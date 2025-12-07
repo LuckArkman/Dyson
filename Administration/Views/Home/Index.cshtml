@@ -1,0 +1,123 @@
+﻿@model Models.DashboardViewModel
+
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="container-fluid">
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+        <!-- Produtos -->
+        <div class="col-lg-4 col-6">
+            <div class="small-box bg-info">
+                <div class="inner">
+                    <h3>@Model.TotalProducts</h3>
+                    <p>Produtos/Serviços</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-box"></i>
+                </div>
+                <a asp-controller="Products" asp-action="Index" class="small-box-footer">
+                    Ver todos <i class="fas fa-arrow-circle-right"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- Ordens -->
+        <div class="col-lg-4 col-6">
+            <div class="small-box bg-success">
+                <div class="inner">
+                    <h3>@Model.TotalOrders</h3>
+                    <p>Vendas Realizadas</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-shopping-cart"></i>
+                </div>
+                <a asp-controller="Admin" asp-action="Orders" class="small-box-footer">
+                    Ver detalhes <i class="fas fa-arrow-circle-right"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- Admins -->
+        <div class="col-lg-4 col-6">
+            <div class="small-box bg-warning">
+                <div class="inner">
+                    <h3>@Model.TotalAdmins</h3>
+                    <p>Administradores</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+                <a href="#" class="small-box-footer">
+                    Gerenciar <i class="fas fa-arrow-circle-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main row -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header border-transparent">
+                    <h3 class="card-title">Últimas Vendas</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table m-0">
+                            <thead>
+                                <tr>
+                                    <th>ID da Ordem</th>
+                                    <th>Item</th>
+                                    <th>Status</th>
+                                    <th>Data</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.RecentOrders != null && Model.RecentOrders.Any())
+                                {
+                                    foreach (var order in Model.RecentOrders)
+                                    {
+                                        @foreach (var o in order.Items)
+                                        {
+                                            <tr>
+                                                <td><a href="#">@order.Id</a></td>
+                                                <td>@(o?.ProductName ?? "Item Removido")</td>
+                                                <td>
+                                                    @if (order.Status == "Completed")
+                                                    {
+                                                        <span class="badge badge-success">Concluído</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="badge badge-warning">@order.Status</span>
+                                                    }
+                                                </td>
+                                                <td>@order.CreatedAt.ToString("dd/MM/yyyy HH:mm")</td>
+                                            </tr>
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="4" class="text-center">Nenhuma venda recente encontrada.</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer clearfix">
+                    <a asp-controller="Admin" asp-action="Orders" class="btn btn-sm btn-secondary float-right">Ver Todas as Ordens</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,183 @@
+@using Enums
+@using System.Globalization
+@model IEnumerable<Dtos.Product>
+@{
+ViewData["Title"] = "Planos de Serviço";
+Layout = "_Layout";
+}
+<div class="space-y-10 p-4 md:p-8">
+<!-- Header da Página -->
+<header class="text-center pb-4">
+    <h1 class="text-4xl font-extrabold text-white mb-2">Escolha o Seu Próximo Nível</h1>
+    <p class="text-text-muted text-lg">Descubra os planos de produtos e serviços para otimizar suas operações na Rede.</p>
+</header>
+
+<!-- Grid de Planos -->
+<section class="grid grid-cols-1 lg:grid-cols-5 gap-6">
+    @foreach (var p in Model.OrderBy(x => x.category))
+    {
+        // --- LÓGICA DE ESTILIZAÇÃO DINÂMICA ---
+        // Definimos as variáveis de cor e estilo antes de desenhar o HTML
+
+        string borderClass = "";
+        string shadowClass = "";
+        string containerClass = "bg-secondary-dark"; // Padrão
+        string buttonClass = "";
+        string badgePopular = "";
+        string iconColor = "";
+        bool isFeatured = false;
+
+        switch (p.category)
+        {
+            case ProductCategory.Gratuito:
+                borderClass = "border-green-500/50";
+                shadowClass = "hover:shadow-green-500/30";
+                buttonClass = "bg-green-600 hover:bg-green-700 text-white";
+                iconColor = "text-green-500";
+                break;
+
+            case ProductCategory.Pago: // Basic
+                borderClass = "border-blue-500/50"; // Use accent-blue se tiver configurado no tailwind
+                shadowClass = "hover:shadow-blue-500/30";
+                buttonClass = "bg-blue-600 hover:bg-blue-700 text-white";
+                iconColor = "text-blue-500";
+                break;
+
+            case ProductCategory.Intermediário: // Node (Destaque)
+                isFeatured = true;
+                borderClass = "border-purple-500/70 border-4"; // Borda mais grossa
+                shadowClass = "shadow-2xl hover:shadow-purple-500/50 transform scale-105 z-10"; // Zoom e sombra maior
+                containerClass = "bg-gradient-to-br from-purple-900 to-gray-900"; // Gradiente
+                buttonClass = "bg-white text-purple-900 hover:bg-gray-200 font-extrabold"; // Botão Invertido
+                iconColor = "text-white"; // Ícones brancos no fundo roxo
+                break;
+
+            case ProductCategory.Avançado: // Operator
+                borderClass = "border-red-500/50";
+                shadowClass = "hover:shadow-red-500/30";
+                buttonClass = "bg-red-600 hover:bg-red-700 text-white";
+                iconColor = "text-red-500";
+                break;
+
+            case ProductCategory.Premium: // Orquestrador
+                borderClass = "border-yellow-500/50";
+                shadowClass = "hover:shadow-yellow-500/30";
+                buttonClass = "bg-yellow-600 hover:bg-yellow-700 text-white";
+                iconColor = "text-yellow-500";
+                break;
+
+            default:
+                borderClass = "border-gray-500/50";
+                shadowClass = "hover:shadow-gray-500/30";
+                buttonClass = "bg-gray-600 hover:bg-gray-700 text-white";
+                iconColor = "text-gray-500";
+                break;
+        }
+
+        // ID único para cada produto
+        var productFormId = $"form-{p.id}";
+        var priceInputId = $"price-{p.id}";
+        var selectId = $"select-{p.id}";
+
+        // --- HTML ÚNICO (Preenchido pelas variáveis acima) ---
+        <div class="@containerClass p-6 rounded-2xl shadow-xl border-2 @borderClass flex flex-col transition duration-300 @shadowClass">
+
+            @if (isFeatured)
+            {
+                <div class="text-center mb-4">
+                    <span class="inline-block bg-white text-purple-900 text-xs font-bold px-3 py-1 rounded-full uppercase">Mais Popular</span>
+                </div>
+            }
+
+            <h2 class="text-xl font-bold text-white">@p.name</h2>
+
+            <!-- Seleção de preço -->
+            <label class="block text-sm @(isFeatured ? "text-gray-300" : "text-text-muted") mt-2 mb-1">Selecione o plano:</label>
+
+            <select id="@selectId" 
+                    class="w-full bg-gray-800 text-white border @borderClass rounded-lg px-3 py-2 focus:ring-2 focus:ring-opacity-50 transition duration-300 outline-none"
+                    data-target="@priceInputId">
+                @foreach (var price in p.PricesCollection ?? new List<Dtos.Prices>())
+                {
+                    <option value="@price.Price">
+                        @price.PriceType - @price.Price.ToString("C2", CultureInfo.GetCultureInfo("pt-BR"))
+                    </option>
+                }
+            </select>
+
+            <p class="text-sm @(isFeatured ? "text-gray-300" : "text-text-muted") mt-2">Categoria: @p.category</p>
+            <p class="mt-4 @(isFeatured ? "text-gray-200" : "text-text-muted")">@p.description</p>
+
+            <ul class="space-y-3 mt-6 text-white flex-grow">
+                @foreach (var r in p.resourcesCollection ?? new List<Dtos.Resources>())
+                {
+                    <li class="flex items-center space-x-2">
+                        <!-- Ícone dinâmico -->
+                        <svg class="h-5 w-5 @iconColor" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                        </svg>
+
+                        <!-- Texto (Riscado se inativo) -->
+                        <span class="@(r.active ? "" : "text-gray-500 line-through")">
+                            @(r.description ?? "Sem descrição")
+                        </span>
+                    </li>
+                }
+            </ul>
+            
+            <form id="@productFormId" asp-controller="Shop" asp-action="AddToCart" method="POST" class="mt-auto w-full">
+                <input type="hidden" name="productId" value="@p.id" />
+                <!-- Input hidden que será atualizado pelo JavaScript quando o usuário mudar o dropdown -->
+                <input type="hidden" id="@priceInputId" name="price" value="@(p.PricesCollection?.FirstOrDefault()?.Price ?? 0)" />
+                
+                <button type="submit" class="w-full mt-8 block text-center @buttonClass py-3 rounded-lg transition duration-300 font-semibold cursor-pointer hover:opacity-90">
+                    @switch (p.category)
+                    {
+                        case ProductCategory.Gratuito:
+                            @:Começar Grátis
+                            break;
+                        case ProductCategory.Pago:
+                            @:Assinar Basic
+                            break;
+                        case ProductCategory.Intermediário:
+                            @:Assinar Pro
+                            break;
+                        case ProductCategory.Avançado:
+                            @:Assinar Operator
+                            break;
+                        case ProductCategory.Premium:
+                            @:Contratar Premium
+                            break;
+                        default:
+                            @:Começar
+                            break;
+                    }
+                </button>
+            </form>
+        </div>
+    }
+</section>
+</div>
+
+<script>
+    // Script para atualizar o input hidden quando o usuário muda o dropdown
+    document.addEventListener("DOMContentLoaded", function() {
+        // Seleciona todos os dropdowns de preço
+        const selectors = document.querySelectorAll('select[data-target]');
+        
+        selectors.forEach(select => {
+            // Adiciona evento de mudança para cada dropdown
+            select.addEventListener('change', function() {
+                const targetId = this.getAttribute('data-target'); // Pega o ID do input hidden
+                const priceValue = this.value; // Pega o valor decimal selecionado
+                
+                // Atualiza o input hidden dentro do form
+                const inputHidden = document.getElementById(targetId);
+                if(inputHidden) {
+                    inputHidden.value = priceValue;
+                    console.log(`Preço atualizado para: ${priceValue}`);
+                }
+            });
+        });
+    });
+</script>

@@ -1,0 +1,346 @@
+{
+  "format": 1,
+  "restore": {
+    "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/AlphaOne/AlphaOne.csproj": {}
+  },
+  "projects": {
+    "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/AlphaOne/AlphaOne.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/AlphaOne/AlphaOne.csproj",
+        "projectName": "AlphaOne",
+        "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/AlphaOne/AlphaOne.csproj",
+        "packagesPath": "/home/mplopes/.nuget/packages/",
+        "outputPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/AlphaOne/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/mplopes/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "/usr/share/dotnet/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Dtos/Dtos.csproj": {
+                "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Dtos/Dtos.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.16, )"
+            },
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.16, )"
+            },
+            "Microsoft.AspNetCore.Identity.UI": {
+              "target": "Package",
+              "version": "[8.0.16, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[8.0.16, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "target": "Package",
+              "version": "[8.0.16, )"
+            },
+            "MongoDB.Driver": {
+              "target": "Package",
+              "version": "[3.5.1, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.16, 8.0.16]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/9.0.300/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Dtos/Dtos.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Dtos/Dtos.csproj",
+        "projectName": "Dtos",
+        "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Dtos/Dtos.csproj",
+        "packagesPath": "/home/mplopes/.nuget/packages/",
+        "outputPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Dtos/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/mplopes/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "/usr/share/dotnet/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Enums/Enums.csproj": {
+                "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Enums/Enums.csproj"
+              },
+              "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Records/Records.csproj": {
+                "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Records/Records.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Akka": {
+              "target": "Package",
+              "version": "[1.5.55, )"
+            },
+            "Microsoft.AspNetCore.Identity.Service.Core": {
+              "target": "Package",
+              "version": "[1.0.0-preview1-final, )"
+            },
+            "MongoDB.Driver": {
+              "target": "Package",
+              "version": "[3.5.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.16, 8.0.16]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/9.0.300/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Enums/Enums.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Enums/Enums.csproj",
+        "projectName": "Enums",
+        "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Enums/Enums.csproj",
+        "packagesPath": "/home/mplopes/.nuget/packages/",
+        "outputPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Enums/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/mplopes/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "/usr/share/dotnet/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Identity.Service.Core": {
+              "target": "Package",
+              "version": "[1.0.0-preview1-final, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.16, 8.0.16]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/9.0.300/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Records/Records.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Records/Records.csproj",
+        "projectName": "Records",
+        "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Records/Records.csproj",
+        "packagesPath": "/home/mplopes/.nuget/packages/",
+        "outputPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Records/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/mplopes/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "/usr/share/dotnet/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Akka": {
+              "target": "Package",
+              "version": "[1.5.55, )"
+            },
+            "Microsoft.AspNetCore.Identity.Service.Core": {
+              "target": "Package",
+              "version": "[1.0.0-preview1-final, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.16, 8.0.16]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/9.0.300/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

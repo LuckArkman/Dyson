@@ -1,0 +1,86 @@
+@model Dtos.BoletoPaymentViewModel
+@{
+    ViewData["Title"] = "Boleto Bancário";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="min-h-screen bg-primary-dark pt-24 pb-12 px-4 flex justify-center items-center">
+    <div class="max-w-2xl w-full bg-secondary-dark rounded-2xl shadow-2xl border border-gray-700 overflow-hidden">
+        
+        <!-- Header Boleto -->
+        <div class="bg-gradient-to-r from-yellow-600 to-orange-600 p-6 flex items-center justify-between">
+            <div>
+                <h1 class="text-2xl font-bold text-white flex items-center">
+                    <svg class="w-8 h-8 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    Boleto Bancário
+                </h1>
+                <p class="text-yellow-100 text-sm mt-1">Aguardando pagamento</p>
+            </div>
+            <div class="text-right">
+                <p class="text-yellow-100 text-xs uppercase">Vencimento</p>
+                <p class="text-white font-bold text-lg">@Model.DueDate.ToString("dd/MM/yyyy")</p>
+            </div>
+        </div>
+
+        <div class="p-8 space-y-8">
+            
+            <!-- Aviso de Compensação -->
+            <div class="bg-yellow-900/20 border-l-4 border-yellow-500 p-4 rounded-r-lg">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <svg class="h-5 w-5 text-yellow-500" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/></svg>
+                    </div>
+                    <div class="ml-3">
+                        <p class="text-sm text-yellow-200">
+                            Pagamentos via boleto podem levar até <strong class="text-white">3 dias úteis</strong> para serem compensados.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Valor -->
+            <div class="text-center">
+                <p class="text-gray-400 text-sm uppercase">Valor do Documento</p>
+                <p class="text-5xl font-extrabold text-white mt-2">@Model.Amount.ToString("C2")</p>
+            </div>
+
+            <!-- Linha Digitável -->
+            <div class="space-y-2">
+                <label class="block text-sm font-medium text-gray-400 text-center">Linha Digitável (Código de Barras)</label>
+                <div class="relative">
+                    <div class="bg-white text-black font-mono font-bold text-lg p-4 rounded-lg text-center break-all shadow-lg tracking-wider">
+                        @Model.BarCode
+                    </div>
+                    <button onclick="copyBarCode()" class="absolute right-2 top-2 bottom-2 bg-gray-100 hover:bg-gray-200 text-gray-800 px-3 rounded text-xs font-bold transition-colors">
+                        COPIAR
+                    </button>
+                </div>
+                <p id="boletoCopyMsg" class="text-green-400 text-xs text-center h-4 opacity-0 transition-opacity">Código copiado!</p>
+            </div>
+
+            <!-- Ações -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <a href="@Model.PdfDownloadUrl" target="_blank" class="flex justify-center items-center py-4 bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white font-bold rounded-xl shadow-lg transition transform hover:-translate-y-1">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    Baixar Boleto PDF
+                </a>
+                
+                <a href="/Profile/Orders" class="flex justify-center items-center py-4 bg-gray-800 hover:bg-gray-700 text-white font-bold rounded-xl border border-gray-600 transition">
+                    Meus Pedidos
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function copyBarCode() {
+        // Cria elemento temporário para copiar pois o texto está em uma div, não input
+        var text = "@Model.BarCode";
+        navigator.clipboard.writeText(text).then(function() {
+            var msg = document.getElementById("boletoCopyMsg");
+            msg.classList.remove("opacity-0");
+            setTimeout(() => msg.classList.add("opacity-0"), 2000);
+        });
+    }
+</script>

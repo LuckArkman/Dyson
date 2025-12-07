@@ -1,0 +1,202 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <link rel="icon" type="image/x-icon" href="~/brainstorm.png?v=3" />
+    <link rel="shortcut icon" href="~/brainstorm.png?v=3" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Dyson.AI - O Futuro da Inteligência Artificial Generativa</title>
+    <!-- Tailwind CSS CDN para o estilo futurista e dark theme -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configuração do Tailwind para o tema dark e cores personalizadas -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-dark': '#0d021c', // Fundo principal roxo escuro
+                        'secondary-dark': '#1e053a', // Elementos de fundo um pouco mais claros (cards)
+                        'accent-purple': '#a78bfa', // Roxo de destaque (texto e ícones)
+                        'accent-blue': '#6366f1', // Azul de destaque (gradientes)
+                    },
+                    backgroundImage: {
+                        'gradient-hero': 'linear-gradient(135deg, #1e053a 0%, #0d021c 100%)',
+                        'gradient-card': 'linear-gradient(145deg, #1e053a 10%, #110520 90%)',
+                        'gradient-button': 'linear-gradient(90deg, #6366f1 0%, #a78bfa 100%)',
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Estilo customizado para o fundo principal e fontes */
+        body {
+            background-color: #0d021c;
+            color: white;
+            font-family: 'Inter', sans-serif;
+        }
+        /* Efeito de destaque para o texto do cabeçalho */
+        .gradient-text {
+            background-image: linear-gradient(90deg, #a78bfa, #6366f1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+        }
+    </style>
+</head>
+<body class="min-h-screen antialiased">
+    <!-- Header/Navbar -->
+    <header class="sticky top-0 z-50 bg-primary-dark/90 backdrop-blur-sm shadow-lg">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <!-- Logotipo DaySon.AI -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-brain h-8 w-8 text-ai-primary"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"></path><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"></path><path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4"></path><path d="M17.599 6.5a3 3 0 0 0 .399-1.375"></path><path d="M6.003 5.125A3 3 0 0 0 6.401 6.5"></path><path d="M3.477 10.896a4 4 0 0 1 .585-.396"></path><path d="M19.938 10.5a4 4 0 0 1 .585.396"></path><path d="M6 18a4 4 0 0 1-1.967-.516"></path><path d="M19.967 17.484A4 4 0 0 1 18 18"></path></svg>
+                <span class="text-xl font-bold gradient-text">Dyson.<span class="gradient-text">AI</span></span>
+            </div>
+            <!-- Links da Navegação Principal (Desktop) -->
+            <div class="hidden md:flex items-center space-x-6 text-sm">
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="text-white hover:text-accent-purple transition duration-300">Home</a>
+                <a asp-area="" asp-controller="Home" asp-action="smartwallets" class="text-white hover:text-accent-purple transition duration-300">Smart Wallets</a>
+                <a asp-area="" asp-controller="Home" asp-action="smartnodes" class="text-white hover:text-accent-purple transition duration-300">Smart Nodes</a>
+                <a asp-area="" asp-controller="Home" asp-action="smartcontracts" class="text-white hover:text-accent-purple transition duration-300">Smart Contracts</a>
+                <a asp-area="" asp-controller="Chat" asp-action="Index" class="text-white hover:text-accent-purple transition duration-300">Chat</a>
+                <a asp-area="" asp-controller="Pricing" asp-action="Pricing" class="text-white hover:text-accent-purple transition duration-300">Prices</a>
+                <a href="#contato" class="text-white hover:text-accent-purple transition duration-300">Contact</a>
+            </div>
+            <!-- Botões de Ação (Desktop) -->
+             <div class="flex items-center space-x-3">
+                            
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <!-- Opção 1: Usuário CONECTADO -->
+                                <!-- Botão que leva ao Dashboard de Perfil -->
+                                <a asp-area="" asp-controller="Profile" asp-action="Index" class="flex items-center space-x-2 px-4 py-2 text-sm font-semibold rounded-lg bg-accent-purple hover:bg-purple-700 transition duration-300 shadow-md">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                                    <span>Meu Perfil</span>
+                                </a>
+                            }
+                            else
+                            {
+                                <!-- Opção 2: Usuário DESCONECTADO -->
+                                <a asp-area="" asp-controller="Account" asp-action="Login" class="px-4 py-2 text-sm font-semibold rounded-lg text-white hover:text-accent-purple transition duration-300">Login</a>
+                                <a asp-area="" asp-controller="Pricing" asp-action="Pricing" class="px-5 py-2 text-sm font-semibold rounded-lg bg-gradient-button hover:opacity-90 transition duration-300 shadow-md"> Começar Grátis</a>
+                            }
+                            
+                            <!-- Botão Menu Hamburguer (para mobile) - Se necessário -->
+                            <button class="md:hidden text-text-muted hover:text-white">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                            </button>
+                            <a href="@Url.Action("Cart", "Shop")" class="nav-link position-relative d-inline-flex align-items-center">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                   class="bi bi-cart" viewBox="0 0 16 16">
+                                <path d="M0 1a1 1 0 0 1 1-1h1.11a1 1 0 0 1 .98.804L3.89 3H14a1 1 0 0 1 .98 1.197l-1 5A1 1 0 0 1 13 10H5a1 1 0 0 1-.98-.804L3.11 4H1a1 1 0 0 1-1-1zM5 12a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm7 0a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/>
+                              </svg>
+                              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"></span>
+                            </a>
+             </div>
+            <!-- Menu Hamburguer (Mobile - não implementado com JS para manter o arquivo único, mas o ícone está aqui) -->
+            <button class="md:hidden text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Conteúdo da View Específica (Index.cshtml) -->
+    <main role="main">
+        @RenderBody()
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-secondary-dark mt-20 pt-12 pb-6 border-t border-accent-purple/20">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Footer Content (Based on user image Captura de tela de 2025-11-25 22-52-02.jpg) -->
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-8 border-b border-accent-purple/30 pb-10 mb-8">
+                <div>
+                    <h4 class="text-white text-lg font-bold mb-3">DaySon.<span class="gradient-text">AI</span></h4>
+                    <p class="text-sm text-gray-400 mb-4">Transforme suas ideias em realidade com o poder da Inteligência Artificial Generativa Descentralizada e Distribuída.</p>
+                    <div class="flex space-x-3">
+                        <!-- Ícones de Mídias Sociais (Placeholder) -->
+                        <a href="#" class="text-gray-400 hover:text-accent-purple transition duration-300"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-3-3h2v-4h2v4h2l-3 3z" /></svg></a>
+                        <a href="#" class="text-gray-400 hover:text-accent-purple transition duration-300"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 16H8V10h3v8zm-1.5-9.25c-.97 0-1.75-.78-1.75-1.75s.78-1.75 1.75-1.75 1.75.78 1.75 1.75-.78 1.75-1.75 1.75zM16 18h-2.5v-3.5c0-.92-.7-1.4-1.35-1.4-.65 0-1.2.48-1.2 1.4V18H9V10h1.75v1.81c.25-.45.92-.81 1.62-.81 1.13 0 2.08.76 2.08 2.65V18z" /></svg></a>
+                        <a href="#" class="text-gray-400 hover:text-accent-purple transition duration-300"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.12 6.55c.34-.34.79-.55 1.25-.55.46 0 .91.21 1.25.55.34.34.55.79.55 1.25s-.21.91-.55 1.25c-.34.34-.79.55-1.25.55s-.91-.21-1.25-.55c-.34-.34-.55-.79-.55-1.25s.21-.91.55-1.25zm-6 0c.34-.34.79-.55 1.25-.55.46 0 .91.21 1.25.55.34.34.55.79.55 1.25s-.21.91-.55 1.25c-.34.34-.79.55-1.25.55s-.91-.21-1.25-.55c-.34-.34-.55-.79-.55-1.25s.21-.91.55-1.25zm6 7c.21 0 .42-.08.57-.23.32-.3.32-.82 0-1.13-.15-.15-.36-.23-.57-.23s-.42.08-.57.23c-.32.3-.32.82 0 1.13.15.15.36.23.57.23zm-6 0c.21 0 .42-.08.57-.23.32-.3.32-.82 0-1.13-.15-.15-.36-.23-.57-.23s-.42.08-.57.23c-.32.3-.32.82 0 1.13.15.15.36.23.57.23z" /></svg></a>
+                        <a href="#" class="text-gray-400 hover:text-accent-purple transition duration-300"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M22 4.02C22 2.9 21.1 2 20.02 2H3.98C2.88 2 2 2.9 2 4.02v15.96C2 21.1 2.9 22 3.98 22h16.04c1.1 0 1.98-.9 1.98-2.02V4.02zm-5 4c0-.55-.45-1-1-1H8c-.55 0-1 .45-1 1v6c0 .55.45 1 1 1h8c.55 0 1-.45 1-1V8zm-1 7h-6v-2h6v2zm0-3h-6V9h6v3z" /></svg></a>
+                    </div>
+                </div>
+
+                <!-- Coluna Produto -->
+                <div>
+                    <h5 class="text-white font-semibold mb-3">Produto</h5>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-accent-purple transition duration-300">Funcionalidades</a></li>
+                        <li><a href="#" class="hover:text-accent-purple transition duration-300">Como Funciona</a></li>
+                        <li><a href="#" class="hover:text-accent-purple transition duration-300">Preços</a></li>
+                        <li><a href="#" class="hover:text-accent-purple transition duration-300">API</a></li>
+                        <li><a href="#" class="hover:text-accent-purple transition duration-300">Integrações</a></li>
+                    </ul>
+                </div>
+
+                <!-- Coluna Empresa -->
+                <div>
+                    <h5 class="text-white font-semibold mb-3">Empresa</h5>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-accent-purple transition duration-300">Sobre Nós</a></li>
+                        <li><a href="#" class="hover:text-accent-purple transition duration-300">Blog</a></li>
+                        <li><a href="#" class="hover:text-accent-purple transition duration-300">Carreiras</a></li>
+                        <li><a href="#" class="hover:text-accent-purple transition duration-300">Imprensa</a></li>
+                        <li><a href="#" class="hover:text-accent-purple transition duration-300">Contato</a></li>
+                    </ul>
+                </div>
+
+                <!-- Coluna Recursos -->
+                <div>
+                    <h5 class="text-white font-semibold mb-3">Recursos</h5>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-accent-purple transition duration-300">Documentação</a></li>
+                        <li><a href="#" class="hover:text-accent-purple transition duration-300">Tutoriais</a></li>
+                        <li><a href="#" class="hover:text-accent-purple transition duration-300">Centro de Ajuda</a></li>
+                        <li><a href="#" class="hover:text-accent-purple transition duration-300">Status</a></li>
+                        <li><a href="#" class="hover:text-accent-purple transition duration-300">Roadmap</a></li>
+                    </ul>
+                </div>
+
+                <!-- Coluna Legal -->
+                <div>
+                    <h5 class="text-white font-semibold mb-3">Legal</h5>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-accent-purple transition duration-300">Termos de Uso</a></li>
+                        <li><a href="#" class="hover:text-accent-purple transition duration-300">Política de Privacidade</a></li>
+                        <li><a href="#" class="hover:text-accent-purple transition duration-300">Cookies</a></li>
+                        <li><a href="#" class="hover:text-accent-purple transition duration-300">LGPD</a></li>
+                        <li><a href="#" class="hover:text-accent-purple transition duration-300">Licenças</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Newsletter Subscription -->
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center py-6">
+                <h4 class="text-xl font-bold mb-3 md:mb-0">Fique por Dentro</h4>
+                <div class="flex w-full md:w-auto space-x-2">
+                    <input type="email" placeholder="Seu melhor email" class="w-full md:w-64 px-4 py-2 rounded-lg bg-primary-dark border border-gray-700 focus:ring-accent-purple focus:border-accent-purple text-white" />
+                    <button class="px-5 py-2 text-sm font-semibold rounded-lg bg-gradient-button hover:opacity-90 transition duration-300">Inscrever-se</button>
+                </div>
+            </div>
+
+            <!-- Copyright and Final Links -->
+            <div class="flex flex-col sm:flex-row justify-between items-center mt-4 pt-4 text-xs text-gray-500 border-t border-gray-800">
+                <p>&copy; 2025 Dyson.AI. Todos os direitos reservados.</p>
+                <div class="flex space-x-4 mt-2 sm:mt-0">
+                    <span class="flex items-center">
+                        <!--<span class="mr-1">🇧🇷</span> Feito no Brasil -->
+                    </span>
+                    <span>Powered by Dyson.AI</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

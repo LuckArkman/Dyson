@@ -1,0 +1,258 @@
+@model List<Dtos.OrderItem>
+@{
+    ViewData["Title"] = "Checkout Seguro";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    decimal total = Model != null ? Model.Sum(x => x.Price * x.Quantity) : 0;
+}
+
+<div class="space-y-8 p-4 md:p-8 max-w-6xl mx-auto min-h-screen pt-24">
+    <h1 class="text-4xl font-extrabold text-white text-center md:text-left">Finalizar Compra</h1>
+
+    <!-- Stepper Visual -->
+    <div id="checkout-steps" class="flex justify-between items-center text-center mb-8 max-w-3xl mx-auto md:mx-0">
+        <div class="flex-1">
+            <div class="w-10 h-10 mx-auto rounded-full bg-accent-purple text-white font-bold flex items-center justify-center shadow-lg shadow-accent-purple/50">1</div>
+            <p class="text-sm mt-2 text-accent-purple font-medium">Revisão</p>
+        </div>
+        <div class="flex-1 h-1 bg-gray-700 mx-2 rounded-full"></div>
+        <div class="flex-1">
+            <div class="w-10 h-10 mx-auto rounded-full bg-gray-800 text-white border border-gray-600 flex items-center justify-center" id="step-2-indicator">2</div>
+            <p class="text-sm mt-2 text-gray-500" id="step-2-text">Pagamento</p>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        <!-- Área Principal -->
+        <div class="lg:col-span-2 space-y-6">
+            
+            <!-- Resumo dos Itens -->
+            <div class="bg-secondary-dark p-6 rounded-2xl shadow-lg border border-gray-800">
+                <h2 class="text-xl font-semibold text-white mb-4 flex items-center">
+                    <svg class="w-6 h-6 mr-2 text-accent-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                    Resumo do Carrinho
+                </h2>
+                @if (Model != null && Model.Any())
+                {
+                    <ul class="space-y-3">
+                        @foreach (var item in Model)
+                        {
+                            <li class="flex justify-between items-center text-gray-300 bg-gray-800/50 p-3 rounded-lg">
+                                <span>@item.ProductName <span class="text-xs text-gray-500">x @item.Quantity</span></span>
+                                <span class="text-white font-bold">@((item.Price * item.Quantity).ToString("C2"))</span>
+                            </li>
+                        }
+                    </ul>
+                }
+                else
+                {
+                    <p class="text-gray-400">Seu carrinho está vazio.</p>
+                }
+            </div>
+
+            <!-- Seleção de Pagamento -->
+            <div class="bg-secondary-dark p-6 rounded-2xl shadow-lg border border-gray-800 animate-fade-in">
+                <h2 class="text-xl font-semibold text-white mb-6 flex items-center">
+                    <svg class="w-6 h-6 mr-2 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+                    Método de Pagamento
+                </h2>
+
+                <!-- Opções (Radio Buttons estilizados) -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    <!-- Cartão -->
+                    <label class="cursor-pointer relative">
+                        <input type="radio" name="paymentMethod" value="card" class="peer sr-only" onchange="togglePaymentFields()" checked>
+                        <div class="p-4 rounded-xl bg-gray-800 border-2 border-transparent peer-checked:border-accent-purple peer-checked:bg-accent-purple/10 hover:bg-gray-700 transition-all text-center h-full flex flex-col items-center justify-center">
+                            <svg class="w-8 h-8 text-white mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+                            <span class="text-white font-medium">Cartão</span>
+                        </div>
+                    </label>
+
+                    <!-- PIX -->
+                    <label class="cursor-pointer relative">
+                        <input type="radio" name="paymentMethod" value="pix" class="peer sr-only" onchange="togglePaymentFields()">
+                        <div class="p-4 rounded-xl bg-gray-800 border-2 border-transparent peer-checked:border-green-500 peer-checked:bg-green-500/10 hover:bg-gray-700 transition-all text-center h-full flex flex-col items-center justify-center">
+                            <svg class="w-8 h-8 text-green-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path></svg>
+                            <span class="text-white font-medium">PIX</span>
+                        </div>
+                    </label>
+
+                    <!-- Boleto -->
+                    <label class="cursor-pointer relative">
+                        <input type="radio" name="paymentMethod" value="boleto" class="peer sr-only" onchange="togglePaymentFields()">
+                        <div class="p-4 rounded-xl bg-gray-800 border-2 border-transparent peer-checked:border-yellow-500 peer-checked:bg-yellow-500/10 hover:bg-gray-700 transition-all text-center h-full flex flex-col items-center justify-center">
+                            <svg class="w-8 h-8 text-yellow-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                            <span class="text-white font-medium">Boleto</span>
+                        </div>
+                    </label>
+                </div>
+
+                <!-- Container Dinâmico de Campos -->
+                <div id="payment-fields-container" class="space-y-4">
+                    
+                    <!-- Campo CPF (Comum e Obrigatório para PIX/Boleto) -->
+                    <div id="cpf-container" class="hidden animate-fade-in bg-gray-800/50 p-4 rounded-xl border border-gray-700">
+                        <label class="block text-sm font-bold text-gray-300 mb-2">CPF do Pagador <span class="text-red-500">*</span></label>
+                        <input type="text" id="cpf" placeholder="000.000.000-00" maxlength="14" oninput="maskCpf(this)" 
+                               class="w-full px-4 py-3 rounded-lg bg-gray-900 border border-gray-600 text-white focus:border-green-500 focus:ring-1 focus:ring-green-500 outline-none transition font-mono">
+                        <p class="text-xs text-gray-500 mt-2">Necessário para registro no Banco Central (PIX) ou emissão bancária (Boleto).</p>
+                    </div>
+
+                    <!-- Campos Cartão (Simplificado para o exemplo) -->
+                    <div id="card-container" class="animate-fade-in space-y-4">
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-1">Número do Cartão</label>
+                            <input type="text" id="cardNumber" placeholder="0000 0000 0000 0000" class="w-full px-4 py-3 rounded-lg bg-gray-900 border border-gray-600 text-white focus:border-accent-purple outline-none">
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm text-gray-400 mb-1">Validade</label>
+                                <input type="text" id="cardExpiry" placeholder="MM/AA" class="w-full px-4 py-3 rounded-lg bg-gray-900 border border-gray-600 text-white outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-sm text-gray-400 mb-1">CVV</label>
+                                <input type="text" id="cardCvv" placeholder="123" class="w-full px-4 py-3 rounded-lg bg-gray-900 border border-gray-600 text-white outline-none">
+                            </div>
+                        </div>
+                        <!-- Nome do Titular -->
+                        <div>
+                           <label class="block text-sm text-gray-400 mb-1">Nome no Cartão</label>
+                           <input type="text" id="cardName" placeholder="NOME DO TITULAR" class="w-full px-4 py-3 rounded-lg bg-gray-900 border border-gray-600 text-white focus:border-accent-purple outline-none uppercase">
+                        </div>
+                    </div>
+
+                    <!-- Mensagens Informativas -->
+                    <div id="pix-info" class="hidden text-sm bg-green-900/20 text-green-300 p-4 rounded-lg border border-green-900/50">
+                        <i class="fas fa-bolt mr-2"></i> O código QR será gerado na próxima tela. Pagamento instantâneo.
+                    </div>
+                    <div id="boleto-info" class="hidden text-sm bg-yellow-900/20 text-yellow-300 p-4 rounded-lg border border-yellow-900/50">
+                        <i class="fas fa-clock mr-2"></i> Você poderá baixar o PDF na próxima tela. Compensação em até 3 dias úteis.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resumo Lateral -->
+        <div class="lg:col-span-1">
+            <div class="bg-secondary-dark p-6 rounded-2xl shadow-xl border border-gray-800 sticky top-24">
+                <h3 class="text-xl font-bold text-white mb-6">Total a Pagar</h3>
+                <div class="flex justify-between items-end mb-6 border-b border-gray-700 pb-6">
+                    <span class="text-gray-400">Total</span>
+                    <span class="text-3xl font-extrabold text-white">@total.ToString("C2")</span>
+                </div>
+                
+                <button onclick="processCheckout()" id="btnCheckout" class="w-full py-4 px-6 bg-gradient-button text-white font-bold rounded-xl shadow-lg hover:opacity-90 transition transform hover:-translate-y-1 flex justify-center items-center">
+                    <span>Finalizar Compra</span>
+                </button>
+                
+                <div class="mt-4 text-center">
+                    <p class="text-xs text-gray-500 mb-2">Pagamento processado por</p>
+                    <div class="flex justify-center items-center space-x-2 opacity-70">
+                        <span class="font-bold text-white">mercado</span><span class="font-bold text-blue-400">pago</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .bg-gradient-button { background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); }
+    .animate-fade-in { animation: fadeIn 0.3s ease-in-out; }
+    @@keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+
+@section Scripts {
+<script>
+    function maskCpf(i) {
+        var v = i.value.replace(/\D/g, '');
+        v = v.replace(/(\d{3})(\d)/, '$1.$2');
+        v = v.replace(/(\d{3})(\d)/, '$1.$2');
+        v = v.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+        i.value = v;
+    }
+
+    function togglePaymentFields() {
+        const method = document.querySelector('input[name="paymentMethod"]:checked').value;
+        const cardContainer = document.getElementById('card-container');
+        const cpfContainer = document.getElementById('cpf-container');
+        const pixInfo = document.getElementById('pix-info');
+        const boletoInfo = document.getElementById('boleto-info');
+
+        // Reset
+        cardContainer.classList.add('hidden');
+        cpfContainer.classList.add('hidden');
+        pixInfo.classList.add('hidden');
+        boletoInfo.classList.add('hidden');
+
+        if (method === 'card') {
+            cardContainer.classList.remove('hidden');
+            // CPF pode ser opcional ou obrigatório para cartão dependendo da regra de fraude
+            // Mas no seu requisito é explícito para PIX e Boleto. Vou esconder para simplificar a UX do cartão.
+        } 
+        else if (method === 'pix') {
+            cpfContainer.classList.remove('hidden');
+            pixInfo.classList.remove('hidden');
+        } 
+        else if (method === 'boleto') {
+            cpfContainer.classList.remove('hidden');
+            boletoInfo.classList.remove('hidden');
+        }
+    }
+
+    async function processCheckout() {
+        const btn = document.getElementById('btnCheckout');
+        const originalText = btn.innerHTML;
+        const method = document.querySelector('input[name="paymentMethod"]:checked').value;
+        const cpf = document.getElementById('cpf').value;
+
+        // Validação Frontend
+        if ((method === 'pix' || method === 'boleto') && (cpf.length < 14)) {
+            alert("Por favor, digite um CPF válido para gerar o pagamento.");
+            document.getElementById('cpf').focus();
+            return;
+        }
+
+        // Estado de Loading
+        btn.disabled = true;
+        btn.innerHTML = `<svg class="animate-spin h-5 w-5 text-white mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Processando...`;
+
+        const payload = {
+            paymentMethod: method,
+            cpf: cpf,
+            // Dados de cartão se necessário
+            cardName: document.getElementById('cardName')?.value || "",
+            cardNumber: document.getElementById('cardNumber')?.value || "",
+            cardExpiry: document.getElementById('cardExpiry')?.value || "",
+            cardCvv: document.getElementById('cardCvv')?.value || ""
+        };
+
+        try {
+            const response = await fetch('/Payment/ProcessCheckout', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                // Redirecionamento crítico para o fluxo do Mercado Pago
+                window.location.href = result.redirectUrl;
+            } else {
+                alert("Erro: " + result.message);
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+            }
+        } catch (error) {
+            console.error(error);
+            alert("Erro de comunicação com o servidor.");
+            btn.disabled = false;
+            btn.innerHTML = originalText;
+        }
+    }
+
+    // Inicializa estado
+    document.addEventListener("DOMContentLoaded", togglePaymentFields);
+</script>
+}

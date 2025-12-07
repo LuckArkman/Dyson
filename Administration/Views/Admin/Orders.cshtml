@@ -1,0 +1,211 @@
+@using Newtonsoft.Json
+@model Dtos.OrdersViewModel
+
+@{
+    ViewData["Title"] = "Gestão de Vendas";
+    
+    // Serializa os dados para JSON para o JavaScript ler
+    var barLabels = JsonConvert.SerializeObject(Model.MonthlySales.Select(x => x.MonthLabel));
+    var barData = JsonConvert.SerializeObject(Model.MonthlySales.Select(x => x.Count));
+    
+    var pieLabels = JsonConvert.SerializeObject(Model.ProductDistribution.Select(x => x.ProductName));
+    var pieData = JsonConvert.SerializeObject(Model.ProductDistribution.Select(x => x.Count));
+}
+
+<!-- IMPORTANTE: Incluir ChartJS (AdminLTE geralmente já possui, mas garantimos aqui via CDN se necessário) -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<section class="content">
+    <div class="container-fluid">
+        
+        <!-- LINHA DOS GRÁFICOS -->
+        <div class="row">
+            
+            <!-- GRÁFICO DE BARRAS: Volume Mensal -->
+            <div class="col-md-7">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Volume de Vendas (Últimos 12 Meses)</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart">
+                            <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GRÁFICO DE PIZZA: Distribuição por Produto -->
+            <div class="col-md-5">
+                <div class="card card-danger">
+                    <div class="card-header">
+                        <h3 class="card-title">Top Produtos (Mês Atual)</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="pieChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                        @if(!Model.ProductDistribution.Any())
+                        {
+                            <p class="text-center text-muted mt-4">Nenhuma venda registrada neste mês.</p>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- FIM LINHA DOS GRÁFICOS -->
+
+        <!-- TABELA DE ORDENS (LISTAGEM) -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Histórico Completo de Transações</h3>
+                    </div>
+                    <div class="card-body table-responsive p-0">
+                        <table class="table table-hover text-nowrap">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Cliente (User ID)</th>
+                                    <th>Itens</th>
+                                    <th>Método de Pagamento</th>
+                                    <th>Data</th>
+                                    <th>Valor</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var order in Model.Orders)
+                                {
+                                    <tr>
+                                        <td>@order.Id</td>
+                                        <td>@order.UserId</td>
+                                        <td>
+                                            @if(order.Items != null && order.Items.Any())
+                                            {
+                                                @string.Join(", ", order.Items.Select(i => $"{i.ProductName} (x{i.Quantity})"))
+                                            }
+                                            else
+                                            {
+                                                <span class="text-muted">Sem itens</span>
+                                            }
+                                        </td>
+                                        <td>
+                                            @switch(order.PaymentMethod)
+                                            {
+                                                case "CreditCard":
+                                                    <span class="badge badge-info">Cartão de Crédito</span>
+                                                    break;
+                                                case "Pix":
+                                                    <span class="badge badge-success">Pix</span>
+                                                    break;
+                                                case "Boleto":
+                                                    <span class="badge badge-warning">Boleto</span>
+                                                    break;
+                                                default:
+                                                    <span>@order.PaymentMethod</span>
+                                                    break;
+                                            }
+                                        </td>
+                                        <td>@order.CreatedAt.ToString("g")</td>
+                                        <td>@order.TotalAmount.ToString("C")</td>
+                                        <td>
+                                            @switch(order.Status)
+                                            {
+                                                case "Paid":
+                                                    <span class="badge badge-success">Pago</span>
+                                                    break;
+                                                case "Pending":
+                                                    <span class="badge badge-warning">Pendente</span>
+                                                    break;
+                                                case "Canceled":
+                                                    <span class="badge badge-danger">Cancelado</span>
+                                                    break;
+                                                default:
+                                                    <span class="badge badge-secondary">@order.Status</span>
+                                                    break;
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- SCRIPTS DE INICIALIZAÇÃO DOS GRÁFICOS -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        
+        // --- CONFIGURAÇÃO DO GRÁFICO DE BARRAS ---
+        var areaChartData = {
+            labels  : @Html.Raw(barLabels),
+            datasets: [
+                {
+                    label               : 'Vendas',
+                    backgroundColor     : 'rgba(60,141,188,0.9)',
+                    borderColor         : 'rgba(60,141,188,0.8)',
+                    pointRadius          : false,
+                    pointColor          : '#3b8bba',
+                    pointStrokeColor    : 'rgba(60,141,188,1)',
+                    pointHighlightFill  : '#fff',
+                    pointHighlightStroke: 'rgba(60,141,188,1)',
+                    data                : @Html.Raw(barData)
+                }
+            ]
+        }
+
+        var barChartCanvas = $('#barChart').get(0).getContext('2d')
+        var barChartData = $.extend(true, {}, areaChartData)
+
+        new Chart(barChartCanvas, {
+            type: 'bar',
+            data: barChartData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                datasetFill: false,
+                scales: {
+                    yAxes: [{
+                        ticks: { beginAtZero: true, stepSize: 1 }
+                    }]
+                }
+            }
+        });
+
+        // --- CONFIGURAÇÃO DO GRÁFICO DE PIZZA ---
+        var donutData = {
+            labels: @Html.Raw(pieLabels),
+            datasets: [
+                {
+                    data: @Html.Raw(pieData),
+                    backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+                }
+            ]
+        }
+        
+        // Só renderiza se houver dados
+        if(donutData.labels.length > 0) {
+            var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
+            var pieOptions     = {
+                maintainAspectRatio : false,
+                responsive : true,
+            }
+            new Chart(pieChartCanvas, {
+                type: 'pie',
+                data: donutData,
+                options: pieOptions
+            });
+        }
+    });
+</script>

@@ -1,0 +1,205 @@
+@model Dtos.WalletViewModel
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "_AdminLayout";
+}
+<div class="row">
+    <!-- Trading Chart Section -->
+    <div class="col-md-8">
+        <div class="card card-primary card-outline">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="far fa-chart-bar"></i>
+                    Flutuação do Token Dtc
+                </h3>
+            </div>
+            <div class="card-body">
+                <canvas id="tradingChart" style="min-height: 300px; height: 300px; max-height: 300px; max-width: 100%;"></canvas>
+            </div>
+            <div class="card-footer">
+                <div class="row">
+                    <div class="col-sm-3 col-6">
+                        <div class="description-block border-right">
+                            <span class="description-percentage text-success"><i class="fas fa-caret-up"></i> 17%</span>
+                            <h5 class="description-header">R$ @Model.CurrentTokenPrice.ToString("F2")</h5>
+                            <span class="description-text">PREÇO ATUAL</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-6">
+                        <div class="description-block">
+                            <button class="btn btn-success btn-block" data-toggle="modal" data-target="#modalBuy">COMPRAR</button>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-6">
+                        <div class="description-block">
+                            <button class="btn btn-danger btn-block" data-toggle="modal" data-target="#modalSell">VENDER</button>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-6">
+                         <div class="description-block">
+                            <button class="btn btn-warning btn-block text-dark" data-toggle="modal" data-target="#modalStake">STAKE</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wallet Info Section -->
+    <div class="col-md-4">
+        <div class="card bg-gradient-navy">
+            <div class="card-header">
+                <h3 class="card-title">Sua Carteira</h3>
+            </div>
+            <div class="card-body">
+                <h3>@Model.Balance.ToString("F4") <small>Dtc</small></h3>
+                <p>Disponível</p>
+                <hr class="bg-gray" />
+                <h5>@Model.StakedBalance.ToString("F4") <small>Dtc</small></h5>
+                <p>Em Staking (Bloqueado)</p>
+                
+                <div class="mt-4">
+                    <label>Endereço:</label>
+                    <div class="input-group input-group-sm">
+                        <input type="text" class="form-control" value="@Model.WalletAddress" readonly>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-info btn-flat" onclick="alert('Copiado!')">Copiar</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Quick Actions -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Ações Rápidas</h3>
+            </div>
+            <div class="card-body">
+                <p>O mercado está em <strong>Alta</strong>. Pode ser um bom momento para vender tokens excedentes ou fazer Stake para rendimentos passivos.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modals for Actions -->
+<!-- Stake Modal -->
+<div class="modal fade" id="modalStake">
+    <div class="modal-dialog">
+        <div class="modal-content bg-dark">
+            <div class="modal-header">
+                <h4 class="modal-title">Fazer Stake (Renda Passiva)</h4>
+                <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Quantidade (Dtc)</label>
+                    <input type="number" id="stakeAmount" class="form-control" placeholder="0.00" />
+                </div>
+                <div class="form-group">
+                    <label>Duração (Dias)</label>
+                    <select id="stakeDuration" class="form-control">
+                        <option value="30">30 Dias (5% APY)</option>
+                        <option value="90">90 Dias (12% APY)</option>
+                        <option value="365">1 Ano (30% APY)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-outline-light" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-warning" onclick="submitStake()">Confirmar Stake</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Buy/Sell Modals similar structure ... (Simplificado via JS fetch abaixo) -->
+<div class="modal fade" id="modalBuy">
+    <div class="modal-dialog">
+        <div class="modal-content bg-dark">
+            <div class="modal-header"><h4 class="modal-title">Comprar Tokens</h4><button type="button" class="close text-white" data-dismiss="modal">&times;</button></div>
+            <div class="modal-body"><input type="number" id="buyAmount" class="form-control" placeholder="Qtd GLU" /></div>
+            <div class="modal-footer"><button class="btn btn-success" onclick="trade('BUY')">Comprar</button></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalSell">
+    <div class="modal-dialog">
+        <div class="modal-content bg-dark">
+            <div class="modal-header"><h4 class="modal-title">Vender Tokens</h4><button type="button" class="close text-white" data-dismiss="modal">&times;</button></div>
+            <div class="modal-body"><input type="number" id="sellAmount" class="form-control" placeholder="Qtd GLU" /></div>
+            <div class="modal-footer"><button class="btn btn-danger" onclick="trade('SELL')">Vender</button></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // ChartJS Setup
+        $(function () {
+            // Fetch chart data via AJAX
+            $.get('/Profile/GetChartData', function(response) {
+                var ctx = document.getElementById('tradingChart').getContext('2d');
+                var tradingChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: response.labels,
+                        datasets: [{
+                            label: 'Preço GLU (BRL)',
+                            data: response.data,
+                            borderColor: '#007bff',
+                            backgroundColor: 'rgba(0, 123, 255, 0.1)',
+                            fill: true,
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: { grid: { color: '#444' } },
+                            x: { grid: { color: '#444' } }
+                        },
+                        plugins: {
+                            legend: { labels: { color: 'white' } }
+                        }
+                    }
+                });
+            });
+        });
+
+        // Actions Logic
+        function submitStake() {
+            var amount = parseFloat($('#stakeAmount').val());
+            var days = parseInt($('#stakeDuration').val());
+            
+            fetch('/Profile/StakeTokens', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ amount: amount, durationDays: days })
+            })
+            .then(res => res.json())
+            .then(data => {
+                alert(data.message);
+                if(data.success) location.reload();
+            });
+        }
+
+        function trade(type) {
+            var inputId = type === 'BUY' ? '#buyAmount' : '#sellAmount';
+            var amount = parseFloat($(inputId).val());
+
+            fetch('/Profile/TradeTokens', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ type: type, amount: amount })
+            })
+            .then(res => res.json())
+            .then(data => {
+                alert(data.message);
+                if(data.success) location.reload();
+            });
+        }
+    </script>
+}

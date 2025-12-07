@@ -1,0 +1,84 @@
+﻿services:
+  api:
+    image: api
+    container_name: api
+    build:
+      context: .
+      dockerfile: Api/Dockerfile
+    environment:
+      - ASPNETCORE_URLS=http://+:8080
+    ports:
+      - "5002:8080"
+      - "5001:8080"
+    depends_on:
+      - mongo
+    restart: unless-stopped
+    networks:
+      - app_network    
+  mongo:
+    image: mongo:latest
+    container_name: mongodb_db
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mplopes
+      MONGO_INITDB_ROOT_PASSWORD: 3702959
+    volumes:
+      - mongodb_data:/data/db
+    restart: always
+    networks:
+      - app_network
+  
+  application:
+    image: application
+    container_name: webApplication
+    build:
+      context: .
+      dockerfile: Application/Dockerfile
+    environment:
+      # Kestrel escutará nas portas 8080 (HTTP) e 443 (HTTPS)
+      - ASPNETCORE_URLS=http://+:8080;https://+:443
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/app/certs/certificate.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=3702959
+    ports:
+      # CORREÇÃO: Mapeia porta 80 da VPS para porta 8080 do container
+      - "80:8080"
+      # CORREÇÃO: Mapeia porta 443 da VPS para porta 443 do container (onde está o SSL)
+      - "443:443"
+    volumes:
+      # Garante que o certificado seja acessível pelo container
+      - /home/ubuntu/mplopes/certs/certificate.pfx:/app/certs/certificate.pfx:ro
+    depends_on:
+      - mongo
+    restart: unless-stopped
+    networks:
+      - app_network
+  
+  administration:
+    image: administration
+    build:
+      context: .
+      dockerfile: Administration/Dockerfile
+    environment:
+      - ASPNETCORE_URLS=http://+:8080;https://+:443
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/app/certs/certificate.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=3702959
+    ports:
+      - "5137:8080"
+      - "7119:443"
+    volumes:
+      - /home/ubuntu/mplopes/certs/certificate.pfx:/app/certs/certificate.pfx:ro
+    depends_on:
+      - mongo
+    restart: unless-stopped
+    networks:
+      - app_network
+  
+volumes:
+  mongodb_data:
+
+networks:
+  app_network:
+    driver: bridge
+
+

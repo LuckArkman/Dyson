@@ -1,0 +1,123 @@
+@{
+    // Define o título da página
+    ViewData["Title"] = "Dashboard da Conta";
+}
+
+<div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    
+    <h1 class="text-4xl font-extrabold mb-8 gradient-text">
+        Seu Dashboard
+    </h1>
+
+    <p class="text-xl text-gray-300 mb-10">
+        Bem-vindo(a) de volta! Gerencie seus ativos descentralizados e configurações de IA Generativa.
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        
+        <div class="p-6 rounded-xl shadow-xl bg-secondary-dark border border-accent-purple/30 hover:border-accent-purple transition duration-300 transform hover:scale-[1.02]">
+            <div class="flex items-center justify-between">
+                <p class="text-gray-400 text-sm font-semibold uppercase">Smart Wallets</p>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-accent-purple" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7.4c0-1.7-.6-2.4-2.4-2.4H5.4C3.6 5 3 5.7 3 7.4v9.2c0 1.7.6 2.4 2.4 2.4H10"/></svg>
+            </div>
+            <p class="text-3xl font-bold mt-2">$ 15,240.00</p>
+            <p class="text-green-400 text-sm mt-1">+4.5% (24h)</p>
+            <a href="/Home/smartwallets" class="block mt-4 text-sm text-accent-blue hover:text-accent-purple font-medium">Ver Detalhes &rarr;</a>
+        </div>
+
+        <div class="p-6 rounded-xl shadow-xl bg-secondary-dark border border-accent-purple/30 hover:border-accent-purple transition duration-300 transform hover:scale-[1.02]">
+            <div class="flex items-center justify-between">
+                <p class="text-gray-400 text-sm font-semibold uppercase">Smart Nodes Ativos</p>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-accent-purple" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+            </div>
+            <p class="text-3xl font-bold mt-2">3 Ativos</p>
+            <p class="text-red-400 text-sm mt-1">-1 Inativo</p>
+            <a href="/Home/smartnodes" class="block mt-4 text-sm text-accent-blue hover:text-accent-purple font-medium">Gerenciar Nodes &rarr;</a>
+        </div>
+
+        <div class="p-6 rounded-xl shadow-xl bg-secondary-dark border border-accent-purple/30 hover:border-accent-purple transition duration-300 transform hover:scale-[1.02]">
+            <div class="flex items-center justify-between">
+                <p class="text-gray-400 text-sm font-semibold uppercase">Token Reward (Última Semana)</p>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-accent-purple" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20c4.4 0 8-3.6 8-8s-3.6-8-8-8-8 3.6-8 8 3.6 8 8 8z"/><path d="M12 4v16"/><path d="M4 12h16"/></svg>
+            </div>
+            <p class="text-3xl font-bold mt-2">1,890 Dtc</p>
+            <p class="text-green-400 text-sm mt-1">+12% (vs. semana passada)</p>
+            <a href="#" class="block mt-4 text-sm text-accent-blue hover:text-accent-purple font-medium">Ver Histórico &rarr;</a>
+        </div>
+
+        <div class="p-6 rounded-xl shadow-xl bg-secondary-dark border border-accent-purple/30 hover:border-accent-purple transition duration-300 transform hover:scale-[1.02]">
+            <div class="flex items-center justify-between">
+                <p class="text-gray-400 text-sm font-semibold uppercase">Smart Contracts</p>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-accent-purple" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 20V4l-4 4-4-4V20"/><path d="M16 4h4l-4 4-4-4"/></svg>
+            </div>
+            <p class="text-3xl font-bold mt-2">5 Implementados</p>
+            <p class="text-gray-400 text-sm mt-1">1 Pendente de Auditoria</p>
+            <a href="/Home/smartcontracts" class="block mt-4 text-sm text-accent-blue hover:text-accent-purple font-medium">Auditar Contratos &rarr;</a>
+        </div>
+        
+    </div>
+    
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+        <div class="lg:col-span-2">
+            <div class="p-6 rounded-xl shadow-xl bg-secondary-dark border border-accent-purple/30 mb-6">
+                <h3 class="text-2xl font-semibold mb-4 text-white">Atividade da Rede (Últimos 30 dias)</h3>
+                <div class="h-64 flex items-center justify-center border border-dashed border-gray-600 rounded-lg">
+                    <p class="text-gray-500">Área para Gráfico (JS/Bibliotecas)</p>
+                </div>
+            </div>
+            
+            <div class="p-6 rounded-xl shadow-xl bg-secondary-dark border border-accent-purple/30">
+                <h3 class="text-2xl font-semibold mb-4 text-white">Notificações Recentes</h3>
+                <ul class="space-y-3">
+                    <li class="p-3 bg-primary-dark rounded-lg flex justify-between items-center text-sm">
+                        <span class="text-gray-300">Smart Node #A123 com recompensa de 500 DYSON processada.</span>
+                        <span class="text-accent-purple text-xs">2 min atrás</span>
+                    </li>
+                    <li class="p-3 bg-primary-dark rounded-lg flex justify-between items-center text-sm">
+                        <span class="text-gray-300">Seu Contrato #4 foi implementado com sucesso.</span>
+                        <span class="text-accent-purple text-xs">1 hora atrás</span>
+                    </li>
+                    <li class="p-3 bg-primary-dark rounded-lg flex justify-between items-center text-sm">
+                        <span class="text-gray-300">Nova atualização de segurança para Smart Wallets disponível.</span>
+                        <span class="text-accent-purple text-xs">1 dia atrás</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="lg:col-span-1">
+            <div class="p-6 rounded-xl shadow-xl bg-secondary-dark border border-accent-purple/30">
+                <h3 class="text-2xl font-semibold mb-4 text-white">Ações Rápidas</h3>
+                <div class="space-y-4">
+                    <button class="w-full px-5 py-3 text-sm font-semibold rounded-lg bg-gradient-button hover:opacity-90 transition duration-300 text-white shadow-lg">
+                        Criar Novo Smart Contract
+                    </button>
+                    <button class="w-full px-5 py-3 text-sm font-semibold rounded-lg bg-primary-dark border border-accent-purple/50 text-accent-purple hover:bg-accent-purple/20 transition duration-300">
+                        Depositar/Retirar Fundos
+                    </button>
+                    <button class="w-full px-5 py-3 text-sm font-semibold rounded-lg bg-primary-dark border border-accent-purple/50 text-accent-purple hover:bg-accent-purple/20 transition duration-300">
+                        Configurações de Segurança
+                    </button>
+                    <a href="#" class="block text-center mt-4 text-sm text-gray-400 hover:text-accent-purple font-medium">
+                        Ver Perfil Completo &rarr;
+                    </a>
+                    
+                    <form asp-controller="Account" asp-action="Logout" method="post" class="mt-6">
+                        <button type="submit" class="w-full text-red-400 hover:text-red-500 transition duration-300 text-sm font-medium">
+                            Sair da Conta (Logout)
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    <script>
+        console.log("Dashboard carregado.");
+    </script>
+}

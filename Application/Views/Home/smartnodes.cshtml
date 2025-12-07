@@ -1,0 +1,188 @@
+@{
+    ViewData["Title"] = "Smart Nodes";
+    Layout = "_Layout";
+}
+
+<!-- Hero Section (Captura de tela de 2025-11-25 23-06-48.jpg) -->
+<section class="py-20 lg:py-32 bg-primary-dark relative overflow-hidden text-center">
+    <!-- Background Glow -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-accent-blue/10 rounded-full blur-[120px] pointer-events-none"></div>
+
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <h1 class="text-5xl md:text-7xl font-extrabold mb-6">
+            <span class="gradient-text">Smart Nodes</span>
+        </h1>
+        <p class="text-lg text-gray-300 mb-10 max-w-3xl mx-auto leading-relaxed">
+            Transforme seu dispositivo em um nó inteligente em nossa rede de <strong class="text-white">IA Generativa Distribuída</strong>.
+            Contribua com poder computacional e personalize tarefas para criar uma IA colaborativa e soberana.
+        </p>
+
+        <a href="#" class="inline-flex items-center px-8 py-3 text-lg font-bold rounded-full bg-gradient-button hover:opacity-90 transition duration-300 shadow-lg shadow-accent-blue/30">
+            Ative Seu Nó Inteligente
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+        </a>
+    </div>
+</section>
+
+<!-- Tecnologia de Ponta Section (Captura de tela de 2025-11-25 23-06-55.jpg) -->
+<section class="py-20 bg-secondary-dark/30">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl font-bold mb-4">Tecnologia de <span class="gradient-text">Ponta</span></h2>
+            <p class="text-gray-400 max-w-2xl mx-auto">
+                Nossos Smart Nodes capacitam usuários a moldar uma IA colaborativa com ferramentas poderosas e flexíveis.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            @{
+                var techCards = new[]
+                {
+                    new {
+                        Icon = "M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z",
+                        Title = "Arquitetura Generativa Distribuída",
+                        Desc = "Cada usuário é um nó ativo na rede, contribuindo com recursos ociosos para uma IA descentralizada, robusta e escalável construída em .NET 8."
+                    },
+                    new {
+                        Icon = "M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z",
+                        Title = "Processamento Autônomo e Local",
+                        Desc = "Cada nó hospeda um modelo RNN (LSTM) pré-treinado, permitindo processamento local rápido, maior privacidade e uma base poderosa para especialização."
+                    },
+                    new {
+                        Icon = "M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37a1.724 1.724 0 002.572-1.065z",
+                        Title = "Controle Total do Usuário",
+                        Desc = "Use prompts de comando, configure rotas e orquestre tarefas para adaptar o comportamento do seu nó às necessidades específicas da sua instituição."
+                    }
+                };
+            }
+
+            @foreach (var card in techCards)
+            {
+                <div class="p-8 rounded-2xl bg-gradient-card border border-gray-800 text-center hover:border-accent-blue/30 transition duration-300">
+                    <div class="w-16 h-16 mx-auto mb-6 rounded-xl bg-accent-blue rounded-lg flex items-center justify-center">
+                         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="@card.Icon" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-white">@card.Title</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        @card.Desc
+                    </p>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- Vantagens Section (Captura de tela de 2025-11-25 23-07-14.jpg) -->
+<section class="py-20">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            
+            <!-- Left Column: Card -->
+            <div class="relative">
+                <div class="p-10 rounded-3xl bg-gradient-to-br from-indigo-600 to-cyan-500 text-center text-white shadow-2xl shadow-indigo-600/30">
+                    <div class="w-24 h-24 mx-auto mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-full w-full text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" />
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Arquitetura Soberana</h3>
+                    <p class="text-white/90 text-sm md:text-base leading-relaxed">
+                        Construída em .NET 8, nossa arquitetura transforma cada nó em um agente de IA personalizável, com comunicação segura via SignalR e gRPC.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Right Column: List -->
+            <div>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Vantagens dos Smart Nodes</h2>
+                <p class="text-gray-400 mb-8">
+                    Oferecemos controle sem precedentes para que empresas e usuários alinhem a IA aos seus objetivos estratégicos.
+                </p>
+
+                <ul class="space-y-4">
+                    @{
+                        var advantages = new[] {
+                            "Personalização via prompts de comando",
+                            "Especialização para tarefas de negócio",
+                            "Controle granular da arquitetura backend",
+                            "Roteamento dinâmico e inteligente de tarefas",
+                            "Sistema de recompensas por contribuição",
+                            "Integração com fluxos de trabalho proprietários"
+                        };
+                    }
+
+                    @foreach (var adv in advantages)
+                    {
+                        <li class="flex items-center space-x-3">
+                            <div class="flex-shrink-0 w-6 h-6 rounded-full border border-accent-purple/50 flex items-center justify-center text-accent-purple">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                            <span class="text-gray-300">@adv</span>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Como Funciona Section (Captura de tela de 2025-11-25 23-07-25.jpg) -->
+<section class="py-20 bg-secondary-dark/30">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl font-bold mb-4">Como Funciona</h2>
+        <p class="text-gray-400 mb-16 max-w-2xl mx-auto">
+            Uma jornada simplificada para você se tornar um participante ativo na rede de IA.
+        </p>
+
+        <div class="relative grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Connecting Line (Desktop) -->
+            <div class="hidden md:block absolute top-12 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-accent-purple/30 to-transparent"></div>
+
+            @{
+                var steps = new[] {
+                    new { Num = "1", Title = "Ative seu Nó", Desc = "Com um clique, integre seu dispositivo à rede IAGD. A configuração inicial é simples e otimizada pela nossa IA." },
+                    new { Num = "2", Title = "Especialize e Personalize", Desc = "Use prompts para direcionar seu nó ou alimente-o com dados para criar um especialista para as tarefas da sua empresa." },
+                    new { Num = "3", Title = "Colabore e Seja Recompensado", Desc = "Seu nó resolve tarefas para você e para a rede, gerando valor e recompensas proporcionais à sua contribuição." }
+                };
+            }
+
+            @foreach (var step in steps)
+            {
+                <div class="relative z-10 flex flex-col items-center">
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-accent-blue to-accent-purple text-white font-bold text-xl flex items-center justify-center mb-6 shadow-lg shadow-accent-purple/40">
+                        @step.Num
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">@step.Title</h3>
+                    <p class="text-gray-400 text-sm max-w-xs mx-auto">
+                        @step.Desc
+                    </p>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action (Captura de tela de 2025-11-25 23-07-42.png) -->
+<section class="py-20">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl md:text-4xl font-bold mb-6">Faça Parte da Revolução da IA Colaborativa</h2>
+        <p class="text-gray-400 mb-10 max-w-2xl mx-auto">
+            Ative seu Smart Node em minutos e comece a moldar o futuro da inteligência artificial de forma distribuída, segura e personalizada.
+        </p>
+        
+        <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+            <a href="#" class="px-8 py-3 text-lg font-bold rounded-lg bg-gradient-to-r from-accent-blue to-cyan-500 hover:opacity-90 transition duration-300 shadow-lg text-white">
+                Configurar Meu Nó Agora
+            </a>
+            <a href="#" class="px-8 py-3 text-lg font-bold rounded-lg border border-gray-600 hover:border-white hover:bg-white/5 text-white transition duration-300">
+                Ler a Documentação
+            </a>
+        </div>
+    </div>
+</section>

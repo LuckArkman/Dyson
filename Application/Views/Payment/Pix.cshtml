@@ -1,0 +1,69 @@
+@model Dtos.PixPaymentViewModel
+@{
+    ViewData["Title"] = "Pagar com PIX";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="min-h-screen bg-primary-dark pt-24 pb-12 px-4 flex justify-center items-center">
+    <div class="max-w-md w-full bg-secondary-dark rounded-2xl shadow-2xl border border-gray-700 overflow-hidden relative">
+        <!-- Header PIX -->
+        <div class="bg-green-600 p-6 text-center relative overflow-hidden">
+            <div class="absolute inset-0 bg-pattern opacity-10"></div> <!-- Pattern decorativo opcional -->
+            <img src="https://logospng.org/download/pix/logo-pix-icone-256.png" class="w-16 h-16 mx-auto mb-2 drop-shadow-lg" alt="Logo PIX" />
+            <h1 class="text-2xl font-bold text-white">Pagamento Instantâneo</h1>
+            <p class="text-green-100 text-sm">Aprovação em segundos</p>
+        </div>
+
+        <div class="p-8 text-center space-y-6">
+            <!-- Valor -->
+            <div>
+                <p class="text-gray-400 text-sm uppercase tracking-wide">Valor Total</p>
+                <p class="text-4xl font-extrabold text-white mt-1">@Model.Amount.ToString("C2")</p>
+            </div>
+
+            <!-- Imagem QR Code -->
+            <div class="bg-white p-4 rounded-xl inline-block shadow-inner mx-auto">
+                <!-- Exibe imagem Base64 retornada pelo MP -->
+                <img src="data:image/jpeg;base64,@Model.QrCodeBase64" alt="QR Code PIX" class="w-56 h-56 object-contain" />
+            </div>
+
+            <!-- Instruções -->
+            <div class="text-gray-300 text-sm space-y-2">
+                <p>1. Abra o app do seu banco.</p>
+                <p>2. Escolha <strong>Pagar com Pix</strong> > <strong>Ler QR Code</strong>.</p>
+            </div>
+
+            <!-- Pix Copia e Cola -->
+            <div class="space-y-2 text-left">
+                <label class="text-xs text-gray-500 font-bold uppercase ml-1">Ou use o Pix Copia e Cola</label>
+                <div class="relative group">
+                    <input type="text" id="pixCopy" value="@Model.PixCode" readonly 
+                           class="w-full bg-gray-900 border border-gray-700 text-gray-300 text-xs rounded-lg px-4 py-3 pr-24 focus:ring-1 focus:ring-green-500 outline-none truncate">
+                    
+                    <button onclick="copyPix()" class="absolute right-1 top-1 bottom-1 bg-green-600 hover:bg-green-700 text-white px-4 rounded-md text-xs font-bold transition-colors shadow-lg">
+                        COPIAR
+                    </button>
+                </div>
+                <p id="copyMsg" class="text-green-400 text-xs text-center h-4 opacity-0 transition-opacity">Código copiado!</p>
+            </div>
+
+            <!-- Botão Voltar/Concluir -->
+            <a href="/Profile/Orders" class="block w-full py-4 bg-gray-800 hover:bg-gray-700 text-white font-bold rounded-xl border border-gray-600 transition text-center">
+                Já paguei, ver meus pedidos
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+    function copyPix() {
+        var copyText = document.getElementById("pixCopy");
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); 
+        navigator.clipboard.writeText(copyText.value);
+        
+        var msg = document.getElementById("copyMsg");
+        msg.classList.remove("opacity-0");
+        setTimeout(() => msg.classList.add("opacity-0"), 2000);
+    }
+</script>

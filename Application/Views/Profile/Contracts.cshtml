@@ -1,0 +1,51 @@
+@model List<dynamic>
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "_AdminLayout";
+}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Gerenciar Contratos Inteligentes</h3>
+                <div class="card-tools">
+                    <button class="btn btn-success btn-sm"><i class="fas fa-plus"></i> Deploy Novo Contrato</button>
+                </div>
+            </div>
+            <div class="card-body table-responsive p-0">
+                <table class="table table-hover text-nowrap">
+                    <thead>
+                        <tr>
+                            <th>ID do Contrato</th>
+                            <th>Nome</th>
+                            <th>Tipo</th>
+                            <th>Status</th>
+                            <th>Gas Consumido</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach(var c in Model)
+                        {
+                            <tr>
+                                <td>@c.Id</td>
+                                <td>@c.Name</td>
+                                <td>@c.Type</td>
+                                <td>
+                                    @if(c.Status == "Active") { <span class="tag tag-success text-success">Ativo</span> }
+                                    else if(c.Status == "Pending") { <span class="tag tag-warning text-warning">Pendente</span> }
+                                    else { <span class="tag tag-secondary text-secondary">Executado</span> }
+                                </td>
+                                <td>@c.GasUsed ETH</td>
+                                <td>
+                                    <button class="btn btn-xs btn-primary">Detalhes</button>
+                                    <button class="btn btn-xs btn-danger">Pausar</button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

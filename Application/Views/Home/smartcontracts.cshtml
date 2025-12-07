@@ -1,0 +1,266 @@
+@{
+    ViewData["Title"] = "Smart Contracts";
+    Layout = "_Layout";
+}
+
+<!-- Hero Section (Captura 23-09-43) -->
+<section class="py-20 lg:py-32 bg-primary-dark relative overflow-hidden text-center">
+    <!-- Background Effects -->
+    <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+        <div class="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-purple-900/20 rounded-full blur-[100px]"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-blue-900/20 rounded-full blur-[100px]"></div>
+    </div>
+
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <h1 class="text-5xl md:text-7xl font-extrabold mb-6 leading-tight">
+            Crie Ecossistemas <br />
+            <span class="gradient-text">Descentralizados</span> com <br />
+            <span class="text-accent-blue">Smart Contracts</span>
+        </h1>
+        <p class="text-lg text-gray-300 mb-10 max-w-3xl mx-auto leading-relaxed">
+            Utilize nossa plataforma para construir, auditar e implantar contratos inteligentes que governam o acesso, gerenciam ativos digitais e automatizam recompensas em sua rede.
+        </p>
+
+        <a href="#" class="inline-flex items-center px-8 py-3 text-lg font-bold rounded-full bg-gradient-button hover:opacity-90 transition duration-300 shadow-lg shadow-accent-purple/30">
+            Começar a Construir
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+        </a>
+    </div>
+</section>
+
+<!-- Plataforma de Governança (Captura 23-09-52) -->
+<section class="py-20 bg-secondary-dark/30">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl font-bold mb-4">Plataforma Completa para <span class="gradient-text">Governança</span></h2>
+            <p class="text-gray-400 max-w-2xl mx-auto">
+                Nossa IA acelera o desenvolvimento e garante a segurança do seu ecossistema.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            @{
+                var govCards = new[]
+                {
+                    new {
+                        Icon = "M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4",
+                        Title = "Desenvolvimento Assistido por IA",
+                        Desc = "Criação automática de contratos para gestão de ativos, sistemas de votação e lógicas de negócio, com verificação de segurança em tempo real."
+                    },
+                    new {
+                        Icon = "M12 4.354a4 4 0 110 5.292M10 16h4m-4-2v2m0 0h4m-4-2H8a2 2 0 00-2 2v2a2 2 0 002 2h8a2 2 0 002-2v-2a2 2 0 00-2-2h-2",
+                        Title = "Governança e Controle de Acesso",
+                        Desc = "Implemente regras de autenticação e autorização para garantir que apenas participantes autorizados interajam com seu ecossistema."
+                    },
+                    new {
+                        Icon = "M9 12l2 2 4-4m5.618-4.20A9.916 9.916 0 0112 2c-5.523 0-10 4.477-10 10s4.477 10 10 10 10-4.477 10-10c0-1.875-.5-3.633-1.382-5.188",
+                        Title = "Auditoria e Segurança Contínua",
+                        Desc = "Análise avançada de vulnerabilidades para proteger os ativos e a integridade das operações do seu ecossistema com a precisão da IA."
+                    }
+                };
+            }
+
+            @foreach (var card in govCards)
+            {
+                <div class="p-8 rounded-2xl bg-gradient-card border border-gray-800 hover:border-accent-purple/30 transition duration-300 group">
+                    <div class="w-16 h-16 mx-auto mb-6 rounded-xl bg-gradient-to-br from-blue-600 to-purple-600 p-0.5">
+                        <div class="w-full h-full bg-primary-dark rounded-[10px] flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white group-hover:text-accent-blue transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="@card.Icon" />
+                            </svg>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-center text-white">@card.Title</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed text-center">
+                        @card.Desc
+                    </p>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- Casos de Uso (Captura 23-10-04) -->
+<section class="py-20">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl font-bold mb-4">Casos de Uso</h2>
+            <p class="text-gray-400 max-w-2xl mx-auto">
+                Contratos inteligentes para todas as aplicações descentralizadas.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            @{
+                var useCases = new[]
+                {
+                    new { Icon = "💰", Title = "Protocolos DeFi", Desc = "Contratos para DEXs, lending, staking e yield farming." },
+                    new { Icon = "🌐", Title = "Ecossistemas de IA Distribuída", Desc = "Gerencie nós, distribua tarefas e recompense contribuições em redes de inteligência artificial colaborativa." },
+                    new { Icon = "🏛️", Title = "DAOs e Governança", Desc = "Estruture votações, valide transações e automatize a distribuição de recompensas de forma transparente." },
+                    new { Icon = "🎨", Title = "NFTs e Ativos Digitais", Desc = "Contratos inteligentes para criação, marketplace e gestão de coleções de NFTs e outros ativos únicos." }
+                };
+            }
+
+            @foreach (var uc in useCases)
+            {
+                <div class="p-8 rounded-xl bg-gray-900/50 border border-gray-800 text-center hover:bg-gray-800/50 transition duration-300">
+                    <div class="text-4xl mb-4">@uc.Icon</div>
+                    <h3 class="text-lg font-bold mb-3 text-white">@uc.Title</h3>
+                    <p class="text-gray-400 text-sm">@uc.Desc</p>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- Funcionalidades Avançadas (Captura 23-10-16) -->
+<section class="py-20 bg-secondary-dark/30">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            
+            <!-- Left Column: List -->
+            <div>
+                <h2 class="text-3xl md:text-4xl font-bold mb-6">Funcionalidades Avançadas</h2>
+                <p class="text-gray-400 mb-8">
+                    Oferecemos tudo que você precisa para desenvolver um ecossistema digital seguro, autônomo e eficiente.
+                </p>
+
+                <ul class="space-y-4">
+                    @{
+                        var advFeatures = new[] {
+                            "Geração de código Solidity otimizado para segurança e custos",
+                            "Criação e gestão de ativos digitais e tokens",
+                            "Implementação de sistemas de recompensa proporcionais",
+                            "Definição de regras de governança e autorização on-chain",
+                            "Testes e simulações automatizados com IA",
+                            "Monitoramento e alertas de segurança pós-implantação"
+                        };
+                    }
+
+                    @foreach (var feature in advFeatures)
+                    {
+                        <li class="flex items-center space-x-3">
+                            <div class="flex-shrink-0 w-6 h-6 rounded-full bg-accent-purple/20 flex items-center justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-accent-purple" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                            <span class="text-gray-300">@feature</span>
+                        </li>
+                    }
+                </ul>
+            </div>
+
+            <!-- Right Column: Card -->
+            <div class="relative">
+                <div class="p-10 rounded-3xl bg-gradient-to-br from-purple-600 to-blue-500 text-center text-white shadow-2xl shadow-purple-600/30">
+                    <div class="w-24 h-24 mx-auto mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-full w-full text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Ativos Digitais e Recompensas</h3>
+                    <p class="text-white/90 text-sm md:text-base leading-relaxed">
+                        Crie e distribua tokens ou outros ativos digitais para incentivar a participação e recompensar contribuições na sua rede.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Código Transparente e Seguro (Captura 23-10-38) -->
+<section class="py-20">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl font-bold mb-4">Código <span class="gradient-text">Transparente e Seguro</span></h2>
+        <p class="text-gray-400 mb-10 max-w-2xl mx-auto">
+            Contratos gerados pela IA seguindo as melhores práticas da indústria.
+        </p>
+
+        <!-- Code Snippet Mockup -->
+        <div class="max-w-4xl mx-auto bg-[#0d1117] rounded-xl border border-gray-700 shadow-2xl overflow-hidden text-left font-mono text-sm leading-relaxed">
+            <!-- Window Bar -->
+            <div class="flex items-center space-x-2 px-4 py-3 bg-[#161b22] border-b border-gray-700">
+                <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                <div class="w-3 h-3 rounded-full bg-green-500"></div>
+            </div>
+            <!-- Code Area -->
+            <div class="p-6 text-gray-300 overflow-x-auto">
+                <pre><code><span class="text-gray-500">// Exemplo: Contrato de token para recompensas, com controle de acesso</span>
+
+<span class="text-purple-400">pragma solidity</span> ^0.8.19;
+
+<span class="text-purple-400">import</span> <span class="text-green-400">"@@openzeppelin/contracts/token/ERC20/ERC20.sol"</span>; <span class="text-gray-500">// Corrigido: usando @@ para escapar @@ do Razor</span>
+<span class="text-purple-400">import</span> <span class="text-green-400">"@@openzeppelin/contracts/access/Ownable.sol"</span>;     <span class="text-gray-500">// Corrigido: usando @@ para escapar @@ do Razor</span>
+
+<span class="text-blue-400">contract</span> <span class="text-yellow-300">AIToken</span> <span class="text-blue-400">is</span> ERC20, Ownable {
+    <span class="text-purple-400">uint256</span> <span class="text-blue-400">public constant</span> MAX_SUPPLY = <span class="text-orange-400">1000000</span> * <span class="text-orange-400">10</span>**<span class="text-orange-400">18</span>;
+
+    <span class="text-gray-500">// Ownable garante que apenas o proprietário controle funções críticas</span>
+    <span class="text-gray-500">// Função para criar novos ativos (recompensas) no ecossistema</span>
+    <span class="text-blue-400">function</span> <span class="text-yellow-300">mint</span>(<span class="text-purple-400">address</span> to, <span class="text-purple-400">uint256</span> amount) <span class="text-blue-400">external</span> onlyOwner {
+        <span class="text-gray-500">// Validação on-chain para manter a integridade do fornecimento</span>
+        <span class="text-blue-400">require</span>(totalSupply() + amount < MAX_SUPPLY, <span class="text-green-400">"Exceeds max supply"</span>);
+        _mint(to, amount);
+    }
+}</code></pre>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Process Steps (Captura 23-10-21) -->
+<section class="py-20 bg-secondary-dark/30">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl font-bold mb-4">Do Conceito ao <span class="gradient-text">Ecossistema Ativo</span></h2>
+        <p class="text-gray-400 mb-16 max-w-2xl mx-auto">
+            Nosso processo simplificado transforma sua visão em realidade em minutos.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            @{
+                var processSteps = new[] {
+                    new { Num = "1", Title = "Defina as Regras", Desc = "Descreva em linguagem natural as regras de acesso, o funcionamento dos ativos e o sistema de recompensas." },
+                    new { Num = "2", Title = "IA Gera o Contrato", Desc = "Nossa IA traduz suas regras em um código Solidity seguro, otimizado e pronto para o seu produto." },
+                    new { Num = "3", Title = "Auditoria Automática", Desc = "Verificação completa de vulnerabilidades para garantir a integridade e segurança do seu ecossistema." },
+                    new { Num = "4", Title = "Implante e Gerencie", Desc = "Implantação com um clique, tenha as ferramentas para gerenciar seu ecossistema." }
+                };
+            }
+
+            @foreach (var step in processSteps)
+            {
+                <div class="flex flex-col items-center">
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-accent-blue to-accent-purple text-white font-bold text-xl flex items-center justify-center mb-6 shadow-lg shadow-accent-purple/40">
+                        @step.Num
+                    </div>
+                    <h3 class="text-lg font-bold mb-3 text-white">@step.Title</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        @step.Desc
+                    </p>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- Footer CTA (Captura 23-10-48) -->
+<section class="py-20">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl md:text-4xl font-bold mb-6">Construa seu Ecossistema Descentralizado</h2>
+        <p class="text-gray-400 mb-10 max-w-2xl mx-auto">
+            Dê vida à sua rede distribuída com contratos inteligentes que garantem segurança, autonomia e governança.
+        </p>
+        
+        <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+            <a href="#" class="px-8 py-3 text-lg font-bold rounded-lg bg-gradient-to-r from-accent-blue to-purple-600 hover:opacity-90 transition duration-300 shadow-lg text-white">
+                Criar Primeiro Contrato
+            </a>
+            <a href="#" class="px-8 py-3 text-lg font-bold rounded-lg border border-gray-600 hover:border-white hover:bg-white/5 text-white transition duration-300">
+                Ver Documentação
+            </a>
+        </div>
+    </div>
+</section>

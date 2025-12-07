@@ -1,0 +1,40 @@
+@model IEnumerable<Dtos.Product>
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Produtos e Serviços Cadastrados</h3>
+        <div class="card-tools">
+            <a asp-action="Create" class="btn btn-success btn-sm"><i class="fas fa-plus"></i> Novo Produto</a>
+        </div>
+    </div>
+    <div class="card-body p-0">
+        <table class="table table-striped projects">
+            <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Categoria</th>
+                <th>Preços Definidos</th>
+                <th>Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model) {
+                <tr>
+                    <td>
+                        <a>@item.name</a>
+                        <br/>
+                        <small>@item.description</small>
+                    </td>
+                    <td><span class="badge badge-info">@item.category</span></td>
+                    <td>@(item.PricesCollection?.Count ?? 0) faixas de preço</td>
+                    <td class="project-actions text-right">
+                        <a class="btn btn-info btn-sm" asp-action="Edit" asp-route-id="@item.id">
+                            <i class="fas fa-pencil-alt"></i> Editar
+                        </a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>

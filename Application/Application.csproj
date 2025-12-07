@@ -1,0 +1,52 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        
+        
+        <AssemblyName>GalileuApp</AssemblyName>
+        <RootNamespace>GalileuApp</RootNamespace>
+        <StaticWebAssetBasePath>_content/GalileuApp</StaticWebAssetBasePath>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Controllers\Controllers.csproj" />
+      <ProjectReference Include="..\Data\Data.csproj" />
+      <ProjectReference Include="..\Dtos\Dtos.csproj" />
+      <ProjectReference Include="..\Interfaces\Interfaces.csproj" />
+      <ProjectReference Include="..\Repositories\Repositories.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="mercadopago-sdk" Version="2.11.0" />
+      <PackageReference Include="Microsoft.AspNetCore.Identity.Service.Core" Version="1.0.0-preview1-final" />
+      <PackageReference Include="MongoDB.Driver" Version="3.5.2" />
+      <PackageReference Include="QRCoder" Version="1.7.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="Microsoft.EntityFrameworkCore.Relational">
+        <HintPath>..\..\..\..\home\mplopes\.nuget\packages\microsoft.entityframeworkcore.relational\8.0.16\lib\net8.0\Microsoft.EntityFrameworkCore.Relational.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="Microsoft.EntityFrameworkCore.Relational">
+        <HintPath>..\..\..\..\home\mplopes\.nuget\packages\microsoft.entityframeworkcore.relational\8.0.16\lib\net8.0\Microsoft.EntityFrameworkCore.Relational.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Pages\Pricing\Pricing.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="..\.dockerignore">
+        <Link>.dockerignore</Link>
+      </Content>
+    </ItemGroup>
+
+</Project>

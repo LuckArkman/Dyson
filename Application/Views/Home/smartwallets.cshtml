@@ -1,0 +1,140 @@
+@{
+    ViewData["Title"] = "Smart Wallets";
+    Layout = "_Layout";
+}
+
+<!-- Hero Section (Captura de tela de 2025-11-25 23-05-27.jpg) -->
+<section class="py-20 lg:py-32 bg-primary-dark relative overflow-hidden">
+    <!-- Background Glow Effect -->
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-4xl opacity-20 pointer-events-none">
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-accent-blue rounded-full blur-[128px]"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent-purple rounded-full blur-[128px]"></div>
+    </div>
+
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+        <h1 class="text-5xl md:text-7xl font-extrabold mb-6">
+            <span class="gradient-text">Smart Wallets</span>
+        </h1>
+        <p class="text-lg text-gray-300 mb-10 max-w-3xl mx-auto leading-relaxed">
+            Sua porta de entrada para a economia da <strong class="text-white">IA Generativa Distribuída</strong>. Gerencie seus ativos,
+            automatize transações e monetize sua contribuição de forma segura e descentralizada.
+        </p>
+
+        <a href="#" class="inline-flex items-center px-8 py-3 text-lg font-bold rounded-full bg-gradient-button hover:opacity-90 transition duration-300 shadow-lg shadow-accent-blue/30">
+            Ativar Minha Smart Wallet
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+        </a>
+    </div>
+</section>
+
+<!-- Main Features Section (Captura de tela de 2025-11-25 23-05-27.jpg) -->
+<section class="py-20 bg-secondary-dark/30">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl font-bold mb-4">Funcionalidades Principais</h2>
+            <p class="text-gray-400 max-w-2xl mx-auto">
+                Projetada para operar de forma segura e inteligente no coração do nosso ecossistema.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            @{
+                var features = new[]
+                {
+                    new {
+                        Icon = "M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z",
+                        Title = "Gestão Descentralizada de Ativos",
+                        Desc = "Armazene e gerencie com total autonomia os créditos e tokens recebidos por sua contribuição na rede, validados pelo protocolo de consenso."
+                    },
+                    new {
+                        Icon = "M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z",
+                        Title = "Transações Automatizadas",
+                        Desc = "Utilize Smart Contracts para programar transferências e pagamentos, garantindo que as regras de negócio sejam executadas sem intermediários."
+                    },
+                    new {
+                        Icon = "M9 12l2 2 4-4m5.618-4.20A9.916 9.916 0 0112 2c-5.523 0-10 4.477-10 10s4.477 10 10 10 10-4.477 10-10c0-1.875-.5-3.633-1.382-5.188",
+                        Title = "Segurança e Autenticação",
+                        Desc = "Com criptografia de ponta a ponta, suas transações e ativos estão protegidos contra acessos não autorizados e nós maliciosos na rede."
+                    }
+                };
+            }
+
+            @foreach (var feature in features)
+            {
+                <div class="p-8 rounded-2xl bg-gradient-card border border-accent-purple/10 hover:border-accent-purple/30 transition duration-300 hover:-translate-y-1 group">
+                    <div class="w-14 h-14 mb-6 rounded-xl bg-gradient-to-br from-accent-blue to-accent-purple p-0.5">
+                        <div class="w-full h-full bg-primary-dark rounded-[10px] flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-white group-hover:text-accent-purple transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="@feature.Icon" />
+                            </svg>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-white">@feature.Title</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        @feature.Desc
+                    </p>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- Why Smart Wallets Section (Captura de tela de 2025-11-25 23-05-38.jpg) -->
+<section class="py-20">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            
+            <!-- Left Column: List -->
+            <div>
+                <h2 class="text-3xl md:text-4xl font-bold mb-6">Por que Smart Wallets?</h2>
+                <p class="text-gray-400 mb-8">
+                    Nossas carteiras são a ferramenta essencial para transformar sua participação na rede em valor real, com total controle e transparência.
+                </p>
+
+                <ul class="space-y-4">
+                    @{
+                        var benefits = new[] {
+                            "Recebimento automático de recompensas",
+                            "Transações peer-to-peer instantâneas",
+                            "Criação de tokens personalizados via Smart Contracts",
+                            "Redução de intermediários e custos",
+                            "Histórico de transações transparente e imutável",
+                            "Integração nativa com o ecossistema IAGD"
+                        };
+                    }
+
+                    @foreach (var benefit in benefits)
+                    {
+                        <li class="flex items-center space-x-3">
+                            <div class="flex-shrink-0 w-6 h-6 rounded-full bg-accent-purple/20 flex items-center justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-accent-purple" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                            <span class="text-gray-300">@benefit</span>
+                        </li>
+                    }
+                </ul>
+            </div>
+
+            <!-- Right Column: Card with Gradient (The Economy of Future) -->
+            <div class="relative">
+                <div class="p-10 rounded-3xl bg-gradient-to-br from-accent-blue to-cyan-400 text-center text-white shadow-2xl shadow-accent-blue/20 transform hover:scale-[1.01] transition duration-500">
+                    <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-sm border border-white/30">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    
+                    <h3 class="text-2xl font-bold mb-4">A Economia do Futuro</h3>
+                    <p class="text-white/90 leading-relaxed text-sm md:text-base">
+                        Participe ativamente da economia digital, onde sua contribuição computacional é diretamente recompensada e transacionável.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>

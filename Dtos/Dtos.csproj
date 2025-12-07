@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Akka" Version="1.5.55" />
+      <PackageReference Include="Microsoft.AspNetCore.Identity.Service.Core" Version="1.0.0-preview1-final" />
+      <PackageReference Include="MongoDB.Driver" Version="3.5.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="Akka">
+        <HintPath>..\..\..\..\home\mplopes\.nuget\packages\akka\1.5.55\lib\net6.0\Akka.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Enums\Enums.csproj" />
+      <ProjectReference Include="..\Records\Records.csproj" />
+    </ItemGroup>
+
+</Project>

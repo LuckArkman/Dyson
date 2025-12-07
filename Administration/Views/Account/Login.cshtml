@@ -1,0 +1,43 @@
+@{ Layout = null; }
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login - Galileu Admin</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="hold-transition login-page">
+<div class="login-box">
+    <div class="login-logo">
+        <a href="#"><b>Dyson</b> Admin</a>
+    </div>
+    <div class="card">
+        <div class="card-body login-card-body">
+            <p class="login-box-msg">Faça login para iniciar sua sessão</p>
+            <form asp-action="Login" method="post">
+                <div class="input-group mb-3">
+                    <input name="Username" class="form-control" placeholder="Usuário">
+                    <div class="input-group-append">
+                        <div class="input-group-text"><span class="fas fa-user"></span></div>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <input name="Password" type="password" class="form-control" placeholder="Senha">
+                    <div class="input-group-append">
+                        <div class="input-group-text"><span class="fas fa-lock"></span></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary btn-block">Entrar</button>
+                    </div>
+                </div>
+                <div class="text-danger mt-2">
+                    @Html.ValidationSummary()
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

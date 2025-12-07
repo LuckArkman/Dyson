@@ -1,0 +1,27 @@
+<div class="col-md-6">
+    <div class="card card-warning">
+        <div class="card-header">
+            <h3 class="card-title">Novo Administrador</h3>
+        </div>
+        <form asp-action="CreateUser" method="post">
+            <div class="card-body">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input name="username" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>E-mail</label>
+                    <input name="email" type="email" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Senha</label>
+                    <input name="password" type="password" class="form-control" required>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-warning">Cadastrar Admin</button>
+            </div>
+            <div class="text-danger pl-3">@Html.ValidationSummary()</div>
+        </form>
+    </div>
+</div>

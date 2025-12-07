@@ -1,0 +1,83 @@
+@model Dtos.DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "_AdminLayout";
+}
+<div class="row">
+    <!-- Balance Card -->
+    <div class="col-lg-3 col-6">
+        <div class="small-box bg-info">
+            <div class="inner">
+                <h3>@Model.Balance.ToString("F2") Dtc</h3>
+                <p>Saldo em Carteira</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-wallet"></i>
+            </div>
+            <a asp-action="Wallet" class="small-box-footer">Gerenciar <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+    <!-- Staked Card -->
+    <div class="col-lg-3 col-6">
+        <div class="small-box bg-success">
+            <div class="inner">
+                <h3>@Model.StakedAmount.ToString("F2") Dtc</h3>
+                <p>Total em Staking (Rendendo)</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <a asp-action="Wallet" class="small-box-footer">Ver Detalhes <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+    <!-- Contracts Card -->
+    <div class="col-lg-3 col-6">
+        <div class="small-box bg-danger">
+            <div class="inner">
+                <h3>@Model.TotalContracts</h3>
+                <p>Contratos Inteligentes</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-file-contract"></i>
+            </div>
+            <a asp-action="Contracts" class="small-box-footer">Administrar <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header border-transparent">
+                <h3 class="card-title">Últimas Transações</h3>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table m-0">
+                        <thead>
+                        <tr>
+                            <th>Hash ID</th>
+                            <th>De</th>
+                            <th>Para</th>
+                            <th>Valor</th>
+                            <th>Data</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach(var t in Model.RecentTransactions)
+                        {
+                            <tr>
+                                <td><a href="#">@t.hash?.Substring(0, 8)...</a></td>
+                                <td>@t.fromAddress</td>
+                                <td>@t.toAddress.Substring(0,46)</td>
+                                <td><span class="badge badge-success">@t.amount Dtc</span></td>
+                                <td>@t.timestamp.ToShortDateString()</td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

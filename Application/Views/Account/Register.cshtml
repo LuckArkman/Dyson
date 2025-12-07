@@ -1,0 +1,68 @@
+@model RegisterViewModel
+
+@{
+    ViewData["Title"] = "Criar Conta";
+    Layout = "_Layout";
+}
+
+<div class="min-h-screen flex items-center justify-center bg-primary-dark p-4">
+    <div class="w-full max-w-md bg-secondary-dark p-8 md:p-10 rounded-xl shadow-2xl border border-gray-700">
+        
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold gradient-text">Dyson.AI</h1>
+            <p class="text-gray-400 mt-2">Crie sua conta em segundos.</p>
+        </div>
+
+        <form asp-controller="Account" asp-action="Register" method="post">
+            
+            <div asp-validation-summary="ModelOnly" class="text-red-400 text-sm mb-4 p-3 rounded-lg bg-red-900/30 border border-red-800"></div>
+
+            <!-- Campo Nome Completo -->
+            <div class="mb-5">
+                <label asp-for="FullName" class="block text-sm font-medium text-gray-300 mb-2">Nome Completo</label>
+                <input asp-for="FullName" type="text" class="w-full p-3 rounded-lg bg-primary-dark border border-gray-700 focus:border-accent-blue focus:ring-accent-blue text-white transition duration-200" placeholder="Seu nome" autocomplete="name" />
+                <span asp-validation-for="FullName" class="text-red-400 text-xs mt-1 block"></span>
+            </div>
+
+            <!-- Campo E-mail -->
+            <div class="mb-5">
+                <label asp-for="Email" class="block text-sm font-medium text-gray-300 mb-2">E-mail</label>
+                <input asp-for="Email" type="email" class="w-full p-3 rounded-lg bg-primary-dark border border-gray-700 focus:border-accent-blue focus:ring-accent-blue text-white transition duration-200" placeholder="seu.email@@exemplo.com" autocomplete="email" />
+                <span asp-validation-for="Email" class="text-red-400 text-xs mt-1 block"></span>
+            </div>
+
+            <!-- Campo Senha -->
+            <div class="mb-5">
+                <label asp-for="Password" class="block text-sm font-medium text-gray-300 mb-2">Senha</label>
+                <input asp-for="Password" type="password" class="w-full p-3 rounded-lg bg-primary-dark border border-gray-700 focus:border-accent-blue focus:ring-accent-blue text-white transition duration-200" placeholder="Mínimo 6 caracteres" autocomplete="new-password" />
+                <span asp-validation-for="Password" class="text-red-400 text-xs mt-1 block"></span>
+            </div>
+
+            <!-- Campo Confirmar Senha -->
+            <div class="mb-6">
+                <label asp-for="ConfirmPassword" class="block text-sm font-medium text-gray-300 mb-2">Confirme a Senha</label>
+                <input asp-for="ConfirmPassword" type="password" class="w-full p-3 rounded-lg bg-primary-dark border border-gray-700 focus:border-accent-blue focus:ring-accent-blue text-white transition duration-200" placeholder="Repita a senha" />
+                <span asp-validation-for="ConfirmPassword" class="text-red-400 text-xs mt-1 block"></span>
+            </div>
+
+            <!-- Botão de Cadastro -->
+            <button type="submit" class="w-full p-3 mb-4 text-white font-bold rounded-lg bg-gradient-button hover:opacity-90 transition duration-300 shadow-md shadow-purple-600/30">
+                Criar Conta
+            </button>
+        </form>
+
+        <!-- Link para Login -->
+        <div class="text-center mt-6">
+            <p class="text-sm text-gray-400">
+                Já tem uma conta? 
+                <a asp-controller="Account" asp-action="Login" class="text-accent-blue hover:text-white font-medium transition duration-200">
+                    Acesse aqui
+                </a>
+            </p>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

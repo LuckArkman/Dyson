@@ -1,0 +1,42 @@
+Usando as configurações de inicialização de /mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Api/Properties/launchSettings.json...
+Compilando...
+/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Services/PolymorphicTypeResolver.cs(29,66): warning CS8602: Desreferência de uma referência possivelmente nula. [/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Services/Services.csproj]
+/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Services/PolymorphicTypeResolver.cs(29,66): warning CS8604: Possível argumento de referência nula para o parâmetro 'typeDiscriminator' em 'JsonDerivedType.JsonDerivedType(Type derivedType, string typeDiscriminator)'. [/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Services/Services.csproj]
+/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Services/GossipService.cs(68,26): warning CS0168: A variável "ex" está declarada, mas nunca é usada [/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Services/Services.csproj]
+/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Controllers/ChatController.cs(18,38): warning CS1998: Este método assíncrono não possui operadores 'await' e será executado de modo síncrono. É recomendável o uso do operador 'await' para aguardar chamadas à API desbloqueadas ou do operador 'await Task.Run(...)' para realizar um trabalho associado à CPU em um thread em segundo plano. [/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Controllers/Controllers.csproj]
+/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Controllers/WalletController.cs(45,17): warning CS0472: O resultado da expressão é sempre 'false', pois um valor do tipo 'decimal' nunca é igual a "null" do tipo 'decimal?' [/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Controllers/Controllers.csproj]
+/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Api/Program.cs(222,12): warning CS8321: A função local 'BootstrapNodeAsync' está declarada, mas nunca é usada [/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Api/Api.csproj]
+Node 1673153662cd4294bcfa6a1e28653d7d is running at http://localhost:5002
+------------------------------------------
+| Node ID:    1673153662cd4294bcfa6a1e28653d7d
+| Address:    http://localhost:5002
+| Known Peers: 1
+------------------------------------------
+
+Bootstrapping into the network via: http://localhost:5001...
+info: Services.WalletService[0]
+      --- WalletService CONSTRUCTOR ---
+info: Services.WalletService[0]
+      ConnectionString: mongodb://mplopes:3702959@localhost:27017/
+info: Services.WalletService[0]
+      DatabaseName: Dyson
+info: Services.WalletService[0]
+      WalletService conectado ao MongoDB com sucesso.
+[Akka] ActorSystem 'Galileu-System' iniciado e atores criados.
+info: Services.GossipService[0]
+      Gossip Service is starting. Will attempt to gossip every 10 seconds.
+[Registry] Nó node-sentiment em http://localhost:5002 registrado.
+info: Microsoft.Hosting.Lifetime[14]
+      Now listening on: http://localhost:5002
+info: Microsoft.Hosting.Lifetime[0]
+      Application started. Press Ctrl+C to shut down.
+info: Microsoft.Hosting.Lifetime[0]
+      Hosting environment: Development
+info: Microsoft.Hosting.Lifetime[0]
+      Content root path: /mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Api
+[Registry] Nó node-translator em http://localhost:5002 registrado.
+[Registry] Nó node-coder-pln em http://localhost:5002 registrado.
+OnResponse >> oi
+OnResponse >> oi
+OnResponse >> hello
+OnResponse >> hello
