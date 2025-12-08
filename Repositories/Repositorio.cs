@@ -124,7 +124,7 @@ public class Repositorio<T> : IRepositorio<T>
     public async Task<List<ContractDocument>> GetUserContractsAsync(string userId)
     {
         var collection = _db.GetDatabase().GetCollection<ContractDocument>("Contracts");
-        var filter = Builders<ContractDocument>.Filter.Eq(c => c.walletAndress, userId);
+        var filter = Builders<ContractDocument>.Filter.Eq(c => c.WalletAddress, userId);
         
         return await collection
             .Find(filter)
@@ -157,5 +157,27 @@ public class Repositorio<T> : IRepositorio<T>
 
         var result = await collection.UpdateOneAsync(filter, update);
         return result.ModifiedCount > 0;
+    }
+
+    public async Task<ContractDocument?> GetContractByIdAsync(string contractId)
+    {
+        var collection = _db.GetDatabase().GetCollection<ContractDocument>("Contracts");
+        var filter = Builders<ContractDocument>.Filter.Eq(c => c.Id, contractId);
+        
+        return await collection.Find(filter).FirstOrDefaultAsync();
+    }
+
+    public async Task UpdateAsync(string contractId, ContractDocument contract)
+    {
+        var collection = _db.GetDatabase().GetCollection<ContractDocument>("Contracts");
+        contract = await GetContractByIdAsync(contractId);
+        
+        var filter = Builders<ContractDocument>.Filter.Eq(c => c.Id, contractId);
+        var update = Builders<ContractDocument>.Update
+            .Set(c => c.Status, contract.Status)
+            .Set(c => c.UpdatedAt, DateTime.UtcNow);
+
+        var result = await collection.UpdateOneAsync(filter, update);
+        await Task.CompletedTask;
     }
 }

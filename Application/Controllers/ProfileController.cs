@@ -226,7 +226,7 @@ public class ProfileController : Controller
 
         try
         {
-            var (success, message) = await _deploymentService.RegisterExistingContractAsync(
+            var (success, message) = await _deploymentService.DeployContractAsync(
                 address,
                 model.ContractAddress,
                 model.ContractName ?? "Imported Contract"
@@ -357,7 +357,7 @@ public class ProfileController : Controller
             }
 
             // 3. Verificação de propriedade (Segurança)
-            if (contract.walletAndress != walletAddress.Address)
+            if (contract.WalletAddress != walletAddress.Address)
             {
                 _logger.LogWarning(
                     "Tentativa de acesso não autorizado ao contrato {ContractAddress} pelo usuário {UserId}", 

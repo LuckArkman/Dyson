@@ -12405,7 +12405,7 @@
     "version": "1.0.0",
     "restore": {
       "projectUniqueName": "/home/mplopes/Documentos/Dyson/Application/Application.csproj",
-      "projectName": "Application",
+      "projectName": "GalileuApp",
       "projectPath": "/home/mplopes/Documentos/Dyson/Application/Application.csproj",
       "packagesPath": "/home/mplopes/.nuget/packages/",
       "outputPath": "/home/mplopes/Documentos/Dyson/Application/obj/",

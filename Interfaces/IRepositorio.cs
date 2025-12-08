@@ -21,4 +21,6 @@ public interface IRepositorio<T>
     Task<List<ContractDocument>> GetUserContractsAsync(string userId);
     Task<ContractDocument?> GetContractByAddressAsync(string contractAddress);
     Task<bool> UpdateContractStatusAsync(string contractAddress, string status);
+    Task<ContractDocument?> GetContractByIdAsync(string contractId);
+    Task UpdateAsync(string contractId, ContractDocument contract);
 }

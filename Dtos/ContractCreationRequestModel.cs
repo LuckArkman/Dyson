@@ -7,11 +7,10 @@ public class ContractCreationRequestModel
 {
     public string ContractName { get; set; }
     public string Symbol { get; set; }
-    public string ContractType { get; set; } // "token", "nft", "marketplace"
-    public string Blockchain { get; set; } // "sepolia", "base-sepolia", etc
+    public string Description { get; set; }
+    public string ContractType { get; set; }
+    public string Blockchain { get; set; }
     public decimal DeploymentCost { get; set; }
-    
-    // Para deploy via API (opcional)
-    public string ContractBytecode { get; set; }
-    public string ContractAbi { get; set; }
+    public string InitialSupply { get; set; }
+    public bool CreateLiquidityPool { get; set; }
 }

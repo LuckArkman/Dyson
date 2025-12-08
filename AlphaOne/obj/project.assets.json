@@ -9389,7 +9389,7 @@
     {
       "code": "NU1605",
       "level": "Error",
-      "message": "Aviso como Erro: Downgrade de pacote detectado: MongoDB.Driver de 3.5.2 para 3.5.1. Referencie o pacote diretamente do projeto para selecionar uma versão diferente. \n AlphaOne -> Dtos -> MongoDB.Driver (>= 3.5.2) \n AlphaOne -> MongoDB.Driver (>= 3.5.1)",
+      "message": "Warning As Error: Detected package downgrade: MongoDB.Driver from 3.5.2 to 3.5.1. Reference the package directly from the project to select a different version. \n AlphaOne -> Dtos -> MongoDB.Driver (>= 3.5.2) \n AlphaOne -> MongoDB.Driver (>= 3.5.1)",
       "libraryId": "MongoDB.Driver",
       "targetGraphs": [
         "net8.0"

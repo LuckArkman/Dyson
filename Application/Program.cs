@@ -1,3 +1,4 @@
+using Dtos;
 using Interfaces;
 using Microsoft.AspNetCore.Authentication.Cookies;
 // Usings do Mongo
@@ -17,6 +18,7 @@ builder.Services.AddSingleton<IUserService, UserService>();
 builder.Services.AddSingleton<ConversationService>();
 builder.Services.AddSingleton<CartService>();
 builder.Services.AddSingleton<WalletService>(); 
+builder.Services.AddHttpClient<ThirdwebApiService>();
 builder.Services.AddSingleton<RewardContractService>();
 builder.Services.AddSingleton<ContractDeploymentService>();
 builder.Services.AddHttpClient<IPaymentGateway, MercadoPagoService>();
