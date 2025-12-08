@@ -19,9 +19,9 @@
                 <table class="table table-hover text-nowrap" id="contractsTable">
                     <thead>
                         <tr>
-                            <th>Andress do Contrato</th>
-                            <th>Nome</th>
-                            <th>Tipo</th>
+                            <th>Nome do Contrato</th>
+                            <th>hash</th>
+                             <th>Tipo</th>
                             <th>Status</th>
                             <th>Gas Consumido</th>
                             <th>Ações</th>
@@ -32,8 +32,8 @@
                         {
                             <tr id="contract-row-@c.walletAndress">
                                 <td>@c.ContractName</td>
+                                <td>@c.ContractAddress</td>
                                 <td>@c.ContractType</td>
-                                <td>@c.Status</td>
                                 <td>
                                     @if(c.Status == "Active") { <span class="tag tag-success text-success">Ativo</span> }
                                     else if(c.Status == "Pending") { <span class="tag tag-warning text-warning">Pendente</span> }
