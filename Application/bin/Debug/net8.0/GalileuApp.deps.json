@@ -6,7 +6,7 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v8.0": {
-      "Application/1.0.0": {
+      "GalileuApp/1.0.0": {
         "dependencies": {
           "Controllers": "1.0.0",
           "Data": "1.0.0",
@@ -20,7 +20,7 @@
           "mercadopago-sdk": "2.11.0"
         },
         "runtime": {
-          "Application.dll": {}
+          "GalileuApp.dll": {}
         }
       },
       "ADRaffy.ENSNormalize/0.1.5": {
@@ -2631,7 +2631,7 @@
     }
   },
   "libraries": {
-    "Application/1.0.0": {
+    "GalileuApp/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

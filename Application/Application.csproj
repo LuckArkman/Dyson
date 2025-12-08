@@ -7,9 +7,9 @@
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
         
         
-        <!--<AssemblyName>GalileuApp</AssemblyName>
+        <AssemblyName>GalileuApp</AssemblyName>
         <RootNamespace>GalileuApp</RootNamespace>
-        <StaticWebAssetBasePath>_content/GalileuApp</StaticWebAssetBasePath> -->
+        <StaticWebAssetBasePath>_content/GalileuApp</StaticWebAssetBasePath>
     </PropertyGroup>
 
     <ItemGroup>
