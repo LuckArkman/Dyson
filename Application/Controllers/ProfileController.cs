@@ -333,4 +333,45 @@ public class ProfileController : Controller
         if (supply == 0) return 1.0m;
         return 1000000m / supply;
     }
+
+    [HttpGet]
+    public async Task<IActionResult> ContractDetails([FromQuery] string contractAddress)
+    {
+        var userId = GetUserId();
+        var walletAddress = await _walletService.GetUserWalletAsync(userId);
+
+        // 1. Validação
+        if (string.IsNullOrWhiteSpace(contractAddress))
+        {
+            return BadRequest(new { message = "Endereço do contrato é obrigatório." });
+        }
+
+        try
+        {
+            // 2. Buscar o contrato pelo endereço e garantir que pertence ao usuário logado
+            var contract = await _contractRepo.GetContractByAddressAsync(contractAddress);
+
+            if (contract == null)
+            {
+                return NotFound(new { message = "Contrato não encontrado." });
+            }
+
+            // 3. Verificação de propriedade (Segurança)
+            if (contract.walletAndress != walletAddress.Address)
+            {
+                _logger.LogWarning(
+                    "Tentativa de acesso não autorizado ao contrato {ContractAddress} pelo usuário {UserId}", 
+                    contractAddress, userId);
+                return Forbid();
+            }
+
+            // 4. Retornar os dados
+            return Ok(contract);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Erro ao buscar detalhes do contrato {ContractAddress}", contractAddress);
+            return StatusCode(500, new { message = "Erro interno ao buscar detalhes." });
+        }
+    }
 }

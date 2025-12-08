@@ -18,34 +18,47 @@
             <div class="card-body table-responsive p-0">
                 <table class="table table-hover text-nowrap" id="contractsTable">
                     <thead>
-                        <tr>
-                            <th>Nome do Contrato</th>
-                            <th>hash</th>
-                             <th>Tipo</th>
-                            <th>Status</th>
-                            <th>Gas Consumido</th>
-                            <th>Ações</th>
-                        </tr>
+                    <tr>
+                        <th>Nome do Contrato</th>
+                        <th>hash</th>
+                        <th>Tipo</th>
+                        <th>Status</th>
+                        <th>Gas Consumido</th>
+                        <th>Ações</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        @foreach(var c in Model)
-                        {
-                            <tr id="contract-row-@c.walletAndress">
-                                <td>@c.ContractName</td>
-                                <td>@c.ContractAddress</td>
-                                <td>@c.ContractType</td>
-                                <td>
-                                    @if(c.Status == "Active") { <span class="tag tag-success text-success">Ativo</span> }
-                                    else if(c.Status == "Pending") { <span class="tag tag-warning text-warning">Pendente</span> }
-                                    else { <span class="tag tag-secondary text-secondary">Executado</span> }
-                                </td>
-                                <td>@c.GasUsed ETH</td>
-                                <td>
-                                    <button class="btn btn-xs btn-primary">Detalhes</button>
-                                    <button class="btn btn-xs btn-danger">Pausar</button>
-                                </td>
-                            </tr>
-                        }
+                    @foreach (var c in Model)
+                    {
+                        <tr id="contract-row-@c.walletAndress">
+                            <td>@c.ContractName</td>
+                            <td>@c.ContractAddress</td>
+                            <td>@c.ContractType</td>
+                            <td>
+                                @if (c.Status == "Active")
+                                {
+                                    <span class="tag tag-success text-success">Ativo</span>
+                                }
+                                else if (c.Status == "Pending")
+                                {
+                                    <span class="tag tag-warning text-warning">Pendente</span>
+                                }
+                                else
+                                {
+                                    <span class="tag tag-secondary text-secondary">Executado</span>
+                                }
+                            </td>
+                            <td>@c.GasUsed ETH</td>
+                            <td>
+                                <button class="btn btn-xs btn-primary detail-btn"
+                                        data-contract-address="@c.ContractAddress">
+                                    Detalhes
+                                </button>
+                                <button class="btn btn-xs btn-danger">Pausar</button>
+
+                            </td>
+                        </tr>
+                    }
                     </tbody>
                 </table>
             </div>
@@ -99,9 +112,112 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="contractDetailsModal" tabindex="-1" role="dialog" aria-labelledby="contractDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="contractDetailsModalLabel">Detalhes do Contrato: <strong id="detailContractName"></strong></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <dl class="row">
+                    <dt class="col-sm-4">Endereço:</dt>
+                    <dd class="col-sm-8">
+                        <code id="detailContractAddress"></code>
+                    </dd>
+
+                    <dt class="col-sm-4">Tipo:</dt>
+                    <dd class="col-sm-8" id="detailContractType"></dd>
+
+                    <dt class="col-sm-4">Blockchain/ChainID:</dt>
+                    <dd class="col-sm-8"><span id="detailBlockchain"></span> (<span id="detailChainId"></span>)</dd>
+
+                    <dt class="col-sm-4">Status:</dt>
+                    <dd class="col-sm-8">
+                        <span class="badge" id="detailStatusBadge"></span>
+                    </dd>
+
+                    <dt class="col-sm-4">Custo de Deploy:</dt>
+                    <dd class="col-sm-8"><span id="detailDeploymentCost"></span> DTC</dd>
+
+                    <dt class="col-sm-4">Gas Usado:</dt>
+                    <dd class="col-sm-8"><span id="detailGasUsed"></span> ETH</dd>
+
+                    <dt class="col-sm-4">Modo de Deploy:</dt>
+                    <dd class="col-sm-8">
+                        <span id="detailDeploymentMode"></span>
+                    </dd>
+
+                    <dt class="col-sm-4">Explorer URL:</dt>
+                    <dd class="col-sm-8">
+                        <a href="#" id="detailExplorerUrl" target="_blank">Ver no Explorer</a>
+                    </dd>
+
+                    <dt class="col-sm-4">Notas:</dt>
+                    <dd class="col-sm-8" id="detailNotes"></dd>
+                </dl>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 @section Scripts {
     <script>
+    // Dentro de $(document).ready(function () { ... });
+    
+    // Novo manipulador para o botão Detalhes
+    $('#contractsTable').on('click', '.detail-btn', function() {
+        var contractAddress = $(this).data('contract-address');
+    
+        // 1. Chamar o novo endpoint para buscar os detalhes
+        $.ajax({
+            url: '@Url.Action("ContractDetails", "Profile")',
+            type: 'GET',
+            data: { contractAddress: contractAddress },
+            success: function (contract) {
+                // 2. Preencher o modal com os dados retornados
+                $('#detailContractName').text(contract.contractName);
+                $('#detailContractAddress').text(contract.contractAddress);
+                $('#detailContractType').text(contract.contractType);
+                $('#detailBlockchain').text(contract.blockchain);
+                $('#detailChainId').text(contract.chainId);
+                $('#detailDeploymentCost').text(contract.deploymentCost.toFixed(2));
+                $('#detailGasUsed').text(contract.gasUsed ? contract.gasUsed.toFixed(4) : 'N/A');
+                $('#detailDeploymentMode').text(contract.deploymentMode);
+                $('#detailNotes').text(contract.notes);
+    
+                // Configurar o link do Explorer
+                $('#detailExplorerUrl').attr('href', contract.explorerUrl);
+    
+                // Configurar o Status Badge
+                var statusClass;
+                switch (contract.status) {
+                    case "Active":
+                        statusClass = 'badge-success';
+                        break;
+                    case "Pending":
+                        statusClass = 'badge-warning';
+                        break;
+                    default:
+                        statusClass = 'badge-secondary';
+                        break;
+                }
+                $('#detailStatusBadge').removeClass().addClass('badge ' + statusClass).text(contract.status);
+    
+                // 3. Exibir o modal
+                $('#contractDetailsModal').modal('show');
+            },
+            error: function (xhr) {
+                var errorMessage = xhr.responseJSON ? xhr.responseJSON.message : "Erro desconhecido ao buscar detalhes.";
+                alert('Erro ao buscar detalhes do contrato: ' + errorMessage);
+            }
+        });
+    });
         $(document).ready(function () {
             // Função para manipular o clique no botão de confirmação do modal
             $('#confirmDeployBtn').click(function (e) {
