@@ -13,7 +13,9 @@ public class ProfileController : Controller
     private readonly IRepositorio<Product> _productRepo;
     private readonly WalletService _walletService;
     private readonly RewardContractService _contractService;
+    private readonly ContractDeploymentService _deploymentService;
     private readonly IRepositorio<Order> _orderRepo;
+    private readonly IRepositorio<ContractDocument> _contractRepo;
     private readonly ILogger<ProfileController> _logger;
 
     // Simulando um "Banco de Dados" de Staking em memória para este exemplo
@@ -22,16 +24,20 @@ public class ProfileController : Controller
 
     public ProfileController(
         IRepositorio<Order> orderRepo,
+        IRepositorio<ContractDocument> contractRepo,
         IRepositorio<Product> productRepo, 
         WalletService walletService,
         RewardContractService contractService,
+        ContractDeploymentService deploymentService,
         ILogger<ProfileController> logger,
         IConfiguration configuration)
     {
         _orderRepo = orderRepo;
+        _contractRepo = contractRepo;
         _productRepo = productRepo;
         _walletService = walletService;
         _contractService = contractService;
+        _deploymentService = deploymentService;
         _logger = logger;
         
         // Inicializa repo de produtos se necessário (garantia)
@@ -40,6 +46,10 @@ public class ProfileController : Controller
             configuration["MongoDbSettings:DataBaseName"],
             "Products");
         _orderRepo.InitializeCollection(
+            configuration["MongoDbSettings:ConnectionString"],
+            configuration["MongoDbSettings:DataBaseName"],
+            "Orders");
+        _contractRepo.InitializeCollection(
             configuration["MongoDbSettings:ConnectionString"],
             configuration["MongoDbSettings:DataBaseName"],
             "Orders");
@@ -71,8 +81,8 @@ public class ProfileController : Controller
         var model = new DashboardViewModel
         {
             Balance = balance,
-            ActiveProducts = products.Count, // Filtrar por usuário se Product tivesse UserId
-            TotalContracts = 5, // Mock
+            ActiveProducts = products.Count,
+            TotalContracts = 20, // Mock
             StakedAmount = staked,
             RecentTransactions = transactions.Take(20).ToList()
         };
@@ -80,8 +90,7 @@ public class ProfileController : Controller
         ViewData["Title"] = "Visão Geral";
         return View(model);
     }
-
-    // --- SMART WALLET & TRADING ---
+    
     public async Task<IActionResult> Wallet()
     {
         var address = GetWalletAddress();
@@ -101,6 +110,145 @@ public class ProfileController : Controller
 
         ViewData["Title"] = "Smart Wallet & Trading";
         return View(model);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateContract([FromBody] ContractCreationRequestModel model)
+    {
+        var address = GetWalletAddress();
+        
+        _logger.LogInformation(
+            "Usuário {UserAddress} solicitou deploy de contrato: {ContractName} " +
+            "Tipo: {ContractType}, Blockchain: {Blockchain}", 
+            address, model.ContractName, model.ContractType, model.Blockchain);
+
+        // 1. Validação básica
+        if (string.IsNullOrWhiteSpace(model.ContractName))
+        {
+            return BadRequest(new { 
+                success = false, 
+                message = "Nome do contrato é obrigatório." 
+            });
+        }
+        if (model.DeploymentCost <= 0)
+        {
+            return BadRequest(new { 
+                success = false, 
+                message = "O custo de implantação deve ser maior que zero." 
+            });
+        }
+
+        try
+        {
+            // 2. Chamar serviço de deployment
+            var (success, result) = await _deploymentService.DeployContractAsync(address, model);
+
+            if (success)
+            {
+                // 'result' é o endereço do contrato deployado
+                _logger.LogInformation(
+                    "Contrato {ContractName} deployado com sucesso no endereço: {ContractAddress}", 
+                    model.ContractName, result);
+
+                return Ok(new { 
+                    success = true, 
+                    message = "Contrato Inteligente deployado com sucesso!", 
+                    contractAddress = result, 
+                    blockchain = model.Blockchain ?? "sepolia",
+                    costCharged = model.DeploymentCost,
+                    explorerUrl = GetExplorerUrl(model.Blockchain ?? "sepolia", result)
+                });
+            }
+            else
+            {
+                // 'result' é a mensagem de erro
+                _logger.LogWarning(
+                    "Falha no deploy de contrato para usuário {UserAddress}: {Error}", 
+                    address, result);
+
+                return BadRequest(new { 
+                    success = false, 
+                    message = result 
+                });
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, 
+                "Erro inesperado ao processar deploy de contrato para usuário {UserAddress}", 
+                address);
+
+            return StatusCode(500, new { 
+                success = false, 
+                message = "Erro interno ao processar deploy. Tente novamente." 
+            });
+        }
+    }
+
+    /// <summary>
+    /// Retorna a URL do block explorer para verificar o contrato
+    /// </summary>
+    private string GetExplorerUrl(string blockchain, string contractAddress)
+    {
+        var baseUrls = new Dictionary<string, string>
+        {
+            { "sepolia", "https://sepolia.etherscan.io/address/" },
+            { "base-sepolia", "https://sepolia.basescan.org/address/" },
+            { "polygon", "https://polygonscan.com/address/" },
+            { "mumbai", "https://mumbai.polygonscan.com/address/" },
+            { "ethereum", "https://etherscan.io/address/" },
+            { "base", "https://basescan.org/address/" },
+            { "arbitrum", "https://arbiscan.io/address/" },
+            { "optimism", "https://optimistic.etherscan.io/address/" }
+        };
+
+        var key = blockchain.ToLower();
+        return baseUrls.ContainsKey(key) 
+            ? baseUrls[key] + contractAddress 
+            : $"https://sepolia.etherscan.io/address/{contractAddress}";
+    }
+
+    /// <summary>
+    /// Endpoint para registrar um contrato já deployado
+    /// </summary>
+    [HttpPost]
+    public async Task<IActionResult> RegisterContract([FromBody] RegisterContractRequestModel model)
+    {
+        var address = GetWalletAddress();
+
+        if (string.IsNullOrWhiteSpace(model.ContractAddress))
+        {
+            return BadRequest(new { 
+                success = false, 
+                message = "Endereço do contrato é obrigatório." 
+            });
+        }
+
+        try
+        {
+            var (success, message) = await _deploymentService.RegisterExistingContractAsync(
+                address,
+                model.ContractAddress,
+                model.ContractName ?? "Imported Contract"
+            );
+
+            if (success)
+            {
+                return Ok(new { success = true, message });
+            }
+            else
+            {
+                return BadRequest(new { success = false, message });
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Erro ao registrar contrato");
+            return StatusCode(500, new { 
+                success = false, 
+                message = "Erro ao registrar contrato." 
+            });
+        }
     }
 
     [HttpPost]
@@ -167,15 +315,12 @@ public class ProfileController : Controller
     }
 
     // --- SMART CONTRACTS ---
-    public IActionResult Contracts()
+    public async Task<IActionResult> Contracts()
     {
-        // Lista mockada de contratos do usuário
-        var contracts = new List<dynamic>
-        {
-            new { Id = Guid.NewGuid(), Name = "Royalty Distribution", Status = "Active", Type = "Payment", GasUsed = 0.0042m },
-            new { Id = Guid.NewGuid(), Name = "Content Copyright", Status = "Pending", Type = "NFT", GasUsed = 0.0000m },
-            new { Id = Guid.NewGuid(), Name = "DAO Vote", Status = "Executed", Type = "Governance", GasUsed = 0.0120m }
-        };
+        var address = GetWalletAddress();
+        var walletkey = await _walletService.GetUserWalletAsync(address);
+        var balance = await _walletService.GetBalanceAsync(walletkey.Address);
+        var contracts = await _contractRepo.GetUserContractsAsync(walletkey.Address);
 
         ViewData["Title"] = "Meus Contratos Inteligentes";
         return View(contracts);

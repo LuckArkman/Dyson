@@ -242,4 +242,110 @@ public class WalletService
         return wallet;
 
     }
+
+    /// <summary>
+    /// Debita um valor da carteira do usuário (cria transação de saída)
+    /// </summary>
+    public async Task DebitBalanceAsync(string walletAddress, decimal amount, string reason)
+    {
+        if (amount <= 0)
+        {
+            throw new ArgumentException("Valor deve ser maior que zero.", nameof(amount));
+        }
+
+        var balance = await GetBalanceAsync(walletAddress);
+        if (balance < amount)
+        {
+            throw new InvalidOperationException($"Saldo insuficiente. Disponível: {balance}, Necessário: {amount}");
+        }
+
+        // Criar transação de débito (saída)
+        // Endereço de destino é "SYSTEM" para indicar que é um débito de serviço
+        await CreateTransactionAsync(
+            fromAddress: walletAddress,
+            toAddress: "SYSTEM_DEBIT",
+            amount: amount,
+            notes: reason
+        );
+
+        _logger.LogInformation(
+            "Débito de {Amount} realizado na carteira (hash: {Hash}). Razão: {Reason}", 
+            amount, walletAddress.GetHashCode(), reason);
+    }
+    
+    /// <summary>
+    /// Credita um valor na carteira do usuário (cria transação de entrada)
+    /// </summary>
+    public async Task CreditBalanceAsync(string walletAddress, decimal amount, string reason)
+    {
+        if (amount <= 0)
+        {
+            throw new ArgumentException("Valor deve ser maior que zero.", nameof(amount));
+        }
+
+        // Criar transação de crédito (entrada)
+        // Endereço de origem é "SYSTEM" para indicar que é um crédito de serviço
+        await CreateTransactionAsync(
+            fromAddress: "SYSTEM_CREDIT",
+            toAddress: walletAddress,
+            amount: amount,
+            notes: reason
+        );
+
+        _logger.LogInformation(
+            "Crédito de {Amount} realizado na carteira (hash: {Hash}). Razão: {Reason}", 
+            amount, walletAddress.GetHashCode(), reason);
+    }
+    
+    /// <summary>
+    /// Gera um endereço de carteira único baseado no userId
+    /// </summary>
+    private string GenerateWalletAddress(string userId)
+    {
+        // Gera um endereço estilo Ethereum baseado no hash do userId
+        var hash = System.Security.Cryptography.SHA256.HashData(
+            System.Text.Encoding.UTF8.GetBytes(userId + DateTime.UtcNow.Ticks)
+        );
+        
+        // Pega os primeiros 20 bytes (40 caracteres hex) = endereço Ethereum
+        var addressBytes = hash.Take(20).ToArray();
+        var address = "0x" + BitConverter.ToString(addressBytes).Replace("-", "").ToLower();
+        
+        return address;
+    }
+    
+    /// <summary>
+    /// Transfere saldo entre duas carteiras
+    /// </summary>
+    public async Task<bool> TransferAsync(string fromAddress, string toAddress, decimal amount, string reason = null)
+    {
+        try
+        {
+            if (amount <= 0)
+            {
+                throw new ArgumentException("Valor deve ser maior que zero.", nameof(amount));
+            }
+
+            var balance = await GetBalanceAsync(fromAddress);
+            if (balance < amount)
+            {
+                _logger.LogWarning("Tentativa de transferência com saldo insuficiente. From: {From}, Amount: {Amount}, Balance: {Balance}", 
+                    fromAddress.GetHashCode(), amount, balance);
+                return false;
+            }
+
+            await CreateTransactionAsync(fromAddress, toAddress, amount, reason ?? "Transferência");
+
+            _logger.LogInformation("Transferência de {Amount} de {From} para {To} realizada com sucesso", 
+                amount, fromAddress.GetHashCode(), toAddress.GetHashCode());
+
+            return true;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Erro ao realizar transferência de {From} para {To}", 
+                fromAddress.GetHashCode(), toAddress.GetHashCode());
+            return false;
+        }
+    }
 }

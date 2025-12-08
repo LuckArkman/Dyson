@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "CGxNtFwLCgo=",
+  "dgSpecHash": "iua/D8PQtmE=",
   "success": true,
-  "projectFilePath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Enums/Enums.csproj",
+  "projectFilePath": "/home/mplopes/Documentos/Dyson/Enums/Enums.csproj",
   "expectedPackageFiles": [
     "/home/mplopes/.nuget/packages/microsoft.aspnetcore.authentication/2.0.0-preview1-final/microsoft.aspnetcore.authentication.2.0.0-preview1-final.nupkg.sha512",
     "/home/mplopes/.nuget/packages/microsoft.aspnetcore.authentication.abstractions/2.0.0-preview1-final/microsoft.aspnetcore.authentication.abstractions.2.0.0-preview1-final.nupkg.sha512",
@@ -125,10 +125,10 @@
     {
       "code": "NU1603",
       "level": "Warning",
-      "message": "Microsoft.Extensions.Primitives 2.0.0-preview1-final depends on System.Runtime.CompilerServices.Unsafe (>= 4.4.0-preview1-25219-04) but System.Runtime.CompilerServices.Unsafe 4.4.0-preview1-25219-04 was not found. System.Runtime.CompilerServices.Unsafe 4.4.0-preview1-25305-02 was resolved instead.",
-      "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Enums/Enums.csproj",
+      "message": "Microsoft.Extensions.Primitives 2.0.0-preview1-final depende de System.Runtime.CompilerServices.Unsafe (>= 4.4.0-preview1-25219-04) mas System.Runtime.CompilerServices.Unsafe 4.4.0-preview1-25219-04 não foi encontrado. System.Runtime.CompilerServices.Unsafe 4.4.0-preview1-25305-02 foi resolvido.",
+      "projectPath": "/home/mplopes/Documentos/Dyson/Enums/Enums.csproj",
       "warningLevel": 1,
-      "filePath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Enums/Enums.csproj",
+      "filePath": "/home/mplopes/Documentos/Dyson/Enums/Enums.csproj",
       "libraryId": "System.Runtime.CompilerServices.Unsafe",
       "targetGraphs": [
         "net8.0"

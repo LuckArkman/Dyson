@@ -12031,11 +12031,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Api/Api.csproj",
+      "projectUniqueName": "/home/mplopes/Documentos/Dyson/Api/Api.csproj",
       "projectName": "Api",
-      "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Api/Api.csproj",
+      "projectPath": "/home/mplopes/Documentos/Dyson/Api/Api.csproj",
       "packagesPath": "/home/mplopes/.nuget/packages/",
-      "outputPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Api/obj/",
+      "outputPath": "/home/mplopes/Documentos/Dyson/Api/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/mplopes/.nuget/NuGet/NuGet.Config"
@@ -12051,23 +12051,23 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Controllers/Controllers.csproj": {
-              "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Controllers/Controllers.csproj"
+            "/home/mplopes/Documentos/Dyson/Controllers/Controllers.csproj": {
+              "projectPath": "/home/mplopes/Documentos/Dyson/Controllers/Controllers.csproj"
             },
-            "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Data/Data.csproj": {
-              "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Data/Data.csproj"
+            "/home/mplopes/Documentos/Dyson/Data/Data.csproj": {
+              "projectPath": "/home/mplopes/Documentos/Dyson/Data/Data.csproj"
             },
-            "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Dtos/Dtos.csproj": {
-              "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Dtos/Dtos.csproj"
+            "/home/mplopes/Documentos/Dyson/Dtos/Dtos.csproj": {
+              "projectPath": "/home/mplopes/Documentos/Dyson/Dtos/Dtos.csproj"
             },
-            "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Records/Records.csproj": {
-              "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Records/Records.csproj"
+            "/home/mplopes/Documentos/Dyson/Records/Records.csproj": {
+              "projectPath": "/home/mplopes/Documentos/Dyson/Records/Records.csproj"
             },
-            "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Repositories/Repositories.csproj": {
-              "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Repositories/Repositories.csproj"
+            "/home/mplopes/Documentos/Dyson/Repositories/Repositories.csproj": {
+              "projectPath": "/home/mplopes/Documentos/Dyson/Repositories/Repositories.csproj"
             },
-            "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Services/Services.csproj": {
-              "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Services/Services.csproj"
+            "/home/mplopes/Documentos/Dyson/Services/Services.csproj": {
+              "projectPath": "/home/mplopes/Documentos/Dyson/Services/Services.csproj"
             }
           }
         }
@@ -12147,7 +12147,7 @@
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Package 'Mono.Data.Sqlite 1.0.61' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0'. This package may not be fully compatible with your project.",
+      "message": "O pacote 'Mono.Data.Sqlite 1.0.61' foi restaurado usando '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' em vez da estrutura de destino do projeto 'net8.0'. Esse pacote pode não ser totalmente compatível com o seu projeto.",
       "libraryId": "Mono.Data.Sqlite",
       "targetGraphs": [
         "net8.0"

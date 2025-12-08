@@ -10,3 +10,16 @@
 /mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Enums/obj/Debug/net8.0/refint/Enums.dll
 /mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Enums/obj/Debug/net8.0/Enums.pdb
 /mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Enums/obj/Debug/net8.0/ref/Enums.dll
+/home/mplopes/Documentos/Dyson/Enums/bin/Debug/net8.0/Enums.deps.json
+/home/mplopes/Documentos/Dyson/Enums/bin/Debug/net8.0/Enums.dll
+/home/mplopes/Documentos/Dyson/Enums/bin/Debug/net8.0/Enums.pdb
+/home/mplopes/Documentos/Dyson/Enums/obj/Debug/net8.0/Enums.csproj.AssemblyReference.cache
+/home/mplopes/Documentos/Dyson/Enums/obj/Debug/net8.0/Enums.GeneratedMSBuildEditorConfig.editorconfig
+/home/mplopes/Documentos/Dyson/Enums/obj/Debug/net8.0/Enums.AssemblyInfoInputs.cache
+/home/mplopes/Documentos/Dyson/Enums/obj/Debug/net8.0/Enums.AssemblyInfo.cs
+/home/mplopes/Documentos/Dyson/Enums/obj/Debug/net8.0/Enums.csproj.CoreCompileInputs.cache
+/home/mplopes/Documentos/Dyson/Enums/obj/Debug/net8.0/Enums.sourcelink.json
+/home/mplopes/Documentos/Dyson/Enums/obj/Debug/net8.0/Enums.dll
+/home/mplopes/Documentos/Dyson/Enums/obj/Debug/net8.0/refint/Enums.dll
+/home/mplopes/Documentos/Dyson/Enums/obj/Debug/net8.0/Enums.pdb
+/home/mplopes/Documentos/Dyson/Enums/obj/Debug/net8.0/ref/Enums.dll

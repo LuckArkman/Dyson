@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Enums/Enums.csproj": {}
+    "/home/mplopes/Documentos/Dyson/Enums/Enums.csproj": {}
   },
   "projects": {
-    "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Enums/Enums.csproj": {
+    "/home/mplopes/Documentos/Dyson/Enums/Enums.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Enums/Enums.csproj",
+        "projectUniqueName": "/home/mplopes/Documentos/Dyson/Enums/Enums.csproj",
         "projectName": "Enums",
-        "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Enums/Enums.csproj",
+        "projectPath": "/home/mplopes/Documentos/Dyson/Enums/Enums.csproj",
         "packagesPath": "/home/mplopes/.nuget/packages/",
-        "outputPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Enums/obj/",
+        "outputPath": "/home/mplopes/Documentos/Dyson/Enums/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/mplopes/.nuget/NuGet/NuGet.Config"

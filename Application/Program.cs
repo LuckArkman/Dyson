@@ -17,7 +17,8 @@ builder.Services.AddSingleton<IUserService, UserService>();
 builder.Services.AddSingleton<ConversationService>();
 builder.Services.AddSingleton<CartService>();
 builder.Services.AddSingleton<WalletService>(); 
-builder.Services.AddSingleton<RewardContractService>(); 
+builder.Services.AddSingleton<RewardContractService>();
+builder.Services.AddSingleton<ContractDeploymentService>();
 builder.Services.AddHttpClient<IPaymentGateway, MercadoPagoService>();
 builder.Services.AddSingleton(typeof(IRepositorio<>), typeof(Repositorio<>));
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)

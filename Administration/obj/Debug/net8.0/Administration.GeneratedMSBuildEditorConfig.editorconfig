@@ -9,65 +9,65 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Administration
 build_property.RootNamespace = Administration
-build_property.ProjectDir = /mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Administration/
+build_property.ProjectDir = /home/mplopes/Documentos/Dyson/Administration/
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = /mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Administration
+build_property.MSBuildProjectDirectory = /home/mplopes/Documentos/Dyson/Administration
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 8.0
 build_property.EnableCodeStyleSeverity = 
 
-[/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Administration/Views/Account/Login.cshtml]
+[/home/mplopes/Documentos/Dyson/Administration/Views/Account/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWNjb3VudC9Mb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Administration/Views/Admin/CreateUser.cshtml]
+[/home/mplopes/Documentos/Dyson/Administration/Views/Admin/CreateUser.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWRtaW4vQ3JlYXRlVXNlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Administration/Views/Admin/Orders.cshtml]
+[/home/mplopes/Documentos/Dyson/Administration/Views/Admin/Orders.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWRtaW4vT3JkZXJzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Administration/Views/Home/Index.cshtml]
+[/home/mplopes/Documentos/Dyson/Administration/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9JbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Administration/Views/Home/Privacy.cshtml]
+[/home/mplopes/Documentos/Dyson/Administration/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9Qcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Administration/Views/Products/Create.cshtml]
+[/home/mplopes/Documentos/Dyson/Administration/Views/Products/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUHJvZHVjdHMvQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Administration/Views/Products/Edit.cshtml]
+[/home/mplopes/Documentos/Dyson/Administration/Views/Products/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUHJvZHVjdHMvRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Administration/Views/Products/Index.cshtml]
+[/home/mplopes/Documentos/Dyson/Administration/Views/Products/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUHJvZHVjdHMvSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Administration/Views/Shared/Error.cshtml]
+[/home/mplopes/Documentos/Dyson/Administration/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL0Vycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Administration/Views/Shared/_ValidationScriptsPartial.cshtml]
+[/home/mplopes/Documentos/Dyson/Administration/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Administration/Views/_ViewImports.cshtml]
+[/home/mplopes/Documentos/Dyson/Administration/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Administration/Views/_ViewStart.cshtml]
+[/home/mplopes/Documentos/Dyson/Administration/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Administration/Views/Shared/_Layout.cshtml]
+[/home/mplopes/Documentos/Dyson/Administration/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-l5d8ojrn8f

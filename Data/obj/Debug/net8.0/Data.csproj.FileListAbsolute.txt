@@ -11,3 +11,16 @@
 /mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Data/obj/Debug/net8.0/refint/Data.dll
 /mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Data/obj/Debug/net8.0/Data.pdb
 /mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Data/obj/Debug/net8.0/ref/Data.dll
+/home/mplopes/Documentos/Dyson/Data/bin/Debug/net8.0/Data.deps.json
+/home/mplopes/Documentos/Dyson/Data/bin/Debug/net8.0/Data.dll
+/home/mplopes/Documentos/Dyson/Data/bin/Debug/net8.0/Data.pdb
+/home/mplopes/Documentos/Dyson/Data/obj/Debug/net8.0/Data.csproj.AssemblyReference.cache
+/home/mplopes/Documentos/Dyson/Data/obj/Debug/net8.0/Data.GeneratedMSBuildEditorConfig.editorconfig
+/home/mplopes/Documentos/Dyson/Data/obj/Debug/net8.0/Data.AssemblyInfoInputs.cache
+/home/mplopes/Documentos/Dyson/Data/obj/Debug/net8.0/Data.AssemblyInfo.cs
+/home/mplopes/Documentos/Dyson/Data/obj/Debug/net8.0/Data.csproj.CoreCompileInputs.cache
+/home/mplopes/Documentos/Dyson/Data/obj/Debug/net8.0/Data.sourcelink.json
+/home/mplopes/Documentos/Dyson/Data/obj/Debug/net8.0/Data.dll
+/home/mplopes/Documentos/Dyson/Data/obj/Debug/net8.0/refint/Data.dll
+/home/mplopes/Documentos/Dyson/Data/obj/Debug/net8.0/Data.pdb
+/home/mplopes/Documentos/Dyson/Data/obj/Debug/net8.0/ref/Data.dll

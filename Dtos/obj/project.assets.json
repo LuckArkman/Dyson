@@ -6693,11 +6693,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Dtos/Dtos.csproj",
+      "projectUniqueName": "/home/mplopes/Documentos/Dyson/Dtos/Dtos.csproj",
       "projectName": "Dtos",
-      "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Dtos/Dtos.csproj",
+      "projectPath": "/home/mplopes/Documentos/Dyson/Dtos/Dtos.csproj",
       "packagesPath": "/home/mplopes/.nuget/packages/",
-      "outputPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Dtos/obj/",
+      "outputPath": "/home/mplopes/Documentos/Dyson/Dtos/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/mplopes/.nuget/NuGet/NuGet.Config"
@@ -6713,11 +6713,11 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Enums/Enums.csproj": {
-              "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Enums/Enums.csproj"
+            "/home/mplopes/Documentos/Dyson/Enums/Enums.csproj": {
+              "projectPath": "/home/mplopes/Documentos/Dyson/Enums/Enums.csproj"
             },
-            "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Records/Records.csproj": {
-              "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Records/Records.csproj"
+            "/home/mplopes/Documentos/Dyson/Records/Records.csproj": {
+              "projectPath": "/home/mplopes/Documentos/Dyson/Records/Records.csproj"
             }
           }
         }

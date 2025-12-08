@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "IKjehRJ2PAg=",
+  "dgSpecHash": "VrqqnmP7C4Q=",
   "success": true,
-  "projectFilePath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Data/Data.csproj",
+  "projectFilePath": "/home/mplopes/Documentos/Dyson/Data/Data.csproj",
   "expectedPackageFiles": [
     "/home/mplopes/.nuget/packages/dnsclient/1.6.1/dnsclient.1.6.1.nupkg.sha512",
     "/home/mplopes/.nuget/packages/microsoft.aspnetcore.authentication/2.0.0-preview1-final/microsoft.aspnetcore.authentication.2.0.0-preview1-final.nupkg.sha512",

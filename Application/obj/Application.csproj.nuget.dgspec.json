@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Application/Application.csproj": {}
+    "/home/mplopes/Documentos/Dyson/Application/Application.csproj": {}
   },
   "projects": {
-    "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Application/Application.csproj": {
+    "/home/mplopes/Documentos/Dyson/Application/Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Application/Application.csproj",
-        "projectName": "GalileuApp",
-        "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Application/Application.csproj",
+        "projectUniqueName": "/home/mplopes/Documentos/Dyson/Application/Application.csproj",
+        "projectName": "Application",
+        "projectPath": "/home/mplopes/Documentos/Dyson/Application/Application.csproj",
         "packagesPath": "/home/mplopes/.nuget/packages/",
-        "outputPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Application/obj/",
+        "outputPath": "/home/mplopes/Documentos/Dyson/Application/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/mplopes/.nuget/NuGet/NuGet.Config"
@@ -27,20 +27,20 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Controllers/Controllers.csproj": {
-                "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Controllers/Controllers.csproj"
+              "/home/mplopes/Documentos/Dyson/Controllers/Controllers.csproj": {
+                "projectPath": "/home/mplopes/Documentos/Dyson/Controllers/Controllers.csproj"
               },
-              "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Data/Data.csproj": {
-                "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Data/Data.csproj"
+              "/home/mplopes/Documentos/Dyson/Data/Data.csproj": {
+                "projectPath": "/home/mplopes/Documentos/Dyson/Data/Data.csproj"
               },
-              "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Dtos/Dtos.csproj": {
-                "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Dtos/Dtos.csproj"
+              "/home/mplopes/Documentos/Dyson/Dtos/Dtos.csproj": {
+                "projectPath": "/home/mplopes/Documentos/Dyson/Dtos/Dtos.csproj"
               },
-              "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Interfaces/Interfaces.csproj": {
-                "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Interfaces/Interfaces.csproj"
+              "/home/mplopes/Documentos/Dyson/Interfaces/Interfaces.csproj": {
+                "projectPath": "/home/mplopes/Documentos/Dyson/Interfaces/Interfaces.csproj"
               },
-              "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Repositories/Repositories.csproj": {
-                "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Repositories/Repositories.csproj"
+              "/home/mplopes/Documentos/Dyson/Repositories/Repositories.csproj": {
+                "projectPath": "/home/mplopes/Documentos/Dyson/Repositories/Repositories.csproj"
               }
             }
           }
@@ -72,6 +72,10 @@
             "QRCoder": {
               "target": "Package",
               "version": "[1.7.0, )"
+            },
+            "Thirdweb": {
+              "target": "Package",
+              "version": "[1.4.0, )"
             },
             "mercadopago-sdk": {
               "target": "Package",
@@ -107,14 +111,14 @@
         }
       }
     },
-    "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Controllers/Controllers.csproj": {
+    "/home/mplopes/Documentos/Dyson/Controllers/Controllers.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Controllers/Controllers.csproj",
+        "projectUniqueName": "/home/mplopes/Documentos/Dyson/Controllers/Controllers.csproj",
         "projectName": "Controllers",
-        "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Controllers/Controllers.csproj",
+        "projectPath": "/home/mplopes/Documentos/Dyson/Controllers/Controllers.csproj",
         "packagesPath": "/home/mplopes/.nuget/packages/",
-        "outputPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Controllers/obj/",
+        "outputPath": "/home/mplopes/Documentos/Dyson/Controllers/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/mplopes/.nuget/NuGet/NuGet.Config"
@@ -130,17 +134,17 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Dtos/Dtos.csproj": {
-                "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Dtos/Dtos.csproj"
+              "/home/mplopes/Documentos/Dyson/Dtos/Dtos.csproj": {
+                "projectPath": "/home/mplopes/Documentos/Dyson/Dtos/Dtos.csproj"
               },
-              "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Interfaces/Interfaces.csproj": {
-                "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Interfaces/Interfaces.csproj"
+              "/home/mplopes/Documentos/Dyson/Interfaces/Interfaces.csproj": {
+                "projectPath": "/home/mplopes/Documentos/Dyson/Interfaces/Interfaces.csproj"
               },
-              "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Records/Records.csproj": {
-                "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Records/Records.csproj"
+              "/home/mplopes/Documentos/Dyson/Records/Records.csproj": {
+                "projectPath": "/home/mplopes/Documentos/Dyson/Records/Records.csproj"
               },
-              "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Services/Services.csproj": {
-                "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Services/Services.csproj"
+              "/home/mplopes/Documentos/Dyson/Services/Services.csproj": {
+                "projectPath": "/home/mplopes/Documentos/Dyson/Services/Services.csproj"
               }
             }
           }
@@ -200,14 +204,14 @@
         }
       }
     },
-    "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Data/Data.csproj": {
+    "/home/mplopes/Documentos/Dyson/Data/Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Data/Data.csproj",
+        "projectUniqueName": "/home/mplopes/Documentos/Dyson/Data/Data.csproj",
         "projectName": "Data",
-        "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Data/Data.csproj",
+        "projectPath": "/home/mplopes/Documentos/Dyson/Data/Data.csproj",
         "packagesPath": "/home/mplopes/.nuget/packages/",
-        "outputPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Data/obj/",
+        "outputPath": "/home/mplopes/Documentos/Dyson/Data/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/mplopes/.nuget/NuGet/NuGet.Config"
@@ -280,14 +284,14 @@
         }
       }
     },
-    "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Dtos/Dtos.csproj": {
+    "/home/mplopes/Documentos/Dyson/Dtos/Dtos.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Dtos/Dtos.csproj",
+        "projectUniqueName": "/home/mplopes/Documentos/Dyson/Dtos/Dtos.csproj",
         "projectName": "Dtos",
-        "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Dtos/Dtos.csproj",
+        "projectPath": "/home/mplopes/Documentos/Dyson/Dtos/Dtos.csproj",
         "packagesPath": "/home/mplopes/.nuget/packages/",
-        "outputPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Dtos/obj/",
+        "outputPath": "/home/mplopes/Documentos/Dyson/Dtos/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/mplopes/.nuget/NuGet/NuGet.Config"
@@ -303,11 +307,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Enums/Enums.csproj": {
-                "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Enums/Enums.csproj"
+              "/home/mplopes/Documentos/Dyson/Enums/Enums.csproj": {
+                "projectPath": "/home/mplopes/Documentos/Dyson/Enums/Enums.csproj"
               },
-              "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Records/Records.csproj": {
-                "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Records/Records.csproj"
+              "/home/mplopes/Documentos/Dyson/Records/Records.csproj": {
+                "projectPath": "/home/mplopes/Documentos/Dyson/Records/Records.csproj"
               }
             }
           }
@@ -367,14 +371,14 @@
         }
       }
     },
-    "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Enums/Enums.csproj": {
+    "/home/mplopes/Documentos/Dyson/Enums/Enums.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Enums/Enums.csproj",
+        "projectUniqueName": "/home/mplopes/Documentos/Dyson/Enums/Enums.csproj",
         "projectName": "Enums",
-        "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Enums/Enums.csproj",
+        "projectPath": "/home/mplopes/Documentos/Dyson/Enums/Enums.csproj",
         "packagesPath": "/home/mplopes/.nuget/packages/",
-        "outputPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Enums/obj/",
+        "outputPath": "/home/mplopes/Documentos/Dyson/Enums/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/mplopes/.nuget/NuGet/NuGet.Config"
@@ -439,14 +443,14 @@
         }
       }
     },
-    "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Interfaces/Interfaces.csproj": {
+    "/home/mplopes/Documentos/Dyson/Interfaces/Interfaces.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Interfaces/Interfaces.csproj",
+        "projectUniqueName": "/home/mplopes/Documentos/Dyson/Interfaces/Interfaces.csproj",
         "projectName": "Interfaces",
-        "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Interfaces/Interfaces.csproj",
+        "projectPath": "/home/mplopes/Documentos/Dyson/Interfaces/Interfaces.csproj",
         "packagesPath": "/home/mplopes/.nuget/packages/",
-        "outputPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Interfaces/obj/",
+        "outputPath": "/home/mplopes/Documentos/Dyson/Interfaces/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/mplopes/.nuget/NuGet/NuGet.Config"
@@ -462,11 +466,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Dtos/Dtos.csproj": {
-                "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Dtos/Dtos.csproj"
+              "/home/mplopes/Documentos/Dyson/Dtos/Dtos.csproj": {
+                "projectPath": "/home/mplopes/Documentos/Dyson/Dtos/Dtos.csproj"
               },
-              "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Records/Records.csproj": {
-                "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Records/Records.csproj"
+              "/home/mplopes/Documentos/Dyson/Records/Records.csproj": {
+                "projectPath": "/home/mplopes/Documentos/Dyson/Records/Records.csproj"
               }
             }
           }
@@ -518,14 +522,14 @@
         }
       }
     },
-    "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Records/Records.csproj": {
+    "/home/mplopes/Documentos/Dyson/Records/Records.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Records/Records.csproj",
+        "projectUniqueName": "/home/mplopes/Documentos/Dyson/Records/Records.csproj",
         "projectName": "Records",
-        "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Records/Records.csproj",
+        "projectPath": "/home/mplopes/Documentos/Dyson/Records/Records.csproj",
         "packagesPath": "/home/mplopes/.nuget/packages/",
-        "outputPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Records/obj/",
+        "outputPath": "/home/mplopes/Documentos/Dyson/Records/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/mplopes/.nuget/NuGet/NuGet.Config"
@@ -594,14 +598,14 @@
         }
       }
     },
-    "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Repositories/Repositories.csproj": {
+    "/home/mplopes/Documentos/Dyson/Repositories/Repositories.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Repositories/Repositories.csproj",
+        "projectUniqueName": "/home/mplopes/Documentos/Dyson/Repositories/Repositories.csproj",
         "projectName": "Repositories",
-        "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Repositories/Repositories.csproj",
+        "projectPath": "/home/mplopes/Documentos/Dyson/Repositories/Repositories.csproj",
         "packagesPath": "/home/mplopes/.nuget/packages/",
-        "outputPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Repositories/obj/",
+        "outputPath": "/home/mplopes/Documentos/Dyson/Repositories/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/mplopes/.nuget/NuGet/NuGet.Config"
@@ -617,11 +621,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Data/Data.csproj": {
-                "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Data/Data.csproj"
+              "/home/mplopes/Documentos/Dyson/Data/Data.csproj": {
+                "projectPath": "/home/mplopes/Documentos/Dyson/Data/Data.csproj"
               },
-              "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Interfaces/Interfaces.csproj": {
-                "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Interfaces/Interfaces.csproj"
+              "/home/mplopes/Documentos/Dyson/Interfaces/Interfaces.csproj": {
+                "projectPath": "/home/mplopes/Documentos/Dyson/Interfaces/Interfaces.csproj"
               }
             }
           }
@@ -681,14 +685,14 @@
         }
       }
     },
-    "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Services/Services.csproj": {
+    "/home/mplopes/Documentos/Dyson/Services/Services.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Services/Services.csproj",
+        "projectUniqueName": "/home/mplopes/Documentos/Dyson/Services/Services.csproj",
         "projectName": "Services",
-        "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Services/Services.csproj",
+        "projectPath": "/home/mplopes/Documentos/Dyson/Services/Services.csproj",
         "packagesPath": "/home/mplopes/.nuget/packages/",
-        "outputPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Services/obj/",
+        "outputPath": "/home/mplopes/Documentos/Dyson/Services/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/mplopes/.nuget/NuGet/NuGet.Config"
@@ -704,17 +708,17 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Data/Data.csproj": {
-                "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Data/Data.csproj"
+              "/home/mplopes/Documentos/Dyson/Data/Data.csproj": {
+                "projectPath": "/home/mplopes/Documentos/Dyson/Data/Data.csproj"
               },
-              "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Dtos/Dtos.csproj": {
-                "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Dtos/Dtos.csproj"
+              "/home/mplopes/Documentos/Dyson/Dtos/Dtos.csproj": {
+                "projectPath": "/home/mplopes/Documentos/Dyson/Dtos/Dtos.csproj"
               },
-              "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Interfaces/Interfaces.csproj": {
-                "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Interfaces/Interfaces.csproj"
+              "/home/mplopes/Documentos/Dyson/Interfaces/Interfaces.csproj": {
+                "projectPath": "/home/mplopes/Documentos/Dyson/Interfaces/Interfaces.csproj"
               },
-              "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Records/Records.csproj": {
-                "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Records/Records.csproj"
+              "/home/mplopes/Documentos/Dyson/Records/Records.csproj": {
+                "projectPath": "/home/mplopes/Documentos/Dyson/Records/Records.csproj"
               }
             }
           }

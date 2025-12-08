@@ -99,4 +99,63 @@ public class Repositorio<T> : IRepositorio<T>
         var filter = Builders<WalletDocument>.Filter.Eq(u => u.userId, id);
         return await collection.Find(filter).FirstOrDefaultAsync();
     }
+    
+    /// <summary>
+    /// Salva um novo contrato no MongoDB
+    /// </summary>
+    public async Task<ContractDocument> SaveContractAsync(ContractDocument contract)
+    {
+        var collection = _db.GetDatabase().GetCollection<ContractDocument>("Contracts");
+        
+        // Garantir que tem ID e timestamps
+        if (string.IsNullOrEmpty(contract.Id))
+            contract.Id = Guid.NewGuid().ToString();
+        
+        contract.CreatedAt = DateTime.UtcNow;
+        contract.UpdatedAt = DateTime.UtcNow;
+
+        await collection.InsertOneAsync(contract);
+        return contract;
+    }
+
+    /// <summary>
+    /// Retorna todos os contratos de um usuário
+    /// </summary>
+    public async Task<List<ContractDocument>> GetUserContractsAsync(string userId)
+    {
+        var collection = _db.GetDatabase().GetCollection<ContractDocument>("Contracts");
+        var filter = Builders<ContractDocument>.Filter.Eq(c => c.walletAndress, userId);
+        
+        return await collection
+            .Find(filter)
+            .SortByDescending(c => c.CreatedAt)
+            .ToListAsync();
+    }
+
+    /// <summary>
+    /// Busca um contrato pelo endereço
+    /// </summary>
+    public async Task<ContractDocument> GetContractByAddressAsync(string contractAddress)
+    {
+        var collection = _db.GetDatabase().GetCollection<ContractDocument>("Contracts");
+        var filter = Builders<ContractDocument>.Filter.Eq(c => c.ContractAddress, contractAddress);
+        
+        return await collection.Find(filter).FirstOrDefaultAsync();
+    }
+
+    /// <summary>
+    /// Atualiza o status de um contrato
+    /// </summary>
+    public async Task<bool> UpdateContractStatusAsync(string contractAddress, string status)
+    {
+        var collection = _db.GetDatabase().GetCollection<ContractDocument>("Contracts");
+        
+        var filter = Builders<ContractDocument>.Filter.Eq(c => c.ContractAddress, contractAddress);
+        var update = Builders<ContractDocument>.Update
+            .Set(c => c.Status, status)
+            .Set(c => c.UpdatedAt, DateTime.UtcNow);
+
+        var result = await collection.UpdateOneAsync(filter, update);
+        return result.ModifiedCount > 0;
+    }
 }

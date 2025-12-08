@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "gxmYawncjCY=",
+  "dgSpecHash": "K4sxqWIbj9w=",
   "success": true,
-  "projectFilePath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Api/Api.csproj",
+  "projectFilePath": "/home/mplopes/Documentos/Dyson/Api/Api.csproj",
   "expectedPackageFiles": [
     "/home/mplopes/.nuget/packages/akka/1.5.55/akka.1.5.55.nupkg.sha512",
     "/home/mplopes/.nuget/packages/akka.analyzers/0.3.3/akka.analyzers.0.3.3.nupkg.sha512",
@@ -247,10 +247,10 @@
     {
       "code": "NU1701",
       "level": "Warning",
-      "message": "Package 'Mono.Data.Sqlite 1.0.61' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0'. This package may not be fully compatible with your project.",
-      "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Api/Api.csproj",
+      "message": "O pacote 'Mono.Data.Sqlite 1.0.61' foi restaurado usando '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' em vez da estrutura de destino do projeto 'net8.0'. Esse pacote pode não ser totalmente compatível com o seu projeto.",
+      "projectPath": "/home/mplopes/Documentos/Dyson/Api/Api.csproj",
       "warningLevel": 1,
-      "filePath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Api/Api.csproj",
+      "filePath": "/home/mplopes/Documentos/Dyson/Api/Api.csproj",
       "libraryId": "Mono.Data.Sqlite",
       "targetGraphs": [
         "net8.0"

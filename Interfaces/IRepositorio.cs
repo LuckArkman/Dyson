@@ -16,4 +16,9 @@ public interface IRepositorio<T>
     Task<T?> GetUserByIdAsync(string id, CancellationToken none);
     Task<User?> GetUserByMailAsync(string email, CancellationToken none);
     Task<WalletDocument?> GetUserWalletAsync(string id, CancellationToken none);
+    
+    Task<ContractDocument?> SaveContractAsync(ContractDocument contract);
+    Task<List<ContractDocument>> GetUserContractsAsync(string userId);
+    Task<ContractDocument?> GetContractByAddressAsync(string contractAddress);
+    Task<bool> UpdateContractStatusAsync(string contractAddress, string status);
 }

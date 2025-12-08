@@ -11,6 +11,7 @@
           "Dtos": "1.0.0",
           "Interfaces": "1.0.0",
           "Microsoft.AspNetCore.Http": "2.3.0",
+          "Microsoft.AspNetCore.Identity.Service.Core": "1.0.0-preview1-final",
           "Microsoft.AspNetCore.Mvc": "2.3.0",
           "Records": "1.0.0",
           "Services": "1.0.0"
@@ -138,6 +139,23 @@
           }
         }
       },
+      "Microsoft.AspNetCore.Authentication/2.0.0-preview1-final": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Authentication.Core": "2.3.0",
+          "Microsoft.AspNetCore.DataProtection": "2.3.0",
+          "Microsoft.AspNetCore.Http": "2.3.0",
+          "Microsoft.AspNetCore.Http.Extensions": "2.3.0",
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.2",
+          "Microsoft.Extensions.Options": "8.0.2",
+          "Microsoft.Extensions.WebEncoders": "8.0.11"
+        },
+        "runtime": {
+          "lib/netcoreapp2.0/Microsoft.AspNetCore.Authentication.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.0.0.17128"
+          }
+        }
+      },
       "Microsoft.AspNetCore.Authentication.Abstractions/2.3.0": {
         "dependencies": {
           "Microsoft.AspNetCore.Http.Abstractions": "2.3.0",
@@ -148,6 +166,17 @@
           "lib/netstandard2.0/Microsoft.AspNetCore.Authentication.Abstractions.dll": {
             "assemblyVersion": "2.3.0.0",
             "fileVersion": "2.3.0.25014"
+          }
+        }
+      },
+      "Microsoft.AspNetCore.Authentication.Cookies/2.0.0-preview1-final": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Authentication": "2.0.0-preview1-final"
+        },
+        "runtime": {
+          "lib/netcoreapp2.0/Microsoft.AspNetCore.Authentication.Cookies.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.0.0.17128"
           }
         }
       },
@@ -203,17 +232,28 @@
           }
         }
       },
-      "Microsoft.AspNetCore.Cryptography.Internal/2.3.0": {
+      "Microsoft.AspNetCore.Cryptography.Internal/8.0.0": {
         "runtime": {
-          "lib/netstandard2.0/Microsoft.AspNetCore.Cryptography.Internal.dll": {
-            "assemblyVersion": "2.3.0.0",
-            "fileVersion": "2.3.0.25010"
+          "lib/net8.0/Microsoft.AspNetCore.Cryptography.Internal.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.23.53112"
+          }
+        }
+      },
+      "Microsoft.AspNetCore.Cryptography.KeyDerivation/8.0.0": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Cryptography.Internal": "8.0.0"
+        },
+        "runtime": {
+          "lib/net8.0/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.23.53112"
           }
         }
       },
       "Microsoft.AspNetCore.DataProtection/2.3.0": {
         "dependencies": {
-          "Microsoft.AspNetCore.Cryptography.Internal": "2.3.0",
+          "Microsoft.AspNetCore.Cryptography.Internal": "8.0.0",
           "Microsoft.AspNetCore.DataProtection.Abstractions": "2.3.0",
           "Microsoft.AspNetCore.Hosting.Abstractions": "2.3.0",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.2",
@@ -331,6 +371,35 @@
           "lib/netstandard2.0/Microsoft.AspNetCore.Http.Features.dll": {
             "assemblyVersion": "2.3.0.0",
             "fileVersion": "2.3.0.25014"
+          }
+        }
+      },
+      "Microsoft.AspNetCore.Identity.Service.Abstractions/1.0.0-preview1-final": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Http.Abstractions": "2.3.0",
+          "Microsoft.Extensions.DependencyInjection": "8.0.1",
+          "Microsoft.IdentityModel.Protocols.OpenIdConnect": "2.1.3"
+        },
+        "runtime": {
+          "lib/netcoreapp2.0/Microsoft.AspNetCore.Identity.Service.Abstractions.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.17128"
+          }
+        }
+      },
+      "Microsoft.AspNetCore.Identity.Service.Core/1.0.0-preview1-final": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Authentication": "2.0.0-preview1-final",
+          "Microsoft.AspNetCore.Authentication.Cookies": "2.0.0-preview1-final",
+          "Microsoft.AspNetCore.Authorization": "2.3.0",
+          "Microsoft.AspNetCore.Hosting.Abstractions": "2.3.0",
+          "Microsoft.AspNetCore.Identity.Service.Abstractions": "1.0.0-preview1-final",
+          "System.ValueTuple": "4.3.0"
+        },
+        "runtime": {
+          "lib/netcoreapp2.0/Microsoft.AspNetCore.Identity.Service.Core.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.17128"
           }
         }
       },
@@ -1024,6 +1093,19 @@
           }
         }
       },
+      "Microsoft.Extensions.Identity.Core/8.0.0": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Cryptography.KeyDerivation": "8.0.0",
+          "Microsoft.Extensions.Logging": "8.0.0",
+          "Microsoft.Extensions.Options": "8.0.2"
+        },
+        "runtime": {
+          "lib/net8.0/Microsoft.Extensions.Identity.Core.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.23.53112"
+          }
+        }
+      },
       "Microsoft.Extensions.Localization/8.0.11": {
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.2",
@@ -1230,6 +1312,32 @@
           "lib/net8.0/Microsoft.IdentityModel.Logging.dll": {
             "assemblyVersion": "8.0.0.0",
             "fileVersion": "8.0.0.50716"
+          }
+        }
+      },
+      "Microsoft.IdentityModel.Protocols/2.1.3": {
+        "dependencies": {
+          "System.Collections.Specialized": "4.3.0",
+          "System.Diagnostics.Contracts": "4.3.0",
+          "System.IdentityModel.Tokens.Jwt": "8.0.0",
+          "System.Net.Http": "4.3.4"
+        },
+        "runtime": {
+          "lib/netstandard1.4/Microsoft.IdentityModel.Protocols.dll": {
+            "assemblyVersion": "2.1.3.0",
+            "fileVersion": "2.1.3.206"
+          }
+        }
+      },
+      "Microsoft.IdentityModel.Protocols.OpenIdConnect/2.1.3": {
+        "dependencies": {
+          "Microsoft.IdentityModel.Protocols": "2.1.3",
+          "System.Dynamic.Runtime": "4.3.0"
+        },
+        "runtime": {
+          "lib/netstandard1.4/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll": {
+            "assemblyVersion": "2.1.3.0",
+            "fileVersion": "2.1.3.206"
           }
         }
       },
@@ -1655,6 +1763,27 @@
         }
       },
       "System.Collections.Immutable/6.0.1": {},
+      "System.Collections.NonGeneric/4.3.0": {
+        "dependencies": {
+          "System.Diagnostics.Debug": "4.3.0",
+          "System.Globalization": "4.3.0",
+          "System.Resources.ResourceManager": "4.3.0",
+          "System.Runtime": "4.3.0",
+          "System.Runtime.Extensions": "4.3.0",
+          "System.Threading": "4.3.0"
+        }
+      },
+      "System.Collections.Specialized/4.3.0": {
+        "dependencies": {
+          "System.Collections.NonGeneric": "4.3.0",
+          "System.Globalization": "4.3.0",
+          "System.Globalization.Extensions": "4.3.0",
+          "System.Resources.ResourceManager": "4.3.0",
+          "System.Runtime": "4.3.0",
+          "System.Runtime.Extensions": "4.3.0",
+          "System.Threading": "4.3.0"
+        }
+      },
       "System.ComponentModel/4.3.0": {
         "dependencies": {
           "System.Runtime": "4.3.0"
@@ -1707,6 +1836,11 @@
             "assemblyVersion": "4.6.1.3",
             "fileVersion": "4.700.21.41603"
           }
+        }
+      },
+      "System.Diagnostics.Contracts/4.3.0": {
+        "dependencies": {
+          "System.Runtime": "4.3.0"
         }
       },
       "System.Diagnostics.Debug/4.3.0": {
@@ -2520,6 +2654,7 @@
       },
       "Data/1.0.0": {
         "dependencies": {
+          "Microsoft.AspNetCore.Identity.Service.Core": "1.0.0-preview1-final",
           "MongoDB.Bson": "3.5.2",
           "MongoDB.Driver": "3.5.2"
         },
@@ -2534,6 +2669,7 @@
         "dependencies": {
           "Akka": "1.5.55",
           "Enums": "1.0.0",
+          "Microsoft.AspNetCore.Identity.Service.Core": "1.0.0-preview1-final",
           "MongoDB.Driver": "3.5.2",
           "Records": "1.0.0"
         },
@@ -2545,6 +2681,9 @@
         }
       },
       "Enums/1.0.0": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Identity.Service.Core": "1.0.0-preview1-final"
+        },
         "runtime": {
           "Enums.dll": {
             "assemblyVersion": "1.0.0.0",
@@ -2555,6 +2694,7 @@
       "Interfaces/1.0.0": {
         "dependencies": {
           "Dtos": "1.0.0",
+          "Microsoft.AspNetCore.Identity.Service.Core": "1.0.0-preview1-final",
           "Records": "1.0.0"
         },
         "runtime": {
@@ -2566,7 +2706,8 @@
       },
       "Records/1.0.0": {
         "dependencies": {
-          "Akka": "1.5.55"
+          "Akka": "1.5.55",
+          "Microsoft.AspNetCore.Identity.Service.Core": "1.0.0-preview1-final"
         },
         "runtime": {
           "Records.dll": {
@@ -2585,9 +2726,11 @@
           "Gossip": "0.1.0",
           "Gossip4Net.Http": "0.0.4",
           "Interfaces": "1.0.0",
+          "Microsoft.AspNetCore.Identity.Service.Core": "1.0.0-preview1-final",
           "Microsoft.Data.Sqlite": "8.0.0",
           "Microsoft.Extensions.Configuration": "10.0.0",
           "Microsoft.Extensions.Hosting": "8.0.0",
+          "Microsoft.Extensions.Identity.Core": "8.0.0",
           "Microsoft.Extensions.Logging": "8.0.0",
           "Microsoft.IdentityModel.Tokens": "8.0.0",
           "Mono.Data.Sqlite": "1.0.61",
@@ -2599,14 +2742,6 @@
           "Services.dll": {
             "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
-          }
-        }
-      },
-      "Microsoft.Extensions.Identity.Core/8.0.0.0": {
-        "runtime": {
-          "Microsoft.Extensions.Identity.Core.dll": {
-            "assemblyVersion": "8.0.0.0",
-            "fileVersion": "8.0.1625.21611"
           }
         }
       }
@@ -2695,12 +2830,26 @@
       "path": "microsoft.aspnetcore.antiforgery/2.3.0",
       "hashPath": "microsoft.aspnetcore.antiforgery.2.3.0.nupkg.sha512"
     },
+    "Microsoft.AspNetCore.Authentication/2.0.0-preview1-final": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-jIbxAhms3j/y0593QIZrnzNma/F4Zbn/revAdI35soIXqtrBcTEDcAni8UmZdeTqMqpnURwk7WQk2RQXLebopw==",
+      "path": "microsoft.aspnetcore.authentication/2.0.0-preview1-final",
+      "hashPath": "microsoft.aspnetcore.authentication.2.0.0-preview1-final.nupkg.sha512"
+    },
     "Microsoft.AspNetCore.Authentication.Abstractions/2.3.0": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-ve6uvLwKNRkfnO/QeN9M8eUJ49lCnWv/6/9p6iTEuiI6Rtsz+myaBAjdMzLuTViQY032xbTF5AdZF5BJzJJyXQ==",
       "path": "microsoft.aspnetcore.authentication.abstractions/2.3.0",
       "hashPath": "microsoft.aspnetcore.authentication.abstractions.2.3.0.nupkg.sha512"
+    },
+    "Microsoft.AspNetCore.Authentication.Cookies/2.0.0-preview1-final": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-FpgloPlYtKt+kjNWcJAnQ8GPgI3kUHN8rnWxxybyVDIyMyl/UPJU+lRUmLZ+sY489OQ6bQVsUrkG9cPQqrF0uA==",
+      "path": "microsoft.aspnetcore.authentication.cookies/2.0.0-preview1-final",
+      "hashPath": "microsoft.aspnetcore.authentication.cookies.2.0.0-preview1-final.nupkg.sha512"
     },
     "Microsoft.AspNetCore.Authentication.Core/2.3.0": {
       "type": "package",
@@ -2730,12 +2879,19 @@
       "path": "microsoft.aspnetcore.cors/2.3.0",
       "hashPath": "microsoft.aspnetcore.cors.2.3.0.nupkg.sha512"
     },
-    "Microsoft.AspNetCore.Cryptography.Internal/2.3.0": {
+    "Microsoft.AspNetCore.Cryptography.Internal/8.0.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-/qy5r0CD40OccajzDmX3gBfqqxpAJkcXoqlVz0YR70x3gTRq/VuseDU/lZ5eh8vM+KCdmPFAtyGcRWxTyXxuYg==",
-      "path": "microsoft.aspnetcore.cryptography.internal/2.3.0",
-      "hashPath": "microsoft.aspnetcore.cryptography.internal.2.3.0.nupkg.sha512"
+      "sha512": "sha512-buuMMCTxFcVkOkEftb2OafYxrveNGre9KJF4Oi1DkR4rxIj6oLam7Wq3g0Fp9hNVpJteKEPiupsxYnPrD/oUGA==",
+      "path": "microsoft.aspnetcore.cryptography.internal/8.0.0",
+      "hashPath": "microsoft.aspnetcore.cryptography.internal.8.0.0.nupkg.sha512"
+    },
+    "Microsoft.AspNetCore.Cryptography.KeyDerivation/8.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-65w93R5wqUUs35R9wjHHDf75GqAbxJsNByKZo5TbQOWSXcUbLWrDUWBQHv78iXIT0PL1pXNqKQz7OHiHMvo0/A==",
+      "path": "microsoft.aspnetcore.cryptography.keyderivation/8.0.0",
+      "hashPath": "microsoft.aspnetcore.cryptography.keyderivation.8.0.0.nupkg.sha512"
     },
     "Microsoft.AspNetCore.DataProtection/2.3.0": {
       "type": "package",
@@ -2806,6 +2962,20 @@
       "sha512": "sha512-f10WUgcsKqrkmnz6gt8HeZ7kyKjYN30PO7cSic1lPtH7paPtnQqXPOveul/SIPI43PhRD4trttg4ywnrEmmJpA==",
       "path": "microsoft.aspnetcore.http.features/2.3.0",
       "hashPath": "microsoft.aspnetcore.http.features.2.3.0.nupkg.sha512"
+    },
+    "Microsoft.AspNetCore.Identity.Service.Abstractions/1.0.0-preview1-final": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-RGWX5snjs1LYC37D5P3aLQcxBKfq7UkcRo788Dz7DZYnTwX+UdeTbUGIXiLKyw3ruM+sVDhdFF1msoNOHj2o3g==",
+      "path": "microsoft.aspnetcore.identity.service.abstractions/1.0.0-preview1-final",
+      "hashPath": "microsoft.aspnetcore.identity.service.abstractions.1.0.0-preview1-final.nupkg.sha512"
+    },
+    "Microsoft.AspNetCore.Identity.Service.Core/1.0.0-preview1-final": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-BOH+x9II9U6wrGx7CCkIcqklS0Cs/W31vBfJ1RHoLAvygM4uAPjDOIQTPQ27tSanry6tgBLIsuBhEQmA4xHIpw==",
+      "path": "microsoft.aspnetcore.identity.service.core/1.0.0-preview1-final",
+      "hashPath": "microsoft.aspnetcore.identity.service.core.1.0.0-preview1-final.nupkg.sha512"
     },
     "Microsoft.AspNetCore.JsonPatch/2.3.0": {
       "type": "package",
@@ -3171,6 +3341,13 @@
       "path": "microsoft.extensions.hosting.abstractions/8.0.1",
       "hashPath": "microsoft.extensions.hosting.abstractions.8.0.1.nupkg.sha512"
     },
+    "Microsoft.Extensions.Identity.Core/8.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-hnXHyIQc+uc2uNMcIbr43+oNBAPEhMpW6lE8ux3MOegRz50WBna4AItlZDY7Y+Id1LLBbf73osUqeTw7CQ371w==",
+      "path": "microsoft.extensions.identity.core/8.0.0",
+      "hashPath": "microsoft.extensions.identity.core.8.0.0.nupkg.sha512"
+    },
     "Microsoft.Extensions.Localization/8.0.11": {
       "type": "package",
       "serviceable": true,
@@ -3289,6 +3466,20 @@
       "sha512": "sha512-bLqpdwrwN9D/INjst8L2a9p0GI8E8SXGJjRYQu6vmEpjnDf6SoVAphEtCVNsyh44iDrT5oVxv9/hkXH7JaezCA==",
       "path": "microsoft.identitymodel.logging/8.0.0",
       "hashPath": "microsoft.identitymodel.logging.8.0.0.nupkg.sha512"
+    },
+    "Microsoft.IdentityModel.Protocols/2.1.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-L1I4Oz4F3pscu5UYsiy0vMgjpJUfHCIBw+/3N4p+9EAYZb0Ntm3EMOq9BGMLGM8Se8FE2Yme7kEUwmn969y68w==",
+      "path": "microsoft.identitymodel.protocols/2.1.3",
+      "hashPath": "microsoft.identitymodel.protocols.2.1.3.nupkg.sha512"
+    },
+    "Microsoft.IdentityModel.Protocols.OpenIdConnect/2.1.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-keaNqISljBEEoB9WNFlyvbuXBdn++oVdj1C+FSriuxSZWrcmkk0ApT9dfpJj4IB0IfV5oC8AgGJfPQCpqni6Zw==",
+      "path": "microsoft.identitymodel.protocols.openidconnect/2.1.3",
+      "hashPath": "microsoft.identitymodel.protocols.openidconnect.2.1.3.nupkg.sha512"
     },
     "Microsoft.IdentityModel.Tokens/8.0.0": {
       "type": "package",
@@ -3598,6 +3789,20 @@
       "path": "system.collections.immutable/6.0.1",
       "hashPath": "system.collections.immutable.6.0.1.nupkg.sha512"
     },
+    "System.Collections.NonGeneric/4.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-prtjIEMhGUnQq6RnPEYLpFt8AtLbp9yq2zxOSrY7KJJZrw25Fi97IzBqY7iqssbM61Ek5b8f3MG/sG1N2sN5KA==",
+      "path": "system.collections.nongeneric/4.3.0",
+      "hashPath": "system.collections.nongeneric.4.3.0.nupkg.sha512"
+    },
+    "System.Collections.Specialized/4.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Epx8PoVZR0iuOnJJDzp7pWvdfMMOAvpUo95pC4ScH2mJuXkKA2Y4aR3cG9qt2klHgSons1WFh4kcGW7cSXvrxg==",
+      "path": "system.collections.specialized/4.3.0",
+      "hashPath": "system.collections.specialized.4.3.0.nupkg.sha512"
+    },
     "System.ComponentModel/4.3.0": {
       "type": "package",
       "serviceable": true,
@@ -3632,6 +3837,13 @@
       "sha512": "sha512-yERfVLXAY0QbylAgaGLByYN0hFxX28aeEQ0hUgJO+Ntn1AfmWl5HHUoYJA0Yl9HhIUUJHVaS/Sw/RLZr5aaC+A==",
       "path": "system.data.sqlclient/4.8.3",
       "hashPath": "system.data.sqlclient.4.8.3.nupkg.sha512"
+    },
+    "System.Diagnostics.Contracts/4.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-eelRRbnm+OloiQvp9CXS0ixjNQldjjkHO4iIkR5XH2VIP8sUB/SIpa1TdUW6/+HDcQ+MlhP3pNa1u5SbzYuWGA==",
+      "path": "system.diagnostics.contracts/4.3.0",
+      "hashPath": "system.diagnostics.contracts.4.3.0.nupkg.sha512"
     },
     "System.Diagnostics.Debug/4.3.0": {
       "type": "package",
@@ -4192,11 +4404,6 @@
     },
     "Services/1.0.0": {
       "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "Microsoft.Extensions.Identity.Core/8.0.0.0": {
-      "type": "reference",
       "serviceable": false,
       "sha512": ""
     }

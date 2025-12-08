@@ -1,4 +1,5 @@
-@model List<dynamic>
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model List<Dtos.ContractDocument>
 @{
     ViewData["Title"] = "Dashboard";
     Layout = "_AdminLayout";
@@ -9,14 +10,16 @@
             <div class="card-header">
                 <h3 class="card-title">Gerenciar Contratos Inteligentes</h3>
                 <div class="card-tools">
-                    <button class="btn btn-success btn-sm"><i class="fas fa-plus"></i> Deploy Novo Contrato</button>
+                    <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#createContractModal">
+                        <i class="fas fa-plus"></i> Deploy Novo Contrato
+                    </button>
                 </div>
             </div>
             <div class="card-body table-responsive p-0">
-                <table class="table table-hover text-nowrap">
+                <table class="table table-hover text-nowrap" id="contractsTable">
                     <thead>
                         <tr>
-                            <th>ID do Contrato</th>
+                            <th>Andress do Contrato</th>
                             <th>Nome</th>
                             <th>Tipo</th>
                             <th>Status</th>
@@ -27,10 +30,10 @@
                     <tbody>
                         @foreach(var c in Model)
                         {
-                            <tr>
-                                <td>@c.Id</td>
-                                <td>@c.Name</td>
-                                <td>@c.Type</td>
+                            <tr id="contract-row-@c.walletAndress">
+                                <td>@c.ContractName</td>
+                                <td>@c.ContractType</td>
+                                <td>@c.Status</td>
                                 <td>
                                     @if(c.Status == "Active") { <span class="tag tag-success text-success">Ativo</span> }
                                     else if(c.Status == "Pending") { <span class="tag tag-warning text-warning">Pendente</span> }
@@ -49,3 +52,125 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="createContractModal" tabindex="-1" role="dialog" aria-labelledby="createContractModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createContractModalLabel">Implantar Novo Contrato Inteligente</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="createContractForm">
+                    <div class="form-group">
+                        <label for="contractName">Nome do Contrato</label>
+                        <input type="text" class="form-control" id="contractName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contractType">Tipo de Contrato</label>
+                        <select class="form-control" id="contractType" required>
+                            <option value="NFT">NFT (ERC-721/1155)</option>
+                            <option value="Token">Token Fungível (ERC-20)</option>
+                            <option value="Governance">Governança (DAO)</option>
+                            <option value="Payment">Pagamento/Royalty</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="blockchain">Blockchain</label>
+                        <select class="form-control" id="blockchain" required>
+                            <option value="ETH">Ethereum</option>
+                            <option value="MATIC">Polygon (Matic)</option>
+                            <option value="SOL">Solana</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="deploymentCost">Custo Estimado de Implantação (USDC)</label>
+                        <input type="number" class="form-control" id="deploymentCost" min="0.01" step="0.01" value="5.00" required>
+                        <small class="form-text text-muted">Este valor será cobrado da sua Smart Wallet para pagar as taxas de Gas.</small>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success" id="confirmDeployBtn">Confirmar Implantação</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Função para manipular o clique no botão de confirmação do modal
+            $('#confirmDeployBtn').click(function (e) {
+                e.preventDefault();
+
+                // 1. Coletar Dados do Formulário
+                var data = {
+                    ContractName: $('#contractName').val(),
+                    ContractType: $('#contractType').val(),
+                    Blockchain: $('#blockchain').val(),
+                    // Converte para decimal/float
+                    DeploymentCost: parseFloat($('#deploymentCost').val()) 
+                };
+
+                // 2. Validação básica
+                if (!data.ContractName || !data.ContractType || !data.Blockchain || data.DeploymentCost <= 0) {
+                    alert('Por favor, preencha todos os campos e garanta que o custo é positivo.');
+                    return;
+                }
+                
+                // Desabilitar o botão e mostrar carregamento
+                $('#confirmDeployBtn').text('Implantando...').prop('disabled', true);
+
+                // 3. Chamada AJAX para o ProfileController.CreateContract
+                $.ajax({
+                    url: '@Url.Action("CreateContract", "Profile")', // Rota para ProfileController.CreateContract
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(data),
+                    success: function (response) {
+                        if (response.success) {
+                            alert(response.message + " Endereço: " + response.contractAddress);
+                            
+                            // 4. Atualizar a tabela dinamicamente (simulando a adição de um novo contrato)
+                            var newRow = '<tr>' +
+                                '<td>' + response.contractAddress.substring(0, 10) + '...</td>' +
+                                '<td>' + data.ContractName + '</td>' +
+                                '<td>' + data.ContractType + '</td>' +
+                                '<td><span class="tag tag-warning text-warning">Pendente</span></td>' + // Status inicial como Pendente
+                                '<td>' + response.costCharged.toFixed(4) + ' ETH</td>' +
+                                '<td><button class="btn btn-xs btn-primary">Detalhes</button> <button class="btn btn-xs btn-danger">Pausar</button></td>' +
+                                '</tr>';
+                            
+                            $('#contractsTable tbody').append(newRow);
+
+                            // Fechar modal e redefinir o botão
+                            $('#createContractModal').modal('hide');
+                            $('#createContractForm')[0].reset();
+
+                        } else {
+                            alert('Erro na criação: ' + response.message);
+                        }
+                    },
+                    error: function (xhr) {
+                        var errorMessage = xhr.responseJSON ? xhr.responseJSON.message : "Erro desconhecido ao comunicar com o servidor.";
+                        alert('Falha na Implantação: ' + errorMessage);
+                    },
+                    complete: function() {
+                         // Restaurar o botão
+                        $('#confirmDeployBtn').text('Confirmar Implantação').prop('disabled', false);
+                    }
+                });
+            });
+            
+            // Limpar formulário ao fechar o modal
+            $('#createContractModal').on('hidden.bs.modal', function () {
+                $('#createContractForm')[0].reset();
+                $('#confirmDeployBtn').text('Confirmar Implantação').prop('disabled', false);
+            });
+        });
+    </script>
+}

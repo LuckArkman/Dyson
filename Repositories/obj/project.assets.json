@@ -6840,11 +6840,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Repositories/Repositories.csproj",
+      "projectUniqueName": "/home/mplopes/Documentos/Dyson/Repositories/Repositories.csproj",
       "projectName": "Repositories",
-      "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Repositories/Repositories.csproj",
+      "projectPath": "/home/mplopes/Documentos/Dyson/Repositories/Repositories.csproj",
       "packagesPath": "/home/mplopes/.nuget/packages/",
-      "outputPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Repositories/obj/",
+      "outputPath": "/home/mplopes/Documentos/Dyson/Repositories/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/mplopes/.nuget/NuGet/NuGet.Config"
@@ -6860,11 +6860,11 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Data/Data.csproj": {
-              "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Data/Data.csproj"
+            "/home/mplopes/Documentos/Dyson/Data/Data.csproj": {
+              "projectPath": "/home/mplopes/Documentos/Dyson/Data/Data.csproj"
             },
-            "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Interfaces/Interfaces.csproj": {
-              "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Galileu.AI/Interfaces/Interfaces.csproj"
+            "/home/mplopes/Documentos/Dyson/Interfaces/Interfaces.csproj": {
+              "projectPath": "/home/mplopes/Documentos/Dyson/Interfaces/Interfaces.csproj"
             }
           }
         }
