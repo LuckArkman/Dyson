@@ -180,4 +180,27 @@ public class Repositorio<T> : IRepositorio<T>
         var result = await collection.UpdateOneAsync(filter, update);
         await Task.CompletedTask;
     }
+
+    public Task<List<User>> GetAllAsync(CancellationToken none)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task UpdateUserAsync(User _User)
+    {
+        var collection = _db.GetDatabase().GetCollection<User>("Users");
+         var user = await GetContractByIdAsync(_User.Id);
+        
+        var filter = Builders<User>.Filter.Eq(c => c.Id, _User.Id);
+        var update = Builders<User>.Update
+            .Set(c => c.UserName, _User.UserName)
+            .Set(c => c.Email, _User.Email)
+            .Set(c => c.PhoneNumber, _User.PhoneNumber)
+            .Set(c => c.PasswordHash, _User.PasswordHash)
+            .Set(c => c.PersonalName, _User.PersonalName)
+            .Set(c => c.BackupDate, _User.BackupDate)
+            .Set(c => c.LastWalletAuth, DateTime.UtcNow);
+        var result = await collection.UpdateOneAsync(filter, update);
+        await Task.CompletedTask;
+    }
 }

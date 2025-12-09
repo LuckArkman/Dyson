@@ -1,6 +1,8 @@
 using System.Security.Claims;
 using Dtos;
 using Interfaces;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services;
@@ -67,49 +69,204 @@ public class ProfileController : Controller
     private string GetWalletAddress() => GetUserId(); 
 
     // --- DASHBOARD HOME ---
-    public async Task<IActionResult> Index()
+    public IActionResult Index()
     {
-        var address = GetWalletAddress();
-        var walletkey = await _walletService.GetUserWalletAsync(address);
-        var balance = await _walletService.GetBalanceAsync(walletkey.Address);
-        var products = await _productRepo.GetAllProductsAsync();
-        var transactions = await _walletService.GetHistoryAsync(walletkey.Address);
-
-        // Simulação de valores
-        _mockStakingStore.TryGetValue(address, out var staked);
-
-        var model = new DashboardViewModel
+        try
         {
-            Balance = balance,
-            ActiveProducts = products.Count,
-            TotalContracts = 20, // Mock
-            StakedAmount = staked,
-            RecentTransactions = transactions.Take(20).ToList()
-        };
+            // CORREÇÃO: Verificar se User e Identity não são nulos
+            if (User == null || User.Identity == null || !User.Identity.IsAuthenticated)
+            {
+                _logger.LogWarning("Unauthenticated access attempt to Profile/Index");
+                return RedirectToAction("Login", "Account");
+            }
 
-        ViewData["Title"] = "Visão Geral";
-        return View(model);
+            // CORREÇÃO: Obter claims de forma segura
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var userName = User.FindFirst(ClaimTypes.Name)?.Value ?? "Usuário";
+            var userEmail = User.FindFirst(ClaimTypes.Email)?.Value ?? "";
+            var walletAddress = User.FindFirst("WalletAddress")?.Value;
+
+            // CORREÇÃO: Criar ViewBag com valores seguros
+            ViewBag.UserId = userId ?? "";
+            ViewBag.UserName = userName;
+            ViewBag.UserEmail = userEmail;
+            ViewBag.WalletAddress = walletAddress;
+            ViewBag.HasWallet = !string.IsNullOrEmpty(walletAddress);
+
+            _logger.LogInformation("Profile page loaded for user {UserId}", userId);
+
+            return View();
+        }
+        catch (NullReferenceException ex)
+        {
+            _logger.LogError(ex, "NullReferenceException in Profile/Index - Line 74 area");
+            
+            // Redirecionar para login se houver problema com claims
+            return RedirectToAction("Login", "Account");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error loading profile page");
+            
+            // Retornar página de erro ou redirecionar
+            return View("Error");
+        }
     }
     
-    public async Task<IActionResult> Wallet()
+    /// <summary>
+    /// Faz logout do usuário
+    /// POST: /Profile/Logout
+    /// </summary>
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Logout()
     {
-        var address = GetWalletAddress();
-        var walletkey = await _walletService.GetUserWalletAsync(address);
-        var balance = await _walletService.GetBalanceAsync(walletkey.Address);
-        var history = await _walletService.GetHistoryAsync(walletkey.Address);
-        _mockStakingStore.TryGetValue(walletkey.Address, out var staked);
-
-        var model = new WalletViewModel
+        try
         {
-            WalletAddress = walletkey.Address,
-            Balance = balance,
-            StakedBalance = staked,
-            History = history.ToList(),
-            CurrentTokenPrice = GenerateSimulatedPrice() 
-        };
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var userName = User.FindFirst(ClaimTypes.Name)?.Value;
 
-        ViewData["Title"] = "Smart Wallet & Trading";
-        return View(model);
+            _logger.LogInformation("User {UserId} ({UserName}) is logging out", userId, userName);
+
+            // Realizar sign out do cookie de autenticação
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            _logger.LogInformation("User {UserId} logged out successfully", userId);
+
+            // Redirecionar para página de login
+            return RedirectToAction("Login", "Account");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error during logout");
+            
+            // Mesmo com erro, tentar fazer logout
+            try
+            {
+                await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            }
+            catch { }
+
+            return RedirectToAction("Login", "Account");
+        }
+    }
+    
+    /// <summary>
+    /// Página de gerenciamento de carteira e trading
+    /// GET: /Profile/Wallet
+    /// </summary>
+    [HttpGet]
+    public IActionResult Wallet()
+    {
+        try
+        {
+            if (User?.Identity?.IsAuthenticated != true)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            PopulateViewBag();
+
+            _logger.LogInformation("Wallet page loaded for user {UserId}", GetUserId());
+
+            // TODO: Buscar dados reais da carteira do banco de dados
+            var model = new Dtos.WalletViewModel
+            {
+                CurrentTokenPrice = 5.50m,
+                TokenBalance = 0,
+                TokenValue = 0,
+                WalletAddress = GetWalletAddress()
+            };
+
+            return View(model);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error loading wallet page");
+            return View("Error");
+        }
+    }
+    
+    /// <summary>
+    /// Página de segurança
+    /// GET: /Profile/Security
+    /// </summary>
+    [HttpGet]
+    public IActionResult Security()
+    {
+        try
+        {
+            if (User?.Identity?.IsAuthenticated != true)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            PopulateViewBag();
+
+            _logger.LogInformation("Security page loaded for user {UserId}", GetUserId());
+
+            return View();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error loading security page");
+            return View("Error");
+        }
+    }
+    
+    /// <summary>
+    /// Página de configurações
+    /// GET: /Profile/Settings
+    /// </summary>
+    [HttpGet]
+    public IActionResult Settings()
+    {
+        try
+        {
+            if (User?.Identity?.IsAuthenticated != true)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            PopulateViewBag();
+
+            _logger.LogInformation("Settings page loaded for user {UserId}", GetUserId());
+
+            return View();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error loading settings page");
+            return View("Error");
+        }
+    }
+    
+    /// <summary>
+    /// Popula ViewBag com informações do usuário
+    /// </summary>
+    private void PopulateViewBag()
+    {
+        ViewBag.UserId = GetUserId();
+        ViewBag.UserName = GetUserName();
+        ViewBag.UserEmail = GetUserEmail();
+        ViewBag.WalletAddress = GetWalletAddress();
+        ViewBag.HasWallet = !string.IsNullOrEmpty(GetWalletAddress());
+    }
+    
+    /// <summary>
+    /// Obtém nome do usuário
+    /// </summary>
+    private string GetUserName()
+    {
+        return User.FindFirst(ClaimTypes.Name)?.Value ?? "Usuário";
+    }
+
+    /// <summary>
+    /// Obtém email do usuário
+    /// </summary>
+    private string GetUserEmail()
+    {
+        return User.FindFirst(ClaimTypes.Email)?.Value ?? "";
     }
 
     /// <summary>

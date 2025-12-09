@@ -1,150 +1,339 @@
-@model Dtos.DashboardViewModel
 @{
     ViewData["Title"] = "Dashboard";
     Layout = "_AdminLayout";
 }
 
-<style>
-  :root {
-    --col-hash: 140px;  /* largura fixa para o Hash */
-    --col-valor: 90px;  /* largura fixa para Valor */
-    --col-data: 110px;  /* largura fixa para Data */
-  }
-
-  /* Evita que qualquer container gere barra horizontal */
-  .table-responsive { 
-    overflow-x: hidden; 
-  }
-
-  /* Tabela responsiva sem estourar a largura */
-  table.table-transactions {
-    width: 100%;
-    table-layout: fixed;          /* divide o espaço de forma fixa */
-    border-collapse: collapse;
-  }
-
-  table.table-transactions col.hash  { width: 140px; }
-  table.table-transactions col.valor { width: 90px; }
-  table.table-transactions col.data  { width: 110px; }
-
-  /* Trunca conteúdo longo com reticências, mas mostra completo no title */
-  .clamp {
-    display: inline-block;
-    max-width: 100%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  /* Caso queira permitir quebra de linha para textos muito longos */
-  .break-anywhere {
-    overflow-wrap: anywhere;
-    word-break: break-word;
-  }
-</style>
-
 <div class="row">
-    <!-- Balance Card -->
+    <!-- User Info Card -->
+    <div class="col-lg-4 col-md-6">
+        <div class="card card-primary card-outline">
+            <div class="card-body box-profile">
+                <div class="text-center">
+                    <div class="profile-user-img img-fluid img-circle bg-gradient-primary d-inline-flex align-items-center justify-content-center" 
+                         style="width: 100px; height: 100px;">
+                        <h1 class="text-white m-0">@ViewBag.UserName.ToString().Substring(0, 1).ToUpper()</h1>
+                    </div>
+                </div>
+
+                <h3 class="profile-username text-center">@ViewBag.UserName</h3>
+                <p class="text-muted text-center">@ViewBag.UserEmail</p>
+
+                <ul class="list-group list-group-unbordered mb-3">
+                    <li class="list-group-item">
+                        <b>Status da Conta</b> 
+                        <a class="float-right">
+                            <span class="badge badge-success">Ativo</span>
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <b>Membro desde</b> 
+                        <a class="float-right">@DateTime.Now.ToString("MMM yyyy")</a>
+                    </li>
+                    <li class="list-group-item">
+                        <b>Último Acesso</b> 
+                        <a class="float-right">Agora</a>
+                    </li>
+                </ul>
+
+                <a asp-controller="Profile" asp-action="Settings" class="btn btn-primary btn-block">
+                    <i class="fas fa-cog"></i> <b>Editar Perfil</b>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wallet Status Card -->
+    <div class="col-lg-8 col-md-6">
+        @if (ViewBag.HasWallet ?? false)
+        {
+            <!-- Wallet Connected -->
+            <div class="card card-success card-outline">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-wallet"></i> Carteira Web3 Conectada
+                    </h3>
+                    <div class="card-tools">
+                        <span class="badge badge-success">
+                            <i class="fas fa-check-circle"></i> Verificada
+                        </span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <p class="text-muted mb-1">Endereço da Carteira:</p>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" value="@ViewBag.WalletAddress" readonly id="walletAddress">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary" type="button" onclick="copyWalletAddress()">
+                                        <i class="fas fa-copy"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="row mt-3">
+                                <div class="col-6">
+                                    <div class="info-box bg-gradient-success">
+                                        <span class="info-box-icon"><i class="fas fa-shield-alt"></i></span>
+                                        <div class="info-box-content">
+                                            <span class="info-box-text">Segurança</span>
+                                            <span class="info-box-number">Blockchain</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="info-box bg-gradient-info">
+                                        <span class="info-box-icon"><i class="fas fa-check"></i></span>
+                                        <div class="info-box-content">
+                                            <span class="info-box-text">Status</span>
+                                            <span class="info-box-number">Ativo</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="text-center">
+                                <i class="fas fa-ethereum fa-5x text-success mb-3"></i>
+                                <p class="text-muted">Autenticação Web3</p>
+                                <a asp-controller="Profile" asp-action="Wallet" class="btn btn-success btn-sm">
+                                    <i class="fas fa-wallet"></i> Gerenciar Carteira
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <!-- No Wallet Connected -->
+            <div class="card card-warning card-outline">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-exclamation-triangle"></i> Carteira Web3 não Conectada
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h5>Conecte sua Carteira MetaMask</h5>
+                            <p class="text-muted">
+                                Conecte sua carteira MetaMask para desbloquear recursos Web3 e autenticação descentralizada.
+                            </p>
+                            
+                            <div class="alert alert-info">
+                                <h5><i class="icon fas fa-info-circle"></i> Benefícios:</h5>
+                                <ul class="mb-0">
+                                    <li>Login rápido sem necessidade de senha</li>
+                                    <li>Segurança aprimorada com criptografia blockchain</li>
+                                    <li>Acesso a recursos Web3 e tokens</li>
+                                    <li>Contratos inteligentes e transações seguras</li>
+                                </ul>
+                            </div>
+                            
+                            <button onclick="linkMetaMaskWallet()" class="btn btn-warning btn-lg">
+                                <i class="fab fa-ethereum"></i> Conectar MetaMask
+                            </button>
+                        </div>
+                        <div class="col-md-4 text-center">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" 
+                                 alt="MetaMask" style="width: 150px; opacity: 0.7;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- Statistics Row -->
+<div class="row">
     <div class="col-lg-3 col-6">
         <div class="small-box bg-info">
             <div class="inner">
-                <h3>@Model.Balance.ToString("F2") Dtc</h3>
-                <p>Saldo em Carteira</p>
-            </div>
-            <div class="icon">
-                <i class="fas fa-wallet"></i>
-            </div>
-            <a asp-action="Wallet" class="small-box-footer">Gerenciar <i class="fas fa-arrow-circle-right"></i></a>
-        </div>
-    </div>
-    <!-- Staked Card -->
-    <div class="col-lg-3 col-6">
-        <div class="small-box bg-success">
-            <div class="inner">
-                <h3>@Model.StakedAmount.ToString("F2") Dtc</h3>
-                <p>Total em Staking (Rendendo)</p>
-            </div>
-            <div class="icon">
-                <i class="fas fa-chart-line"></i>
-            </div>
-            <a asp-action="Wallet" class="small-box-footer">Ver Detalhes <i class="fas fa-arrow-circle-right"></i></a>
-        </div>
-    </div>
-    <!-- Contracts Card -->
-    <div class="col-lg-3 col-6">
-        <div class="small-box bg-danger">
-            <div class="inner">
-                <h3>@Model.TotalContracts</h3>
-                <p>Contratos Inteligentes</p>
+                <h3>0</h3>
+                <p>Contratos Ativos</p>
             </div>
             <div class="icon">
                 <i class="fas fa-file-contract"></i>
             </div>
-            <a asp-action="Contracts" class="small-box-footer">Administrar <i class="fas fa-arrow-circle-right"></i></a>
+            <a asp-controller="Profile" asp-action="Contracts" class="small-box-footer">
+                Ver Contratos <i class="fas fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-6">
+        <div class="small-box bg-success">
+            <div class="inner">
+                <h3>0</h3>
+                <p>Pedidos Completos</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-shopping-cart"></i>
+            </div>
+            <a asp-controller="Profile" asp-action="Orders" class="small-box-footer">
+                Ver Pedidos <i class="fas fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-6">
+        <div class="small-box bg-warning">
+            <div class="inner">
+                <h3>R$ 0</h3>
+                <p>Saldo em Tokens</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-coins"></i>
+            </div>
+            <a asp-controller="Profile" asp-action="Wallet" class="small-box-footer">
+                Ver Carteira <i class="fas fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-6">
+        <div class="small-box bg-danger">
+            <div class="inner">
+                <h3>0</h3>
+                <p>Transações</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-exchange-alt"></i>
+            </div>
+            <a asp-controller="Profile" asp-action="Wallet" class="small-box-footer">
+                Ver Histórico <i class="fas fa-arrow-circle-right"></i>
+            </a>
         </div>
     </div>
 </div>
 
+<!-- Recent Activity -->
 <div class="row">
     <div class="col-md-12">
-        <div class="card">
-            <div class="card-header border-transparent">
-                <h3 class="card-title">Últimas Transações</h3>
-            </div>
-
-            <div class="card-body p-0">
-                <div class="table-responsive">
-                    <table class="table m-0 table-transactions">
-                        <colgroup>
-                            <col class="hash" />
-                            <col />
-                            <col />
-                            <col class="valor" />
-                            <col class="data" />
-                        </colgroup>
-
-                        <thead>
-                            <tr>
-                                <th>Hash ID</th>
-                                <th>De</th>
-                                <th>Para</th>
-                                <th>Valor</th>
-                                <th>Data</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            @foreach (var t in Model.RecentTransactions)
-                            {
-                                <tr>
-                                    <!-- Hash curto na célula, valor completo no title -->
-                                    <td>
-                                        <a href="#" title="@t.hash">@t.hash?.Substring(0, 8)…</a>
-                                    </td>
-
-                                    <!-- Campos longos com reticências -->
-                                    <td>
-                                        <span class="clamp" title="@t.fromAddress">@t.fromAddress</span>
-                                    </td>
-
-                                    <td>
-                                        <span class="clamp" title="@t.toAddress">@t.toAddress</span>
-                                    </td>
-
-                                    <td>
-                                        <span class="clamp" title="@t.amount">@t.amount Dtc</span>
-                                    </td>
-
-                                    <td>
-                                        <span class="clamp" title='@t.timestamp.ToString("u")'>@t.timestamp.ToShortDateString()</span>
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
+        <div class="card card-primary card-outline">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-history"></i> Atividade Recente
+                </h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
                 </div>
             </div>
-
+            <div class="card-body">
+                <div class="timeline">
+                    <div class="time-label">
+                        <span class="bg-primary">Hoje</span>
+                    </div>
+                    <div>
+                        <i class="fas fa-sign-in-alt bg-blue"></i>
+                        <div class="timeline-item">
+                            <span class="time"><i class="fas fa-clock"></i> Agora</span>
+                            <h3 class="timeline-header">Login realizado</h3>
+                            <div class="timeline-body">
+                                Você fez login no dashboard
+                            </div>
+                        </div>
+                    </div>
+                    @if (ViewBag.HasWallet ?? false)
+                    {
+                        <div>
+                            <i class="fas fa-wallet bg-green"></i>
+                            <div class="timeline-item">
+                                <span class="time"><i class="fas fa-clock"></i> Recente</span>
+                                <h3 class="timeline-header">Carteira Conectada</h3>
+                                <div class="timeline-body">
+                                    Sua carteira MetaMask foi conectada com sucesso
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <div>
+                        <i class="fas fa-clock bg-gray"></i>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        // Link wallet to existing account
+        async function linkMetaMaskWallet() {
+            try {
+                const metaMask = window.metaMaskAuth;
+                
+                if (!metaMask || !metaMask.isMetaMaskInstalled) {
+                    alert('MetaMask não está instalado. Por favor, instale a extensão MetaMask.');
+                    window.open('https://metamask.io/download/', '_blank');
+                    return;
+                }
+                
+                // Connect wallet
+                metaMask.showLoading('Conectando à carteira...');
+                const account = await metaMask.connectWallet();
+                if (!account) return;
+
+                // Get signature message
+                metaMask.showLoading('Preparando assinatura...');
+                const message = await metaMask.getSignatureMessage(account, 'link');
+
+                // Sign message
+                const signature = await metaMask.signMessage(message, account);
+
+                // Link to account
+                metaMask.showLoading('Vinculando carteira...');
+                const response = await fetch('/Account/LinkWallet', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        walletAddress: account,
+                        signature: signature,
+                        message: message
+                    })
+                });
+
+                metaMask.hideLoading();
+
+                if (response.ok) {
+                    const result = await response.json();
+                    metaMask.showSuccess(result.message);
+                    setTimeout(() => window.location.reload(), 1500);
+                } else {
+                    const error = await response.json();
+                    metaMask.showError(error.message || 'Erro ao vincular carteira');
+                }
+            } catch (error) {
+                console.error('Error linking wallet:', error);
+                if (window.metaMaskAuth) {
+                    window.metaMaskAuth.showError(error.message || 'Erro ao vincular carteira');
+                } else {
+                    alert('Erro ao vincular carteira: ' + error.message);
+                }
+            }
+        }
+
+        // Copy wallet address to clipboard
+        function copyWalletAddress() {
+            const walletInput = document.getElementById('walletAddress');
+            walletInput.select();
+            document.execCommand('copy');
+            
+            // Show toast notification
+            $(document).Toasts('create', {
+                class: 'bg-success',
+                title: 'Copiado!',
+                body: 'Endereço da carteira copiado para a área de transferência.',
+                autohide: true,
+                delay: 3000,
+            });
+        }
+    </script>
+}

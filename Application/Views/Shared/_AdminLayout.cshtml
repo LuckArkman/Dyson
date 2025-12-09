@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Dyson.AI | Dashboard</title>
+    <title>@ViewData["Title"] | Dyson.AI Dashboard</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -13,6 +13,29 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        /* Custom styles for better integration */
+        .brand-link {
+            border-bottom: 1px solid #4b5563;
+        }
+        .nav-link.active {
+            background-color: #007bff !important;
+            color: white !important;
+        }
+        .wallet-badge {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+        }
+        .user-panel img {
+            width: 2.1rem;
+            height: 2.1rem;
+        }
+        .nav-icon {
+            margin-right: 0.5rem;
+        }
+    </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed dark-mode">
 <div class="wrapper">
@@ -26,19 +49,56 @@
                 </a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <a asp-controller="Home" asp-action="Index" class="nav-link">Home Site</a>
+                <a asp-controller="Home" asp-action="Index" class="nav-link">
+                    <i class="fas fa-home"></i> Home Site
+                </a>
             </li>
         </ul>
 
         <ul class="navbar-nav ml-auto">
+            <!-- Wallet Address Display -->
+            @if (!string.IsNullOrEmpty(ViewBag.WalletAddress as string))
+            {
+                <li class="nav-item d-none d-md-inline-block">
+                    <span class="nav-link">
+                        <i class="fas fa-wallet text-success"></i>
+                        <span class="wallet-badge bg-success">
+                            @((ViewBag.WalletAddress as string).Substring(0, 6))...@((ViewBag.WalletAddress as string).Substring((ViewBag.WalletAddress as string).Length - 4))
+                        </span>
+                    </span>
+                </li>
+            }
+            
+            <!-- Notifications -->
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" href="#">
+                    <i class="far fa-bell"></i>
+                    <span class="badge badge-warning navbar-badge">3</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                    <span class="dropdown-item dropdown-header">3 Notificações</span>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item">
+                        <i class="fas fa-envelope mr-2"></i> Nova mensagem
+                        <span class="float-right text-muted text-sm">3 mins</span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item dropdown-footer">Ver Todas</a>
+                </div>
+            </li>
+            
+            <!-- Fullscreen -->
             <li class="nav-item">
-                <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                <a class="nav-link" data-widget="fullscreen" href="#" role="button" title="Tela Cheia">
                     <i class="fas fa-expand-arrows-alt"></i>
                 </a>
             </li>
+            
+            <!-- Logout -->
             <li class="nav-item">
-                <form asp-controller="Account" asp-action="Logout" method="post">
-                    <button type="submit" class="btn btn-link nav-link text-danger">
+                <form asp-controller="Profile" asp-action="Logout" method="post" class="d-inline">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn btn-link nav-link text-danger" title="Sair">
                         <i class="fas fa-sign-out-alt"></i> Sair
                     </button>
                 </form>
@@ -50,44 +110,124 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
-        <a href="#" class="brand-link">
-            <span class="brand-text font-weight-light">Dyson.AI Profile</span>
+        <a asp-controller="Profile" asp-action="Index" class="brand-link text-center">
+            <span class="brand-text font-weight-light">
+                <i class="fas fa-robot"></i> Dyson.AI
+            </span>
         </a>
 
         <!-- Sidebar -->
         <div class="sidebar">
-            <!-- Sidebar user panel (optional) -->
+            <!-- Sidebar user panel -->
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <div class="image">
+                    <div class="bg-gradient-primary rounded-circle d-flex align-items-center justify-center" 
+                         style="width: 2.1rem; height: 2.1rem; display: flex; align-items: center; justify-content: center;">
+                        <span class="text-white font-weight-bold">
+                            @((User.Identity?.Name ?? "U").Substring(0, 1).ToUpper())
+                        </span>
+                    </div>
+                </div>
                 <div class="info">
-                    <a href="#" class="d-block">@User.Identity?.Name</a>
+                    <a asp-controller="Profile" asp-action="Index" class="d-block">
+                        @(User.Identity?.Name ?? "Usuário")
+                    </a>
+                    @if (!string.IsNullOrEmpty(ViewBag.WalletAddress as string))
+                    {
+                        <small class="text-success d-block d-md-none">
+                            <i class="fas fa-circle" style="font-size: 0.5rem;"></i> Wallet Conectada
+                        </small>
+                    }
                 </div>
             </div>
 
             <!-- Sidebar Menu -->
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                    
+                    <!-- Dashboard -->
+                    <li class="nav-header">PAINEL PRINCIPAL</li>
                     <li class="nav-item">
-                        <a asp-controller="Profile" asp-action="Index" class="nav-link @(ViewContext.RouteData.Values["Action"]?.ToString() == "Index" ? "active" : "")">
+                        <a asp-controller="Profile" asp-action="Index" 
+                           class="nav-link @(ViewContext.RouteData.Values["Action"]?.ToString() == "Index" ? "active" : "")">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>Dashboard</p>
                         </a>
                     </li>
+
+                    <!-- Web3 Section -->
+                    <li class="nav-header">WEB3 & BLOCKCHAIN</li>
+                    
                     <li class="nav-item">
-                        <a asp-controller="Profile" asp-action="Wallet" class="nav-link @(ViewContext.RouteData.Values["Action"]?.ToString() == "Wallet" ? "active" : "")">
+                        <a asp-controller="Profile" asp-action="Wallet" 
+                           class="nav-link @(ViewContext.RouteData.Values["Action"]?.ToString() == "Wallet" ? "active" : "")">
                             <i class="nav-icon fas fa-wallet"></i>
-                            <p>Smart Wallet & Trade</p>
+                            <p>
+                                Smart Wallet
+                                @if (!string.IsNullOrEmpty(ViewBag.WalletAddress as string))
+                                {
+                                    <span class="badge badge-success right">
+                                        <i class="fas fa-check"></i>
+                                    </span>
+                                }
+                            </p>
                         </a>
                     </li>
+                    
                     <li class="nav-item">
-                        <a asp-controller="Profile" asp-action="Contracts" class="nav-link @(ViewContext.RouteData.Values["Action"]?.ToString() == "Contracts" ? "active" : "")">
+                        <a asp-controller="Profile" asp-action="Contracts" 
+                           class="nav-link @(ViewContext.RouteData.Values["Action"]?.ToString() == "Contracts" ? "active" : "")">
                             <i class="nav-icon fas fa-file-contract"></i>
                             <p>Smart Contracts</p>
                         </a>
                     </li>
+
+                    <!-- Orders & Services -->
+                    <li class="nav-header">SERVIÇOS</li>
+                    
                     <li class="nav-item">
-                        <a asp-controller="Profile" asp-action="Orders" class="nav-link @(ViewContext.RouteData.Values["Action"]?.ToString() == "Contracts" ? "active" : "")">
-                            <i class="nav-icon fas fa-file-Orders"></i>
-                            <p>Orders</p>
+                        <a asp-controller="Profile" asp-action="Orders" 
+                           class="nav-link @(ViewContext.RouteData.Values["Action"]?.ToString() == "Orders" ? "active" : "")">
+                            <i class="nav-icon fas fa-shopping-cart"></i>
+                            <p>
+                                Meus Pedidos
+                            </p>
+                        </a>
+                    </li>
+
+                    <!-- Settings -->
+                    <li class="nav-header">CONFIGURAÇÕES</li>
+                    
+                    <li class="nav-item">
+                        <a asp-controller="Profile" asp-action="Settings" 
+                           class="nav-link @(ViewContext.RouteData.Values["Action"]?.ToString() == "Settings" ? "active" : "")">
+                            <i class="nav-icon fas fa-cog"></i>
+                            <p>Configurações</p>
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a asp-controller="Profile" asp-action="Security" 
+                           class="nav-link @(ViewContext.RouteData.Values["Action"]?.ToString() == "Security" ? "active" : "")">
+                            <i class="nav-icon fas fa-shield-alt"></i>
+                            <p>Segurança</p>
+                        </a>
+                    </li>
+
+                    <!-- Help & Support -->
+                    <li class="nav-header">SUPORTE</li>
+                    
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-question-circle"></i>
+                            <p>Ajuda</p>
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-book"></i>
+                            <p>Documentação</p>
                         </a>
                     </li>
                 </ul>
@@ -104,10 +244,20 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">@ViewData["Title"]</h1>
+                        <h1 class="m-0">
+                            @ViewData["Title"]
+                        </h1>
                     </div>
-                </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item">
+                                <a asp-controller="Profile" asp-action="Index">Dashboard</a>
+                            </li>
+                            <li class="breadcrumb-item active">@ViewData["Title"]</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
         </div>
         <!-- /.content-header -->
 
@@ -115,15 +265,18 @@
         <section class="content">
             <div class="container-fluid">
                 @RenderBody()
-            </div><!-- /.container-fluid -->
+            </div>
         </section>
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
 
     <footer class="main-footer">
-        <strong>Copyright &copy; 2025 <a href="#">Dyson.AI</a>.</strong>
-        All rights reserved.
+        <strong>Copyright &copy; 2025 <a href="https://dyson.ai">Dyson.AI</a>.</strong>
+        Todos os direitos reservados.
+        <div class="float-right d-none d-sm-inline-block">
+            <b>Versão</b> 1.0.0
+        </div>
     </footer>
 </div>
 <!-- ./wrapper -->
@@ -134,6 +287,31 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+
+<!-- MetaMask Integration -->
+<script src="~/js/metamask-auth.js"></script>
+
+<!-- Custom Admin Scripts -->
+<script>
+    $(document).ready(function() {
+        // Initialize tooltips
+        $('[data-toggle="tooltip"]').tooltip();
+        
+        // Initialize popovers
+        $('[data-toggle="popover"]').popover();
+        
+        // Keep sidebar active state
+        $('.nav-sidebar a').on('click', function() {
+            $('.nav-sidebar .nav-link').removeClass('active');
+            $(this).addClass('active');
+        });
+        
+        // Auto-hide alerts after 5 seconds
+        setTimeout(function() {
+            $('.alert').fadeOut('slow');
+        }, 5000);
+    });
+</script>
 
 @await RenderSectionAsync("Scripts", required: false)
 </body>

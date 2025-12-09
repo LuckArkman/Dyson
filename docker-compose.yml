@@ -41,12 +41,9 @@
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/app/certs/certificate.pfx
       - ASPNETCORE_Kestrel__Certificates__Default__Password=3702959
     ports:
-      # CORREÇÃO: Mapeia porta 80 da VPS para porta 8080 do container
       - "80:8080"
-      # CORREÇÃO: Mapeia porta 443 da VPS para porta 443 do container (onde está o SSL)
       - "443:443"
     volumes:
-      # Garante que o certificado seja acessível pelo container
       - /home/ubuntu/mplopes/certs/certificate.pfx:/app/certs/certificate.pfx:ro
     depends_on:
       - mongo

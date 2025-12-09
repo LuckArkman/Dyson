@@ -80,13 +80,37 @@
               "target": "Package",
               "version": "[8.0.0, )"
             },
+            "MongoDB.Driver": {
+              "target": "Package",
+              "version": "[3.5.2, )"
+            },
             "Mono.Data.Sqlite": {
               "target": "Package",
               "version": "[1.0.61, )"
             },
+            "Nethereum.Signer": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
+            "Nethereum.Util": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
+            "Nethereum.Web3": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
+            "Serilog.AspNetCore": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.6.2, )"
+            },
+            "Thirdweb": {
+              "target": "Package",
+              "version": "[3.1.1, )"
             }
           },
           "imports": [

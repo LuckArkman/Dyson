@@ -219,7 +219,6 @@
 /home/mplopes/Documentos/Dyson/Application/bin/Debug/net8.0/Microsoft.CodeAnalysis.CSharp.dll
 /home/mplopes/Documentos/Dyson/Application/bin/Debug/net8.0/Microsoft.CodeAnalysis.Razor.dll
 /home/mplopes/Documentos/Dyson/Application/bin/Debug/net8.0/Microsoft.Data.Sqlite.dll
-/home/mplopes/Documentos/Dyson/Application/bin/Debug/net8.0/Microsoft.DotNet.PlatformAbstractions.dll
 /home/mplopes/Documentos/Dyson/Application/bin/Debug/net8.0/Microsoft.Extensions.Caching.Memory.dll
 /home/mplopes/Documentos/Dyson/Application/bin/Debug/net8.0/Microsoft.Extensions.Configuration.dll
 /home/mplopes/Documentos/Dyson/Application/bin/Debug/net8.0/Microsoft.Extensions.Configuration.Abstractions.dll
@@ -347,6 +346,16 @@
 /home/mplopes/Documentos/Dyson/Application/bin/Debug/net8.0/Nethereum.Web3.dll
 /home/mplopes/Documentos/Dyson/Application/bin/Debug/net8.0/BouncyCastle.Crypto.dll
 /home/mplopes/Documentos/Dyson/Application/bin/Debug/net8.0/Thirdweb.dll
+/home/mplopes/Documentos/Dyson/Application/bin/Debug/net8.0/Nethereum.Util.Rest.dll
+/home/mplopes/Documentos/Dyson/Application/bin/Debug/net8.0/Serilog.dll
+/home/mplopes/Documentos/Dyson/Application/bin/Debug/net8.0/Serilog.AspNetCore.dll
+/home/mplopes/Documentos/Dyson/Application/bin/Debug/net8.0/Serilog.Extensions.Hosting.dll
+/home/mplopes/Documentos/Dyson/Application/bin/Debug/net8.0/Serilog.Extensions.Logging.dll
+/home/mplopes/Documentos/Dyson/Application/bin/Debug/net8.0/Serilog.Formatting.Compact.dll
+/home/mplopes/Documentos/Dyson/Application/bin/Debug/net8.0/Serilog.Settings.Configuration.dll
+/home/mplopes/Documentos/Dyson/Application/bin/Debug/net8.0/Serilog.Sinks.Console.dll
+/home/mplopes/Documentos/Dyson/Application/bin/Debug/net8.0/Serilog.Sinks.Debug.dll
+/home/mplopes/Documentos/Dyson/Application/bin/Debug/net8.0/Serilog.Sinks.File.dll
 /home/mplopes/Documentos/Dyson/Application/bin/Debug/net8.0/Application.staticwebassets.runtime.json
 /home/mplopes/Documentos/Dyson/Application/bin/Debug/net8.0/Application.staticwebassets.endpoints.json
 /home/mplopes/Documentos/Dyson/Application/bin/Debug/net8.0/Application

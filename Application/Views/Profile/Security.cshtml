@@ -1,0 +1,627 @@
+@{
+    ViewData["Title"] = "Segurança";
+    Layout = "_AdminLayout";
+}
+
+<!-- Security Status Overview -->
+<div class="row">
+    <div class="col-12">
+        <div class="callout callout-info">
+            <h5><i class="fas fa-shield-alt"></i> Status de Segurança da Conta</h5>
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="info-box bg-success">
+                        <span class="info-box-icon"><i class="fas fa-check"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Senha Forte</span>
+                            <span class="info-box-number">Ativa</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="info-box bg-warning">
+                        <span class="info-box-icon"><i class="fas fa-mobile-alt"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">2FA</span>
+                            <span class="info-box-number">Não Configurado</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="info-box bg-success">
+                        <span class="info-box-icon"><i class="fas fa-envelope"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Email</span>
+                            <span class="info-box-number">Verificado</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="info-box bg-info">
+                        <span class="info-box-icon"><i class="fas fa-wallet"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Carteira</span>
+                            <span class="info-box-number">@(ViewBag.HasWallet ? "Conectada" : "Não Conectada")</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Password Management -->
+    <div class="col-md-6">
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-key"></i> Gerenciamento de Senha
+                </h3>
+            </div>
+            <form id="changePasswordForm">
+                <div class="card-body">
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i> 
+                        Use uma senha forte com no mínimo 14 caracteres, incluindo letras maiúsculas, minúsculas, números e símbolos.
+                    </div>
+
+                    <div class="form-group">
+                        <label>Senha Atual</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="currentPassword" required>
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('currentPassword')">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Nova Senha</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="newPassword" required>
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('newPassword')">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="mt-2">
+                            <small class="text-muted">Força da senha:</small>
+                            <div class="progress" style="height: 10px;">
+                                <div class="progress-bar" id="passwordStrength" role="progressbar" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Confirmar Nova Senha</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="confirmPassword" required>
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('confirmPassword')">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="logoutAll">
+                            <label class="custom-control-label" for="logoutAll">
+                                Desconectar de todos os dispositivos após alterar senha
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Alterar Senha
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Session Management -->
+        <div class="card card-secondary">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-laptop"></i> Sessões Ativas
+                </h3>
+            </div>
+            <div class="card-body">
+                <div class="timeline">
+                    <div>
+                        <i class="fas fa-laptop bg-success"></i>
+                        <div class="timeline-item">
+                            <span class="time"><i class="fas fa-clock"></i> Agora</span>
+                            <h3 class="timeline-header">
+                                <strong>Sessão Atual</strong>
+                            </h3>
+                            <div class="timeline-body">
+                                <strong>Navegador:</strong> Chrome 120<br>
+                                <strong>IP:</strong> 192.168.1.100<br>
+                                <strong>Localização:</strong> São Paulo, Brasil
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <i class="fas fa-mobile-alt bg-info"></i>
+                        <div class="timeline-item">
+                            <span class="time"><i class="fas fa-clock"></i> 2 horas atrás</span>
+                            <h3 class="timeline-header">Mobile App</h3>
+                            <div class="timeline-body">
+                                <strong>Dispositivo:</strong> iPhone 13<br>
+                                <strong>Localização:</strong> Rio de Janeiro, Brasil
+                            </div>
+                            <div class="timeline-footer">
+                                <button class="btn btn-danger btn-sm" onclick="terminateSession('mobile-123')">
+                                    <i class="fas fa-sign-out-alt"></i> Encerrar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-danger btn-block" onclick="terminateAllSessions()">
+                    <i class="fas fa-sign-out-alt"></i> Encerrar Todas as Outras Sessões
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Two-Factor Authentication -->
+    <div class="col-md-6">
+        <div class="card card-warning">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-mobile-alt"></i> Autenticação de Dois Fatores (2FA)
+                </h3>
+                <div class="card-tools">
+                    <span class="badge badge-warning">Recomendado</span>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-warning">
+                    <h5><i class="icon fas fa-exclamation-triangle"></i> Proteção Extra!</h5>
+                    Ativar 2FA adiciona uma camada extra de segurança, exigindo um código do seu celular além da senha.
+                </div>
+
+                <div id="2faDisabled">
+                    <h5>Por que usar 2FA?</h5>
+                    <ul>
+                        <li><i class="fas fa-check text-success"></i> Protege contra roubo de senha</li>
+                        <li><i class="fas fa-check text-success"></i> Previne acesso não autorizado</li>
+                        <li><i class="fas fa-check text-success"></i> Recomendado por especialistas</li>
+                        <li><i class="fas fa-check text-success"></i> Padrão da indústria de segurança</li>
+                    </ul>
+
+                    <h5 class="mt-3">Métodos Disponíveis:</h5>
+                    <div class="row">
+                        <div class="col-6">
+                            <button class="btn btn-warning btn-block" data-toggle="modal" data-target="#modal2faApp">
+                                <i class="fas fa-mobile-alt"></i><br>
+                                App Autenticador
+                                <br><small>(Recomendado)</small>
+                            </button>
+                        </div>
+                        <div class="col-6">
+                            <button class="btn btn-outline-warning btn-block" data-toggle="modal" data-target="#modal2faSMS">
+                                <i class="fas fa-sms"></i><br>
+                                SMS
+                                <br><small>(Menos seguro)</small>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="2faEnabled" style="display: none;">
+                    <div class="alert alert-success">
+                        <i class="fas fa-check-circle"></i> 2FA está ativo e protegendo sua conta!
+                    </div>
+                    <p><strong>Método atual:</strong> App Autenticador</p>
+                    <p><strong>Configurado em:</strong> 15/11/2024</p>
+                    
+                    <button class="btn btn-danger" onclick="disable2FA()">
+                        <i class="fas fa-times"></i> Desativar 2FA
+                    </button>
+                    <button class="btn btn-secondary" data-toggle="modal" data-target="#modalBackupCodes">
+                        <i class="fas fa-key"></i> Ver Códigos de Backup
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Security Options -->
+        <div class="card card-info">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-cog"></i> Opções de Segurança
+                </h3>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="loginAlerts" checked>
+                        <label class="custom-control-label" for="loginAlerts">
+                            Alertas de Login
+                        </label>
+                    </div>
+                    <small class="form-text text-muted">
+                        Receber notificação por email a cada novo login
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="ipWhitelist">
+                        <label class="custom-control-label" for="ipWhitelist">
+                            Lista Branca de IPs
+                        </label>
+                    </div>
+                    <small class="form-text text-muted">
+                        Permitir login apenas de IPs específicos
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="withdrawalLock" checked>
+                        <label class="custom-control-label" for="withdrawalLock">
+                        Confirmação para Retiradas
+                        </label>
+                    </div>
+                    <small class="form-text text-muted">
+                        Exigir confirmação por email para saques
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="biometric">
+                        <label class="custom-control-label" for="biometric">
+                            Login Biométrico (Mobile)
+                        </label>
+                    </div>
+                    <small class="form-text text-muted">
+                        Usar impressão digital ou Face ID
+                    </small>
+                </div>
+
+                <hr>
+
+                <div class="form-group">
+                    <label>Timeout de Sessão</label>
+                    <select class="form-control" id="sessionTimeout">
+                        <option value="15">15 minutos</option>
+                        <option value="30" selected>30 minutos</option>
+                        <option value="60">1 hora</option>
+                        <option value="120">2 horas</option>
+                        <option value="0">Nunca (não recomendado)</option>
+                    </select>
+                </div>
+
+                <button class="btn btn-info btn-block">
+                    <i class="fas fa-save"></i> Salvar Configurações
+                </button>
+            </div>
+        </div>
+
+        <!-- Activity Log -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-history"></i> Log de Atividades Recentes
+                </h3>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>Ação</th>
+                            <th>Data/Hora</th>
+                            <th>IP</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><i class="fas fa-sign-in-alt text-success"></i> Login</td>
+                            <td>09/12/2024 14:30</td>
+                            <td>192.168.1.100</td>
+                        </tr>
+                        <tr>
+                            <td><i class="fas fa-key text-info"></i> Alteração de Senha</td>
+                            <td>08/12/2024 10:15</td>
+                            <td>192.168.1.100</td>
+                        </tr>
+                        <tr>
+                            <td><i class="fas fa-wallet text-primary"></i> Carteira Conectada</td>
+                            <td>05/12/2024 16:45</td>
+                            <td>192.168.1.100</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer">
+                <a href="#" class="btn btn-default btn-sm">Ver Log Completo</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 2FA App Setup Modal -->
+<div class="modal fade" id="modal2faApp">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-warning">
+                <h4 class="modal-title">
+                    <i class="fas fa-mobile-alt"></i> Configurar App Autenticador
+                </h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h5>Passo 1: Instale um App Autenticador</h5>
+                <p>Baixe um destes apps no seu celular:</p>
+                <ul>
+                    <li><strong>Google Authenticator</strong> (iOS/Android)</li>
+                    <li><strong>Microsoft Authenticator</strong> (iOS/Android)</li>
+                    <li><strong>Authy</strong> (iOS/Android)</li>
+                </ul>
+
+                <h5 class="mt-3">Passo 2: Escaneie o QR Code</h5>
+                <div class="text-center">
+                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" 
+                         alt="QR Code" 
+                         style="width: 200px; height: 200px; border: 2px solid #ccc; padding: 10px;">
+                </div>
+                <p class="text-center mt-2">
+                    <small>Ou digite manualmente: <code>ABCD EFGH IJKL MNOP</code></small>
+                </p>
+
+                <h5 class="mt-3">Passo 3: Digite o Código do App</h5>
+                <input type="text" class="form-control text-center" id="2faCode" placeholder="000000" maxlength="6">
+
+                <div class="alert alert-info mt-3">
+                    <i class="fas fa-info-circle"></i> 
+                    <strong>Importante:</strong> Guarde os códigos de backup em um lugar seguro!
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-warning" onclick="enable2FA()">
+                    Ativar 2FA
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 2FA SMS Modal -->
+<div class="modal fade" id="modal2faSMS">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-warning">
+                <h4 class="modal-title">
+                    <i class="fas fa-sms"></i> Configurar 2FA por SMS
+                </h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-warning">
+                    <i class="fas fa-exclamation-triangle"></i> 
+                    SMS é menos seguro que App Autenticador. Recomendamos usar app sempre que possível.
+                </div>
+                <div class="form-group">
+                    <label>Número de Telefone</label>
+                    <input type="tel" class="form-control" placeholder="+55 (00) 00000-0000">
+                </div>
+                <p>Você receberá um código por SMS a cada login.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-warning">Enviar Código de Verificação</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Backup Codes Modal -->
+<div class="modal fade" id="modalBackupCodes">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-info">
+                <h4 class="modal-title">
+                    <i class="fas fa-key"></i> Códigos de Backup
+                </h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Use estes códigos se perder acesso ao seu celular:</strong></p>
+                <div class="bg-dark p-3 text-center" style="font-family: monospace;">
+                    1234-5678<br>
+                    9012-3456<br>
+                    7890-1234<br>
+                    5678-9012<br>
+                    3456-7890
+                </div>
+                <p class="text-danger mt-3">
+                    <i class="fas fa-exclamation-triangle"></i> 
+                    Cada código só pode ser usado uma vez. Guarde-os em local seguro!
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" onclick="printBackupCodes()">
+                    <i class="fas fa-print"></i> Imprimir
+                </button>
+                <button type="button" class="btn btn-secondary" onclick="downloadBackupCodes()">
+                    <i class="fas fa-download"></i> Baixar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Password Strength Checker
+        $('#newPassword').on('input', function() {
+            const password = $(this).val();
+            let strength = 0;
+            
+            if (password.length >= 8) strength += 20;
+            if (password.length >= 14) strength += 20;
+            if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength += 20;
+            if (/[0-9]/.test(password)) strength += 20;
+            if (/[^a-zA-Z0-9]/.test(password)) strength += 20;
+
+            let color = 'bg-danger';
+            if (strength >= 60) color = 'bg-warning';
+            if (strength >= 80) color = 'bg-success';
+
+            $('#passwordStrength')
+                .css('width', strength + '%')
+                .removeClass('bg-danger bg-warning bg-success')
+                .addClass(color);
+        });
+
+        // Toggle Password Visibility
+        function togglePassword(fieldId) {
+            const field = $('#' + fieldId);
+            const type = field.attr('type') === 'password' ? 'text' : 'password';
+            field.attr('type', type);
+        }
+
+        // Change Password Form
+        $('#changePasswordForm').on('submit', function(e) {
+            e.preventDefault();
+            
+            const current = $('#currentPassword').val();
+            const newPass = $('#newPassword').val();
+            const confirm = $('#confirmPassword').val();
+
+            if (newPass !== confirm) {
+                alert('As senhas não coincidem!');
+                return;
+            }
+
+            fetch('/Profile/ChangePassword', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    currentPassword: current,
+                    newPassword: newPass,
+                    logoutAll: $('#logoutAll').is(':checked')
+                })
+            })
+            .then(res => res.json())
+            .then(result => {
+                if (result.success) {
+                    $(document).Toasts('create', {
+                        class: 'bg-success',
+                        title: 'Senha Alterada!',
+                        body: 'Sua senha foi atualizada com sucesso.',
+                        autohide: true,
+                        delay: 3000
+                    });
+                    $('#changePasswordForm')[0].reset();
+                } else {
+                    alert(result.message || 'Erro ao alterar senha');
+                }
+            });
+        });
+
+        // Enable 2FA
+        function enable2FA() {
+            const code = $('#2faCode').val();
+            
+            fetch('/Profile/Enable2FA', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ code: code })
+            })
+            .then(res => res.json())
+            .then(result => {
+                if (result.success) {
+                    $('#modal2faApp').modal('hide');
+                    $('#2faDisabled').hide();
+                    $('#2faEnabled').show();
+                    $(document).Toasts('create', {
+                        class: 'bg-success',
+                        title: '2FA Ativado!',
+                        body: 'Sua conta agora está mais segura.',
+                        autohide: true,
+                        delay: 3000
+                    });
+                }
+            });
+        }
+
+        // Disable 2FA
+        function disable2FA() {
+            if (!confirm('Tem certeza que deseja desativar 2FA? Sua conta ficará menos segura.')) {
+                return;
+            }
+
+            fetch('/Profile/Disable2FA', {
+                method: 'POST'
+            })
+            .then(res => res.json())
+            .then(result => {
+                if (result.success) {
+                    $('#2faEnabled').hide();
+                    $('#2faDisabled').show();
+                }
+            });
+        }
+
+        // Terminate Session
+        function terminateSession(sessionId) {
+            fetch('/Profile/TerminateSession', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ sessionId: sessionId })
+            })
+            .then(res => res.json())
+            .then(result => {
+                if (result.success) {
+                    location.reload();
+                }
+            });
+        }
+
+        // Terminate All Sessions
+        function terminateAllSessions() {
+            if (!confirm('Isso vai desconectar todos os outros dispositivos. Continuar?')) {
+                return;
+            }
+
+            fetch('/Profile/TerminateAllSessions', {
+                method: 'POST'
+            })
+            .then(res => res.json())
+            .then(result => {
+                if (result.success) {
+                    alert('Todas as outras sessões foram encerradas.');
+                }
+            });
+        }
+
+        // Print Backup Codes
+        function printBackupCodes() {
+            window.print();
+        }
+
+        // Download Backup Codes
+        function downloadBackupCodes() {
+            const codes = "1234-5678\n9012-3456\n7890-1234\n5678-9012\n3456-7890";
+            const blob = new Blob([codes], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'backup-codes.txt';
+            a.click();
+        }
+    </script>
+}

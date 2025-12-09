@@ -1,0 +1,472 @@
+@{
+    ViewData["Title"] = "Configurações";
+    Layout = "_AdminLayout";
+}
+
+<div class="row">
+    <!-- Account Settings -->
+    <div class="col-md-6">
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-user-cog"></i> Informações da Conta
+                </h3>
+            </div>
+            <form id="accountForm">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label>Nome de Usuário</label>
+                        <input type="text" class="form-control" value="@ViewBag.UserName" id="userName">
+                    </div>
+                    <div class="form-group">
+                        <label>Nome Completo</label>
+                        <input type="text" class="form-control" placeholder="Seu nome completo" id="fullName">
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" class="form-control" value="@ViewBag.UserEmail" id="email">
+                        <small class="form-text text-muted">
+                            <i class="fas fa-check-circle text-success"></i> Email verificado
+                        </small>
+                    </div>
+                    <div class="form-group">
+                        <label>Telefone</label>
+                        <input type="tel" class="form-control" placeholder="+55 (00) 00000-0000" id="phone">
+                    </div>
+                    <div class="form-group">
+                        <label>País</label>
+                        <select class="form-control" id="country">
+                            <option value="BR" selected>Brasil</option>
+                            <option value="US">Estados Unidos</option>
+                            <option value="PT">Portugal</option>
+                            <option value="ES">Espanha</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Idioma Preferido</label>
+                        <select class="form-control" id="language">
+                            <option value="pt-BR" selected>Português (Brasil)</option>
+                            <option value="en-US">English (US)</option>
+                            <option value="es-ES">Español</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Salvar Alterações
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Preferences -->
+    <div class="col-md-6">
+        <div class="card card-secondary">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-sliders-h"></i> Preferências
+                </h3>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <label>Tema da Interface</label>
+                    <select class="form-control" id="theme">
+                        <option value="dark" selected>Dark Mode (Escuro)</option>
+                        <option value="light">Light Mode (Claro)</option>
+                        <option value="auto">Automático (Sistema)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Moeda Padrão</label>
+                    <select class="form-control" id="currency">
+                        <option value="BRL" selected>Real Brasileiro (BRL)</option>
+                        <option value="USD">Dólar Americano (USD)</option>
+                        <option value="EUR">Euro (EUR)</option>
+                        <option value="BTC">Bitcoin (BTC)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Fuso Horário</label>
+                    <select class="form-control" id="timezone">
+                        <option value="America/Sao_Paulo" selected>São Paulo (GMT-3)</option>
+                        <option value="America/New_York">New York (GMT-5)</option>
+                        <option value="Europe/London">Londres (GMT+0)</option>
+                    </select>
+                </div>
+
+                <hr>
+
+                <div class="form-group">
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="autoRefresh" checked>
+                        <label class="custom-control-label" for="autoRefresh">
+                            Atualização Automática de Dados
+                        </label>
+                    </div>
+                    <small class="form-text text-muted">
+                        Atualizar preços e saldos automaticamente a cada 30 segundos
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="soundEffects">
+                        <label class="custom-control-label" for="soundEffects">
+                            Efeitos Sonoros
+                        </label>
+                    </div>
+                    <small class="form-text text-muted">
+                        Tocar som em transações e alertas
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="animations" checked>
+                        <label class="custom-control-label" for="animations">
+                            Animações
+                        </label>
+                    </div>
+                    <small class="form-text text-muted">
+                        Ativar animações na interface
+                    </small>
+                </div>
+
+                <button class="btn btn-secondary btn-block mt-3">
+                    <i class="fas fa-save"></i> Salvar Preferências
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Notification Settings -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-info">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-bell"></i> Notificações
+                </h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h5><i class="fas fa-envelope"></i> Email</h5>
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="emailTrans" checked>
+                                <label class="custom-control-label" for="emailTrans">
+                                    Transações
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="emailPrice" checked>
+                                <label class="custom-control-label" for="emailPrice">
+                                    Alertas de Preço
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="emailSecurity" checked>
+                                <label class="custom-control-label" for="emailSecurity">
+                                    Alertas de Segurança
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="emailNews">
+                                <label class="custom-control-label" for="emailNews">
+                                    Newsletter
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <h5><i class="fas fa-mobile-alt"></i> Push (App/Browser)</h5>
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="pushTrans" checked>
+                                <label class="custom-control-label" for="pushTrans">
+                                    Transações
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="pushPrice" checked>
+                                <label class="custom-control-label" for="pushPrice">
+                                    Alertas de Preço
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="pushSecurity" checked>
+                                <label class="custom-control-label" for="pushSecurity">
+                                    Alertas de Segurança
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="pushNews">
+                                <label class="custom-control-label" for="pushNews">
+                                    Notícias
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <h5><i class="fas fa-sms"></i> SMS</h5>
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="smsTrans">
+                                <label class="custom-control-label" for="smsTrans">
+                                    Transações
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="smsSecurity" checked>
+                                <label class="custom-control-label" for="smsSecurity">
+                                    Alertas de Segurança
+                                </label>
+                            </div>
+                        </div>
+                        <small class="text-muted">
+                            <i class="fas fa-info-circle"></i> SMS pode ter custos adicionais
+                        </small>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-info">
+                    <i class="fas fa-save"></i> Salvar Configurações de Notificação
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Privacy Settings -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-warning">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-user-shield"></i> Privacidade
+                </h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Visibilidade do Perfil</label>
+                            <select class="form-control" id="profileVisibility">
+                                <option value="private" selected>Privado</option>
+                                <option value="public">Público</option>
+                                <option value="friends">Apenas Conexões</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="showWallet">
+                                <label class="custom-control-label" for="showWallet">
+                                    Mostrar Endereço da Carteira Publicamente
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="showBalance">
+                                <label class="custom-control-label" for="showBalance">
+                                    Mostrar Saldo Publicamente
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="showActivity">
+                                <label class="custom-control-label" for="showActivity">
+                                    Mostrar Atividade de Transações
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <h5>Dados Pessoais</h5>
+                        <p class="text-muted">
+                            Você tem o direito de acessar, corrigir ou excluir seus dados pessoais.
+                        </p>
+                        <div class="btn-group-vertical btn-block">
+                            <button class="btn btn-outline-warning" data-toggle="modal" data-target="#modalExportData">
+                                <i class="fas fa-download"></i> Exportar Meus Dados
+                            </button>
+                            <button class="btn btn-outline-danger" data-toggle="modal" data-target="#modalDeleteAccount">
+                                <i class="fas fa-user-times"></i> Excluir Conta
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-warning">
+                    <i class="fas fa-save"></i> Salvar Configurações de Privacidade
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Export Data Modal -->
+<div class="modal fade" id="modalExportData">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-warning">
+                <h4 class="modal-title">
+                    <i class="fas fa-download"></i> Exportar Dados
+                </h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Você receberá um arquivo contendo todos os seus dados em até 48 horas no email cadastrado.</p>
+                <p><strong>Dados incluídos:</strong></p>
+                <ul>
+                    <li>Informações da conta</li>
+                    <li>Histórico de transações</li>
+                    <li>Dados da carteira</li>
+                    <li>Configurações</li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-warning" onclick="exportData()">
+                    Confirmar Exportação
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Account Modal -->
+<div class="modal fade" id="modalDeleteAccount">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <h4 class="modal-title">
+                    <i class="fas fa-exclamation-triangle"></i> Excluir Conta
+                </h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-danger">
+                    <h5><i class="icon fas fa-ban"></i> Atenção!</h5>
+                    Esta ação é irreversível. Todos os seus dados serão permanentemente excluídos.
+                </div>
+                <p>Para confirmar, digite "EXCLUIR" no campo abaixo:</p>
+                <input type="text" class="form-control" id="deleteConfirm" placeholder="EXCLUIR">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" onclick="deleteAccount()">
+                    Excluir Permanentemente
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Account Form Submit
+            $('#accountForm').on('submit', function(e) {
+                e.preventDefault();
+                
+                const data = {
+                    userName: $('#userName').val(),
+                    fullName: $('#fullName').val(),
+                    email: $('#email').val(),
+                    phone: $('#phone').val(),
+                    country: $('#country').val(),
+                    language: $('#language').val()
+                };
+
+                fetch('/Profile/UpdateAccount', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                })
+                .then(res => res.json())
+                .then(result => {
+                    if (result.success) {
+                        $(document).Toasts('create', {
+                            class: 'bg-success',
+                            title: 'Sucesso!',
+                            body: 'Informações da conta atualizadas.',
+                            autohide: true,
+                            delay: 3000
+                        });
+                    }
+                });
+            });
+
+            // Theme Change
+            $('#theme').on('change', function() {
+                const theme = $(this).val();
+                // Implementar mudança de tema
+                console.log('Theme changed to:', theme);
+            });
+        });
+
+        function exportData() {
+            fetch('/Profile/ExportData', {
+                method: 'POST'
+            })
+            .then(res => res.json())
+            .then(result => {
+                $('#modalExportData').modal('hide');
+                $(document).Toasts('create', {
+                    class: 'bg-success',
+                    title: 'Exportação Solicitada',
+                    body: 'Você receberá um email em até 48 horas.',
+                    autohide: true,
+                    delay: 5000
+                });
+            });
+        }
+
+        function deleteAccount() {
+            const confirm = $('#deleteConfirm').val();
+            if (confirm !== 'EXCLUIR') {
+                alert('Digite "EXCLUIR" para confirmar.');
+                return;
+            }
+
+            fetch('/Profile/DeleteAccount', {
+                method: 'POST'
+            })
+            .then(res => res.json())
+            .then(result => {
+                if (result.success) {
+                    window.location.href = '/Account/Login';
+                }
+            });
+        }
+    </script>
+}

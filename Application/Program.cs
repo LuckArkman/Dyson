@@ -17,7 +17,9 @@ builder.Services.AddHttpClient();
 builder.Services.AddSingleton<IUserService, UserService>(); 
 builder.Services.AddSingleton<ConversationService>();
 builder.Services.AddSingleton<CartService>();
-builder.Services.AddSingleton<WalletService>(); 
+builder.Services.AddSingleton<WalletService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IWeb3AuthService, Web3AuthService>();
 builder.Services.AddHttpClient<ThirdwebApiService>();
 builder.Services.AddSingleton<RewardContractService>();
 builder.Services.AddSingleton<ContractDeploymentService>();
@@ -26,12 +28,14 @@ builder.Services.AddSingleton(typeof(IRepositorio<>), typeof(Repositorio<>));
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
-        // Define o caminho para onde o usuário será redirecionado
-        // se tentar acessar uma página protegida sem estar autenticado.
         options.LoginPath = "/Account/Login";
-        options.AccessDeniedPath = "/Account/AccessDenied";
         options.LogoutPath = "/Account/Logout";
-        options.ExpireTimeSpan = TimeSpan.FromDays(1);
+        options.AccessDeniedPath = "/Account/AccessDenied";
+        options.ExpireTimeSpan = TimeSpan.FromHours(24);
+        options.SlidingExpiration = true;
+        options.Cookie.HttpOnly = true;
+        options.Cookie.SecurePolicy = CookieSecurePolicy.Always; // Usar HTTPS
+        options.Cookie.SameSite = SameSiteMode.Strict;
     });
 
 // Adiciona o serviço de usuários (SIMULADO - Substituir por MongoDB em produção)

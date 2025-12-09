@@ -23,4 +23,6 @@ public interface IRepositorio<T>
     Task<bool> UpdateContractStatusAsync(string contractAddress, string status);
     Task<ContractDocument?> GetContractByIdAsync(string contractId);
     Task UpdateAsync(string contractId, ContractDocument contract);
+    Task<List<User>> GetAllAsync(CancellationToken none);
+    Task UpdateUserAsync(User existingUser);
 }

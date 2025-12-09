@@ -88,6 +88,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUHJvZmlsZS9PcmRlcnMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[/home/mplopes/Documentos/Dyson/Application/Views/Profile/Security.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUHJvZmlsZS9TZWN1cml0eS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/mplopes/Documentos/Dyson/Application/Views/Profile/Settings.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUHJvZmlsZS9TZXR0aW5ncy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [/home/mplopes/Documentos/Dyson/Application/Views/Profile/Wallet.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUHJvZmlsZS9XYWxsZXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
