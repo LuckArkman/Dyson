@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "k98s0XCOglU=",
+  "dgSpecHash": "ZwCtleyyiAU=",
   "success": true,
-  "projectFilePath": "/home/mplopes/Documentos/Dyson/Records/Records.csproj",
+  "projectFilePath": "/mnt/8AA2CEB6A2CEA5D3/Dyson/Records/Records.csproj",
   "expectedPackageFiles": [
     "/home/mplopes/.nuget/packages/akka/1.5.55/akka.1.5.55.nupkg.sha512",
     "/home/mplopes/.nuget/packages/akka.analyzers/0.3.3/akka.analyzers.0.3.3.nupkg.sha512",
@@ -133,9 +133,9 @@
       "code": "NU1603",
       "level": "Warning",
       "message": "Microsoft.Extensions.Primitives 2.0.0-preview1-final depends on System.Runtime.CompilerServices.Unsafe (>= 4.4.0-preview1-25219-04) but System.Runtime.CompilerServices.Unsafe 4.4.0-preview1-25219-04 was not found. System.Runtime.CompilerServices.Unsafe 4.4.0-preview1-25305-02 was resolved instead.",
-      "projectPath": "/home/mplopes/Documentos/Dyson/Records/Records.csproj",
+      "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Dyson/Records/Records.csproj",
       "warningLevel": 1,
-      "filePath": "/home/mplopes/Documentos/Dyson/Records/Records.csproj",
+      "filePath": "/mnt/8AA2CEB6A2CEA5D3/Dyson/Records/Records.csproj",
       "libraryId": "System.Runtime.CompilerServices.Unsafe",
       "targetGraphs": [
         "net8.0"

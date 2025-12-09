@@ -21,7 +21,8 @@
           "Repositories": "1.0.0",
           "Serilog.AspNetCore": "8.0.0",
           "Thirdweb": "1.4.0",
-          "mercadopago-sdk": "2.11.0"
+          "mercadopago-sdk": "2.11.0",
+          "Microsoft.EntityFrameworkCore.Relational": "8.0.16.0"
         },
         "runtime": {
           "Application.dll": {}
@@ -2724,6 +2725,14 @@
             "fileVersion": "1.0.0.0"
           }
         }
+      },
+      "Microsoft.EntityFrameworkCore.Relational/8.0.16.0": {
+        "runtime": {
+          "Microsoft.EntityFrameworkCore.Relational.dll": {
+            "assemblyVersion": "8.0.16.0",
+            "fileVersion": "8.0.1625.21606"
+          }
+        }
       }
     }
   },
@@ -4590,6 +4599,11 @@
     },
     "Services/1.0.0": {
       "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Microsoft.EntityFrameworkCore.Relational/8.0.16.0": {
+      "type": "reference",
       "serviceable": false,
       "sha512": ""
     }

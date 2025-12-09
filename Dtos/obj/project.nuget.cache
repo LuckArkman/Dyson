@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "yIElYx9h8ww=",
+  "dgSpecHash": "eK6Kk0umuOo=",
   "success": true,
-  "projectFilePath": "/home/mplopes/Documentos/Dyson/Dtos/Dtos.csproj",
+  "projectFilePath": "/mnt/8AA2CEB6A2CEA5D3/Dyson/Dtos/Dtos.csproj",
   "expectedPackageFiles": [
     "/home/mplopes/.nuget/packages/akka/1.5.55/akka.1.5.55.nupkg.sha512",
     "/home/mplopes/.nuget/packages/akka.analyzers/0.3.3/akka.analyzers.0.3.3.nupkg.sha512",
