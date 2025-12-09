@@ -40,7 +40,7 @@ public class ProfileController : Controller
         _deploymentService = deploymentService;
         _logger = logger;
         
-        // Inicializa repo de produtos se necessário (garantia)
+        // Inicializa repos
         _productRepo.InitializeCollection(
             configuration["MongoDbSettings:ConnectionString"],
             configuration["MongoDbSettings:DataBaseName"],
@@ -52,8 +52,9 @@ public class ProfileController : Controller
         _contractRepo.InitializeCollection(
             configuration["MongoDbSettings:ConnectionString"],
             configuration["MongoDbSettings:DataBaseName"],
-            "Orders");
+            configuration["MongoDbSettings:DbContracts"] ?? "Contracts");
     }
+
     public async Task<IActionResult> Orders()
     {
         ViewData["Title"] = "Histórico de Compras";
@@ -61,9 +62,8 @@ public class ProfileController : Controller
         var myOrders = await _orderRepo.GetAllOrdersByUserAsync(userId);
         return View(myOrders);
     }
+
     private string GetUserId() => User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-    // Assume que o ID do usuário é usado como chave da carteira para simplificar, 
-    // ou busca o endereço real se estiver na Claim.
     private string GetWalletAddress() => GetUserId(); 
 
     // --- DASHBOARD HOME ---
@@ -112,6 +112,9 @@ public class ProfileController : Controller
         return View(model);
     }
 
+    /// <summary>
+    /// Deploy de novo contrato (via Arc Testnet ou modo simulação)
+    /// </summary>
     [HttpPost]
     public async Task<IActionResult> CreateContract([FromBody] ContractCreationRequestModel model)
     {
@@ -130,11 +133,13 @@ public class ProfileController : Controller
                 message = "Nome do contrato é obrigatório." 
             });
         }
-        if (model.DeploymentCost <= 0)
+
+        // Deployment cost pode ser 0 em modo simulação
+        if (model.DeploymentCost < 0)
         {
             return BadRequest(new { 
                 success = false, 
-                message = "O custo de implantação deve ser maior que zero." 
+                message = "O custo de implantação não pode ser negativo." 
             });
         }
 
@@ -150,13 +155,20 @@ public class ProfileController : Controller
                     "Contrato {ContractName} deployado com sucesso no endereço: {ContractAddress}", 
                     model.ContractName, result);
 
+                // Determinar blockchain
+                var blockchain = string.IsNullOrWhiteSpace(model.Blockchain) 
+                    ? "arc-testnet" 
+                    : model.Blockchain;
+
                 return Ok(new { 
                     success = true, 
                     message = "Contrato Inteligente deployado com sucesso!", 
                     contractAddress = result, 
-                    blockchain = model.Blockchain ?? "sepolia",
+                    blockchain = blockchain,
+                    chainId = GetChainId(blockchain),
                     costCharged = model.DeploymentCost,
-                    explorerUrl = GetExplorerUrl(model.Blockchain ?? "sepolia", result)
+                    explorerUrl = GetExplorerUrl(blockchain, result),
+                    transactionHash = GetTransactionHashFromResult(result)
                 });
             }
             else
@@ -187,25 +199,84 @@ public class ProfileController : Controller
 
     /// <summary>
     /// Retorna a URL do block explorer para verificar o contrato
+    /// Atualizado com suporte a Arc Testnet
     /// </summary>
     private string GetExplorerUrl(string blockchain, string contractAddress)
     {
         var baseUrls = new Dictionary<string, string>
         {
+            // Arc Testnet (Priority)
+            { "arc-testnet", "https://testnet.arcscan.app/address/" },
+            { "arc", "https://testnet.arcscan.app/address/" },
+            
+            // Ethereum
             { "sepolia", "https://sepolia.etherscan.io/address/" },
+            { "ethereum", "https://etherscan.io/address/" },
+            { "mainnet", "https://etherscan.io/address/" },
+            { "eth", "https://etherscan.io/address/" },
+            
+            // Base
             { "base-sepolia", "https://sepolia.basescan.org/address/" },
+            { "base", "https://basescan.org/address/" },
+            
+            // Polygon
             { "polygon", "https://polygonscan.com/address/" },
             { "mumbai", "https://mumbai.polygonscan.com/address/" },
-            { "ethereum", "https://etherscan.io/address/" },
-            { "base", "https://basescan.org/address/" },
+            { "polygon-amoy", "https://amoy.polygonscan.com/address/" },
+            { "matic", "https://polygonscan.com/address/" },
+            
+            // Arbitrum
             { "arbitrum", "https://arbiscan.io/address/" },
-            { "optimism", "https://optimistic.etherscan.io/address/" }
+            { "arbitrum-sepolia", "https://sepolia.arbiscan.io/address/" },
+            
+            // Optimism
+            { "optimism", "https://optimistic.etherscan.io/address/" },
+            { "optimism-sepolia", "https://sepolia-optimistic.etherscan.io/address/" }
         };
 
-        var key = blockchain.ToLower();
+        var key = blockchain?.ToLower() ?? "arc-testnet";
         return baseUrls.ContainsKey(key) 
             ? baseUrls[key] + contractAddress 
-            : $"https://sepolia.etherscan.io/address/{contractAddress}";
+            : $"https://testnet.arcscan.app/address/{contractAddress}";
+    }
+
+    /// <summary>
+    /// Retorna o Chain ID baseado no blockchain
+    /// </summary>
+    private int GetChainId(string blockchain)
+    {
+        var chainIds = new Dictionary<string, int>
+        {
+            { "arc-testnet", 5042002 },
+            { "arc", 5042002 },
+            { "ethereum", 1 },
+            { "mainnet", 1 },
+            { "sepolia", 11155111 },
+            { "base", 8453 },
+            { "base-sepolia", 84532 },
+            { "polygon", 137 },
+            { "matic", 137 },
+            { "mumbai", 80001 },
+            { "polygon-amoy", 80002 },
+            { "arbitrum", 42161 },
+            { "arbitrum-sepolia", 421614 },
+            { "optimism", 10 },
+            { "optimism-sepolia", 11155420 }
+        };
+
+        var key = blockchain?.ToLower() ?? "arc-testnet";
+        return chainIds.ContainsKey(key) ? chainIds[key] : 5042002;
+    }
+
+    /// <summary>
+    /// Extrai transaction hash do resultado (se disponível)
+    /// </summary>
+    private string GetTransactionHashFromResult(string result)
+    {
+        // Se result é um endereço (0x...), não temos o hash ainda
+        // O hash seria retornado separadamente pelo serviço
+        // Por enquanto, retorna vazio
+        return string.Empty;
     }
 
     /// <summary>
@@ -216,6 +287,11 @@ public class ProfileController : Controller
     {
         var address = GetWalletAddress();
 
+        _logger.LogInformation(
+            "Usuário {UserAddress} solicitou registro de contrato: {ContractAddress}", 
+            address, model.ContractAddress);
+
+        // Validação
         if (string.IsNullOrWhiteSpace(model.ContractAddress))
         {
             return BadRequest(new { 
@@ -224,26 +300,62 @@ public class ProfileController : Controller
             });
         }
 
+        // Validar formato do endereço
+        if (!model.ContractAddress.StartsWith("0x") || model.ContractAddress.Length != 42)
+        {
+            return BadRequest(new { 
+                success = false, 
+                message = "Endereço do contrato inválido. Deve começar com 0x e ter 42 caracteres." 
+            });
+        }
+
         try
         {
-            var (success, message) = await _deploymentService.DeployContractAsync(
-                address,
-                model.ContractAddress,
-                model.ContractName ?? "Imported Contract"
-            );
+            // Usar método de registro de contrato existente
+            var contractModel = new ContractCreationRequestModel
+            {
+                ContractName = model.ContractName ?? "Imported Contract",
+                ContractType = "imported",
+                Blockchain = model.Blockchain ?? "arc-testnet",
+                DeploymentCost = 0
+            };
 
-            if (success)
+            // Aqui você precisaria de um método específico para importar
+            // Por enquanto, vou simular o registro
+            var contract = new ContractDocument
             {
-                return Ok(new { success = true, message });
-            }
-            else
-            {
-                return BadRequest(new { success = false, message });
-            }
+                WalletAddress = address,
+                UserId = address,
+                ContractAddress = model.ContractAddress,
+                ContractName = model.ContractName ?? "Imported Contract",
+                ContractType = "imported",
+                Category = "imported",
+                Blockchain = model.Blockchain ?? "arc-testnet",
+                ChainId = GetChainId(model.Blockchain ?? "arc-testnet"),
+                Status = "active",
+                DeploymentMode = "imported",
+                DeployedAt = DateTime.UtcNow,
+                ExplorerUrl = GetExplorerUrl(model.Blockchain ?? "arc-testnet", model.ContractAddress),
+                Notes = $"Contrato importado em {DateTime.UtcNow:yyyy-MM-dd HH:mm:ss} UTC",
+                Tags = new List<string> { "imported", model.Blockchain?.ToLower() ?? "arc-testnet" }
+            };
+
+            await _contractRepo.SaveContractAsync(contract);
+
+            _logger.LogInformation(
+                "Contrato {ContractAddress} registrado com sucesso", 
+                model.ContractAddress);
+
+            return Ok(new { 
+                success = true, 
+                message = "Contrato registrado com sucesso!",
+                contractAddress = model.ContractAddress,
+                explorerUrl = contract.ExplorerUrl
+            });
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Erro ao registrar contrato");
+            _logger.LogError(ex, "Erro ao registrar contrato {ContractAddress}", model.ContractAddress);
             return StatusCode(500, new { 
                 success = false, 
                 message = "Erro ao registrar contrato." 
@@ -319,24 +431,42 @@ public class ProfileController : Controller
     {
         var address = GetWalletAddress();
         var walletkey = await _walletService.GetUserWalletAsync(address);
-        var balance = await _walletService.GetBalanceAsync(walletkey.Address);
-        var contracts = await _contractRepo.GetUserContractsAsync(walletkey.Address);
+        
+        try
+        {
+            var contracts = await _contractRepo.GetUserContractsAsync(walletkey.Address);
 
-        ViewData["Title"] = "Meus Contratos Inteligentes";
-        return View(contracts);
+            // Adicionar estatísticas
+            var stats = new
+            {
+                Total = contracts.Count(),
+                Active = contracts.Count(c => c.Status == "active"),
+                Simulated = contracts.Count(c => c.DeploymentMode == "simulated"),
+                RealDeployed = contracts.Count(c => c.DeploymentMode != "simulated"),
+                ArcTestnet = contracts.Count(c => c.Blockchain == "arc-testnet"),
+                OtherChains = contracts.Count(c => c.Blockchain != "arc-testnet")
+            };
+
+            ViewData["Stats"] = stats;
+            ViewData["Title"] = "Meus Contratos Inteligentes";
+            
+            return View(contracts);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Erro ao carregar contratos do usuário {UserAddress}", address);
+            ViewData["Title"] = "Meus Contratos Inteligentes";
+            return View(new List<ContractDocument>());
+        }
     }
 
-    // Helper
-    private decimal GenerateSimulatedPrice()
-    {
-        decimal supply = _contractService.GetTotalSupply();
-        if (supply == 0) return 1.0m;
-        return 1000000m / supply;
-    }
-
+    /// <summary>
+    /// Busca detalhes de um contrato específico
+    /// </summary>
     [HttpGet]
     public async Task<IActionResult> ContractDetails([FromQuery] string contractAddress)
     {
+        Console.WriteLine(contractAddress);
         var userId = GetUserId();
         var walletAddress = await _walletService.GetUserWalletAsync(userId);
 
@@ -365,7 +495,39 @@ public class ProfileController : Controller
                 return Forbid();
             }
 
-            // 4. Retornar os dados
+            // 4. Enriquecer dados
+            var enrichedContract = new
+            {
+                contract.Id,
+                contract.ContractAddress,
+                contract.ContractName,
+                contract.Symbol,
+                contract.ContractType,
+                contract.Blockchain,
+                contract.ChainId,
+                contract.Status,
+                contract.DeploymentMode,
+                contract.DeployedAt,
+                contract.TransactionHash,
+                contract.ExplorerUrl,
+                contract.TotalSupply,
+                contract.Decimals,
+                contract.Description,
+                contract.Notes,
+                contract.Tags,
+                
+                // Informações adicionais
+                IsSimulated = contract.DeploymentMode == "simulated",
+                IsArcTestnet = contract.Blockchain == "arc-testnet",
+                CanVerifyOnExplorer = contract.DeploymentMode != "simulated",
+                GasToken = contract.Blockchain == "arc-testnet" ? "USDC" : "ETH",
+                
+                // URLs úteis
+                ExplorerLink = contract.ExplorerUrl,
+                FaucetLink = contract.Blockchain == "arc-testnet" 
+                    ? "https://faucet.circle.com" 
+                    : null
+            };
             return Ok(contract);
         }
         catch (Exception ex)
@@ -373,5 +535,49 @@ public class ProfileController : Controller
             _logger.LogError(ex, "Erro ao buscar detalhes do contrato {ContractAddress}", contractAddress);
             return StatusCode(500, new { message = "Erro interno ao buscar detalhes." });
         }
+    }
+
+    /// <summary>
+    /// Busca analytics de um contrato (se disponível)
+    /// </summary>
+    [HttpGet]
+    public async Task<IActionResult> GetContractAnalytics([FromQuery] string contractAddress)
+    {
+        try
+        {
+            var contract = await _contractRepo.GetContractByAddressAsync(contractAddress);
+            
+            if (contract == null)
+            {
+                return NotFound(new { message = "Contrato não encontrado." });
+            }
+
+            // Retornar analytics (mock se não estiver disponível)
+            var analytics = new
+            {
+                contract.TransactionCount,
+                contract.UniqueHolders,
+                contract.TotalVolume,
+                contract.LastInteraction,
+                contract.DeployedAt,
+                DaysActive = (DateTime.UtcNow - contract.DeployedAt),
+                IsActive = contract.Status == "active"
+            };
+
+            return Ok(analytics);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Erro ao buscar analytics");
+            return StatusCode(500, new { message = "Erro ao buscar analytics." });
+        }
+    }
+
+    // Helper
+    private decimal GenerateSimulatedPrice()
+    {
+        decimal supply = _contractService.GetTotalSupply();
+        if (supply == 0) return 1.0m;
+        return 1000000m / supply;
     }
 }

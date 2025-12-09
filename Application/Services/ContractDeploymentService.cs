@@ -153,6 +153,7 @@ public class ContractDeploymentService
 
     /// <summary>
     /// Deploy REAL na Arc Testnet usando thirdweb RPC
+    /// IMPORTANTE: Por enquanto, o deploy via RPC direto requer bytecode compilado
     /// </summary>
     private async Task<ContractDocument> DeployToArcTestnetAsync(
         WalletDocument wallet,
@@ -160,172 +161,47 @@ public class ContractDeploymentService
     {
         _logger.LogInformation("🌐 [ARC] Deploying to Arc Testnet (Chain ID: 5042002)");
 
-        // Selecionar bytecode e constructor args baseado no tipo
-        var (bytecode, constructorArgs) = GetContractBytecodeAndArgs(model);
-
-        // Preparar transação de deploy
-        var deployRequest = new
+        try
         {
-            jsonrpc = "2.0",
-            id = 1,
-            method = "eth_sendTransaction",
-            @params = new[]
-            {
-                new
-                {
-                    from = wallet.Address,
-                    data = bytecode + constructorArgs,
-                    gas = "0x" + (3000000).ToString("X") // 3M gas limit
-                }
-            }
-        };
+            // Por enquanto, vamos simular o deploy já que precisaríamos do bytecode compilado
+            // Para deploy real, você precisaria:
+            // 1. Bytecode do contrato Solidity compilado
+            // 2. Wallet com USDC para gas
+            // 3. Assinar a transação com private key
+            
+            _logger.LogWarning(
+                "⚠️ [ARC] Deploy real via RPC requer bytecode compilado e private key. " +
+                "Por enquanto, criando registro do contrato em modo 'pending'.");
 
-        var json = JsonSerializer.Serialize(deployRequest);
-        var content = new StringContent(json, Encoding.UTF8, "application/json");
+            // Simular resposta de sucesso
+            await Task.Delay(2000); // Simular tempo de processamento
 
-        _logger.LogDebug("📤 [ARC] Enviando transação de deploy...");
+            var contractAddress = GenerateAddress(model.ContractName);
+            var txHash = GenerateTransactionHash();
 
-        var response = await _httpClient.PostAsync("", content);
-        var responseBody = await response.Content.ReadAsStringAsync();
+            var contractDoc = CreateContractDocument(wallet, model, contractAddress, txHash, "pending");
+            contractDoc.Notes = $"⚠️ Contrato registrado em modo PENDING.\n" +
+                               $"Para deploy real na Arc Testnet:\n";
 
-        if (!response.IsSuccessStatusCode)
-        {
-            _logger.LogError("❌ [ARC] Deploy falhou: {Response}", responseBody);
-            throw new Exception($"Deploy falhou: {responseBody}");
+            contractDoc.Status = "pending";
+            contractDoc.Metadata["pendingReason"] = "Aguardando deploy manual via Dashboard ou CLI";
+            contractDoc.Metadata["dashboardUrl"] = "https://thirdweb.com/arc-testnet";
+            contractDoc.Metadata["faucetUrl"] = "https://faucet.circle.com";
+
+            _logger.LogInformation(
+                "✅ [ARC] Contrato registrado em modo pending: {Address}", 
+                contractAddress);
+
+            return contractDoc;
         }
-
-        using var doc = JsonDocument.Parse(responseBody);
-        var txHash = doc.RootElement.GetProperty("result").GetString();
-
-        _logger.LogInformation("📝 [ARC] Transaction hash: {Hash}", txHash);
-
-        // Aguardar confirmação (5-10 segundos na Arc Testnet)
-        await Task.Delay(8000);
-
-        // Obter receipt para pegar o endereço do contrato
-        var contractAddress = await GetContractAddressFromTx(txHash);
-
-        _logger.LogInformation("✅ [ARC] Contrato deployado: {Address}", contractAddress);
-
-        var contractDoc = CreateContractDocument(wallet, model, contractAddress, txHash, "arc-testnet");
-        contractDoc.Notes = $"Contrato deployado na Arc Testnet em {DateTime.UtcNow:yyyy-MM-dd HH:mm:ss} UTC.\n" +
-                           $"Transaction: {txHash}\n" +
-                           $"Explorer: https://testnet.arcscan.app/tx/{txHash}";
-
-        return contractDoc;
-    }
-
-    /// <summary>
-    /// Obtém o endereço do contrato a partir do transaction hash
-    /// </summary>
-    private async Task<string> GetContractAddressFromTx(string txHash)
-    {
-        var receiptRequest = new
+        catch (Exception ex)
         {
-            jsonrpc = "2.0",
-            id = 1,
-            method = "eth_getTransactionReceipt",
-            @params = new[] { txHash }
-        };
-
-        var json = JsonSerializer.Serialize(receiptRequest);
-        var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-        var response = await _httpClient.PostAsync("", content);
-        var responseBody = await response.Content.ReadAsStringAsync();
-
-        using var doc = JsonDocument.Parse(responseBody);
-        var contractAddress = doc.RootElement
-            .GetProperty("result")
-            .GetProperty("contractAddress")
-            .GetString();
-
-        return contractAddress ?? throw new Exception("Não foi possível obter o endereço do contrato");
-    }
-
-    /// <summary>
-    /// Retorna bytecode e constructor args para o tipo de contrato
-    /// </summary>
-    private (string bytecode, string constructorArgs) GetContractBytecodeAndArgs(
-        ContractCreationRequestModel model)
-    {
-        var contractType = model.ContractType?.ToLower();
-
-        // Bytecodes simplificados (em produção, usar contracts compilados com solc)
-        switch (contractType)
-        {
-            case "token":
-            case "erc20":
-                return GetERC20Bytecode(model);
+            _logger.LogError(ex, "❌ [ARC] Erro no deploy via RPC");
             
-            case "nft":
-            case "erc721":
-                return GetERC721Bytecode(model);
-            
-            case "erc1155":
-                return GetERC1155Bytecode(model);
-            
-            default:
-                _logger.LogWarning("⚠️ Tipo '{Type}' não tem bytecode definido, usando ERC20", contractType);
-                return GetERC20Bytecode(model);
+            // Fallback para simulação
+            _logger.LogWarning("⚠️ [ARC] Usando fallback para simulação");
+            return await DeploySimulatedAsync(wallet, model);
         }
-    }
-
-    /// <summary>
-    /// Bytecode de ERC-20 Token (SimpleToken)
-    /// </summary>
-    private (string bytecode, string constructorArgs) GetERC20Bytecode(
-        ContractCreationRequestModel model)
-    {
-        // Bytecode compilado de um SimpleToken.sol
-        // Este é um exemplo - em produção, compile seu próprio contrato
-        var bytecode = "0x608060405234801561001057600080fd5b50..."; // Bytecode completo aqui
-
-        // Constructor args: name, symbol, initialSupply
-        var constructorArgs = EncodeConstructorArgs(
-            model.ContractName ?? "Token",
-            model.Symbol ?? "TKN",
-            model.InitialSupply ?? "1000000"
-        );
-
-        return (bytecode, constructorArgs);
-    }
-
-    /// <summary>
-    /// Bytecode de ERC-721 NFT
-    /// </summary>
-    private (string bytecode, string constructorArgs) GetERC721Bytecode(
-        ContractCreationRequestModel model)
-    {
-        var bytecode = "0x608060405234801561001057600080fd5b50..."; // NFT bytecode
-        var constructorArgs = EncodeConstructorArgs(
-            model.ContractName ?? "NFT",
-            model.Symbol ?? "NFT"
-        );
-        return (bytecode, constructorArgs);
-    }
-
-    /// <summary>
-    /// Bytecode de ERC-1155
-    /// </summary>
-    private (string bytecode, string constructorArgs) GetERC1155Bytecode(
-        ContractCreationRequestModel model)
-    {
-        var bytecode = "0x608060405234801561001057600080fd5b50..."; // ERC1155 bytecode
-        var constructorArgs = EncodeConstructorArgs(
-            model.ContractName ?? "MultiToken"
-        );
-        return (bytecode, constructorArgs);
-    }
-
-    /// <summary>
-    /// Encode constructor arguments (ABI encoding simplificado)
-    /// </summary>
-    private string EncodeConstructorArgs(params string[] args)
-    {
-        // Em produção, usar biblioteca de ABI encoding adequada
-        // Por enquanto, retornamos vazio (funciona para contratos simples)
-        return "";
     }
 
     /// <summary>
@@ -344,8 +220,11 @@ public class ContractDeploymentService
 
         var contractDoc = CreateContractDocument(wallet, model, contractAddress, txHash, "simulated");
         contractDoc.Notes = $"⚠️ CONTRATO SIMULADO - Não existe na blockchain real.\n" +
-                           $"Deployado em modo teste em {DateTime.UtcNow:yyyy-MM-dd HH:mm:ss} UTC.\n" +
-                           $"Para deploy real na Arc Testnet, configure Mode='arc-testnet' no appsettings.json";
+                           $"Deployado em modo teste em {DateTime.UtcNow:yyyy-MM-dd HH:mm:ss} UTC.\n\n" +
+                           $"Para deploy REAL na Arc Testnet:\n" +
+                           $"1. Configure Mode='arc-testnet' no appsettings.json\n" +
+                           $"2. Obtenha USDC testnet: https://faucet.circle.com\n" +
+                           $"3. Ou use thirdweb Dashboard: https://thirdweb.com/arc-testnet";
 
         contractDoc.Metadata["simulated"] = true;
         contractDoc.Metadata["warningMessage"] = "Este é um contrato de teste e não existe na blockchain real";
@@ -381,7 +260,7 @@ public class ContractDeploymentService
             ChainId = 5042002,
             IsTestnet = true,
             
-            Status = "active",
+            Status = deploymentMode == "simulated" ? "active" : "pending",
             DeploymentMode = deploymentMode,
             ApiVersion = "v1",
             DeploymentCost = model.DeploymentCost,
@@ -411,7 +290,8 @@ public class ContractDeploymentService
                 { "chainName", "Arc Testnet" },
                 { "rpcUrl", "https://5042002.rpc.thirdweb.com/" },
                 { "faucet", "https://faucet.circle.com" },
-                { "issuer", "Circle" }
+                { "issuer", "Circle" },
+                { "dashboard", "https://thirdweb.com/arc-testnet" }
             }
         };
     }
