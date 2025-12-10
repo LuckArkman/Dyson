@@ -4752,6 +4752,11 @@
           "Microsoft.Extensions.Logging": "8.0.0",
           "Microsoft.IdentityModel.Tokens": "8.0.0",
           "Mono.Data.Sqlite": "1.0.61",
+          "Nethereum.Contracts": "5.0.0",
+          "Nethereum.Hex": "5.0.0",
+          "Nethereum.Signer": "5.0.0",
+          "Nethereum.Util": "5.0.0",
+          "Nethereum.Web3": "5.0.0",
           "Records": "1.0.0",
           "System.IdentityModel.Tokens.Jwt": "8.0.0",
           "System.Security.Claims": "4.3.0"

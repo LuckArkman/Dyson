@@ -27,4 +27,9 @@ public class TransactionDocument
 
     [BsonElement("hash")]
     public string hash { get; set; } = null!;
+
+    public string type { get; set; }
+    public string status { get; set; }
+    public string blockchainNetwork { get; set; }
+    public string contractAddress { get; set; }
 }

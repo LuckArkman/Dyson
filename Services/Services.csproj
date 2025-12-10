@@ -13,6 +13,12 @@
       <Reference Include="Microsoft.Extensions.Identity.Core">
         <HintPath>..\..\..\..\home\mplopes\.nuget\packages\microsoft.aspnetcore.app.ref\8.0.16\ref\net8.0\Microsoft.Extensions.Identity.Core.dll</HintPath>
       </Reference>
+      <Reference Include="Nethereum.ABI">
+        <HintPath>..\..\..\..\home\mplopes\.nuget\packages\nethereum.abi\5.0.0\lib\net8.0\Nethereum.ABI.dll</HintPath>
+      </Reference>
+      <Reference Include="Nethereum.Web3">
+        <HintPath>..\..\..\..\home\mplopes\.nuget\packages\nethereum.web3\5.0.0\lib\net8.0\Nethereum.Web3.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
     <ItemGroup>
@@ -29,6 +35,11 @@
       <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
       <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="8.0.0" />
       <PackageReference Include="Mono.Data.Sqlite" Version="1.0.61" />
+      <PackageReference Include="Nethereum.Contracts" Version="5.0.0" />
+      <PackageReference Include="Nethereum.Hex" Version="5.0.0" />
+      <PackageReference Include="Nethereum.Signer" Version="5.0.0" />
+      <PackageReference Include="Nethereum.Util" Version="5.0.0" />
+      <PackageReference Include="Nethereum.Web3" Version="5.0.0" />
       <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.0.0" />
       <PackageReference Include="System.Security.Claims" Version="4.3.0" />
     </ItemGroup>

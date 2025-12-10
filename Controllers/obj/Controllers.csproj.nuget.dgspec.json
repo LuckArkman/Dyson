@@ -597,6 +597,26 @@
               "target": "Package",
               "version": "[1.0.61, )"
             },
+            "Nethereum.Contracts": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
+            "Nethereum.Hex": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
+            "Nethereum.Signer": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
+            "Nethereum.Util": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
+            "Nethereum.Web3": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
             "System.IdentityModel.Tokens.Jwt": {
               "target": "Package",
               "version": "[8.0.0, )"
