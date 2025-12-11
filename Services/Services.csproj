@@ -30,6 +30,7 @@
       <PackageReference Include="Microsoft.AspNetCore.Identity.Service.Core" Version="1.0.0-preview1-final" />
       <PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.0" />
       <PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.0" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.1" />
       <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
       <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="8.0.0" />
       <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
@@ -49,6 +50,7 @@
       <ProjectReference Include="..\Dtos\Dtos.csproj" />
       <ProjectReference Include="..\Interfaces\Interfaces.csproj" />
       <ProjectReference Include="..\Records\Records.csproj" />
+      <ProjectReference Include="..\Repositories\Repositories.csproj" />
     </ItemGroup>
 
 </Project>

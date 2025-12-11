@@ -6,9 +6,9 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
         
-        <AssemblyName>GalileuApp</AssemblyName>
+        <!-- <AssemblyName>GalileuApp</AssemblyName>
         <RootNamespace>GalileuApp</RootNamespace>
-        <StaticWebAssetBasePath>_content/GalileuApp</StaticWebAssetBasePath>
+        <StaticWebAssetBasePath>_content/GalileuApp</StaticWebAssetBasePath> -->
     </PropertyGroup>
 
     <ItemGroup>
@@ -22,6 +22,7 @@
     <ItemGroup>
       <PackageReference Include="mercadopago-sdk" Version="2.11.0" />
       <PackageReference Include="Microsoft.AspNetCore.Identity.Service.Core" Version="1.0.0-preview1-final" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.1" />
       <PackageReference Include="MongoDB.Driver" Version="3.5.2" />
       <PackageReference Include="Nethereum.Signer" Version="5.0.0" />
       <PackageReference Include="Nethereum.Util" Version="5.0.0" />

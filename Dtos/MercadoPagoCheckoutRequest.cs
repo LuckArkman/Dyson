@@ -17,9 +17,7 @@ public class MercadoPagoCheckoutRequest
     [Required(ErrorMessage = "Email é obrigatório")]
     [EmailAddress(ErrorMessage = "Email inválido")]
     public string Email { get; set; } = string.Empty;
-
-    [Required(ErrorMessage = "CPF é obrigatório")]
-    [CpfValidation(ErrorMessage = "CPF inválido")]
+    
     public string Document { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "Nome é obrigatório")]

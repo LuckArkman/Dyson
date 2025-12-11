@@ -1,7 +1,6 @@
 using Dtos;
 using Interfaces;
 using Microsoft.AspNetCore.Authentication.Cookies;
-// Usings do Mongo
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Serializers;
@@ -23,7 +22,7 @@ builder.Services.AddScoped<IWeb3AuthService, Web3AuthService>();
 builder.Services.AddHttpClient<ThirdwebApiService>();
 builder.Services.AddSingleton<RewardContractService>();
 builder.Services.AddSingleton<ContractDeploymentService>();
-builder.Services.AddHttpClient<IPaymentGateway, MercadoPagoService>();
+builder.Services.AddScoped<IPaymentGateway, ArcPaymentService>();
 builder.Services.AddSingleton(typeof(IRepositorio<>), typeof(Repositorio<>));
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>

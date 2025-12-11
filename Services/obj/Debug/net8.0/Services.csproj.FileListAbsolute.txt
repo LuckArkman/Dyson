@@ -72,3 +72,5 @@
 /mnt/8AA2CEB6A2CEA5D3/Dyson/Services/obj/Debug/net8.0/refint/Services.dll
 /mnt/8AA2CEB6A2CEA5D3/Dyson/Services/obj/Debug/net8.0/Services.pdb
 /mnt/8AA2CEB6A2CEA5D3/Dyson/Services/obj/Debug/net8.0/ref/Services.dll
+/mnt/8AA2CEB6A2CEA5D3/Dyson/Services/bin/Debug/net8.0/Repositories.dll
+/mnt/8AA2CEB6A2CEA5D3/Dyson/Services/bin/Debug/net8.0/Repositories.pdb

@@ -10,7 +10,8 @@
         "dependencies": {
           "Dtos": "1.0.0",
           "Microsoft.AspNetCore.Identity.Service.Core": "1.0.0-preview1-final",
-          "Records": "1.0.0"
+          "Records": "1.0.0",
+          "Nethereum.RPC": "5.0.0.0"
         },
         "runtime": {
           "Interfaces.dll": {}
@@ -1294,6 +1295,14 @@
             "fileVersion": "1.0.0.0"
           }
         }
+      },
+      "Nethereum.RPC/5.0.0.0": {
+        "runtime": {
+          "Nethereum.RPC.dll": {
+            "assemblyVersion": "5.0.0.0",
+            "fileVersion": "5.0.0.0"
+          }
+        }
       }
     }
   },
@@ -2211,6 +2220,11 @@
     },
     "Records/1.0.0": {
       "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Nethereum.RPC/5.0.0.0": {
+      "type": "reference",
       "serviceable": false,
       "sha512": ""
     }

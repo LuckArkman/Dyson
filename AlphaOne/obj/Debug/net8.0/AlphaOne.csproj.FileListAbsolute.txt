@@ -607,3 +607,6 @@
 /mnt/8AA2CEB6A2CEA5D3/Galileu.AI/AlphaOne/bin/Debug/net8.0/Records.dll
 /mnt/8AA2CEB6A2CEA5D3/Galileu.AI/AlphaOne/bin/Debug/net8.0/Enums.pdb
 /mnt/8AA2CEB6A2CEA5D3/Galileu.AI/AlphaOne/bin/Debug/net8.0/Records.pdb
+/mnt/8AA2CEB6A2CEA5D3/Dyson/AlphaOne/obj/Debug/net8.0/AlphaOne.dll
+/mnt/8AA2CEB6A2CEA5D3/Dyson/AlphaOne/obj/Debug/net8.0/refint/AlphaOne.dll
+/mnt/8AA2CEB6A2CEA5D3/Dyson/AlphaOne/obj/Debug/net8.0/AlphaOne.pdb

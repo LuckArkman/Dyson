@@ -39,7 +39,7 @@
                         {
                             <li class="flex justify-between items-center text-gray-300 bg-gray-800/50 p-3 rounded-lg">
                                 <span>@item.ProductName <span class="text-xs text-gray-500">x @item.Quantity</span></span>
-                                <span class="text-white font-bold">@((item.Price * item.Quantity).ToString("C2"))</span>
+                                <span class="text-white font-bold">@((item.Price * item.Quantity).ToString())</span>
                             </li>
                         }
                     </ul>
@@ -58,37 +58,49 @@
                 </h2>
 
                 <!-- Opções (Radio Buttons estilizados) -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                    
+                    <!-- USDC / Crypto (NOVO) -->
+                    <label class="cursor-pointer relative">
+                        <input type="radio" name="paymentMethod" value="usdc" class="peer sr-only" onchange="togglePaymentFields()" checked>
+                        <div class="p-4 rounded-xl bg-gray-800 border-2 border-transparent peer-checked:border-orange-500 peer-checked:bg-orange-500/10 hover:bg-gray-700 transition-all text-center h-full flex flex-col items-center justify-center">
+                            <svg class="w-8 h-8 text-orange-400 mb-2" fill="currentColor" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
+                                <text x="12" y="16" text-anchor="middle" font-size="10" font-weight="bold" fill="currentColor">$</text>
+                            </svg>
+                            <span class="text-white font-medium">USDC</span>
+                            <span class="text-xs text-gray-400 mt-1">Metamask</span>
+                        </div>
+                    </label>
+
                     <!-- Cartão -->
                     <label class="cursor-pointer relative">
-                        <input type="radio" name="paymentMethod" value="card" class="peer sr-only" onchange="togglePaymentFields()" checked>
+                        <input type="radio" name="paymentMethod" value="card" class="peer sr-only" onchange="togglePaymentFields()">
                         <div class="p-4 rounded-xl bg-gray-800 border-2 border-transparent peer-checked:border-accent-purple peer-checked:bg-accent-purple/10 hover:bg-gray-700 transition-all text-center h-full flex flex-col items-center justify-center">
                             <svg class="w-8 h-8 text-white mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
                             <span class="text-white font-medium">Cartão</span>
-                        </div>
-                    </label>
-
-                    <!-- PIX -->
-                    <label class="cursor-pointer relative">
-                        <input type="radio" name="paymentMethod" value="pix" class="peer sr-only" onchange="togglePaymentFields()">
-                        <div class="p-4 rounded-xl bg-gray-800 border-2 border-transparent peer-checked:border-green-500 peer-checked:bg-green-500/10 hover:bg-gray-700 transition-all text-center h-full flex flex-col items-center justify-center">
-                            <svg class="w-8 h-8 text-green-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path></svg>
-                            <span class="text-white font-medium">PIX</span>
-                        </div>
-                    </label>
-
-                    <!-- Boleto -->
-                    <label class="cursor-pointer relative">
-                        <input type="radio" name="paymentMethod" value="boleto" class="peer sr-only" onchange="togglePaymentFields()">
-                        <div class="p-4 rounded-xl bg-gray-800 border-2 border-transparent peer-checked:border-yellow-500 peer-checked:bg-yellow-500/10 hover:bg-gray-700 transition-all text-center h-full flex flex-col items-center justify-center">
-                            <svg class="w-8 h-8 text-yellow-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                            <span class="text-white font-medium">Boleto</span>
                         </div>
                     </label>
                 </div>
 
                 <!-- Container Dinâmico de Campos -->
                 <div id="payment-fields-container" class="space-y-4">
+                    
+                    <!-- USDC Info (NOVO) -->
+                    <div id="usdc-info" class="animate-fade-in bg-orange-900/20 text-orange-300 p-4 rounded-lg border border-orange-900/50">
+                        <div class="flex items-start space-x-3">
+                            <svg class="w-6 h-6 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                            <div>
+                                <h4 class="font-semibold">Pagamento via Blockchain</h4>
+                                <p class="text-sm mt-1">
+                                    Você será redirecionado para conectar sua carteira Metamask e realizar o pagamento em USDC.
+                                    Certifique-se de ter saldo suficiente de USDC e ETH para taxas de gas.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                     
                     <!-- Campo CPF (Comum e Obrigatório para PIX/Boleto) -->
                     <div id="cpf-container" class="hidden animate-fade-in bg-gray-800/50 p-4 rounded-xl border border-gray-700">
@@ -98,8 +110,8 @@
                         <p class="text-xs text-gray-500 mt-2">Necessário para registro no Banco Central (PIX) ou emissão bancária (Boleto).</p>
                     </div>
 
-                    <!-- Campos Cartão (Simplificado para o exemplo) -->
-                    <div id="card-container" class="animate-fade-in space-y-4">
+                    <!-- Campos Cartão -->
+                    <div id="card-container" class="hidden animate-fade-in space-y-4">
                         <div>
                             <label class="block text-sm text-gray-400 mb-1">Número do Cartão</label>
                             <input type="text" id="cardNumber" placeholder="0000 0000 0000 0000" class="w-full px-4 py-3 rounded-lg bg-gray-900 border border-gray-600 text-white focus:border-accent-purple outline-none">
@@ -114,7 +126,6 @@
                                 <input type="text" id="cardCvv" placeholder="123" class="w-full px-4 py-3 rounded-lg bg-gray-900 border border-gray-600 text-white outline-none">
                             </div>
                         </div>
-                        <!-- Nome do Titular -->
                         <div>
                            <label class="block text-sm text-gray-400 mb-1">Nome no Cartão</label>
                            <input type="text" id="cardName" placeholder="NOME DO TITULAR" class="w-full px-4 py-3 rounded-lg bg-gray-900 border border-gray-600 text-white focus:border-accent-purple outline-none uppercase">
@@ -138,7 +149,7 @@
                 <h3 class="text-xl font-bold text-white mb-6">Total a Pagar</h3>
                 <div class="flex justify-between items-end mb-6 border-b border-gray-700 pb-6">
                     <span class="text-gray-400">Total</span>
-                    <span class="text-3xl font-extrabold text-white">@total.ToString("C2")</span>
+                    <span class="text-3xl font-extrabold text-white">@total.ToString()</span>
                 </div>
                 
                 <button onclick="processCheckout()" id="btnCheckout" class="w-full py-4 px-6 bg-gradient-button text-white font-bold rounded-xl shadow-lg hover:opacity-90 transition transform hover:-translate-y-1 flex justify-center items-center">
@@ -148,7 +159,7 @@
                 <div class="mt-4 text-center">
                     <p class="text-xs text-gray-500 mb-2">Pagamento processado por</p>
                     <div class="flex justify-center items-center space-x-2 opacity-70">
-                        <span class="font-bold text-white">mercado</span><span class="font-bold text-blue-400">pago</span>
+                        <span class="font-bold text-white">Circle</span>
                     </div>
                 </div>
             </div>
@@ -178,17 +189,20 @@
         const cpfContainer = document.getElementById('cpf-container');
         const pixInfo = document.getElementById('pix-info');
         const boletoInfo = document.getElementById('boleto-info');
+        const usdcInfo = document.getElementById('usdc-info');
 
         // Reset
         cardContainer.classList.add('hidden');
         cpfContainer.classList.add('hidden');
         pixInfo.classList.add('hidden');
         boletoInfo.classList.add('hidden');
+        usdcInfo.classList.add('hidden');
 
-        if (method === 'card') {
+        if (method === 'usdc') {
+            usdcInfo.classList.remove('hidden');
+        }
+        else if (method === 'card') {
             cardContainer.classList.remove('hidden');
-            // CPF pode ser opcional ou obrigatório para cartão dependendo da regra de fraude
-            // Mas no seu requisito é explícito para PIX e Boleto. Vou esconder para simplificar a UX do cartão.
         } 
         else if (method === 'pix') {
             cpfContainer.classList.remove('hidden');
@@ -204,6 +218,13 @@
         const btn = document.getElementById('btnCheckout');
         const originalText = btn.innerHTML;
         const method = document.querySelector('input[name="paymentMethod"]:checked').value;
+
+        // Se for USDC, redirecionar para Web3Payment
+        if (method === 'usdc') {
+            window.location.href = '/Web3Payment/Checkout';
+            return;
+        }
+
         const cpf = document.getElementById('cpf').value;
 
         // Validação Frontend
@@ -220,7 +241,6 @@
         const payload = {
             paymentMethod: method,
             cpf: cpf,
-            // Dados de cartão se necessário
             cardName: document.getElementById('cardName')?.value || "",
             cardNumber: document.getElementById('cardNumber')?.value || "",
             cardExpiry: document.getElementById('cardExpiry')?.value || "",
@@ -237,7 +257,6 @@
             const result = await response.json();
 
             if (result.success) {
-                // Redirecionamento crítico para o fluxo do Mercado Pago
                 window.location.href = result.redirectUrl;
             } else {
                 alert("Erro: " + result.message);

@@ -10,12 +10,12 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyCompanyAttribute("GalileuApp")]
+[assembly: System.Reflection.AssemblyCompanyAttribute("Application")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+178f184f423fbf84842fe01202d9069da5abe70e")]
-[assembly: System.Reflection.AssemblyProductAttribute("GalileuApp")]
-[assembly: System.Reflection.AssemblyTitleAttribute("GalileuApp")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f4aa3401ec9af5bac52c411ddcae970da199161e")]
+[assembly: System.Reflection.AssemblyProductAttribute("Application")]
+[assembly: System.Reflection.AssemblyTitleAttribute("Application")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
 
 // Gerado pela classe WriteCodeFragment do MSBuild.

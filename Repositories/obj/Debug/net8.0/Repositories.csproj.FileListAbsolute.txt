@@ -70,3 +70,4 @@
 /mnt/8AA2CEB6A2CEA5D3/Dyson/Repositories/obj/Debug/net8.0/refint/Repositories.dll
 /mnt/8AA2CEB6A2CEA5D3/Dyson/Repositories/obj/Debug/net8.0/Repositories.pdb
 /mnt/8AA2CEB6A2CEA5D3/Dyson/Repositories/obj/Debug/net8.0/ref/Repositories.dll
+/mnt/8AA2CEB6A2CEA5D3/Dyson/Repositories/bin/Debug/net8.0/Nethereum.RPC.dll

@@ -8,7 +8,7 @@
       "version": "1.0.0",
       "restore": {
         "projectUniqueName": "/mnt/8AA2CEB6A2CEA5D3/Dyson/Application/Application.csproj",
-        "projectName": "GalileuApp",
+        "projectName": "Application",
         "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Dyson/Application/Application.csproj",
         "packagesPath": "/home/mplopes/.nuget/packages/",
         "outputPath": "/mnt/8AA2CEB6A2CEA5D3/Dyson/Application/obj/",
@@ -64,6 +64,10 @@
             "Microsoft.AspNetCore.Identity.Service.Core": {
               "target": "Package",
               "version": "[1.0.0-preview1-final, )"
+            },
+            "Microsoft.Extensions.DependencyInjection": {
+              "target": "Package",
+              "version": "[10.0.1, )"
             },
             "MongoDB.Driver": {
               "target": "Package",
@@ -735,6 +739,9 @@
               },
               "/mnt/8AA2CEB6A2CEA5D3/Dyson/Records/Records.csproj": {
                 "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Dyson/Records/Records.csproj"
+              },
+              "/mnt/8AA2CEB6A2CEA5D3/Dyson/Repositories/Repositories.csproj": {
+                "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Dyson/Repositories/Repositories.csproj"
               }
             }
           }
@@ -786,6 +793,10 @@
             "Microsoft.Extensions.Configuration": {
               "target": "Package",
               "version": "[10.0.0, )"
+            },
+            "Microsoft.Extensions.DependencyInjection": {
+              "target": "Package",
+              "version": "[10.0.1, )"
             },
             "Microsoft.Extensions.Hosting": {
               "target": "Package",

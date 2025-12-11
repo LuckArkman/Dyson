@@ -100,7 +100,7 @@ Layout = "_Layout";
                 @foreach (var price in p.PricesCollection ?? new List<Dtos.Prices>())
                 {
                     <option value="@price.Price">
-                        @price.PriceType - @price.Price.ToString("C2", CultureInfo.GetCultureInfo("pt-BR"))
+                        @price.PriceType - USDC - @price.Price.ToString()
                     </option>
                 }
             </select>

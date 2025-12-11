@@ -15,4 +15,10 @@
       <PackageReference Include="Microsoft.AspNetCore.Identity.Service.Core" Version="1.0.0-preview1-final" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Reference Include="Nethereum.RPC">
+        <HintPath>..\..\..\..\home\mplopes\.nuget\packages\nethereum.rpc\5.0.0\lib\net8.0\Nethereum.RPC.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
 </Project>
