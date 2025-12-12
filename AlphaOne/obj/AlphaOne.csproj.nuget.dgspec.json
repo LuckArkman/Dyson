@@ -71,11 +71,15 @@
             },
             "MongoDB.Driver": {
               "target": "Package",
-              "version": "[3.5.1, )"
+              "version": "[3.5.2, )"
             },
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
               "version": "[8.0.0, )"
+            },
+            "Qdrant.Client": {
+              "target": "Package",
+              "version": "[1.16.1, )"
             }
           },
           "imports": [
@@ -159,6 +163,10 @@
               "target": "Package",
               "version": "[1.5.55, )"
             },
+            "Jint": {
+              "target": "Package",
+              "version": "[4.4.2, )"
+            },
             "Microsoft.AspNetCore.Identity.Service.Core": {
               "target": "Package",
               "version": "[1.0.0-preview1-final, )"
@@ -166,6 +174,10 @@
             "MongoDB.Driver": {
               "target": "Package",
               "version": "[3.5.2, )"
+            },
+            "Qdrant.Client": {
+              "target": "Package",
+              "version": "[1.16.1, )"
             }
           },
           "imports": [
@@ -235,9 +247,17 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Jint": {
+              "target": "Package",
+              "version": "[4.4.2, )"
+            },
             "Microsoft.AspNetCore.Identity.Service.Core": {
               "target": "Package",
               "version": "[1.0.0-preview1-final, )"
+            },
+            "Qdrant.Client": {
+              "target": "Package",
+              "version": "[1.16.1, )"
             }
           },
           "imports": [
@@ -311,9 +331,17 @@
               "target": "Package",
               "version": "[1.5.55, )"
             },
+            "Jint": {
+              "target": "Package",
+              "version": "[4.4.2, )"
+            },
             "Microsoft.AspNetCore.Identity.Service.Core": {
               "target": "Package",
               "version": "[1.0.0-preview1-final, )"
+            },
+            "Qdrant.Client": {
+              "target": "Package",
+              "version": "[1.16.1, )"
             }
           },
           "imports": [

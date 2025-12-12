@@ -1,16 +1,405 @@
+@using Dtos
+@model SmartAgent
 @{
-    ViewData["Title"] = "Make Smart Agente";
-    Layout = "_AdminLayout";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = string.IsNullOrEmpty(Model.id) ? "Criar Novo Agente" : $"Editando: {Model.Name}";
 }
 
-<!DOCTYPE html>
+<!-- Drawflow CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jerosoler/Drawflow/dist/drawflow.min.css">
+<!-- FontAwesome (Garanta que está no Layout, mas reforçando aqui se necessário) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-<html>
-<head>
-</head>
-<body>
-<div>
-      
+<style>
+    /* Ajuste de Layout para tela cheia */
+    .content-wrapper { display: flex; flex-direction: column; height: calc(100vh - 57px); }
+    .content { flex: 1; display: flex; flex-direction: column; padding: 0 !important; }
+    .container-fluid { flex: 1; display: flex; flex-direction: column; padding: 0; }
+    
+    /* Editor Canvas */
+    .editor-container {
+        flex: 1; position: relative; overflow: hidden;
+        background: #212529;
+        background-image: radial-gradient(#495057 1px, transparent 1px);
+        background-size: 25px 25px;
+    }
+
+    /* Toolbar Superior */
+    .editor-toolbar {
+        background: #343a40; padding: 10px 15px; border-bottom: 1px solid #4b5563;
+        display: flex; justify-content: space-between; align-items: center; z-index: 5;
+    }
+
+    /* Paleta Lateral Esquerda */
+    .node-palette {
+        position: absolute; top: 15px; left: 15px; width: 200px;
+        background: rgba(33, 37, 41, 0.95); border: 1px solid #4b5563; border-radius: 8px;
+        z-index: 10; box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    }
+    .palette-header { padding: 10px; border-bottom: 1px solid #4b5563; font-weight: bold; text-align: center; color: #adb5bd; }
+    .palette-item {
+        padding: 10px 15px; color: #fff; cursor: grab; border-bottom: 1px solid #343a40;
+        display: flex; align-items: center; transition: background 0.2s;
+    }
+    .palette-item:hover { background: #343a40; }
+    .palette-item i { width: 25px; margin-right: 5px; text-align: center; }
+
+    /* Painel de Propriedades (Direita - Oculto por padrão) */
+    .properties-panel {
+        position: absolute; top: 0; right: -320px; width: 300px; height: 100%;
+        background: #2c3136; border-left: 1px solid #4b5563;
+        transition: right 0.3s ease; z-index: 20; padding: 15px; overflow-y: auto;
+    }
+    .properties-panel.open { right: 0; }
+
+    /* Estilo dos Nós */
+    .drawflow-node {
+        background: #343a40; border: 1px solid #6c757d; border-radius: 6px; width: 200px;
+        color: white; padding: 0;
+    }
+    .drawflow-node .title { padding: 8px; border-radius: 6px 6px 0 0; font-weight: bold; font-size: 0.9rem; }
+    .drawflow-node .content { padding: 10px; font-size: 0.85rem; color: #ced4da; }
+    .drawflow-node.selected { border-color: #ffc107; box-shadow: 0 0 8px rgba(255, 193, 7, 0.6); }
+
+    /* Cores Específicas */
+    .bg-webhook { background-color: #28a745; }
+    .bg-http { background-color: #007bff; }
+    .bg-ai { background-color: #6f42c1; }
+    .bg-logic { background-color: #dc3545; }
+    .bg-code { background-color: #e83e8c; }
+</style>
+
+<!-- TOOLBAR -->
+<div class="editor-toolbar">
+    <div class="d-flex align-items-center">
+        <div class="input-group input-group-sm" style="width: 300px;">
+            <div class="input-group-prepend">
+                <span class="input-group-text bg-dark border-secondary"><i class="fas fa-robot"></i></span>
+            </div>
+            <input type="text" id="agentName" class="form-control bg-dark text-white border-secondary" 
+                   value="@(Model.Name ?? "Novo Agente")" placeholder="Nome do Agente">
+        </div>
+        <input type="hidden" id="agentId" value="@Model.id">
+    </div>
+    
+    <div>
+        <div class="btn-group mr-2">
+            <button class="btn btn-secondary btn-sm" onclick="editor.zoom_out()" title="Zoom Out"><i class="fas fa-search-minus"></i></button>
+            <button class="btn btn-secondary btn-sm" onclick="editor.zoom_reset()" title="Reset Zoom"><i class="fas fa-search"></i></button>
+            <button class="btn btn-secondary btn-sm" onclick="editor.zoom_in()" title="Zoom In"><i class="fas fa-search-plus"></i></button>
+        </div>
+        <button class="btn btn-success btn-sm font-weight-bold shadow-sm" onclick="saveWorkflow()">
+            <i class="fas fa-save mr-1"></i> SALVAR
+        </button>
+    </div>
 </div>
-</body>
-</html>
+
+<!-- EDITOR AREA -->
+<div class="editor-container" id="drawflow" ondrop="drop(event)" ondragover="allowDrop(event)">
+    
+    <!-- PALETTE -->
+    <div class="node-palette">
+        <div class="palette-header">Ferramentas</div>
+        
+        <div class="palette-item" draggable="true" ondragstart="drag(event)" data-node="webhook">
+            <i class="fas fa-bolt text-success"></i> Webhook
+        </div>
+        <div class="palette-item" draggable="true" ondragstart="drag(event)" data-node="httpRequest">
+            <i class="fas fa-globe text-primary"></i> HTTP Request
+        </div>
+        <div class="palette-item" draggable="true" ondragstart="drag(event)" data-node="openai">
+            <i class="fas fa-brain text-purple" style="color:#a57aff"></i> AI / LLM
+        </div>
+        <div class="palette-item" draggable="true" ondragstart="drag(event)" data-node="if">
+            <i class="fas fa-code-branch text-danger"></i> IF Condition
+        </div>
+        <div class="palette-item" draggable="true" ondragstart="drag(event)" data-node="code">
+            <i class="fas fa-code text-pink" style="color:#ff6b6b"></i> JavaScript
+        </div>
+    </div>
+
+    <!-- PROPERTIES PANEL -->
+    <div class="properties-panel" id="propsPanel">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="m-0 text-white"><i class="fas fa-cog"></i> Configurações</h5>
+            <button class="btn btn-xs btn-outline-secondary" onclick="closeProps()"><i class="fas fa-times"></i></button>
+        </div>
+        <hr class="bg-secondary">
+        
+        <div id="propsContent">
+            <p class="text-muted text-center mt-5">Selecione um nó para editar.</p>
+        </div>
+
+        <div id="propsActions" style="display:none;" class="mt-4">
+            <button class="btn btn-primary btn-block mb-2" onclick="saveNodeSettings()">Aplicar Alterações</button>
+            <button class="btn btn-outline-danger btn-block btn-sm" onclick="deleteSelectedNode()">Excluir Nó</button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/gh/jerosoler/Drawflow/dist/drawflow.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        // --- 1. CONFIGURAÇÃO INICIAL ---
+        var id = document.getElementById("drawflow");
+        const editor = new Drawflow(id);
+        editor.reroute = true;
+        editor.start();
+
+        let selectedNodeId = null;
+
+        // --- 2. DRAG & DROP ---
+        function allowDrop(ev) { ev.preventDefault(); }
+        function drag(ev) { ev.dataTransfer.setData("node", ev.target.getAttribute('data-node')); }
+        function drop(ev) {
+            ev.preventDefault();
+            var type = ev.dataTransfer.getData("node");
+            addNodeToCanvas(type, ev.clientX, ev.clientY);
+        }
+
+        function addNodeToCanvas(type, x, y) {
+            // Conversão de Coordenadas
+            var pos_x = x * ( editor.precanvas.clientWidth / (editor.precanvas.clientWidth * editor.zoom)) - (editor.precanvas.getBoundingClientRect().x * ( editor.precanvas.clientWidth / (editor.precanvas.clientWidth * editor.zoom)));
+            var pos_y = y * ( editor.precanvas.clientHeight / (editor.precanvas.clientHeight * editor.zoom)) - (editor.precanvas.getBoundingClientRect().y * ( editor.precanvas.clientHeight / (editor.precanvas.clientHeight * editor.zoom)));
+
+            var html = getTemplate(type);
+            var inputs = (type === 'webhook') ? 0 : 1;
+            var outputs = (type === 'if') ? 2 : 1;
+
+            editor.addNode(type, inputs, outputs, pos_x, pos_y, type, { config: {} }, html);
+        }
+
+        // --- 3. TEMPLATES HTML DOS NÓS ---
+        function getTemplate(type) {
+            let titleClass = "";
+            let icon = "";
+            let desc = "";
+
+            switch(type) {
+                case 'webhook': titleClass="bg-webhook"; icon="fa-bolt"; desc="Trigger"; break;
+                case 'httpRequest': titleClass="bg-http"; icon="fa-globe"; desc="API Call"; break;
+                case 'openai': titleClass="bg-ai"; icon="fa-brain"; desc="LLM"; break;
+                case 'if': titleClass="bg-logic"; icon="fa-code-branch"; desc="Logic"; break;
+                case 'code': titleClass="bg-code"; icon="fa-code"; desc="JS Script"; break;
+                default: titleClass="bg-secondary"; icon="fa-cube"; desc="Node"; break;
+            }
+
+            return `
+                <div class="title ${titleClass}"><i class="fas ${icon}"></i> ${type.toUpperCase()}</div>
+                <div class="content">${desc}</div>
+            `;
+        }
+
+        // --- 4. PAINEL DE PROPRIEDADES (CRÍTICO) ---
+        editor.on('nodeSelected', function(id) {
+            selectedNodeId = id;
+            document.getElementById('propsPanel').classList.add('open');
+            const node = editor.getNodeFromId(id);
+            renderProperties(node);
+        });
+
+        editor.on('nodeUnselected', function() {
+            closeProps();
+        });
+
+        function closeProps() {
+            document.getElementById('propsPanel').classList.remove('open');
+            selectedNodeId = null;
+        }
+
+        function renderProperties(node) {
+            const data = node.data.config || {};
+            let html = "";
+
+            if(node.name === 'httpRequest') {
+                html = `
+                    <div class="form-group">
+                        <label>URL</label>
+                        <input type="text" id="prop-url" class="form-control bg-dark text-white" value="${data.url || 'https://'}">
+                    </div>
+                    <div class="form-group">
+                        <label>Método</label>
+                        <select id="prop-method" class="form-control bg-dark text-white">
+                            <option ${data.method=='GET'?'selected':''}>GET</option>
+                            <option ${data.method=='POST'?'selected':''}>POST</option>
+                            <option ${data.method=='PUT'?'selected':''}>PUT</option>
+                        </select>
+                    </div>
+                `;
+            } else if (node.name === 'openai') {
+                html = `
+                    <div class="form-group">
+                        <label>System Prompt</label>
+                        <textarea id="prop-prompt" class="form-control bg-dark text-white" rows="5">${data.prompt || ''}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Modelo</label>
+                        <select id="prop-model" class="form-control bg-dark text-white">
+                            <option value="gpt-4o">GPT-4o</option>
+                            <option value="gpt-3.5-turbo">GPT-3.5 Turbo</option>
+                        </select>
+                    </div>
+                `;
+            } else if (node.name === 'code') {
+                html = `
+                    <div class="form-group">
+                        <label>JavaScript Code</label>
+                        <textarea id="prop-code" class="form-control bg-dark text-white" rows="10" style="font-family:monospace;">${data.code || '// return $input;'}</textarea>
+                    </div>
+                `;
+            } else if (node.name === 'webhook') {
+                 html = `
+                    <div class="form-group"><label>Path</label><input type="text" id="prop-path" class="form-control bg-dark text-white" value="${data.path || '/webhook'}"></div>
+                    <div class="form-group"><label>Method</label><select id="prop-method" class="form-control bg-dark text-white"><option>GET</option><option>POST</option></select></div>
+                `;
+            } else {
+                html = `<p class="text-muted">Este nó não possui configurações.</p>`;
+            }
+
+            document.getElementById('propsContent').innerHTML = html;
+            document.getElementById('propsActions').style.display = 'block';
+        }
+
+        function saveNodeSettings() {
+            if(!selectedNodeId) return;
+            
+            // Coleta dados dos inputs
+            let newData = { config: {} };
+            
+            if(document.getElementById('prop-url')) newData.config.url = document.getElementById('prop-url').value;
+            if(document.getElementById('prop-method')) newData.config.method = document.getElementById('prop-method').value;
+            if(document.getElementById('prop-prompt')) newData.config.prompt = document.getElementById('prop-prompt').value;
+            if(document.getElementById('prop-code')) newData.config.code = document.getElementById('prop-code').value;
+            if(document.getElementById('prop-path')) newData.config.path = document.getElementById('prop-path').value;
+
+            editor.updateNodeDataFromId(selectedNodeId, newData);
+            
+            // Feedback visual
+            const Toast = Swal.mixin({ toast: true, position: 'top-end', showConfirmButton: false, timer: 1500 });
+            Toast.fire({ icon: 'success', title: 'Configurações atualizadas' });
+            
+            closeProps();
+        }
+
+        function deleteSelectedNode() {
+            if(selectedNodeId) {
+                editor.removeNodeId(selectedNodeId);
+                closeProps();
+            }
+        }
+
+        // --- 5. SAVE & LOAD (BACKEND) ---
+        
+        // Load
+        document.addEventListener("DOMContentLoaded", () => {
+            const modelJson = @Html.Raw(Json.Serialize(Model));
+            if(modelJson && modelJson.workflow && modelJson.workflow.nodes && modelJson.workflow.nodes.length > 0) {
+                restoreWorkflow(modelJson.workflow);
+            }
+        });
+
+        function restoreWorkflow(workflow) {
+            // Conversão Backend -> Frontend
+            const exportData = { "drawflow": { "Home": { "data": {} } } };
+
+            workflow.nodes.forEach(n => {
+                let frontType = n.type.split('.').pop();
+                if(n.type.includes('HttpRequest')) frontType = 'httpRequest';
+                if(n.type.includes('OpenAI')) frontType = 'openai';
+                
+                // Fallback para nomes antigos
+                if(!['webhook','httpRequest','openai','if','code'].includes(frontType)) frontType = 'httpRequest';
+
+                const html = getTemplate(frontType);
+                const inputs = (frontType === 'webhook') ? 0 : 1;
+                const outputs = (frontType === 'if') ? 2 : 1;
+
+                exportData.drawflow.Home.data[n.id] = {
+                    "id": n.id,
+                    "name": frontType,
+                    "data": { "config": n.parameters },
+                    "class": frontType,
+                    "html": html,
+                    "typenode": false,
+                    "inputs": {}, "outputs": {},
+                    "pos_x": n.position.x, "pos_y": n.position.y
+                };
+
+                for(let i=1; i<=inputs; i++) exportData.drawflow.Home.data[n.id].inputs[`input_${i}`] = { connections: [] };
+                for(let i=1; i<=outputs; i++) exportData.drawflow.Home.data[n.id].outputs[`output_${i}`] = { connections: [] };
+            });
+
+            workflow.connections.forEach(c => {
+                const s = c.sourceNodeId;
+                const t = c.targetNodeId;
+                const outKey = `output_${(c.sourceOutputIndex || 0) + 1}`;
+                const inKey = `input_1`;
+
+                if(exportData.drawflow.Home.data[s] && exportData.drawflow.Home.data[t]) {
+                    exportData.drawflow.Home.data[s].outputs[outKey].connections.push({ node: t, output: inKey });
+                    exportData.drawflow.Home.data[t].inputs[inKey].connections.push({ node: s, input: outKey });
+                }
+            });
+
+            editor.import(exportData);
+        }
+
+        // Save
+        async function saveWorkflow() {
+            const raw = editor.export();
+            const nodesDict = raw.drawflow.Home.data;
+            const backendNodes = [];
+            const backendConnections = [];
+
+            for (const [key, val] of Object.entries(nodesDict)) {
+                let backType = 'n8n-nodes-base.' + val.name;
+                if(val.name === 'httpRequest') backType = 'MyClone.HttpRequest';
+                if(val.name === 'openai') backType = 'SmartAgent.OpenAI';
+
+                backendNodes.push({
+                    Id: val.id.toString(),
+                    Name: val.name,
+                    Type: backType,
+                    Parameters: val.data.config || {},
+                    Position: { X: val.pos_x, Y: val.pos_y }
+                });
+
+                for (const [outName, outObj] of Object.entries(val.outputs)) {
+                    for (const conn of outObj.connections) {
+                        backendConnections.push({
+                            SourceNodeId: val.id.toString(),
+                            TargetNodeId: conn.node.toString(),
+                            SourceOutputIndex: parseInt(outName.split('_')[1]) - 1
+                        });
+                    }
+                }
+            }
+
+            const payload = {
+                Id: document.getElementById('agentId').value || null,
+                Name: document.getElementById('agentName').value,
+                Workflow: { Nodes: backendNodes, Connections: backendConnections }
+            };
+
+            try {
+                const res = await fetch('/SmartAgent/Save', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (res.ok) {
+                    const data = await res.json();
+                    document.getElementById('agentId').value = data.id;
+                    Swal.fire('Sucesso', 'Agente salvo!', 'success');
+                } else {
+                    Swal.fire('Erro', 'Falha ao salvar.', 'error');
+                }
+            } catch(e) {
+                Swal.fire('Erro', 'Erro de conexão.', 'error');
+            }
+        }
+    </script>
+}

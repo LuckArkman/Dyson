@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using Data;
 using Dtos;
 using Interfaces;
@@ -202,5 +203,43 @@ public class Repositorio<T> : IRepositorio<T>
             .Set(c => c.LastWalletAuth, DateTime.UtcNow);
         var result = await collection.UpdateOneAsync(filter, update);
         await Task.CompletedTask;
+    }
+    
+    public async Task<IEnumerable<T>> SearchAsync(Expression<Func<T, bool>> predicate)
+    {
+        return await _collection.Find(predicate).ToListAsync();
+    }
+
+    public async Task<T> GetByIdAsync(string id)
+    {
+        // Assume que a entidade tem um campo Id. 
+        // Como T é genérico, filtramos usando Builders genéricos ou Reflection se necessário.
+        // A maneira mais limpa com Driver Mongo moderno é Filter.Eq("Id", id)
+        var filter = Builders<T>.Filter.Eq("Id", id);
+        return await _collection.Find(filter).FirstOrDefaultAsync();
+    }
+
+    public async Task AddAsync(T entity)
+    {
+        await _collection.InsertOneAsync(entity);
+    }
+
+    public async Task UpdateAsync(T entity)
+    {
+        // Precisamos pegar o ID da entidade via Reflection ou assumir uma interface
+        var idProperty = typeof(T).GetProperty("Id");
+        var idValue = idProperty?.GetValue(entity)?.ToString();
+
+        if (idValue != null)
+        {
+            var filter = Builders<T>.Filter.Eq("Id", idValue);
+            await _collection.ReplaceOneAsync(filter, entity);
+        }
+    }
+
+    public async Task DeleteAsync(string id)
+    {
+        var filter = Builders<T>.Filter.Eq("Id", id);
+        await _collection.DeleteOneAsync(filter);
     }
 }

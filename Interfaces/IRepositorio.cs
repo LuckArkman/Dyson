@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using Dtos;
 using MongoDB.Driver;
 
@@ -25,4 +26,10 @@ public interface IRepositorio<T>
     Task UpdateAsync(string contractId, ContractDocument contract);
     Task<List<User>> GetAllAsync(CancellationToken none);
     Task UpdateUserAsync(User existingUser);
+    
+    Task<IEnumerable<T>> SearchAsync(Expression<Func<T, bool>> predicate);
+    Task<T> GetByIdAsync(string id);
+    Task AddAsync(T entity);
+    Task UpdateAsync(T entity);
+    Task DeleteAsync(string id);
 }

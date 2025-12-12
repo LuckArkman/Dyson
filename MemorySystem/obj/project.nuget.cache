@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "dgSpecHash": "OEaQwANAElI=",
+  "success": true,
+  "projectFilePath": "/home/mplopes/Documentos/Dyson/MemorySystem/MemorySystem.csproj",
+  "expectedPackageFiles": [
+    "/home/mplopes/.nuget/packages/google.protobuf/3.31.0/google.protobuf.3.31.0.nupkg.sha512",
+    "/home/mplopes/.nuget/packages/grpc.core.api/2.71.0/grpc.core.api.2.71.0.nupkg.sha512",
+    "/home/mplopes/.nuget/packages/grpc.net.client/2.71.0/grpc.net.client.2.71.0.nupkg.sha512",
+    "/home/mplopes/.nuget/packages/grpc.net.common/2.71.0/grpc.net.common.2.71.0.nupkg.sha512",
+    "/home/mplopes/.nuget/packages/microsoft.extensions.logging.abstractions/6.0.0/microsoft.extensions.logging.abstractions.6.0.0.nupkg.sha512",
+    "/home/mplopes/.nuget/packages/qdrant.client/1.16.1/qdrant.client.1.16.1.nupkg.sha512",
+    "/home/mplopes/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.16/microsoft.aspnetcore.app.ref.8.0.16.nupkg.sha512"
+  ],
+  "logs": []
+}
