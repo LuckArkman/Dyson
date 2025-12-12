@@ -1,0 +1,335 @@
+@using System.Globalization;
+@using Dtos
+@model object 
+
+@{
+    ViewData["Title"] = "Cadastrar para Venda";
+    // Mantendo o layout de administração para a página de gestão/cadastro
+    Layout = "_AdminLayout";
+    
+    // VARIÁVEIS DE CONTEXTO (Mock para dados que viriam do Controller/ViewBag)
+    var currentDTCPrice = 0.50m; 
+    var sellType = ViewBag.SellType as string; // 'Agent', 'Token', ou vazio
+    var tokenPackages = ViewBag.TokenPackages as List<int> ?? new List<int> { 1000, 2500, 5000, 10000 };
+    var userAgents = new List<SmartAgent> 
+    {
+        new SmartAgent { id = "A001", Name = "Agente Otimizador de Trading (v1.2)", Description = "IA para negociação de alta frequência e análise de mercado em tempo real. Licença de 1 ano.", Type = "Trading & Otimização", price = 1500.00m },
+        new SmartAgent { id = "A002", Name = "Agente de Análise de Sentimento (Beta)", Description = "Monitora redes sociais e notícias para gerar insights de mercado em 12 idiomas.", Type = "Análise de Sentimento", price = 800.00m },
+        new SmartAgent { id = "A003", Name = "Agente de Auditoria de Contrato (P)", Description = "Versão premium do auditor de contratos. Verifica vulnerabilidades de reentrância e overflow.", Type = "Segurança & Auditoria", price = 2200.00m }
+    };
+
+    if (ViewBag.UserAgents != null)
+    {
+        userAgents = ViewBag.UserAgents as List<SmartAgent>;
+    }
+}
+
+<style>
+    /* Estilos Customizados */
+    .selection-card {
+        border-radius: 15px;
+        transition: transform 0.3s, box-shadow 0.3s;
+        cursor: pointer;
+        min-height: 250px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%; 
+        height: 100%;
+    }
+    .selection-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+    .selection-icon {
+        font-size: 3.5rem;
+        margin-bottom: 15px;
+    }
+    .form-section {
+        border-radius: 15px;
+        padding: 30px;
+        background-color: #212529; /* Fundo escuro para a seção de formulário */
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+    .info-tip {
+        background-color: #343a40;
+        border-left: 5px solid #ffc107;
+        padding: 10px;
+        border-radius: 5px;
+    }
+    .card-link-wrapper {
+        display: block;
+        height: 100%;
+        text-decoration: none;
+    }
+</style>
+
+<div class="row">
+    <div class="col-lg-12">
+        
+        @if (TempData["Message"] != null)
+        {
+            <div class="alert alert-@(TempData["MessageType"] == "success" ? "success" : "danger") alert-dismissible fade show" role="alert">
+                <i class="fas fa-info-circle mr-2"></i>
+                @TempData["Message"]
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        }
+
+        @if (string.IsNullOrEmpty(sellType))
+        {
+            <h2 class="mb-4 text-white"><i class="fas fa-cogs mr-2"></i> O que você deseja vender?</h2>
+            
+            <div class="row" id="selectionCards">
+                
+                <div class="col-md-6 mb-4">
+                    <a asp-controller="marketPlace" asp-action="Sell" asp-route-type="Agent" class="card-link-wrapper text-decoration-none">
+                        <div class="card bg-dark selection-card border-info text-center">
+                            <div class="card-body">
+                                <i class="selection-icon fas fa-robot text-info"></i>
+                                <h3 class="card-title text-white">Smart Agent</h3>
+                                <p class="card-text text-white-50">Inteligência Artificial, Robôs de Trading, Ferramentas de Automação.</p>
+                                <span class="badge badge-info p-2 mt-2">Selecionar Cadastro</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="col-md-6 mb-4">
+                    <a asp-controller="marketPlace" asp-action="Sell" asp-route-type="Token" class="card-link-wrapper text-decoration-none">
+                        <div class="card bg-dark selection-card border-success text-center">
+                            <div class="card-body">
+                                <i class="selection-icon fas fa-coins text-success"></i>
+                                <h3 class="card-title text-white">Pacote de Tokens DTC</h3>
+                                <p class="card-text text-white-50">Venda seus ativos DTC por um preço definido por você.</p>
+                                <span class="badge badge-success p-2 mt-2">Selecionar Cadastro</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        }
+        else
+        {
+            <a asp-controller="marketPlace" asp-action="Sell" class="btn btn-default mb-4"><i class="fas fa-arrow-left mr-2"></i> Voltar à Seleção</a>
+            
+            <div class="form-section">
+            
+                @if (sellType == "Agent")
+                {
+                    <h4 class="mb-4 text-info"><i class="fas fa-id-card-alt mr-2"></i> Cadastro de Smart Agent</h4>
+                    <div class="info-tip mb-4">
+                        <small class="text-warning">Dica:</small>
+                        <p class="text-white-50 mb-0">Selecione um Agente do seu inventário para listar. Os campos de Nome, Categoria e Descrição serão preenchidos automaticamente.</p>
+                    </div>
+
+                    <form asp-controller="marketPlace" asp-action="RegisterAgent" method="post">
+                        
+                        <div class="form-group">
+                            <label for="ExistingAgentId"><i class="fas fa-list-check"></i> **Selecione o Smart Agent para Venda:**</label>
+                            <select id="ExistingAgentId" name="ExistingAgentId" class="form-control form-control-lg custom-select bg-dark text-white border-secondary" required>
+                                <option value="">Selecione um Agente do seu Inventário</option>
+                                @foreach (var agent in userAgents!)
+                                {
+                                    <option value="@agent.id" 
+                                            data-name="@agent.Name" 
+                                            data-desc="@agent.Description" 
+                                            data-category="@agent.Type">
+                                        [@agent.id] @agent.Name
+                                    </option>
+                                }
+                            </select>
+                        </div>
+                        
+                        <hr class="border-secondary my-4">
+
+                        <div class="form-row">
+                            <div class="form-group col-md-8">
+                                <label for="AgentName"><i class="fas fa-tag"></i> Nome do Smart Agent (Preenchido):</label>
+                                <input type="text" id="AgentName" name="Name" class="form-control form-control-lg bg-dark text-white border-secondary" readonly required>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="AgentCategory"><i class="fas fa-list-alt"></i> Categoria (Preenchida):</label>
+                                <input type="text" id="AgentCategory" name="Category" class="form-control form-control-lg bg-dark text-white border-secondary" readonly required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="AgentDescription"><i class="fas fa-file-alt"></i> Descrição (Preenchida):</label>
+                            <textarea id="AgentDescription" name="Description" class="form-control bg-dark text-white border-secondary" rows="5" readonly required></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="AgentPrice"><i class="fas fa-dollar-sign"></i> Preço de Venda (em DTC):</label>
+                            <div class="input-group input-group-lg">
+                                <input type="number" step="0.01" min="0.01" id="AgentPrice" name="PriceDTC" class="form-control bg-dark text-white border-secondary" placeholder="500.00" required>
+                                <div class="input-group-append">
+                                    <span class="input-group-text bg-warning text-dark">DTC</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-info btn-lg btn-block mt-4"><i class="fas fa-cloud-upload-alt mr-2"></i> Listar Smart Agent Agora</button>
+                    </form>
+                }
+                else if (sellType == "Token")
+                {
+                    <h4 class="mb-4 text-success"><i class="fas fa-coins mr-2"></i> Configuração do Pacote de Tokens</h4>
+                    <div class="info-tip mb-4">
+                        <small class="text-warning">Atenção:</small>
+                        <p class="text-white-50 mb-0">Você deve possuir a quantidade de tokens na sua Smart Wallet para finalizar o cadastro de venda.</p>
+                    </div>
+
+                    <form asp-controller="marketPlace" asp-action="RegisterTokenPackage" method="post">
+                        
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="TokenAmount"><i class="fas fa-cubes"></i> Quantidade de Tokens DTC:</label>
+                                <select id="TokenAmount" class="form-control form-control-lg custom-select bg-dark text-white border-secondary">
+                                    <option value="">Selecione a Quantidade</option>
+                                    @* Lista de Pacotes enviadas pelo Controller *@
+                                    @foreach (var amount in tokenPackages)
+                                    {
+                                        <option value="@amount">@amount.ToString() DTC</option>
+                                    }
+                                    <option value="custom">Outra Quantidade...</option>
+                                </select>
+                                
+                                <div id="CustomAmountGroup" style="display:none;">
+                                    <input type="number" step="1" min="1" id="CustomTokenAmount" name="" class="form-control form-control-lg mt-2 bg-dark text-white border-secondary" placeholder="Digite a quantidade exata">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group col-md-6">
+                                <label for="TokenPrice"><i class="fas fa-dollar-sign"></i> Preço Unitário (USD/DTC):</label>
+                                <div class="input-group input-group-lg">
+                                    <input type="number" step="0.0001" min="0.0001" id="TokenPrice" name="PriceDTC" class="form-control bg-dark text-white border-secondary" placeholder="@currentDTCPrice.ToString("F4", CultureInfo.InvariantCulture)" required>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text bg-primary text-white">USD / DTC</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="TotalPriceUSD"><i class="fas fa-funnel-dollar"></i> Preço Total do Pacote (USD):</label>
+                            <div class="input-group input-group-lg">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text bg-success text-white">$</span>
+                                </div>
+                                <input type="text" id="TotalPriceUSD" name="TotalPriceUSD" class="form-control bg-dark text-success font-weight-bold" readonly placeholder="0.00" required>
+                            </div>
+                        </div>
+                        
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-success btn-lg btn-block mt-4"><i class="fas fa-check-circle mr-2"></i> Listar Pacote de Tokens Agora</button>
+                    </form>
+                }
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Inicializa Tooltips do Bootstrap
+            $('[data-toggle="tooltip"]').tooltip();
+            
+            // ----------------------------------------------------------------------
+            // Lógica Específica do Formulário de Agentes (Preenchimento Automático)
+            // ----------------------------------------------------------------------
+            function populateAgentFields() {
+                const selectedOption = $('#ExistingAgentId option:selected');
+                
+                if (selectedOption.val() !== "") {
+                    // Pega os dados dos atributos data-*
+                    const name = selectedOption.data('name');
+                    const desc = selectedOption.data('desc');
+                    const category = selectedOption.data('category');
+
+                    // Preenche os campos de input
+                    $('#AgentName').val(name);
+                    $('#AgentDescription').val(desc);
+                    $('#AgentCategory').val(category);
+                } else {
+                    // Limpa os campos se nada for selecionado
+                    $('#AgentName').val('');
+                    $('#AgentDescription').val('');
+                    $('#AgentCategory').val('');
+                }
+            }
+
+            // Aciona a função quando o valor do seletor de agente muda
+            $('#ExistingAgentId').on('change', populateAgentFields);
+            
+            // ----------------------------------------------------------------------
+            // Lógica Específica do Formulário de Tokens (Preço e Quantidade Customizada)
+            // ----------------------------------------------------------------------
+
+            // 1. Lógica para mostrar/ocultar o campo de quantidade customizada
+            function toggleCustomAmount() {
+                var selectedValue = $('#TokenAmount').val();
+                
+                if (selectedValue === 'custom') {
+                    // CORREÇÃO: Mostra a div que contém o input customizado
+                    $('#CustomAmountGroup').show();
+                    $('#CustomTokenAmount').focus(); 
+                } else {
+                    // Oculta a div
+                    $('#CustomAmountGroup').hide();
+                }
+                
+                updateTotalPrice();
+            }
+
+            // 2. Lógica para calcular o preço total e ajustar o 'name' do campo 'Amount'
+            function updateTotalPrice() {
+                var amount = 0;
+                var pricePerToken = parseFloat($('#TokenPrice').val());
+
+                // Determina a quantidade a ser usada e define o campo 'Amount' a ser enviado
+                if ($('#TokenAmount').val() === 'custom' && $('#CustomAmountGroup').is(':visible')) {
+                    amount = parseFloat($('#CustomTokenAmount').val());
+                    // Envia o valor do input customizado
+                    $('#TokenAmount').prop('name', '');
+                    $('#CustomTokenAmount').prop('name', 'Amount'); 
+                } else {
+                    amount = parseFloat($('#TokenAmount').val());
+                    // Envia o valor do select
+                    $('#TokenAmount').prop('name', 'Amount');
+                    $('#CustomTokenAmount').prop('name', '');
+                }
+
+                if (isNaN(amount) || isNaN(pricePerToken) || amount <= 0 || pricePerToken <= 0) {
+                    $('#TotalPriceUSD').val('0.00');
+                    return;
+                }
+                
+                var total = amount * pricePerToken;
+                $('#TotalPriceUSD').val(total.toFixed(2));
+            }
+
+            // Atribui a função de cálculo aos eventos de input/mudança
+            $('#TokenAmount').on('change', toggleCustomAmount);
+            $('#CustomTokenAmount, #TokenPrice').on('input change', updateTotalPrice);
+            
+            // ----------------------------------------------------------------------
+            // Inicialização (Para garantir o estado correto na carga da página)
+            // ----------------------------------------------------------------------
+
+            // Se a página recarregar no formulário Agent (ex: após erro), preenche os dados
+            if ('@sellType' === 'Agent') {
+                populateAgentFields();
+            } 
+            
+            // Se a página recarregar no formulário Token, ajusta a visibilidade customizada
+            if ('@sellType' === 'Token') {
+                toggleCustomAmount();
+            }
+        });
+    </script>
+}

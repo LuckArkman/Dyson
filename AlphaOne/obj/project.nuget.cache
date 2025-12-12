@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "NA1S2JKwdio=",
+  "dgSpecHash": "OGQjh5ViDjM=",
   "success": false,
-  "projectFilePath": "/mnt/8AA2CEB6A2CEA5D3/Dyson/AlphaOne/AlphaOne.csproj",
+  "projectFilePath": "/home/mplopes/Documentos/Dyson/AlphaOne/AlphaOne.csproj",
   "expectedPackageFiles": [
     "/home/mplopes/.nuget/packages/akka/1.5.55/akka.1.5.55.nupkg.sha512",
     "/home/mplopes/.nuget/packages/akka.analyzers/0.3.3/akka.analyzers.0.3.3.nupkg.sha512",
@@ -184,8 +184,8 @@
       "code": "NU1605",
       "level": "Error",
       "message": "Warning As Error: Detected package downgrade: MongoDB.Driver from 3.5.2 to 3.5.1. Reference the package directly from the project to select a different version. \n AlphaOne -> Dtos -> MongoDB.Driver (>= 3.5.2) \n AlphaOne -> MongoDB.Driver (>= 3.5.1)",
-      "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Dyson/AlphaOne/AlphaOne.csproj",
-      "filePath": "/mnt/8AA2CEB6A2CEA5D3/Dyson/AlphaOne/AlphaOne.csproj",
+      "projectPath": "/home/mplopes/Documentos/Dyson/AlphaOne/AlphaOne.csproj",
+      "filePath": "/home/mplopes/Documentos/Dyson/AlphaOne/AlphaOne.csproj",
       "libraryId": "MongoDB.Driver",
       "targetGraphs": [
         "net8.0"

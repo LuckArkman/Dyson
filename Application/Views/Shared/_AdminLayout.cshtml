@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+    <link rel="icon" type="image/x-icon" href="~/brainstorm.png?v=3" />
+    <link rel="shortcut icon" href="~/brainstorm.png?v=3" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@ViewData["Title"] | Dyson.AI Dashboard</title>
@@ -13,7 +15,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
+
     <style>
         /* Custom styles for better integration */
         .brand-link {
@@ -129,7 +131,7 @@
                     </div>
                 </div>
                 <div class="info">
-                    <a asp-controller="Profile" asp-action="Index" class="d-block">
+                    <a asp-controller="Profile" asp-action="profile" class="d-block">
                         @(User.Identity?.Name ?? "Usuário")
                     </a>
                     @if (!string.IsNullOrEmpty(ViewBag.WalletAddress as string))
@@ -148,7 +150,7 @@
                     <!-- Dashboard -->
                     <li class="nav-header">PAINEL PRINCIPAL</li>
                     <li class="nav-item">
-                        <a asp-controller="Profile" asp-action="Index" 
+                        <a asp-controller="Profile" asp-action="profile" 
                            class="nav-link @(ViewContext.RouteData.Values["Action"]?.ToString() == "Index" ? "active" : "")">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>Dashboard</p>
@@ -194,7 +196,46 @@
                             </p>
                         </a>
                     </li>
+                    <li class="nav-header">MarketPlace</li>
+                    <li class="nav-item">
+                        <a asp-controller="MarketPlace" asp-action="Market"
+                           class="nav-link @(ViewContext.RouteData.Values["Action"]?.ToString() == "Market" ? "active" : "")">
+                            <i class="nav-icon fas fa-store"></i>
+                            <p>Navegar</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-controller="MarketPlace" asp-action="Sell"
+                           class="nav-link @(ViewContext.RouteData.Values["Action"]?.ToString() == "Sell" ? "active" : "")">
+                            <i class="nav-icon fas fa-hand-holding-usd"></i>
+                            <p>Vender</p>
+                        </a>
+                    </li>
+                    <li class="nav-header">Smart Agents</li>
 
+                    <li class="nav-item">
+                        <a asp-controller="SmartAgent" asp-action="MyAgents"
+                           class="nav-link @(ViewContext.RouteData.Values["Action"]?.ToString() == "MyAgents" ? "active" : "")">
+                            <i class="nav-icon fas fa-users"></i>
+                            <p>Meus Agentes</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a asp-controller="SmartAgent" asp-action="ManageAgents"
+                           class="nav-link @(ViewContext.RouteData.Values["Action"]?.ToString() == "ManageAgents" ? "active" : "")">
+                            <i class="nav-icon fas fa-cogs"></i>
+                            <p>Gerenciar Agentes</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a asp-controller="SmartAgent" asp-action="make"
+                           class="nav-link @(ViewContext.RouteData.Values["Action"]?.ToString() == "make" ? "active" : "")">
+                            <i class="nav-icon fas fa-plus-circle"></i>
+                            <p>Criar um Novo Agente</p>
+                        </a>
+                    </li>
                     <!-- Settings -->
                     <li class="nav-header">CONFIGURAÇÕES</li>
                     
@@ -213,23 +254,13 @@
                             <p>Segurança</p>
                         </a>
                     </li>
-
-                    <!-- Help & Support -->
-                    <li class="nav-header">SUPORTE</li>
-                    
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-question-circle"></i>
-                            <p>Ajuda</p>
-                        </a>
-                    </li>
-                    
                     <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-book"></i>
                             <p>Documentação</p>
                         </a>
                     </li>
+                    
                 </ul>
             </nav>
             <!-- /.sidebar-menu -->

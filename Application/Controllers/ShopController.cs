@@ -132,7 +132,7 @@ public class ShopController : Controller
         // 1. Criar Pedido
         var order = new Order
         {
-            Id = Guid.NewGuid().ToString(),
+            id = Guid.NewGuid().ToString(),
             UserId = userId,
             Items = new List<OrderItem>(cartItems),
             TotalAmount = total,

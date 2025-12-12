@@ -1,3 +1,4 @@
+@model List<Dtos.Order>
 @{
     ViewData["Title"] = "Meus Pedidos";
     Layout = "_AdminLayout";
@@ -95,15 +96,71 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td colspan="6" class="text-center text-muted py-5">
-                                <i class="fas fa-inbox fa-3x mb-3"></i>
-                                <p>Nenhum pedido encontrado.</p>
-                                <a href="#" class="btn btn-primary">
-                                    <i class="fas fa-shopping-cart"></i> Explorar Produtos
-                                </a>
-                            </td>
-                        </tr>
+                        @if (!Model.Any())
+                        {
+                            <tr>
+                                <td colspan="7" class="text-center">Nenhuma compra encontrada.</td>
+                            </tr>
+                        }
+                        else 
+                        {
+                            @foreach (var order in Model.OrderByDescending(x => x.CreatedAt))
+                            {
+                                <tr>
+                                    <td><small>@order.id.Substring(0, 8)...</small></td>
+                                    <td>@order.CreatedAt.ToString("dd/MM/yyyy HH:mm")</td>
+                                    <td>
+                                        @foreach(var item in order.Items)
+                                        {
+                                            <div class="text-sm">@item.Quantity x @item.ProductName</div>
+                                        }
+                                    </td>
+                                    <td class="font-weight-bold">@order.TotalAmount.ToString("C2")</td>
+                                    <td>
+                                        @if(order.PaymentMethod == "card" || order.PaymentMethod == "credit_card") { <i class="fas fa-credit-card text-primary"></i> <span> Cartão</span> }
+                                        else if(order.PaymentMethod == "pix") { <i class="fas fa-qrcode text-success"></i> <span> Pix</span> }
+                                        else { <i class="fas fa-barcode text-warning"></i> <span> Boleto</span> }
+                                    </td>
+                                    <td>
+                                        @if(order.Status?.ToLower() == "paid" || order.Status?.ToLower() == "approved") { 
+                                            <span class="badge badge-success">Pago</span> 
+                                        }
+                                        else if(order.Status?.ToLower() == "pending") { 
+                                            <span class="badge badge-warning">Pendente</span> 
+                                        }
+                                        else { 
+                                            <span class="badge badge-danger">@order.Status</span> 
+                                        }
+                                    </td>
+                                    <td>
+                                        <!-- LÓGICA DO BOTÃO DE AÇÃO -->
+                                        @if ((order.Status?.ToLower() == "pending") && order.PaymentData != null)
+                                        {
+                                            // Lógica para PIX
+                                            if (order.PaymentMethod == "pix" && !string.IsNullOrEmpty(order.PaymentData.PixQrCode))
+                                            {
+                                                <button class="btn btn-xs btn-success" 
+                                                        onclick="openPixModal('@order.TotalAmount.ToString("C2")', '@order.PaymentData.PixQrCode', '@order.PaymentData.PixQrCodeBase64')">
+                                                    <i class="fas fa-qrcode"></i> Pagar PIX
+                                                </button>
+                                            }
+                                            // Lógica para BOLETO
+                                            else if ((order.PaymentMethod == "boleto" || order.PaymentMethod == "bolbradesco") && !string.IsNullOrEmpty(order.PaymentData.BoletoPdfUrl))
+                                            {
+                                                <button class="btn btn-xs btn-warning" 
+                                                        onclick="openBoletoModal('@order.TotalAmount.ToString("C2")', '@order.PaymentData.BoletoBarcode', '@order.PaymentData.BoletoPdfUrl', '@(order.PaymentData.BoletoDueDate?.ToString("dd/MM/yyyy") ?? "N/A")')">
+                                                    <i class="fas fa-barcode"></i> Ver Boleto
+                                                </button>
+                                            }
+                                        }
+                                        else if (order.Status?.ToLower() == "paid" || order.Status?.ToLower() == "approved")
+                                        {
+                                            <button class="btn btn-xs btn-primary"><i class="fas fa-file-invoice"></i> Recibo</button>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        }
                     </tbody>
                 </table>
             </div>
@@ -215,10 +272,131 @@
     </div>
 </div>
 
+<!-- ========================= -->
+<!-- MODAL DE PAGAMENTO (ÚNICO) -->
+<!-- ========================= -->
+<div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content bg-dark text-white border-secondary">
+            <div class="modal-header border-secondary">
+                <h5 class="modal-title" id="modalTitle">Detalhes do Pagamento</h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                
+                <!-- Valor -->
+                <h3 class="text-success font-weight-bold mb-4" id="modalAmount">R$ 0,00</h3>
+
+                <!-- CONTAINER PIX -->
+                <div id="pixContainer" style="display:none;">
+                    <p class="text-muted">Escaneie o QR Code abaixo:</p>
+                    <div class="bg-white p-2 d-inline-block rounded mb-3">
+                        <!-- Imagem Base64 -->
+                        <img id="pixImage" src="" alt="QR Code" style="width: 200px; height: 200px;">
+                    </div>
+                    
+                    <div class="form-group text-left">
+                        <label class="text-muted small">Copia e Cola:</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control bg-secondary text-white border-0" id="pixCodeInput" readonly>
+                            <div class="input-group-append">
+                                <button class="btn btn-success" onclick="copyToClipboard('pixCodeInput')">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CONTAINER BOLETO -->
+                <div id="boletoContainer" style="display:none;">
+                    <p class="text-warning"><i class="fas fa-exclamation-triangle"></i> Vencimento: <span id="boletoDueDate"></span></p>
+                    
+                    <div class="form-group text-left mt-3">
+                        <label class="text-muted small">Linha Digitável:</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control bg-secondary text-white border-0" id="boletoBarcodeInput" readonly>
+                            <div class="input-group-append">
+                                <button class="btn btn-warning" onclick="copyToClipboard('boletoBarcodeInput')">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a id="boletoPdfLink" href="#" target="_blank" class="btn btn-block btn-outline-warning mt-4">
+                        <i class="fas fa-file-pdf"></i> Baixar PDF do Boleto
+                    </a>
+                </div>
+
+            </div>
+            <div class="modal-footer border-secondary">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SCRIPTS -->
+<!-- Adicione isso se não estiver usando Layout com jQuery/Bootstrap carregado -->
 @section Scripts {
     <script>
-        $(document).ready(function() {
-            // Initialize any needed components
-        });
+        // Função para abrir Modal PIX
+        function openPixModal(amount, code, base64Image) {
+            // Configura UI
+            $('#modalTitle').text('Pagamento via PIX');
+            $('#modalAmount').text(amount);
+            
+            // Alterna Containers
+            $('#pixContainer').show();
+            $('#boletoContainer').hide();
+
+            // Popula Dados
+            $('#pixCodeInput').val(code);
+            
+            // Verifica se a imagem já tem o prefixo data:image
+            const imgSrc = base64Image.startsWith('data:image') 
+                ? base64Image 
+                : 'data:image/jpeg;base64,' + base64Image;
+            
+            $('#pixImage').attr('src', imgSrc);
+
+            // Abre Modal
+            $('#paymentModal').modal('show');
+        }
+
+        // Função para abrir Modal Boleto
+        function openBoletoModal(amount, barcode, pdfUrl, dueDate) {
+            // Configura UI
+            $('#modalTitle').text('Pagamento via Boleto');
+            $('#modalAmount').text(amount);
+
+            // Alterna Containers
+            $('#pixContainer').hide();
+            $('#boletoContainer').show();
+
+            // Popula Dados
+            $('#boletoBarcodeInput').val(barcode);
+            $('#boletoPdfLink').attr('href', pdfUrl);
+            $('#boletoDueDate').text(dueDate);
+
+            // Abre Modal
+            $('#paymentModal').modal('show');
+        }
+
+        // Função de Copiar
+        function copyToClipboard(elementId) {
+            var copyText = document.getElementById(elementId);
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); // Para mobile
+
+            navigator.clipboard.writeText(copyText.value).then(function() {
+                alert("Código copiado com sucesso!");
+            }, function(err) {
+                console.error('Erro ao copiar: ', err);
+            });
+        }
     </script>
 }

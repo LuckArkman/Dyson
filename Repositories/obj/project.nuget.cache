@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "+EWnqM5xVyI=",
+  "dgSpecHash": "kE2Bt9l+zlM=",
   "success": true,
-  "projectFilePath": "/mnt/8AA2CEB6A2CEA5D3/Dyson/Repositories/Repositories.csproj",
+  "projectFilePath": "/home/mplopes/Documentos/Dyson/Repositories/Repositories.csproj",
   "expectedPackageFiles": [
     "/home/mplopes/.nuget/packages/akka/1.5.55/akka.1.5.55.nupkg.sha512",
     "/home/mplopes/.nuget/packages/akka.analyzers/0.3.3/akka.analyzers.0.3.3.nupkg.sha512",

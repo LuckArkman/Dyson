@@ -87,7 +87,7 @@
                                         @foreach (var o in order.Items)
                                         {
                                             <tr>
-                                                <td><a href="#">@order.Id</a></td>
+                                                <td><a href="#">@order.id</a></td>
                                                 <td>@(o?.ProductName ?? "Item Removido")</td>
                                                 <td>
                                                     @if (order.Status == "Completed")

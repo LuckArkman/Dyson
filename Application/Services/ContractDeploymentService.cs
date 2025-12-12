@@ -67,16 +67,26 @@ public class ContractDeploymentService
 
         try
         {
-            var wallet = await _walletService.GetUserWalletAsync(userAddress);
-            if (wallet == null)
-            {
-                return (false, "Wallet não encontrada para o usuário.");
-            }
 
+            WalletDocument? wallet = null;
+            if (!string.IsNullOrWhiteSpace(userAddress))
+            {
+                wallet = new WalletDocument
+                {
+                    Address = userAddress,
+                };
+            }
+            if (string.IsNullOrWhiteSpace(userAddress))
+            {
+                wallet = await _walletService.GetUserWalletAsync(userAddress);
+                if(wallet == null)return (false, "Wallet não encontrada para o usuário.");
+            }
+            
+            /*
             // Verificar saldo se houver custo
             if (model.DeploymentCost > 0)
             {
-                var balance = await _walletService.GetBalanceAsync(wallet.Address);
+                var balance = await _walletService.GetBalanceAsync(userAddress);
                 if (balance < model.DeploymentCost)
                 {
                     _logger.LogWarning(
@@ -85,6 +95,7 @@ public class ContractDeploymentService
                     return (false, $"Saldo insuficiente. Você tem {balance} tokens, mas precisa de {model.DeploymentCost}.");
                 }
             }
+            */
 
             // Determinar modo de deployment
             var deploymentMode = _configuration["ThirdwebSettings:Deployment:Mode"] ?? "simulation";
@@ -94,12 +105,12 @@ public class ContractDeploymentService
             if (deploymentMode == "arc-testnet")
             {
                 _logger.LogInformation("🌐 [ARC] Deploy real na Arc Testnet");
-                contractDoc = await DeployToArcTestnetAsync(wallet, model);
+                contractDoc = await DeployToArcTestnetAsync(wallet!,model);
             }
             else if (deploymentMode == "simulation")
             {
                 _logger.LogInformation("🧪 [ARC] Modo simulação ativado");
-                contractDoc = await DeploySimulatedAsync(wallet, model);
+                contractDoc = await DeploySimulatedAsync(wallet!, model);
             }
             else
             {
@@ -108,6 +119,7 @@ public class ContractDeploymentService
             }
 
             // Debitar custo se houver
+            /*
             if (model.DeploymentCost > 0)
             {
                 await _walletService.DebitBalanceAsync(
@@ -119,6 +131,8 @@ public class ContractDeploymentService
                     "💸 Custo de {Cost} debitado da wallet {Address}",
                     model.DeploymentCost, wallet.Address);
             }
+            */
+            
 
             // Adicionar evento ao log
             contractDoc.EventLog.Add(new ContractEvent

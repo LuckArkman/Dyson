@@ -8,11 +8,11 @@ public class WalletDocument
     [BsonId]
     public string Id { get; set; } = Guid.NewGuid().ToString();
 
-    public string userId { get; set; }
+    public string? userId { get; set; } = null;
 
     [BsonElement("address")]
     public string Address { get; set; } 
 
     [BsonElement("createdAt")]
-    public DateTime CreatedAt { get; set; }
+    public DateTime CreatedAt { get; set; } =  DateTime.UtcNow;
 }

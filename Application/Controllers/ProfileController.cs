@@ -12,6 +12,7 @@ namespace Controllers;
 [Authorize]
 public class ProfileController : Controller
 {
+    private readonly IRepositorio<User> _repositorioUser;
     private readonly IRepositorio<Product> _productRepo;
     private readonly WalletService _walletService;
     private readonly RewardContractService _contractService;
@@ -25,6 +26,7 @@ public class ProfileController : Controller
     private static readonly Dictionary<string, decimal> _mockStakingStore = new();
 
     public ProfileController(
+        IRepositorio<User> repositorioUser,
         IRepositorio<Order> orderRepo,
         IRepositorio<ContractDocument> contractRepo,
         IRepositorio<Product> productRepo, 
@@ -34,6 +36,7 @@ public class ProfileController : Controller
         ILogger<ProfileController> logger,
         IConfiguration configuration)
     {
+        _repositorioUser = repositorioUser;
         _orderRepo = orderRepo;
         _contractRepo = contractRepo;
         _productRepo = productRepo;
@@ -43,6 +46,10 @@ public class ProfileController : Controller
         _logger = logger;
         
         // Inicializa repos
+        _repositorioUser.InitializeCollection(
+            configuration["MongoDbSettings:ConnectionString"],
+            configuration["MongoDbSettings:DataBaseName"],
+            "Users");
         _productRepo.InitializeCollection(
             configuration["MongoDbSettings:ConnectionString"],
             configuration["MongoDbSettings:DataBaseName"],
@@ -68,8 +75,8 @@ public class ProfileController : Controller
     private string GetUserId() => User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
     private string GetWalletAddress() => GetUserId(); 
 
-    // --- DASHBOARD HOME ---
-    public IActionResult Index()
+    [Authorize]
+    public IActionResult profile()
     {
         try
         {
@@ -275,7 +282,9 @@ public class ProfileController : Controller
     [HttpPost]
     public async Task<IActionResult> CreateContract([FromBody] ContractCreationRequestModel model)
     {
-        var address = GetWalletAddress();
+        var user = await _repositorioUser.GetByIdAsync(GetUserId(), CancellationToken.None);
+        var address = user.WalletAddress;
+        
         
         _logger.LogInformation(
             "Usuário {UserAddress} solicitou deploy de contrato: {ContractName} " +
@@ -586,12 +595,12 @@ public class ProfileController : Controller
     // --- SMART CONTRACTS ---
     public async Task<IActionResult> Contracts()
     {
-        var address = GetWalletAddress();
-        var walletkey = await _walletService.GetUserWalletAsync(address);
+        var user = await _repositorioUser.GetByIdAsync(GetUserId(), CancellationToken.None);
+        var address = user.WalletAddress;
         
         try
         {
-            var contracts = await _contractRepo.GetUserContractsAsync(walletkey.Address);
+            var contracts = await _contractRepo.GetUserContractsAsync(address);
 
             // Adicionar estatísticas
             var stats = new

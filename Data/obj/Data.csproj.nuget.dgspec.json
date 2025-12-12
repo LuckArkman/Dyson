@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/mnt/8AA2CEB6A2CEA5D3/Dyson/Data/Data.csproj": {}
+    "/home/mplopes/Documentos/Dyson/Data/Data.csproj": {}
   },
   "projects": {
-    "/mnt/8AA2CEB6A2CEA5D3/Dyson/Data/Data.csproj": {
+    "/home/mplopes/Documentos/Dyson/Data/Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/mnt/8AA2CEB6A2CEA5D3/Dyson/Data/Data.csproj",
+        "projectUniqueName": "/home/mplopes/Documentos/Dyson/Data/Data.csproj",
         "projectName": "Data",
-        "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Dyson/Data/Data.csproj",
+        "projectPath": "/home/mplopes/Documentos/Dyson/Data/Data.csproj",
         "packagesPath": "/home/mplopes/.nuget/packages/",
-        "outputPath": "/mnt/8AA2CEB6A2CEA5D3/Dyson/Data/obj/",
+        "outputPath": "/home/mplopes/Documentos/Dyson/Data/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/mplopes/.nuget/NuGet/NuGet.Config"

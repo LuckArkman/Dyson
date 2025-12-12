@@ -6713,11 +6713,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/mnt/8AA2CEB6A2CEA5D3/Dyson/Interfaces/Interfaces.csproj",
+      "projectUniqueName": "/home/mplopes/Documentos/Dyson/Interfaces/Interfaces.csproj",
       "projectName": "Interfaces",
-      "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Dyson/Interfaces/Interfaces.csproj",
+      "projectPath": "/home/mplopes/Documentos/Dyson/Interfaces/Interfaces.csproj",
       "packagesPath": "/home/mplopes/.nuget/packages/",
-      "outputPath": "/mnt/8AA2CEB6A2CEA5D3/Dyson/Interfaces/obj/",
+      "outputPath": "/home/mplopes/Documentos/Dyson/Interfaces/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/mplopes/.nuget/NuGet/NuGet.Config"
@@ -6733,11 +6733,11 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "/mnt/8AA2CEB6A2CEA5D3/Dyson/Dtos/Dtos.csproj": {
-              "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Dyson/Dtos/Dtos.csproj"
+            "/home/mplopes/Documentos/Dyson/Dtos/Dtos.csproj": {
+              "projectPath": "/home/mplopes/Documentos/Dyson/Dtos/Dtos.csproj"
             },
-            "/mnt/8AA2CEB6A2CEA5D3/Dyson/Records/Records.csproj": {
-              "projectPath": "/mnt/8AA2CEB6A2CEA5D3/Dyson/Records/Records.csproj"
+            "/home/mplopes/Documentos/Dyson/Records/Records.csproj": {
+              "projectPath": "/home/mplopes/Documentos/Dyson/Records/Records.csproj"
             }
           }
         }

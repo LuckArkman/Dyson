@@ -36,7 +36,6 @@ public class AdminController : Controller
     
     public async Task<IActionResult> Orders()
     {
-        // 1. Busca a lista completa (como já fazia)
         var ordersList = await _service.GetAllOrdersAsync();
 
         // 2. Busca dados para o Gráfico de Barras (Últimos 12 meses)
