@@ -16,6 +16,7 @@
           "Gossip": "0.1.0",
           "Gossip4Net.Http": "0.0.4",
           "Interfaces": "1.0.0",
+          "Jint": "4.4.2",
           "Microsoft.AspNetCore.Identity.Service.Core": "1.0.0-preview1-final",
           "Microsoft.Data.Sqlite": "8.0.0",
           "Microsoft.Extensions.Configuration": "10.0.0",
@@ -24,12 +25,22 @@
           "Microsoft.Extensions.Logging": "8.0.0",
           "Microsoft.IdentityModel.Tokens": "8.0.0",
           "Mono.Data.Sqlite": "1.0.61",
+          "Qdrant.Client": "1.16.1",
           "Records": "1.0.0",
           "System.IdentityModel.Tokens.Jwt": "8.0.0",
-          "System.Security.Claims": "4.3.0"
+          "System.Security.Claims": "4.3.0",
+          "Microsoft.Extensions.Http": "8.0.0.0"
         },
         "runtime": {
           "Services.dll": {}
+        }
+      },
+      "Acornima/1.2.0": {
+        "runtime": {
+          "lib/net8.0/Acornima.dll": {
+            "assemblyVersion": "1.2.0.0",
+            "fileVersion": "1.2.0.0"
+          }
         }
       },
       "Akka/1.5.55": {
@@ -96,6 +107,14 @@
           }
         }
       },
+      "Google.Protobuf/3.31.0": {
+        "runtime": {
+          "lib/net5.0/Google.Protobuf.dll": {
+            "assemblyVersion": "3.31.0.0",
+            "fileVersion": "3.31.0.0"
+          }
+        }
+      },
       "Gossip/0.1.0": {
         "dependencies": {
           "Dapper": "2.0.123",
@@ -123,6 +142,37 @@
           }
         }
       },
+      "Grpc.Core.Api/2.71.0": {
+        "runtime": {
+          "lib/netstandard2.1/Grpc.Core.Api.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.71.0.0"
+          }
+        }
+      },
+      "Grpc.Net.Client/2.71.0": {
+        "dependencies": {
+          "Grpc.Net.Common": "2.71.0",
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.0"
+        },
+        "runtime": {
+          "lib/net8.0/Grpc.Net.Client.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.71.0.0"
+          }
+        }
+      },
+      "Grpc.Net.Common/2.71.0": {
+        "dependencies": {
+          "Grpc.Core.Api": "2.71.0"
+        },
+        "runtime": {
+          "lib/net8.0/Grpc.Net.Common.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.71.0.0"
+          }
+        }
+      },
       "ImpromptuInterface/7.0.1": {
         "dependencies": {
           "Dynamitey": "2.0.9.136",
@@ -133,6 +183,17 @@
           "lib/netstandard2.0/ImpromptuInterface.dll": {
             "assemblyVersion": "7.0.1.0",
             "fileVersion": "7.0.1.0"
+          }
+        }
+      },
+      "Jint/4.4.2": {
+        "dependencies": {
+          "Acornima": "1.2.0"
+        },
+        "runtime": {
+          "lib/net8.0/Jint.dll": {
+            "assemblyVersion": "4.4.2.0",
+            "fileVersion": "4.0.0.0"
           }
         }
       },
@@ -947,6 +1008,18 @@
           "lib/netstandard2.0/Newtonsoft.Json.dll": {
             "assemblyVersion": "13.0.0.0",
             "fileVersion": "13.0.1.25517"
+          }
+        }
+      },
+      "Qdrant.Client/1.16.1": {
+        "dependencies": {
+          "Google.Protobuf": "3.31.0",
+          "Grpc.Net.Client": "2.71.0"
+        },
+        "runtime": {
+          "lib/net6.0/Qdrant.Client.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.16.1.0"
           }
         }
       },
@@ -1828,9 +1901,11 @@
       },
       "Data/1.0.0": {
         "dependencies": {
+          "Jint": "4.4.2",
           "Microsoft.AspNetCore.Identity.Service.Core": "1.0.0-preview1-final",
           "MongoDB.Bson": "3.5.2",
-          "MongoDB.Driver": "3.5.2"
+          "MongoDB.Driver": "3.5.2",
+          "Qdrant.Client": "1.16.1"
         },
         "runtime": {
           "Data.dll": {
@@ -1843,8 +1918,10 @@
         "dependencies": {
           "Akka": "1.5.55",
           "Enums": "1.0.0",
+          "Jint": "4.4.2",
           "Microsoft.AspNetCore.Identity.Service.Core": "1.0.0-preview1-final",
           "MongoDB.Driver": "3.5.2",
+          "Qdrant.Client": "1.16.1",
           "Records": "1.0.0"
         },
         "runtime": {
@@ -1856,7 +1933,9 @@
       },
       "Enums/1.0.0": {
         "dependencies": {
-          "Microsoft.AspNetCore.Identity.Service.Core": "1.0.0-preview1-final"
+          "Jint": "4.4.2",
+          "Microsoft.AspNetCore.Identity.Service.Core": "1.0.0-preview1-final",
+          "Qdrant.Client": "1.16.1"
         },
         "runtime": {
           "Enums.dll": {
@@ -1868,7 +1947,9 @@
       "Interfaces/1.0.0": {
         "dependencies": {
           "Dtos": "1.0.0",
+          "Jint": "4.4.2",
           "Microsoft.AspNetCore.Identity.Service.Core": "1.0.0-preview1-final",
+          "Qdrant.Client": "1.16.1",
           "Records": "1.0.0"
         },
         "runtime": {
@@ -1881,12 +1962,22 @@
       "Records/1.0.0": {
         "dependencies": {
           "Akka": "1.5.55",
-          "Microsoft.AspNetCore.Identity.Service.Core": "1.0.0-preview1-final"
+          "Jint": "4.4.2",
+          "Microsoft.AspNetCore.Identity.Service.Core": "1.0.0-preview1-final",
+          "Qdrant.Client": "1.16.1"
         },
         "runtime": {
           "Records.dll": {
             "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "Microsoft.Extensions.Http/8.0.0.0": {
+        "runtime": {
+          "Microsoft.Extensions.Http.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.1625.21506"
           }
         }
       }
@@ -1897,6 +1988,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "Acornima/1.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-pT3kn/WrVzz4NmrzN5zOAVDOK2VuQFJ7VivKviKmKbbzppMVEToEvnAaVhxerXclptvjpBUudhOwUtDsRjrMYQ==",
+      "path": "acornima/1.2.0",
+      "hashPath": "acornima.1.2.0.nupkg.sha512"
     },
     "Akka/1.5.55": {
       "type": "package",
@@ -1947,6 +2045,13 @@
       "path": "dynamitey/2.0.9.136",
       "hashPath": "dynamitey.2.0.9.136.nupkg.sha512"
     },
+    "Google.Protobuf/3.31.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-OZXSf6igaJBeo+kAzMhYF0R5zp0nRgf4G0Uis/IsGKACc4RGP9bQPLpHLengIFuASl0lY92utMB8rRpTx4TaOg==",
+      "path": "google.protobuf/3.31.0",
+      "hashPath": "google.protobuf.3.31.0.nupkg.sha512"
+    },
     "Gossip/0.1.0": {
       "type": "package",
       "serviceable": true,
@@ -1961,12 +2066,40 @@
       "path": "gossip4net.http/0.0.4",
       "hashPath": "gossip4net.http.0.0.4.nupkg.sha512"
     },
+    "Grpc.Core.Api/2.71.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-QquqUC37yxsDzd1QaDRsH2+uuznWPTS8CVE2Yzwl3CvU4geTNkolQXoVN812M2IwT6zpv3jsZRc9ExJFNFslTg==",
+      "path": "grpc.core.api/2.71.0",
+      "hashPath": "grpc.core.api.2.71.0.nupkg.sha512"
+    },
+    "Grpc.Net.Client/2.71.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-U1vr20r5ngoT9nlb7wejF28EKN+taMhJsV9XtK9MkiepTZwnKxxiarriiMfCHuDAfPUm9XUjFMn/RIuJ4YY61w==",
+      "path": "grpc.net.client/2.71.0",
+      "hashPath": "grpc.net.client.2.71.0.nupkg.sha512"
+    },
+    "Grpc.Net.Common/2.71.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-v0c8R97TwRYwNXlC8GyRXwYTCNufpDfUtj9la+wUrZFzVWkFJuNAltU+c0yI3zu0jl54k7en6u2WKgZgd57r2Q==",
+      "path": "grpc.net.common/2.71.0",
+      "hashPath": "grpc.net.common.2.71.0.nupkg.sha512"
+    },
     "ImpromptuInterface/7.0.1": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-9w44OsRuNJoAX0dbVoNqdljCqQIk33Hha5W+BcnWVwawFCEuVBDZbPQafgE1gVvvRaQhc1FOIKuJIIhXZmadvA==",
       "path": "impromptuinterface/7.0.1",
       "hashPath": "impromptuinterface.7.0.1.nupkg.sha512"
+    },
+    "Jint/4.4.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-+2G0SkWWYiHjvCWFYgWgLUDVvemMxjgmlnT3X4p8cllSt1SX3jgO7PSqxenTW4yDE4dOQ8BLRmbuiC8ANp1trw==",
+      "path": "jint/4.4.2",
+      "hashPath": "jint.4.4.2.nupkg.sha512"
     },
     "Microsoft.AspNetCore.Authentication/2.0.0-preview1-final": {
       "type": "package",
@@ -2443,6 +2576,13 @@
       "sha512": "sha512-ppPFpBcvxdsfUonNcvITKqLl3bqxWbDCZIzDWHzjpdAHRFfZe0Dw9HmA0+za13IdyrgJwpkDTDA9fHaxOrt20A==",
       "path": "newtonsoft.json/13.0.1",
       "hashPath": "newtonsoft.json.13.0.1.nupkg.sha512"
+    },
+    "Qdrant.Client/1.16.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-EJo50JXTdjY2JOUphCFLXoHukI/tz/ykLCmMnQHUjsKT22ZfL0XIdEziHOC3vjw2SOoY8WDVQ+AxixEonejOZA==",
+      "path": "qdrant.client/1.16.1",
+      "hashPath": "qdrant.client.1.16.1.nupkg.sha512"
     },
     "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.2": {
       "type": "package",
@@ -3096,6 +3236,11 @@
     },
     "Records/1.0.0": {
       "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Microsoft.Extensions.Http/8.0.0.0": {
+      "type": "reference",
       "serviceable": false,
       "sha512": ""
     }

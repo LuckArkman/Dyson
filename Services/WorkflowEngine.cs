@@ -11,14 +11,20 @@ namespace Services;
 public class WorkflowEngine : IWorkflowEngine
 {
     private readonly IHttpClientFactory _httpClientFactory;
+    private readonly AIProviderManager _aiProviderManager;
     private readonly ILogger<WorkflowEngine> _logger;
     private readonly IConfiguration _configuration; // Para ler API Keys
 
-    public WorkflowEngine(IHttpClientFactory httpClientFactory, ILogger<WorkflowEngine> logger, IConfiguration configuration)
+    public WorkflowEngine(
+        IHttpClientFactory httpClientFactory,
+        ILogger<WorkflowEngine> logger,
+        IConfiguration configuration,
+        AIProviderManager aiProviderManager)
     {
         _httpClientFactory = httpClientFactory;
         _logger = logger;
         _configuration = configuration;
+        _aiProviderManager = aiProviderManager;
     }
 
     public async Task<string> RunWorkflowAsync(SmartAgent agent, string initialPayload = "{}")
@@ -54,9 +60,12 @@ public class WorkflowEngine : IWorkflowEngine
                 {
                     currentData = await ExecuteHttpNode(currentNode, currentData, logs);
                 }
-                else if (currentNode.Type.Contains("OpenAI", StringComparison.OrdinalIgnoreCase))
+                else if (currentNode.Type.Contains("AI", StringComparison.OrdinalIgnoreCase) || 
+                         currentNode.Type.Contains("OpenAI", StringComparison.OrdinalIgnoreCase) ||
+                         currentNode.Type.Contains("Anthropic", StringComparison.OrdinalIgnoreCase) ||
+                         currentNode.Type.Contains("Gemini", StringComparison.OrdinalIgnoreCase))
                 {
-                    currentData = await ExecuteOpenAINode(currentNode, logs);
+                    currentData = await ExecuteAINode(currentNode, logs);
                 }
                 else if (currentNode.Type.Contains("code", StringComparison.OrdinalIgnoreCase))
                 {
@@ -140,15 +149,194 @@ public class WorkflowEngine : IWorkflowEngine
         return result; // O resultado vira o input do próximo nó
     }
 
-    // ... (Manter ExecuteCodeNode e ExecuteIfNode da resposta anterior) ...
-    // ... (Manter ExecuteOpenAINode, mas usando _configuration["OpenAI:ApiKey"]) ...
+    // ============================================================
+    // EXECUÇÃO DE NÓS ESPECÍFICOS
+    // ============================================================
+
+    private string ExecuteCodeNode(WorkflowNode node, string inputData, List<string> logs)
+    {
+        try
+        {
+            var jsonParams = JsonSerializer.Serialize(node.Parameters);
+            var p = JsonNode.Parse(jsonParams);
+            
+            string code = p?["code"]?.ToString() ?? "";
+            string mode = p?["mode"]?.ToString() ?? "runOnceForAllItems";
+
+            logs.Add($"[Code] Mode: {mode}");
+
+            // Configura engine Jint com segurança
+            var engine = new Engine(cfg => cfg
+                .LimitMemory(4_000_000)  // 4MB max
+                .LimitRecursion(20)      // Evita stack overflow
+                .TimeoutInterval(TimeSpan.FromSeconds(5)) // 5s timeout
+            );
+
+            // Injeta dados de entrada
+            engine.SetValue("$input", inputData);
+            
+            // Injeta funções auxiliares do n8n
+            engine.SetValue("$json", JsonNode.Parse(inputData));
+            
+            // Executa o código
+            var result = engine.Evaluate($@"
+                (function() {{
+                    {code}
+                }})()
+            ");
+
+            // Converte resultado para JSON
+            string output = result?.ToString() ?? inputData;
+            
+            logs.Add($"[Code] Output: {output.Substring(0, Math.Min(100, output.Length))}...");
+            
+            return output;
+        }
+        catch (Jint.Runtime.JavaScriptException jsEx)
+        {
+            logs.Add($"[Code ERROR] JavaScript: {jsEx.Message} at line {jsEx.Location.Start.Line}");
+            throw new Exception($"JavaScript Error: {jsEx.Message}");
+        }
+        catch (TimeoutException)
+        {
+            logs.Add($"[Code ERROR] Timeout excedido (5s)");
+            throw new Exception("Code execution timeout (5 seconds)");
+        }
+        catch (Exception ex)
+        {
+            logs.Add($"[Code ERROR] {ex.Message}");
+            throw;
+        }
+    }
+
+    private bool ExecuteIfNode(WorkflowNode node, string inputData, List<string> logs)
+    {
+        try
+        {
+            var jsonParams = JsonSerializer.Serialize(node.Parameters);
+            var p = JsonNode.Parse(jsonParams);
+            
+            string conditionType = p?["conditions"]?["combinator"]?.ToString() ?? "and";
+            var conditions = p?["conditions"]?["conditions"]?.AsArray();
+
+            if (conditions == null || conditions.Count == 0)
+            {
+                logs.Add("[IF] Nenhuma condição definida, retornando FALSE");
+                return false;
+            }
+
+            var inputJson = JsonNode.Parse(inputData);
+            bool result = conditionType == "and";
+
+            foreach (var condition in conditions)
+            {
+                string leftValue = condition?["leftValue"]?.ToString() ?? "";
+                string operation = condition?["operation"]?.ToString() ?? "equals";
+                string rightValue = condition?["rightValue"]?.ToString() ?? "";
+
+                // Resolve variáveis (ex: {{ $json.status }})
+                if (leftValue.StartsWith("{{") && leftValue.EndsWith("}}"))
+                {
+                    string path = leftValue.Trim('{', '}', ' ').Replace("$json.", "");
+                    leftValue = inputJson?[path]?.ToString() ?? "";
+                }
+
+                bool conditionResult = operation switch
+                {
+                    "equals" => leftValue == rightValue,
+                    "notEquals" => leftValue != rightValue,
+                    "contains" => leftValue.Contains(rightValue),
+                    "notContains" => !leftValue.Contains(rightValue),
+                    "startsWith" => leftValue.StartsWith(rightValue),
+                    "endsWith" => leftValue.EndsWith(rightValue),
+                    "larger" => double.TryParse(leftValue, out var l1) && double.TryParse(rightValue, out var r1) && l1 > r1,
+                    "largerEqual" => double.TryParse(leftValue, out var l2) && double.TryParse(rightValue, out var r2) && l2 >= r2,
+                    "smaller" => double.TryParse(leftValue, out var l3) && double.TryParse(rightValue, out var r3) && l3 < r3,
+                    "smallerEqual" => double.TryParse(leftValue, out var l4) && double.TryParse(rightValue, out var r4) && l4 <= r4,
+                    _ => false
+                };
+
+                logs.Add($"[IF] {leftValue} {operation} {rightValue} = {conditionResult}");
+
+                if (conditionType == "and")
+                {
+                    result = result && conditionResult;
+                }
+                else
+                {
+                    result = result || conditionResult;
+                }
+            }
+
+            logs.Add($"[IF] Resultado final: {result}");
+            return result;
+        }
+        catch (Exception ex)
+        {
+            logs.Add($"[IF ERROR] {ex.Message}");
+            return false;
+        }
+    }
+
+    private async Task<string> ExecuteAINode(WorkflowNode node, List<string> logs)
+    {
+        try
+        {
+            var jsonParams = JsonSerializer.Serialize(node.Parameters);
+            var p = JsonNode.Parse(jsonParams);
+            
+            // Novo formato: "Provider:Model" (ex: "OpenAI:gpt-4", "Anthropic Claude:claude-sonnet-4")
+            string providerModel = p?["providerModel"]?.ToString() ?? "OpenAI:gpt-4";
+            string prompt = p?["prompt"]?.ToString() ?? "";
+            double temperature = double.Parse(p?["temperature"]?.ToString() ?? "0.7");
+            int maxTokens = int.Parse(p?["maxTokens"]?.ToString() ?? "1000");
+
+            logs.Add($"[AI] Provider: {providerModel}, Prompt: {prompt.Substring(0, Math.Min(50, prompt.Length))}...");
+
+            // Usa o AIProviderManager para executar
+            var aiManager = _aiProviderManager;
+            
+            if (aiManager == null)
+            {
+                throw new Exception("AIProviderManager não está registrado no DI");
+            }
+
+            var aiResponse = await aiManager.ExecuteAsync(
+                providerModel, 
+                prompt, 
+                temperature, 
+                maxTokens
+            );
+
+            logs.Add($"[AI] ✅ {aiResponse.Provider} | Tokens: {aiResponse.TokensUsed} | Custo: ${aiResponse.Cost:F4}");
+            logs.Add($"[AI] Response: {aiResponse.Content.Substring(0, Math.Min(100, aiResponse.Content.Length))}...");
+
+            // Retorna no formato esperado
+            return JsonSerializer.Serialize(new 
+            { 
+                response = aiResponse.Content,
+                provider = aiResponse.Provider,
+                model = aiResponse.Model,
+                tokensUsed = aiResponse.TokensUsed,
+                cost = aiResponse.Cost
+            });
+        }
+        catch (Exception ex)
+        {
+            logs.Add($"[AI ERROR] {ex.Message}");
+            throw;
+        }
+    }
+
+    // ============================================================
+    // NAVEGAÇÃO NO WORKFLOW
+    // ============================================================
     
-    // Pequeno ajuste no FindNextNode para ser seguro
     private WorkflowNode? FindNextNode(SmartAgent agent, string currentId, int outputIndex)
     {
         var conn = agent.Workflow.Connections.FirstOrDefault(c => 
             c.SourceNodeId == currentId && 
-            (c.SourceOutputIndex == outputIndex || (outputIndex == 0 && c.SourceOutputIndex == 0))); // Fallback
+            c.SourceOutputIndex == outputIndex);
 
         if (conn == null) return null;
         return agent.Workflow.Nodes.FirstOrDefault(n => n.Id == conn.TargetNodeId);

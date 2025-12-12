@@ -531,6 +531,13 @@
 /mnt/8AA2CEB6A2CEA5D3/Dyson/Application/obj/Debug/net8.0/Application.pdb
 /mnt/8AA2CEB6A2CEA5D3/Dyson/Application/obj/Debug/net8.0/Application.genruntimeconfig.cache
 /mnt/8AA2CEB6A2CEA5D3/Dyson/Application/obj/Debug/net8.0/ref/Application.dll
+/home/mplopes/Documentos/Dyson/Application/bin/Debug/net8.0/Acornima.dll
+/home/mplopes/Documentos/Dyson/Application/bin/Debug/net8.0/Google.Protobuf.dll
+/home/mplopes/Documentos/Dyson/Application/bin/Debug/net8.0/Grpc.Core.Api.dll
+/home/mplopes/Documentos/Dyson/Application/bin/Debug/net8.0/Grpc.Net.Client.dll
+/home/mplopes/Documentos/Dyson/Application/bin/Debug/net8.0/Grpc.Net.Common.dll
+/home/mplopes/Documentos/Dyson/Application/bin/Debug/net8.0/Jint.dll
+/home/mplopes/Documentos/Dyson/Application/bin/Debug/net8.0/Qdrant.Client.dll
 /home/mplopes/Documentos/Dyson/Application/bin/Debug/net8.0/Application.staticwebassets.runtime.json
 /home/mplopes/Documentos/Dyson/Application/bin/Debug/net8.0/Application.staticwebassets.endpoints.json
 /home/mplopes/Documentos/Dyson/Application/bin/Debug/net8.0/Application

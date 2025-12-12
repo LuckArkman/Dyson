@@ -18,8 +18,9 @@ public class SmartAgent
     
     public WorkflowData Workflow { get; set; } = new();
 
-    public DateTime CreatedAt { get; set; }
-    public DateTime UpdatedAt { get; set; }
+    public DateTime? CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime? UpdatedAt { get; set; }
     public decimal price { get; set; }
     public string Type { get; set; }
+    public string Status { get; set; }
 }

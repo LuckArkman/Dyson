@@ -24,7 +24,7 @@ public class ErrorHandlingMiddleware
             {
                 context.Response.ContentType = "application/json";
                 context.Response.StatusCode = 500;
-                await context.Response.WriteAsJsonAsync(new { error = "Erro interno no servidor Dyson.", details = ex.Message });
+                await context.Response.WriteAsync( "Erro interno no servidor Dyson.");
             }
             else 
             {

@@ -2352,6 +2352,23 @@
           "bin/placeholder/Enums.dll": {}
         }
       },
+      "Interfaces/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "Dtos": "1.0.0",
+          "Jint": "4.4.2",
+          "Microsoft.AspNetCore.Identity.Service.Core": "1.0.0-preview1-final",
+          "Qdrant.Client": "1.16.1",
+          "Records": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Interfaces.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Interfaces.dll": {}
+        }
+      },
       "Records/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
@@ -7013,6 +7030,11 @@
       "path": "../Enums/Enums.csproj",
       "msbuildProject": "../Enums/Enums.csproj"
     },
+    "Interfaces/1.0.0": {
+      "type": "project",
+      "path": "../Interfaces/Interfaces.csproj",
+      "msbuildProject": "../Interfaces/Interfaces.csproj"
+    },
     "Records/1.0.0": {
       "type": "project",
       "path": "../Records/Records.csproj",
@@ -7022,6 +7044,7 @@
   "projectFileDependencyGroups": {
     "net8.0": [
       "Dtos >= 1.0.0",
+      "Interfaces >= 1.0.0",
       "Qdrant.Client >= 1.16.1"
     ]
   },
@@ -7053,6 +7076,9 @@
           "projectReferences": {
             "/home/mplopes/Documentos/Dyson/Dtos/Dtos.csproj": {
               "projectPath": "/home/mplopes/Documentos/Dyson/Dtos/Dtos.csproj"
+            },
+            "/home/mplopes/Documentos/Dyson/Interfaces/Interfaces.csproj": {
+              "projectPath": "/home/mplopes/Documentos/Dyson/Interfaces/Interfaces.csproj"
             }
           }
         }

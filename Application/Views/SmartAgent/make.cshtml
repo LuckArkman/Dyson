@@ -1,405 +1,1129 @@
 @using Dtos
 @model SmartAgent
 @{
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
-    ViewData["Title"] = string.IsNullOrEmpty(Model.id) ? "Criar Novo Agente" : $"Editando: {Model.Name}";
+Layout = "~/Views/Shared/_AdminLayout.cshtml";
+ViewData["Title"] = string.IsNullOrEmpty(Model.id) ? "Criar Novo Agente" : $"Editando: {Model.Name}";
 }
 
 <!-- Drawflow CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jerosoler/Drawflow/dist/drawflow.min.css">
-<!-- FontAwesome (Garanta que está no Layout, mas reforçando aqui se necessário) -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
-    /* Ajuste de Layout para tela cheia */
-    .content-wrapper { display: flex; flex-direction: column; height: calc(100vh - 57px); }
-    .content { flex: 1; display: flex; flex-direction: column; padding: 0 !important; }
-    .container-fluid { flex: 1; display: flex; flex-direction: column; padding: 0; }
-    
-    /* Editor Canvas */
+    /* ==================== LAYOUT BASE ==================== */
+    .content-wrapper {
+        display: flex;
+        flex-direction: column;
+        height: calc(100vh - 57px);
+        overflow: hidden;
+    }
+    .content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    .container-fluid {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        padding: 0;
+        height: 100%;
+    }
+
+    /* ==================== EDITOR CANVAS ==================== */
     .editor-container {
-        flex: 1; position: relative; overflow: hidden;
-        background: #212529;
-        background-image: radial-gradient(#495057 1px, transparent 1px);
-        background-size: 25px 25px;
+        flex: 1;
+        position: relative;
+        overflow: hidden;
+        background: #1a1d23;
+        background-image:
+            linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
+        background-size: 20px 20px;
     }
 
-    /* Toolbar Superior */
+    /* ==================== TOOLBAR SUPERIOR ==================== */
     .editor-toolbar {
-        background: #343a40; padding: 10px 15px; border-bottom: 1px solid #4b5563;
-        display: flex; justify-content: space-between; align-items: center; z-index: 5;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 12px 20px;
+        border-bottom: 2px solid rgba(255,255,255,0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 100;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.3);
     }
 
-    /* Paleta Lateral Esquerda */
+    .agent-name-input {
+        background: rgba(255,255,255,0.15);
+        border: 1px solid rgba(255,255,255,0.3);
+        color: white;
+        font-size: 16px;
+        font-weight: 600;
+        padding: 8px 15px;
+        border-radius: 8px;
+        width: 350px;
+        transition: all 0.3s ease;
+    }
+    .agent-name-input:focus {
+        background: rgba(255,255,255,0.25);
+        border-color: rgba(255,255,255,0.5);
+        box-shadow: 0 0 15px rgba(255,255,255,0.3);
+        outline: none;
+    }
+
+    .toolbar-btn {
+        background: rgba(255,255,255,0.2);
+        border: 1px solid rgba(255,255,255,0.3);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 6px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    .toolbar-btn:hover {
+        background: rgba(255,255,255,0.3);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+    .toolbar-btn.btn-save {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        border: none;
+        font-size: 14px;
+        padding: 10px 25px;
+    }
+    .toolbar-btn.btn-save:hover {
+        transform: translateY(-2px) scale(1.05);
+    }
+
+    /* ==================== NODE PALETTE (ESQUERDA) ==================== */
     .node-palette {
-        position: absolute; top: 15px; left: 15px; width: 200px;
-        background: rgba(33, 37, 41, 0.95); border: 1px solid #4b5563; border-radius: 8px;
-        z-index: 10; box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        width: 240px;
+        background: rgba(26, 29, 35, 0.98);
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 12px;
+        z-index: 50;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+        overflow: hidden;
     }
-    .palette-header { padding: 10px; border-bottom: 1px solid #4b5563; font-weight: bold; text-align: center; color: #adb5bd; }
+
+    .palette-header {
+        padding: 15px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        font-weight: 700;
+        text-align: center;
+        color: white;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .palette-section {
+        padding: 10px 0;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .palette-section-title {
+        padding: 8px 15px;
+        color: #8b92a7;
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
     .palette-item {
-        padding: 10px 15px; color: #fff; cursor: grab; border-bottom: 1px solid #343a40;
-        display: flex; align-items: center; transition: background 0.2s;
+        padding: 12px 15px;
+        color: #fff;
+        cursor: grab;
+        display: flex;
+        align-items: center;
+        transition: all 0.2s ease;
+        margin: 2px 8px;
+        border-radius: 6px;
     }
-    .palette-item:hover { background: #343a40; }
-    .palette-item i { width: 25px; margin-right: 5px; text-align: center; }
+    .palette-item:hover {
+        background: rgba(102, 126, 234, 0.2);
+        transform: translateX(5px);
+    }
+    .palette-item:active {
+        cursor: grabbing;
+    }
+    .palette-item i {
+        width: 30px;
+        margin-right: 10px;
+        text-align: center;
+        font-size: 16px;
+    }
+    .palette-item-label {
+        flex: 1;
+        font-size: 13px;
+        font-weight: 500;
+    }
 
-    /* Painel de Propriedades (Direita - Oculto por padrão) */
+    /* ==================== PROPERTIES PANEL (DIREITA) ==================== */
     .properties-panel {
-        position: absolute; top: 0; right: -320px; width: 300px; height: 100%;
-        background: #2c3136; border-left: 1px solid #4b5563;
-        transition: right 0.3s ease; z-index: 20; padding: 15px; overflow-y: auto;
+        position: absolute;
+        top: 0;
+        right: -380px;
+        width: 360px;
+        height: 100%;
+        background: rgba(26, 29, 35, 0.98);
+        border-left: 1px solid rgba(255,255,255,0.1);
+        transition: right 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
+        z-index: 60;
+        padding: 0;
+        overflow-y: auto;
+        box-shadow: -8px 0 32px rgba(0,0,0,0.5);
     }
-    .properties-panel.open { right: 0; }
+    .properties-panel.open {
+        right: 0;
+    }
 
-    /* Estilo dos Nós */
+    .props-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 20px;
+        color: white;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+    }
+    .props-header h5 {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    .props-close-btn {
+        background: rgba(255,255,255,0.2);
+        border: none;
+        color: white;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    .props-close-btn:hover {
+        background: rgba(255,255,255,0.3);
+        transform: rotate(90deg);
+    }
+
+    .props-content {
+        padding: 20px;
+    }
+
+    .form-group-modern {
+        margin-bottom: 20px;
+    }
+    .form-group-modern label {
+        display: block;
+        color: #8b92a7;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 8px;
+    }
+    .form-control-modern {
+        width: 100%;
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.1);
+        color: white;
+        padding: 10px 15px;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: all 0.3s ease;
+    }
+    .form-control-modern:focus {
+        background: rgba(255,255,255,0.08);
+        border-color: #667eea;
+        box-shadow: 0 0 15px rgba(102, 126, 234, 0.3);
+        outline: none;
+    }
+    .form-control-modern::placeholder {
+        color: rgba(255,255,255,0.3);
+    }
+
+    .props-actions {
+        padding: 20px;
+        border-top: 1px solid rgba(255,255,255,0.1);
+        background: rgba(0,0,0,0.2);
+    }
+    .btn-apply {
+        width: 100%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        color: white;
+        padding: 12px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-bottom: 10px;
+    }
+    .btn-apply:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+    }
+    .btn-delete {
+        width: 100%;
+        background: transparent;
+        border: 1px solid rgba(239, 68, 68, 0.5);
+        color: #ef4444;
+        padding: 10px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 13px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    .btn-delete:hover {
+        background: rgba(239, 68, 68, 0.1);
+        border-color: #ef4444;
+    }
+
+    /* ==================== AI PROVIDER SELECTOR ==================== */
+    .provider-badge {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 12px;
+        font-size: 11px;
+        font-weight: 600;
+        margin-left: 8px;
+    }
+    .provider-badge.free { background: #10b981; color: white; }
+    .provider-badge.low { background: #3b82f6; color: white; }
+    .provider-badge.mid { background: #f59e0b; color: white; }
+    .provider-badge.high { background: #ef4444; color: white; }
+
+    /* ==================== DRAWFLOW NODE STYLES ==================== */
     .drawflow-node {
-        background: #343a40; border: 1px solid #6c757d; border-radius: 6px; width: 200px;
-        color: white; padding: 0;
+        background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+        border: 2px solid rgba(255,255,255,0.1);
+        border-radius: 12px;
+        width: 220px;
+        color: white;
+        padding: 0;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+        transition: all 0.3s ease;
     }
-    .drawflow-node .title { padding: 8px; border-radius: 6px 6px 0 0; font-weight: bold; font-size: 0.9rem; }
-    .drawflow-node .content { padding: 10px; font-size: 0.85rem; color: #ced4da; }
-    .drawflow-node.selected { border-color: #ffc107; box-shadow: 0 0 8px rgba(255, 193, 7, 0.6); }
+    .drawflow-node:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 32px rgba(0,0,0,0.6);
+    }
+    .drawflow-node.selected {
+        border-color: #fbbf24;
+        box-shadow: 0 0 30px rgba(251, 191, 36, 0.6);
+        transform: scale(1.02);
+    }
 
-    /* Cores Específicas */
-    .bg-webhook { background-color: #28a745; }
-    .bg-http { background-color: #007bff; }
-    .bg-ai { background-color: #6f42c1; }
-    .bg-logic { background-color: #dc3545; }
-    .bg-code { background-color: #e83e8c; }
+    .drawflow-node .title-box {
+        padding: 12px 15px;
+        border-radius: 10px 10px 0 0;
+        font-weight: 700;
+        font-size: 13px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .drawflow-node .title-box i {
+        font-size: 16px;
+    }
+    .drawflow-node .node-content {
+        padding: 12px 15px;
+        font-size: 12px;
+        color: #cbd5e0;
+        line-height: 1.4;
+    }
+
+    /* Cores dos Nós */
+    .node-webhook { background: linear-gradient(135deg, #10b981 0%, #059669 100%); }
+    .node-http { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); }
+    .node-ai { background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); }
+    .node-if { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); }
+    .node-code { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); }
+    .node-memory { background: linear-gradient(135deg, #ec4899 0%, #db2777 100%); }
+
+    /* ==================== MINIMAP ==================== */
+    .minimap {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        width: 200px;
+        height: 150px;
+        background: rgba(26, 29, 35, 0.95);
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 8px;
+        z-index: 40;
+        padding: 10px;
+    }
+    .minimap-title {
+        color: #8b92a7;
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+    }
+
+    /* ==================== RESPONSIVE ==================== */
+    @@media (max-width: 768px) {
+    .node-palette {
+        width: 200px;
+        left: 10px;
+        top: 10px;
+    }
+    .properties-panel {
+        width: 100%;
+        right: -100%;
+    }
+    .properties-panel.open {
+        right: 0;
+    }
+    .agent-name-input {
+        width: 200px;
+    }
+    }
 </style>
 
-<!-- TOOLBAR -->
+<!-- ==================== TOOLBAR ==================== -->
 <div class="editor-toolbar">
-    <div class="d-flex align-items-center">
-        <div class="input-group input-group-sm" style="width: 300px;">
-            <div class="input-group-prepend">
-                <span class="input-group-text bg-dark border-secondary"><i class="fas fa-robot"></i></span>
-            </div>
-            <input type="text" id="agentName" class="form-control bg-dark text-white border-secondary" 
-                   value="@(Model.Name ?? "Novo Agente")" placeholder="Nome do Agente">
+    <div class="d-flex align-items-center gap-3">
+        <div>
+            <i class="fas fa-robot" style="font-size: 24px; color: white;"></i>
         </div>
+        <input type="text" id="agentName" class="agent-name-input"
+               value="@(Model.Name ?? "Novo Agente Inteligente")"
+               placeholder="Nome do seu Smart Agent">
         <input type="hidden" id="agentId" value="@Model.id">
     </div>
-    
-    <div>
-        <div class="btn-group mr-2">
-            <button class="btn btn-secondary btn-sm" onclick="editor.zoom_out()" title="Zoom Out"><i class="fas fa-search-minus"></i></button>
-            <button class="btn btn-secondary btn-sm" onclick="editor.zoom_reset()" title="Reset Zoom"><i class="fas fa-search"></i></button>
-            <button class="btn btn-secondary btn-sm" onclick="editor.zoom_in()" title="Zoom In"><i class="fas fa-search-plus"></i></button>
+
+    <div class="d-flex align-items-center gap-2">
+        <div class="btn-group">
+            <button class="toolbar-btn" onclick="editor.zoom_out()" title="Zoom Out">
+                <i class="fas fa-search-minus"></i>
+            </button>
+            <button class="toolbar-btn" onclick="editor.zoom_reset()" title="Reset">
+                <i class="fas fa-search"></i>
+            </button>
+            <button class="toolbar-btn" onclick="editor.zoom_in()" title="Zoom In">
+                <i class="fas fa-search-plus"></i>
+            </button>
         </div>
-        <button class="btn btn-success btn-sm font-weight-bold shadow-sm" onclick="saveWorkflow()">
-            <i class="fas fa-save mr-1"></i> SALVAR
+        <button class="toolbar-btn" onclick="clearCanvas()" title="Limpar Tudo">
+            <i class="fas fa-trash-alt"></i>
+        </button>
+        <button class="toolbar-btn btn-save" onclick="saveWorkflow()">
+            <i class="fas fa-save mr-2"></i> SALVAR AGENTE
         </button>
     </div>
 </div>
 
-<!-- EDITOR AREA -->
+<!-- ==================== EDITOR CANVAS ==================== -->
 <div class="editor-container" id="drawflow" ondrop="drop(event)" ondragover="allowDrop(event)">
-    
-    <!-- PALETTE -->
+
+    <!-- ==================== NODE PALETTE ==================== -->
     <div class="node-palette">
-        <div class="palette-header">Ferramentas</div>
-        
-        <div class="palette-item" draggable="true" ondragstart="drag(event)" data-node="webhook">
-            <i class="fas fa-bolt text-success"></i> Webhook
+        <div class="palette-header">
+            <i class="fas fa-puzzle-piece mr-2"></i>
+            Ferramentas
         </div>
-        <div class="palette-item" draggable="true" ondragstart="drag(event)" data-node="httpRequest">
-            <i class="fas fa-globe text-primary"></i> HTTP Request
+
+        <div class="palette-section">
+            <div class="palette-section-title">
+                <i class="fas fa-bolt mr-1"></i> Triggers
+            </div>
+            <div class="palette-item" draggable="true" ondragstart="drag(event)" data-node="webhook">
+                <i class="fas fa-bolt" style="color: #10b981;"></i>
+                <span class="palette-item-label">Webhook</span>
+            </div>
         </div>
-        <div class="palette-item" draggable="true" ondragstart="drag(event)" data-node="openai">
-            <i class="fas fa-brain text-purple" style="color:#a57aff"></i> AI / LLM
+
+        <div class="palette-section">
+            <div class="palette-section-title">
+                <i class="fas fa-brain mr-1"></i> IA & Processamento
+            </div>
+            <div class="palette-item" draggable="true" ondragstart="drag(event)" data-node="ai">
+                <i class="fas fa-brain" style="color: #8b5cf6;"></i>
+                <span class="palette-item-label">AI / LLM</span>
+            </div>
+            <div class="palette-item" draggable="true" ondragstart="drag(event)" data-node="memory">
+                <i class="fas fa-database" style="color: #ec4899;"></i>
+                <span class="palette-item-label">Memory</span>
+            </div>
+            <div class="palette-item" draggable="true" ondragstart="drag(event)" data-node="code">
+                <i class="fas fa-code" style="color: #f59e0b;"></i>
+                <span class="palette-item-label">JavaScript</span>
+            </div>
         </div>
-        <div class="palette-item" draggable="true" ondragstart="drag(event)" data-node="if">
-            <i class="fas fa-code-branch text-danger"></i> IF Condition
+
+        <div class="palette-section">
+            <div class="palette-section-title">
+                <i class="fas fa-globe mr-1"></i> Integrations
+            </div>
+            <div class="palette-item" draggable="true" ondragstart="drag(event)" data-node="http">
+                <i class="fas fa-globe" style="color: #3b82f6;"></i>
+                <span class="palette-item-label">HTTP Request</span>
+            </div>
         </div>
-        <div class="palette-item" draggable="true" ondragstart="drag(event)" data-node="code">
-            <i class="fas fa-code text-pink" style="color:#ff6b6b"></i> JavaScript
+
+        <div class="palette-section">
+            <div class="palette-section-title">
+                <i class="fas fa-code-branch mr-1"></i> Logic
+            </div>
+            <div class="palette-item" draggable="true" ondragstart="drag(event)" data-node="if">
+                <i class="fas fa-code-branch" style="color: #ef4444;"></i>
+                <span class="palette-item-label">IF Condition</span>
+            </div>
         </div>
     </div>
 
-    <!-- PROPERTIES PANEL -->
+    <!-- ==================== PROPERTIES PANEL ==================== -->
     <div class="properties-panel" id="propsPanel">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h5 class="m-0 text-white"><i class="fas fa-cog"></i> Configurações</h5>
-            <button class="btn btn-xs btn-outline-secondary" onclick="closeProps()"><i class="fas fa-times"></i></button>
-        </div>
-        <hr class="bg-secondary">
-        
-        <div id="propsContent">
-            <p class="text-muted text-center mt-5">Selecione um nó para editar.</p>
+        <div class="props-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5>
+                    <i class="fas fa-cog mr-2"></i>
+                    Configurações
+                </h5>
+                <button class="props-close-btn" onclick="closeProps()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
         </div>
 
-        <div id="propsActions" style="display:none;" class="mt-4">
-            <button class="btn btn-primary btn-block mb-2" onclick="saveNodeSettings()">Aplicar Alterações</button>
-            <button class="btn btn-outline-danger btn-block btn-sm" onclick="deleteSelectedNode()">Excluir Nó</button>
+        <div class="props-content" id="propsContent">
+            <div class="text-center" style="padding: 60px 20px; color: #8b92a7;">
+                <i class="fas fa-mouse-pointer" style="font-size: 48px; margin-bottom: 20px; opacity: 0.5;"></i>
+                <p style="font-size: 14px; line-height: 1.6;">
+                    Selecione um nó no canvas<br>para visualizar e editar<br>suas configurações
+                </p>
+            </div>
+        </div>
+
+        <div id="propsActions" style="display:none;" class="props-actions">
+            <button class="btn-apply" onclick="saveNodeSettings()">
+                <i class="fas fa-check mr-2"></i>
+                Aplicar Alterações
+            </button>
+            <button class="btn-delete" onclick="deleteSelectedNode()">
+                <i class="fas fa-trash-alt mr-2"></i>
+                Excluir Este Nó
+            </button>
+        </div>
+    </div>
+
+    <!-- ==================== MINIMAP (OPCIONAL) ==================== -->
+    <div class="minimap">
+        <div class="minimap-title">Minimap</div>
+        <div id="minimapContent" style="width: 100%; height: 100%; background: rgba(0,0,0,0.3); border-radius: 4px;">
+            <!-- Minimap canvas será renderizado aqui pelo Drawflow -->
         </div>
     </div>
 </div>
 
 @section Scripts {
-    <script src="https://cdn.jsdelivr.net/gh/jerosoler/Drawflow/dist/drawflow.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/gh/jerosoler/Drawflow/dist/drawflow.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <script>
-        // --- 1. CONFIGURAÇÃO INICIAL ---
-        var id = document.getElementById("drawflow");
-        const editor = new Drawflow(id);
-        editor.reroute = true;
-        editor.start();
+<script>
+    // ==================== CONFIGURAÇÃO INICIAL ====================
+    const container = document.getElementById("drawflow");
+    const editor = new Drawflow(container);
+    editor.reroute = true;
+    editor.reroute_fix_curvature = true;
+    editor.curvature = 0.5;
+    editor.force_first_input = false;
+    editor.start();
 
-        let selectedNodeId = null;
+    let selectedNodeId = null;
 
-        // --- 2. DRAG & DROP ---
-        function allowDrop(ev) { ev.preventDefault(); }
-        function drag(ev) { ev.dataTransfer.setData("node", ev.target.getAttribute('data-node')); }
-        function drop(ev) {
-            ev.preventDefault();
-            var type = ev.dataTransfer.getData("node");
-            addNodeToCanvas(type, ev.clientX, ev.clientY);
-        }
+    // ==================== DRAG & DROP ====================
+    function allowDrop(ev) {
+        ev.preventDefault();
+    }
 
-        function addNodeToCanvas(type, x, y) {
-            // Conversão de Coordenadas
-            var pos_x = x * ( editor.precanvas.clientWidth / (editor.precanvas.clientWidth * editor.zoom)) - (editor.precanvas.getBoundingClientRect().x * ( editor.precanvas.clientWidth / (editor.precanvas.clientWidth * editor.zoom)));
-            var pos_y = y * ( editor.precanvas.clientHeight / (editor.precanvas.clientHeight * editor.zoom)) - (editor.precanvas.getBoundingClientRect().y * ( editor.precanvas.clientHeight / (editor.precanvas.clientHeight * editor.zoom)));
+    function drag(ev) {
+        ev.dataTransfer.setData("node", ev.target.getAttribute('data-node'));
+    }
 
-            var html = getTemplate(type);
-            var inputs = (type === 'webhook') ? 0 : 1;
-            var outputs = (type === 'if') ? 2 : 1;
+    function drop(ev) {
+        ev.preventDefault();
+        const type = ev.dataTransfer.getData("node");
+        addNodeToCanvas(type, ev.clientX, ev.clientY);
+    }
 
-            editor.addNode(type, inputs, outputs, pos_x, pos_y, type, { config: {} }, html);
-        }
+    function addNodeToCanvas(type, x, y) {
+        // Conversão de coordenadas do mouse para coordenadas do canvas
+        const rect = editor.precanvas.getBoundingClientRect();
+        const pos_x = (x - rect.left) * (editor.precanvas.clientWidth / (editor.precanvas.clientWidth * editor.zoom)) - editor.precanvas.getBoundingClientRect().x;
+        const pos_y = (y - rect.top) * (editor.precanvas.clientHeight / (editor.precanvas.clientHeight * editor.zoom)) - editor.precanvas.getBoundingClientRect().y;
 
-        // --- 3. TEMPLATES HTML DOS NÓS ---
-        function getTemplate(type) {
-            let titleClass = "";
-            let icon = "";
-            let desc = "";
+        const html = getNodeTemplate(type);
+        const inputs = (type === 'webhook') ? 0 : 1;
+        const outputs = (type === 'if') ? 2 : 1;
 
-            switch(type) {
-                case 'webhook': titleClass="bg-webhook"; icon="fa-bolt"; desc="Trigger"; break;
-                case 'httpRequest': titleClass="bg-http"; icon="fa-globe"; desc="API Call"; break;
-                case 'openai': titleClass="bg-ai"; icon="fa-brain"; desc="LLM"; break;
-                case 'if': titleClass="bg-logic"; icon="fa-code-branch"; desc="Logic"; break;
-                case 'code': titleClass="bg-code"; icon="fa-code"; desc="JS Script"; break;
-                default: titleClass="bg-secondary"; icon="fa-cube"; desc="Node"; break;
-            }
+        editor.addNode(type, inputs, outputs, pos_x, pos_y, type, { config: {} }, html);
 
-            return `
-                <div class="title ${titleClass}"><i class="fas ${icon}"></i> ${type.toUpperCase()}</div>
-                <div class="content">${desc}</div>
-            `;
-        }
+        // Feedback visual
+        showToast('success', `Nó ${type} adicionado!`);
+    }
 
-        // --- 4. PAINEL DE PROPRIEDADES (CRÍTICO) ---
-        editor.on('nodeSelected', function(id) {
-            selectedNodeId = id;
-            document.getElementById('propsPanel').classList.add('open');
-            const node = editor.getNodeFromId(id);
-            renderProperties(node);
-        });
-
-        editor.on('nodeUnselected', function() {
-            closeProps();
-        });
-
-        function closeProps() {
-            document.getElementById('propsPanel').classList.remove('open');
-            selectedNodeId = null;
-        }
-
-        function renderProperties(node) {
-            const data = node.data.config || {};
-            let html = "";
-
-            if(node.name === 'httpRequest') {
-                html = `
-                    <div class="form-group">
-                        <label>URL</label>
-                        <input type="text" id="prop-url" class="form-control bg-dark text-white" value="${data.url || 'https://'}">
+    // ==================== NODE TEMPLATES ====================
+    function getNodeTemplate(type) {
+        const templates = {
+            'webhook': `
+                    <div class="title-box node-webhook">
+                        <i class="fas fa-bolt"></i>
+                        <span>Webhook Trigger</span>
                     </div>
-                    <div class="form-group">
-                        <label>Método</label>
-                        <select id="prop-method" class="form-control bg-dark text-white">
-                            <option ${data.method=='GET'?'selected':''}>GET</option>
-                            <option ${data.method=='POST'?'selected':''}>POST</option>
-                            <option ${data.method=='PUT'?'selected':''}>PUT</option>
+                    <div class="node-content">
+                        Recebe requisições HTTP
+                    </div>
+                `,
+            'http': `
+                    <div class="title-box node-http">
+                        <i class="fas fa-globe"></i>
+                        <span>HTTP Request</span>
+                    </div>
+                    <div class="node-content">
+                        Faz requisições externas
+                    </div>
+                `,
+            'ai': `
+                    <div class="title-box node-ai">
+                        <i class="fas fa-brain"></i>
+                        <span>AI / LLM</span>
+                    </div>
+                    <div class="node-content">
+                        Processamento com IA
+                    </div>
+                `,
+            'if': `
+                    <div class="title-box node-if">
+                        <i class="fas fa-code-branch"></i>
+                        <span>IF Condition</span>
+                    </div>
+                    <div class="node-content">
+                        Lógica condicional
+                    </div>
+                `,
+            'code': `
+                    <div class="title-box node-code">
+                        <i class="fas fa-code"></i>
+                        <span>JavaScript Code</span>
+                    </div>
+                    <div class="node-content">
+                        Executa código JS
+                    </div>
+                `,
+            'memory': `
+                    <div class="title-box node-memory">
+                        <i class="fas fa-database"></i>
+                        <span>Vector Memory</span>
+                    </div>
+                    <div class="node-content">
+                        Memória de longo prazo
+                    </div>
+                `
+        };
+        return templates[type] || templates['http'];
+    }
+
+    // ==================== SELEÇÃO DE NÓS ====================
+    editor.on('nodeSelected', function(id) {
+        selectedNodeId = id;
+        showNodeProperties(id);
+    });
+
+    editor.on('nodeUnselected', function() {
+        selectedNodeId = null;
+        closeProps();
+    });
+
+    function showNodeProperties(nodeId) {
+        const node = editor.getNodeFromId(nodeId);
+        const data = node.data.config || {};
+
+        let html = '';
+
+        // ==================== WEBHOOK ====================
+        if (node.name === 'webhook') {
+            html = `
+                    <div class="form-group-modern">
+                        <label><i class="fas fa-link mr-1"></i> Path do Webhook</label>
+                        <input type="text" id="prop-path" class="form-control-modern" 
+                               value="${data.path || '/webhook'}" 
+                               placeholder="/webhook">
+                    </div>
+                    <div class="form-group-modern">
+                        <label><i class="fas fa-exchange-alt mr-1"></i> Método HTTP</label>
+                        <select id="prop-method" class="form-control-modern">
+                            <option ${data.method === 'GET' ? 'selected' : ''}>GET</option>
+                            <option ${data.method === 'POST' ? 'selected' : ''}>POST</option>
+                            <option ${data.method === 'PUT' ? 'selected' : ''}>PUT</option>
+                            <option ${data.method === 'DELETE' ? 'selected' : ''}>DELETE</option>
                         </select>
                     </div>
                 `;
-            } else if (node.name === 'openai') {
-                html = `
-                    <div class="form-group">
-                        <label>System Prompt</label>
-                        <textarea id="prop-prompt" class="form-control bg-dark text-white" rows="5">${data.prompt || ''}</textarea>
+        }
+        // ==================== HTTP REQUEST ====================
+        else if (node.name === 'http') {
+            html = `
+                    <div class="form-group-modern">
+                        <label><i class="fas fa-link mr-1"></i> URL</label>
+                        <input type="text" id="prop-url" class="form-control-modern" 
+                               value="${data.url || ''}" 
+                               placeholder="https://api.example.com/endpoint">
                     </div>
-                    <div class="form-group">
-                        <label>Modelo</label>
-                        <select id="prop-model" class="form-control bg-dark text-white">
-                            <option value="gpt-4o">GPT-4o</option>
-                            <option value="gpt-3.5-turbo">GPT-3.5 Turbo</option>
+                    <div class="form-group-modern">
+                        <label><i class="fas fa-exchange-alt mr-1"></i> Método</label>
+                        <select id="prop-method" class="form-control-modern">
+                            <option ${data.method === 'GET' ? 'selected' : ''}>GET</option>
+                            <option ${data.method === 'POST' ? 'selected' : ''}>POST</option>
+                            <option ${data.method === 'PUT' ? 'selected' : ''}>PUT</option>
+                            <option ${data.method === 'DELETE' ? 'selected' : ''}>DELETE</option>
                         </select>
                     </div>
-                `;
-            } else if (node.name === 'code') {
-                html = `
-                    <div class="form-group">
-                        <label>JavaScript Code</label>
-                        <textarea id="prop-code" class="form-control bg-dark text-white" rows="10" style="font-family:monospace;">${data.code || '// return $input;'}</textarea>
+                    <div class="form-group-modern">
+                        <label><i class="fas fa-file-code mr-1"></i> Body (JSON)</label>
+                        <textarea id="prop-body" class="form-control-modern" rows="4" 
+                                  placeholder='{"key": "value"}'>${data.body || ''}</textarea>
                     </div>
                 `;
-            } else if (node.name === 'webhook') {
-                 html = `
-                    <div class="form-group"><label>Path</label><input type="text" id="prop-path" class="form-control bg-dark text-white" value="${data.path || '/webhook'}"></div>
-                    <div class="form-group"><label>Method</label><select id="prop-method" class="form-control bg-dark text-white"><option>GET</option><option>POST</option></select></div>
+        }
+        // ==================== AI / LLM ====================
+        else if (node.name === 'ai') {
+            html = `
+                    <div class="form-group-modern">
+                        <label><i class="fas fa-robot mr-1"></i> AI Provider & Model</label>
+                        <select id="prop-providerModel" class="form-control-modern">
+                            <optgroup label="🆓 Google Gemini (FREE)">
+                                <option value="Google Gemini:gemini-2.0-flash-exp" ${data.providerModel === 'Google Gemini:gemini-2.0-flash-exp' ? 'selected' : ''}>
+                                    Gemini 2.0 Flash <span class="provider-badge free">FREE</span>
+                                </option>
+                                <option value="Google Gemini:gemini-1.5-flash" ${data.providerModel === 'Google Gemini:gemini-1.5-flash' ? 'selected' : ''}>
+                                    Gemini 1.5 Flash <span class="provider-badge free">$0.00015/1k</span>
+                                </option>
+                            </optgroup>
+                            <optgroup label="💎 Anthropic Claude">
+                                <option value="Anthropic Claude:claude-haiku-4-20250514" ${data.providerModel === 'Anthropic Claude:claude-haiku-4-20250514' ? 'selected' : ''}>
+                                    Claude Haiku 4 <span class="provider-badge low">$0.0008/1k</span>
+                                </option>
+                                <option value="Anthropic Claude:claude-sonnet-4-20250514" ${data.providerModel === 'Anthropic Claude:claude-sonnet-4-20250514' ? 'selected' : ''}>
+                                    Claude Sonnet 4 <span class="provider-badge mid">$0.003/1k</span>
+                                </option>
+                                <option value="Anthropic Claude:claude-opus-4-20250514" ${data.providerModel === 'Anthropic Claude:claude-opus-4-20250514' ? 'selected' : ''}>
+                                    Claude Opus 4 <span class="provider-badge high">$0.015/1k</span>
+                                </option>
+                            </optgroup>
+                            <optgroup label="🤖 OpenAI">
+                                <option value="OpenAI:gpt-3.5-turbo" ${data.providerModel === 'OpenAI:gpt-3.5-turbo' ? 'selected' : ''}>
+                                    GPT-3.5 Turbo <span class="provider-badge low">$0.002/1k</span>
+                                </option>
+                                <option value="OpenAI:gpt-4-turbo" ${data.providerModel === 'OpenAI:gpt-4-turbo' ? 'selected' : ''}>
+                                    GPT-4 Turbo <span class="provider-badge mid">$0.01/1k</span>
+                                </option>
+                                <option value="OpenAI:gpt-4" ${data.providerModel === 'OpenAI:gpt-4' ? 'selected' : ''}>
+                                    GPT-4 <span class="provider-badge high">$0.03/1k</span>
+                                </option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    <div class="form-group-modern">
+                        <label><i class="fas fa-comment-dots mr-1"></i> Prompt / System Message</label>
+                        <textarea id="prop-prompt" class="form-control-modern" rows="6" 
+                                  placeholder="Você é um assistente útil que...">${data.prompt || ''}</textarea>
+                        <small style="color: #8b92a7; font-size: 11px; display: block; margin-top: 5px;">
+                            Use variáveis: {{ $json.campo }}
+                        </small>
+                    </div>
+                    <div class="form-group-modern">
+                        <label><i class="fas fa-thermometer-half mr-1"></i> Temperature</label>
+                        <input type="range" id="prop-temperature" class="form-control-modern" 
+                               min="0" max="2" step="0.1" value="${data.temperature || 0.7}">
+                        <div style="color: #8b92a7; font-size: 12px; text-align: center;" id="tempValue">${data.temperature || 0.7}</div>
+                    </div>
+                    <div class="form-group-modern">
+                        <label><i class="fas fa-text-width mr-1"></i> Max Tokens</label>
+                        <input type="number" id="prop-maxTokens" class="form-control-modern" 
+                               value="${data.maxTokens || 1000}" min="100" max="8000" step="100">
+                    </div>
                 `;
-            } else {
-                html = `<p class="text-muted">Este nó não possui configurações.</p>`;
-            }
-
-            document.getElementById('propsContent').innerHTML = html;
-            document.getElementById('propsActions').style.display = 'block';
+        }
+        // ==================== IF CONDITION ====================
+        else if (node.name === 'if') {
+            html = `
+                    <div class="form-group-modern">
+                        <label><i class="fas fa-code-branch mr-1"></i> Condição</label>
+                        <select id="prop-condition-type" class="form-control-modern">
+                            <option ${data.conditionType === 'equals' ? 'selected' : ''}>equals</option>
+                            <option ${data.conditionType === 'notEquals' ? 'selected' : ''}>notEquals</option>
+                            <option ${data.conditionType === 'contains' ? 'selected' : ''}>contains</option>
+                            <option ${data.conditionType === 'greaterThan' ? 'selected' : ''}>greaterThan</option>
+                            <option ${data.conditionType === 'lessThan' ? 'selected' : ''}>lessThan</option>
+                        </select>
+                    </div>
+                    <div class="form-group-modern">
+                        <label><i class="fas fa-box mr-1"></i> Valor 1</label>
+                        <input type="text" id="prop-value1" class="form-control-modern" 
+                               value="${data.value1 || ''}" 
+                               placeholder="{{ $json.campo }}">
+                    </div>
+                    <div class="form-group-modern">
+                        <label><i class="fas fa-box mr-1"></i> Valor 2</label>
+                        <input type="text" id="prop-value2" class="form-control-modern" 
+                               value="${data.value2 || ''}" 
+                               placeholder="valor esperado">
+                    </div>
+                    <div style="padding: 15px; background: rgba(255,255,255,0.05); border-radius: 8px; margin-top: 15px;">
+                        <small style="color: #8b92a7; font-size: 11px; line-height: 1.6;">
+                            <i class="fas fa-info-circle mr-1"></i>
+                            <strong>Output 1:</strong> TRUE<br>
+                            <strong>Output 2:</strong> FALSE
+                        </small>
+                    </div>
+                `;
+        }
+        // ==================== JAVASCRIPT CODE ====================
+        else if (node.name === 'code') {
+            html = `
+                    <div class="form-group-modern">
+                        <label><i class="fas fa-code mr-1"></i> JavaScript Code</label>
+                        <textarea id="prop-code" class="form-control-modern" rows="12" 
+                                  style="font-family: 'Courier New', monospace; font-size: 13px;"
+                                  placeholder="// Use $input para acessar dados&#10;return { resultado: $input.valor * 2 };">${data.code || '// Seu código aqui\nreturn $input;'}</textarea>
+                        <small style="color: #8b92a7; font-size: 11px; display: block; margin-top: 5px;">
+                            <i class="fas fa-lightbulb mr-1"></i>
+                            Use <code>$input</code> para dados de entrada
+                        </small>
+                    </div>
+                `;
+        }
+        // ==================== MEMORY ====================
+        else if (node.name === 'memory') {
+            html = `
+                    <div class="form-group-modern">
+                        <label><i class="fas fa-tasks mr-1"></i> Operação</label>
+                        <select id="prop-operation" class="form-control-modern">
+                            <option ${data.operation === 'save' ? 'selected' : ''}>save</option>
+                            <option ${data.operation === 'search' ? 'selected' : ''}>search</option>
+                        </select>
+                    </div>
+                    <div class="form-group-modern">
+                        <label><i class="fas fa-comment mr-1"></i> Conteúdo</label>
+                        <textarea id="prop-content" class="form-control-modern" rows="4" 
+                                  placeholder="{{ $json.userMessage }}">${data.content || ''}</textarea>
+                    </div>
+                    <div style="padding: 15px; background: rgba(236, 72, 153, 0.1); border-radius: 8px; border: 1px solid rgba(236, 72, 153, 0.3); margin-top: 15px;">
+                        <small style="color: #f9a8d4; font-size: 11px; line-height: 1.6;">
+                            <i class="fas fa-database mr-1"></i>
+                            <strong>Save:</strong> Salva na memória vetorial<br>
+                            <strong>Search:</strong> Busca memórias similares
+                        </small>
+                    </div>
+                `;
+        }
+        else {
+            html = `
+                    <div class="text-center" style="padding: 40px 20px; color: #8b92a7;">
+                        <i class="fas fa-cog" style="font-size: 36px; margin-bottom: 15px; opacity: 0.5;"></i>
+                        <p>Este nó não possui configurações avançadas.</p>
+                    </div>
+                `;
         }
 
-        function saveNodeSettings() {
-            if(!selectedNodeId) return;
-            
-            // Coleta dados dos inputs
-            let newData = { config: {} };
-            
-            if(document.getElementById('prop-url')) newData.config.url = document.getElementById('prop-url').value;
-            if(document.getElementById('prop-method')) newData.config.method = document.getElementById('prop-method').value;
-            if(document.getElementById('prop-prompt')) newData.config.prompt = document.getElementById('prop-prompt').value;
-            if(document.getElementById('prop-code')) newData.config.code = document.getElementById('prop-code').value;
-            if(document.getElementById('prop-path')) newData.config.path = document.getElementById('prop-path').value;
+        document.getElementById('propsContent').innerHTML = html;
+        document.getElementById('propsActions').style.display = html.includes('form-group-modern') ? 'block' : 'none';
+        document.getElementById('propsPanel').classList.add('open');
 
-            editor.updateNodeDataFromId(selectedNodeId, newData);
-            
-            // Feedback visual
-            const Toast = Swal.mixin({ toast: true, position: 'top-end', showConfirmButton: false, timer: 1500 });
-            Toast.fire({ icon: 'success', title: 'Configurações atualizadas' });
-            
-            closeProps();
+        // Event listener para temperature slider
+        const tempSlider = document.getElementById('prop-temperature');
+        if (tempSlider) {
+            tempSlider.addEventListener('input', function() {
+                document.getElementById('tempValue').textContent = this.value;
+            });
         }
+    }
 
-        function deleteSelectedNode() {
-            if(selectedNodeId) {
-                editor.removeNodeId(selectedNodeId);
-                closeProps();
-            }
-        }
+    function closeProps() {
+        document.getElementById('propsPanel').classList.remove('open');
+        selectedNodeId = null;
+    }
 
-        // --- 5. SAVE & LOAD (BACKEND) ---
-        
-        // Load
-        document.addEventListener("DOMContentLoaded", () => {
-            const modelJson = @Html.Raw(Json.Serialize(Model));
-            if(modelJson && modelJson.workflow && modelJson.workflow.nodes && modelJson.workflow.nodes.length > 0) {
-                restoreWorkflow(modelJson.workflow);
+    function saveNodeSettings() {
+        if(!selectedNodeId) return;
+
+        let newData = { config: {} };
+
+        // Coleta todos os campos do formulário
+        const fields = [
+            'url', 'method', 'body', 'path', 'prompt', 'providerModel',
+            'temperature', 'maxTokens', 'code', 'operation', 'content',
+            'condition-type', 'value1', 'value2'
+        ];
+
+        fields.forEach(field => {
+            const element = document.getElementById(`prop-${field}`);
+            if (element) {
+                const key = field.replace('-', '_');
+                newData.config[key] = element.value;
             }
         });
 
-        function restoreWorkflow(workflow) {
-            // Conversão Backend -> Frontend
-            const exportData = { "drawflow": { "Home": { "data": {} } } };
+        editor.updateNodeDataFromId(selectedNodeId, newData);
 
-            workflow.nodes.forEach(n => {
-                let frontType = n.type.split('.').pop();
-                if(n.type.includes('HttpRequest')) frontType = 'httpRequest';
-                if(n.type.includes('OpenAI')) frontType = 'openai';
-                
-                // Fallback para nomes antigos
-                if(!['webhook','httpRequest','openai','if','code'].includes(frontType)) frontType = 'httpRequest';
+        showToast('success', '✓ Configurações salvas!');
+        closeProps();
+    }
 
-                const html = getTemplate(frontType);
-                const inputs = (frontType === 'webhook') ? 0 : 1;
-                const outputs = (frontType === 'if') ? 2 : 1;
-
-                exportData.drawflow.Home.data[n.id] = {
-                    "id": n.id,
-                    "name": frontType,
-                    "data": { "config": n.parameters },
-                    "class": frontType,
-                    "html": html,
-                    "typenode": false,
-                    "inputs": {}, "outputs": {},
-                    "pos_x": n.position.x, "pos_y": n.position.y
-                };
-
-                for(let i=1; i<=inputs; i++) exportData.drawflow.Home.data[n.id].inputs[`input_${i}`] = { connections: [] };
-                for(let i=1; i<=outputs; i++) exportData.drawflow.Home.data[n.id].outputs[`output_${i}`] = { connections: [] };
-            });
-
-            workflow.connections.forEach(c => {
-                const s = c.sourceNodeId;
-                const t = c.targetNodeId;
-                const outKey = `output_${(c.sourceOutputIndex || 0) + 1}`;
-                const inKey = `input_1`;
-
-                if(exportData.drawflow.Home.data[s] && exportData.drawflow.Home.data[t]) {
-                    exportData.drawflow.Home.data[s].outputs[outKey].connections.push({ node: t, output: inKey });
-                    exportData.drawflow.Home.data[t].inputs[inKey].connections.push({ node: s, input: outKey });
+    function deleteSelectedNode() {
+        if(selectedNodeId) {
+            Swal.fire({
+                title: 'Excluir este nó?',
+                text: "Esta ação não pode ser desfeita!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#ef4444',
+                cancelButtonColor: '#6b7280',
+                confirmButtonText: 'Sim, excluir!',
+                cancelButtonText: 'Cancelar',
+                background: '#1a1d23',
+                color: '#fff'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    editor.removeNodeId(selectedNodeId);
+                    closeProps();
+                    showToast('success', 'Nó excluído!');
                 }
             });
-
-            editor.import(exportData);
         }
+    }
 
-        // Save
-        async function saveWorkflow() {
-            const raw = editor.export();
-            const nodesDict = raw.drawflow.Home.data;
-            const backendNodes = [];
-            const backendConnections = [];
-
-            for (const [key, val] of Object.entries(nodesDict)) {
-                let backType = 'n8n-nodes-base.' + val.name;
-                if(val.name === 'httpRequest') backType = 'MyClone.HttpRequest';
-                if(val.name === 'openai') backType = 'SmartAgent.OpenAI';
-
-                backendNodes.push({
-                    Id: val.id.toString(),
-                    Name: val.name,
-                    Type: backType,
-                    Parameters: val.data.config || {},
-                    Position: { X: val.pos_x, Y: val.pos_y }
-                });
-
-                for (const [outName, outObj] of Object.entries(val.outputs)) {
-                    for (const conn of outObj.connections) {
-                        backendConnections.push({
-                            SourceNodeId: val.id.toString(),
-                            TargetNodeId: conn.node.toString(),
-                            SourceOutputIndex: parseInt(outName.split('_')[1]) - 1
-                        });
-                    }
-                }
+    // ==================== CLEAR CANVAS ====================
+    function clearCanvas() {
+        Swal.fire({
+            title: 'Limpar tudo?',
+            text: "Todos os nós e conexões serão removidos!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#ef4444',
+            cancelButtonColor: '#6b7280',
+            confirmButtonText: 'Sim, limpar!',
+            cancelButtonText: 'Cancelar',
+            background: '#1a1d23',
+            color: '#fff'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                editor.clear();
+                showToast('success', 'Canvas limpo!');
             }
+        });
+    }
 
-            const payload = {
-                Id: document.getElementById('agentId').value || null,
-                Name: document.getElementById('agentName').value,
-                Workflow: { Nodes: backendNodes, Connections: backendConnections }
+    // ==================== SAVE & LOAD ====================
+    document.addEventListener("DOMContentLoaded", () => {
+        const modelJson = @Html.Raw(Json.Serialize(Model));
+        if(modelJson && modelJson.workflow && modelJson.workflow.nodes && modelJson.workflow.nodes.length > 0) {
+            restoreWorkflow(modelJson.workflow);
+        }
+    });
+
+    function restoreWorkflow(workflow) {
+        const exportData = { "drawflow": { "Home": { "data": {} } } };
+
+        workflow.nodes.forEach(n => {
+            let frontType = n.type.toLowerCase();
+            if(frontType.includes('http')) frontType = 'http';
+            if(frontType.includes('ai') || frontType.includes('openai')) frontType = 'ai';
+            if(frontType.includes('webhook')) frontType = 'webhook';
+            if(frontType.includes('code')) frontType = 'code';
+            if(frontType.includes('if')) frontType = 'if';
+            if(frontType.includes('memory')) frontType = 'memory';
+
+            const html = getNodeTemplate(frontType);
+            const inputs = (frontType === 'webhook') ? 0 : 1;
+            const outputs = (frontType === 'if') ? 2 : 1;
+
+            exportData.drawflow.Home.data[n.id] = {
+                "id": n.id,
+                "name": frontType,
+                "data": { "config": n.parameters },
+                "class": frontType,
+                "html": html,
+                "typenode": false,
+                "inputs": {},
+                "outputs": {},
+                "pos_x": n.position.x,
+                "pos_y": n.position.y
             };
 
-            try {
-                const res = await fetch('/SmartAgent/Save', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
+            for(let i=1; i<=inputs; i++) {
+                exportData.drawflow.Home.data[n.id].inputs[`input_${i}`] = { connections: [] };
+            }
+            for(let i=1; i<=outputs; i++) {
+                exportData.drawflow.Home.data[n.id].outputs[`output_${i}`] = { connections: [] };
+            }
+        });
 
-                if (res.ok) {
-                    const data = await res.json();
-                    document.getElementById('agentId').value = data.id;
-                    Swal.fire('Sucesso', 'Agente salvo!', 'success');
-                } else {
-                    Swal.fire('Erro', 'Falha ao salvar.', 'error');
+        workflow.connections.forEach(c => {
+            const s = c.sourceNodeId;
+            const t = c.targetNodeId;
+            const outKey = `output_${(c.sourceOutputIndex || 0) + 1}`;
+            const inKey = `input_1`;
+
+            if(exportData.drawflow.Home.data[s] && exportData.drawflow.Home.data[t]) {
+                exportData.drawflow.Home.data[s].outputs[outKey].connections.push({
+                    node: t,
+                    output: inKey
+                });
+                exportData.drawflow.Home.data[t].inputs[inKey].connections.push({
+                    node: s,
+                    input: outKey
+                });
+            }
+        });
+
+        editor.import(exportData);
+    }
+
+    async function saveWorkflow() {
+        const agentName = document.getElementById('agentName').value.trim();
+
+        if (!agentName) {
+            showToast('error', 'Por favor, defina um nome para o agente!');
+            return;
+        }
+
+        const raw = editor.export();
+        const nodesDict = raw.drawflow.Home.data;
+
+        if (Object.keys(nodesDict).length === 0) {
+            showToast('warning', 'Adicione pelo menos um nó antes de salvar!');
+            return;
+        }
+
+        const backendNodes = [];
+        const backendConnections = [];
+
+        for (const [key, val] of Object.entries(nodesDict)) {
+            let backType = 'n8n-nodes-base.' + val.name;
+            if(val.name === 'http') backType = 'MyClone.HttpRequest';
+            if(val.name === 'ai') backType = 'SmartAgent.AI';
+            if(val.name === 'memory') backType = 'SmartAgent.Memory';
+
+            backendNodes.push({
+                Id: val.id.toString(),
+                Name: val.name,
+                Type: backType,
+                Parameters: val.data.config || {},
+                Position: { X: val.pos_x, Y: val.pos_y }
+            });
+
+            for (const [outName, outObj] of Object.entries(val.outputs)) {
+                for (const conn of outObj.connections) {
+                    backendConnections.push({
+                        SourceNodeId: val.id.toString(),
+                        TargetNodeId: conn.node.toString(),
+                        SourceOutputIndex: parseInt(outName.split('_')[1]) - 1
+                    });
                 }
-            } catch(e) {
-                Swal.fire('Erro', 'Erro de conexão.', 'error');
             }
         }
-    </script>
+
+        const payload = {
+            Id: document.getElementById('agentId').value || null,
+            Name: agentName,
+            Workflow: {
+                Nodes: backendNodes,
+                Connections: backendConnections
+            }
+        };
+
+        // Loading
+        Swal.fire({
+            title: 'Salvando...',
+            text: 'Aguarde enquanto salvamos seu agente',
+            allowOutsideClick: false,
+            background: '#1a1d23',
+            color: '#fff',
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+
+        try {
+            const res = await fetch('/SmartAgent/Save', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (res.ok) {
+                const data = await res.json();
+                document.getElementById('agentId').value = data.id;
+
+                Swal.fire({
+                    icon: 'success',
+                    title: '✓ Agente Salvo!',
+                    text: `${agentName} foi salvo com sucesso!`,
+                    confirmButtonColor: '#667eea',
+                    background: '#1a1d23',
+                    color: '#fff'
+                });
+            } else {
+                throw new Error('Erro ao salvar');
+            }
+        } catch(e) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Erro ao Salvar',
+                text: 'Não foi possível salvar o agente. Tente novamente.',
+                confirmButtonColor: '#ef4444',
+                background: '#1a1d23',
+                color: '#fff'
+            });
+        }
+    }
+
+    // ==================== HELPER FUNCTIONS ====================
+    function showToast(icon, title) {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            background: '#1a1d23',
+            color: '#fff'
+        });
+        Toast.fire({ icon, title });
+    }
+
+    // ==================== KEYBOARD SHORTCUTS ====================
+    document.addEventListener('keydown', function(e) {
+        // Ctrl/Cmd + S para salvar
+        if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+            e.preventDefault();
+            saveWorkflow();
+        }
+        // Delete para remover nó selecionado
+        if (e.key === 'Delete' && selectedNodeId) {
+            deleteSelectedNode();
+        }
+        // Esc para fechar painel
+        if (e.key === 'Escape') {
+            closeProps();
+        }
+    });
+
+    console.log('✓ Smart Agent Editor carregado com sucesso!');
+</script>
 }
