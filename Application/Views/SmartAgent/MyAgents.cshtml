@@ -2,7 +2,6 @@
 @model List<SmartAgent>
 @{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
-    ViewData["Title"] = "Meus Smart Agents";
     
     var allAgents = Model;
     var runningAgents = Model.Where(a => a.Status == "running").ToList();

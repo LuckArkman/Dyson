@@ -43,33 +43,15 @@ public class SmartAgentController : Controller
     /// </summary>
     public async Task<IActionResult> MyAgents()
     {
+        // Obtém o ID do usuário logado
         var userId = GetUserId();
-        var agents = await _repositorioSmartAgent.SearchAsync(x => x.userId == userId);
-        
-        // Organiza agentes por status
-        var viewModel = new
-        {
-            Running = new List<SmartAgent>(),
-            Stopped = new List<SmartAgent>(),
-            Pending = new List<SmartAgent>(),
-            Failed = new List<SmartAgent>()
-        };
-        
-        foreach (var agent in agents)
-        {
-            var status = await _executionManager.GetAgentStatusAsync(agent.id);
-            
-            if (status == null || status.Status == "stopped")
-                viewModel.Stopped.Add(agent);
-            else if (status.Status == "running")
-                viewModel.Running.Add(agent);
-            else if (status.Status == "pending")
-                viewModel.Pending.Add(agent);
-            else if (status.Status == "failed")
-                viewModel.Failed.Add(agent);
-        }
-        
-        return View(viewModel);
+    
+        // Busca TODOS os agentes do usuário no repositório
+        var allAgents = await _repositorioSmartAgent.SearchAsync(a => a.userId == userId);
+    
+        // Retorna APENAS a lista completa de SmartAgent como o Model da View.
+        // A View fará o filtro por status.
+        return View(allAgents); 
     }
 
     // ============================================================

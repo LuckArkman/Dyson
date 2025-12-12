@@ -7,8 +7,8 @@ build_property.InvariantGlobalization =
 build_property.PlatformNeutralAssembly = 
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
-build_property.RootNamespace = Application
-build_property.RootNamespace = Application
+build_property.RootNamespace = GalileuApp
+build_property.RootNamespace = GalileuApp
 build_property.ProjectDir = /home/mplopes/Documentos/Dyson/Application/
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
@@ -146,4 +146,4 @@ build_metadata.AdditionalFiles.CssScope =
 
 [/home/mplopes/Documentos/Dyson/Application/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19MYXlvdXQuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = b-9ib70kg4jq
+build_metadata.AdditionalFiles.CssScope = b-agg8nazryk
