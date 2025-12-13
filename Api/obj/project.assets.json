@@ -1648,6 +1648,30 @@
           "buildTransitive/net6.0/_._": {}
         }
       },
+      "Microsoft.Extensions.Http/8.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Configuration.Abstractions": "8.0.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.0",
+          "Microsoft.Extensions.Diagnostics": "8.0.0",
+          "Microsoft.Extensions.Logging": "8.0.0",
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.0",
+          "Microsoft.Extensions.Options": "8.0.0"
+        },
+        "compile": {
+          "lib/net8.0/Microsoft.Extensions.Http.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/Microsoft.Extensions.Http.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
       "Microsoft.Extensions.Identity.Core/8.0.0": {
         "type": "package",
         "dependencies": {
@@ -4853,6 +4877,7 @@
           "Microsoft.AspNetCore.Http": "2.3.0",
           "Microsoft.AspNetCore.Identity.Service.Core": "1.0.0-preview1-final",
           "Microsoft.AspNetCore.Mvc": "2.3.0",
+          "Microsoft.Extensions.Http": "8.0.0",
           "Qdrant.Client": "1.16.1",
           "Records": "1.0.0",
           "Services": "1.0.0"
@@ -4870,6 +4895,7 @@
         "dependencies": {
           "Jint": "4.4.2",
           "Microsoft.AspNetCore.Identity.Service.Core": "1.0.0-preview1-final",
+          "Microsoft.Extensions.Http": "8.0.0",
           "MongoDB.Bson": "3.5.1",
           "MongoDB.Driver": "3.5.1",
           "Qdrant.Client": "1.16.1"
@@ -4889,6 +4915,7 @@
           "Enums": "1.0.0",
           "Jint": "4.4.2",
           "Microsoft.AspNetCore.Identity.Service.Core": "1.0.0-preview1-final",
+          "Microsoft.Extensions.Http": "8.0.0",
           "MongoDB.Driver": "3.5.2",
           "Qdrant.Client": "1.16.1",
           "Records": "1.0.0"
@@ -4906,6 +4933,7 @@
         "dependencies": {
           "Jint": "4.4.2",
           "Microsoft.AspNetCore.Identity.Service.Core": "1.0.0-preview1-final",
+          "Microsoft.Extensions.Http": "8.0.0",
           "Qdrant.Client": "1.16.1"
         },
         "compile": {
@@ -4922,6 +4950,7 @@
           "Dtos": "1.0.0",
           "Jint": "4.4.2",
           "Microsoft.AspNetCore.Identity.Service.Core": "1.0.0-preview1-final",
+          "Microsoft.Extensions.Http": "8.0.0",
           "Qdrant.Client": "1.16.1",
           "Records": "1.0.0"
         },
@@ -4939,6 +4968,7 @@
           "Akka": "1.5.55",
           "Jint": "4.4.2",
           "Microsoft.AspNetCore.Identity.Service.Core": "1.0.0-preview1-final",
+          "Microsoft.Extensions.Http": "8.0.0",
           "Qdrant.Client": "1.16.1"
         },
         "compile": {
@@ -4957,6 +4987,7 @@
           "Jint": "4.4.2",
           "Microsoft.AspNetCore.Identity.Service.Core": "1.0.0-preview1-final",
           "Microsoft.Extensions.Configuration": "8.0.0",
+          "Microsoft.Extensions.Http": "8.0.0",
           "MongoDB.Driver": "3.5.2",
           "Qdrant.Client": "1.16.1"
         },
@@ -4984,6 +5015,7 @@
           "Microsoft.Data.Sqlite": "8.0.0",
           "Microsoft.Extensions.Configuration": "10.0.0",
           "Microsoft.Extensions.Hosting": "8.0.0",
+          "Microsoft.Extensions.Http": "8.0.0",
           "Microsoft.Extensions.Identity.Core": "8.0.0",
           "Microsoft.Extensions.Logging": "8.0.0",
           "Microsoft.IdentityModel.Tokens": "8.0.0",
@@ -7028,6 +7060,36 @@
         "lib/netstandard2.1/Microsoft.Extensions.Hosting.Abstractions.xml",
         "microsoft.extensions.hosting.abstractions.8.0.1.nupkg.sha512",
         "microsoft.extensions.hosting.abstractions.nuspec",
+        "useSharedDesignerContext.txt"
+      ]
+    },
+    "Microsoft.Extensions.Http/8.0.0": {
+      "sha512": "cWz4caHwvx0emoYe7NkHPxII/KkTI8R/LC9qdqJqnKv2poTJ4e2qqPGQqvRoQ5kaSA4FU5IV3qFAuLuOhoqULQ==",
+      "type": "package",
+      "path": "microsoft.extensions.http/8.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
+        "PACKAGE.md",
+        "THIRD-PARTY-NOTICES.TXT",
+        "buildTransitive/net461/Microsoft.Extensions.Http.targets",
+        "buildTransitive/net462/_._",
+        "buildTransitive/net6.0/_._",
+        "buildTransitive/netcoreapp2.0/Microsoft.Extensions.Http.targets",
+        "lib/net462/Microsoft.Extensions.Http.dll",
+        "lib/net462/Microsoft.Extensions.Http.xml",
+        "lib/net6.0/Microsoft.Extensions.Http.dll",
+        "lib/net6.0/Microsoft.Extensions.Http.xml",
+        "lib/net7.0/Microsoft.Extensions.Http.dll",
+        "lib/net7.0/Microsoft.Extensions.Http.xml",
+        "lib/net8.0/Microsoft.Extensions.Http.dll",
+        "lib/net8.0/Microsoft.Extensions.Http.xml",
+        "lib/netstandard2.0/Microsoft.Extensions.Http.dll",
+        "lib/netstandard2.0/Microsoft.Extensions.Http.xml",
+        "microsoft.extensions.http.8.0.0.nupkg.sha512",
+        "microsoft.extensions.http.nuspec",
         "useSharedDesignerContext.txt"
       ]
     },
@@ -13354,6 +13416,7 @@
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 8.0.0",
       "Microsoft.AspNetCore.Identity.Service.Core >= 1.0.0-preview1-final",
       "Microsoft.AspNetCore.OpenApi >= 8.0.16",
+      "Microsoft.Extensions.Http >= 8.0.0",
       "Microsoft.IdentityModel.Tokens >= 8.0.0",
       "MongoDB.Driver >= 3.5.2",
       "Mono.Data.Sqlite >= 1.0.61",
@@ -13447,6 +13510,10 @@
           "Microsoft.AspNetCore.OpenApi": {
             "target": "Package",
             "version": "[8.0.16, )"
+          },
+          "Microsoft.Extensions.Http": {
+            "target": "Package",
+            "version": "[8.0.0, )"
           },
           "Microsoft.IdentityModel.Tokens": {
             "target": "Package",

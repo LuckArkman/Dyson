@@ -248,4 +248,15 @@ public class Repositorio<T> : IRepositorio<T>
         var filter = Builders<T>.Filter.Eq("_id", id);
         return await _collection.Find(filter).FirstOrDefaultAsync();
     }
+
+    public async Task UpdateUserWalletAsync(string userId, string publicKey)
+    {
+        var collection = _db.GetDatabase().GetCollection<User>("Users");
+        
+        var filter = Builders<User>.Filter.Eq(c => c.Id, userId);
+        var update = Builders<User>.Update
+            .Set(c => c.WalletAddress, publicKey);
+        var result = await collection.UpdateOneAsync(filter, update);
+        await Task.CompletedTask;
+    }
 }

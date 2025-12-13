@@ -80,6 +80,10 @@
               "target": "Package",
               "version": "[8.0.16, )"
             },
+            "Microsoft.Extensions.Http": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
             "Microsoft.IdentityModel.Tokens": {
               "target": "Package",
               "version": "[8.0.0, )"
@@ -220,6 +224,10 @@
               "target": "Package",
               "version": "[2.3.0, )"
             },
+            "Microsoft.Extensions.Http": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
             "Qdrant.Client": {
               "target": "Package",
               "version": "[1.16.1, )"
@@ -299,6 +307,10 @@
             "Microsoft.AspNetCore.Identity.Service.Core": {
               "target": "Package",
               "version": "[1.0.0-preview1-final, )"
+            },
+            "Microsoft.Extensions.Http": {
+              "target": "Package",
+              "version": "[8.0.0, )"
             },
             "MongoDB.Bson": {
               "target": "Package",
@@ -399,6 +411,10 @@
               "target": "Package",
               "version": "[1.0.0-preview1-final, )"
             },
+            "Microsoft.Extensions.Http": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
             "MongoDB.Driver": {
               "target": "Package",
               "version": "[3.5.2, )"
@@ -482,6 +498,10 @@
             "Microsoft.AspNetCore.Identity.Service.Core": {
               "target": "Package",
               "version": "[1.0.0-preview1-final, )"
+            },
+            "Microsoft.Extensions.Http": {
+              "target": "Package",
+              "version": "[8.0.0, )"
             },
             "Qdrant.Client": {
               "target": "Package",
@@ -570,6 +590,10 @@
               "target": "Package",
               "version": "[1.0.0-preview1-final, )"
             },
+            "Microsoft.Extensions.Http": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
             "Qdrant.Client": {
               "target": "Package",
               "version": "[1.16.1, )"
@@ -653,6 +677,10 @@
             "Microsoft.AspNetCore.Identity.Service.Core": {
               "target": "Package",
               "version": "[1.0.0-preview1-final, )"
+            },
+            "Microsoft.Extensions.Http": {
+              "target": "Package",
+              "version": "[8.0.0, )"
             },
             "Qdrant.Client": {
               "target": "Package",
@@ -742,6 +770,10 @@
               "version": "[1.0.0-preview1-final, )"
             },
             "Microsoft.Extensions.Configuration": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.Extensions.Http": {
               "target": "Package",
               "version": "[8.0.0, )"
             },
@@ -871,6 +903,10 @@
               "version": "[10.0.0, )"
             },
             "Microsoft.Extensions.Hosting": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.Extensions.Http": {
               "target": "Package",
               "version": "[8.0.0, )"
             },

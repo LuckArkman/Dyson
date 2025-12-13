@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "WqeIDNGjvuE=",
+  "dgSpecHash": "xzjipSHOPZ0=",
   "success": true,
   "projectFilePath": "/home/mplopes/Documentos/Dyson/Api/Api.csproj",
   "expectedPackageFiles": [
@@ -97,6 +97,7 @@
     "/home/mplopes/.nuget/packages/microsoft.extensions.filesystemglobbing/8.0.0/microsoft.extensions.filesystemglobbing.8.0.0.nupkg.sha512",
     "/home/mplopes/.nuget/packages/microsoft.extensions.hosting/8.0.0/microsoft.extensions.hosting.8.0.0.nupkg.sha512",
     "/home/mplopes/.nuget/packages/microsoft.extensions.hosting.abstractions/8.0.1/microsoft.extensions.hosting.abstractions.8.0.1.nupkg.sha512",
+    "/home/mplopes/.nuget/packages/microsoft.extensions.http/8.0.0/microsoft.extensions.http.8.0.0.nupkg.sha512",
     "/home/mplopes/.nuget/packages/microsoft.extensions.identity.core/8.0.0/microsoft.extensions.identity.core.8.0.0.nupkg.sha512",
     "/home/mplopes/.nuget/packages/microsoft.extensions.localization/8.0.11/microsoft.extensions.localization.8.0.11.nupkg.sha512",
     "/home/mplopes/.nuget/packages/microsoft.extensions.localization.abstractions/8.0.11/microsoft.extensions.localization.abstractions.8.0.11.nupkg.sha512",

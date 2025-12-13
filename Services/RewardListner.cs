@@ -35,14 +35,14 @@ public class RewardListner : BackgroundService
     private async void OnBlockAdded(object? sender, NodeClient node)
     {
         
-        var user = await _repositorio.GetUserByIdAsync(node._session.UserId.ToString(), CancellationToken.None);
+        User? user = await _repositorio.GetUserByIdAsync(node._session.UserId, CancellationToken.None);
         if (user == null)
         {
             Console.WriteLine($"[RewardListner]  {node!._session == null}");
             Console.WriteLine($"[RewardListner] ⚠️ Aviso: Tentativa de recompensa falhou. NodeClient {node!.id} and UserId : {node._session.UserId} tem user nulo.");
             return; 
         }
-        await _rewardContractService.RewardUserWallet(user.Id);
+        await _rewardContractService.RewardUserWallet(user);
     }
     
     protected override Task ExecuteAsync(CancellationToken stoppingToken)

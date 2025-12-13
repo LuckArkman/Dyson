@@ -53,6 +53,10 @@
               "target": "Package",
               "version": "[1.0.0-preview1-final, )"
             },
+            "Microsoft.Extensions.Http": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
             "Qdrant.Client": {
               "target": "Package",
               "version": "[1.16.1, )"

@@ -33,7 +33,7 @@ public class AccountController : Controller
     {
         if (User.Identity.IsAuthenticated)
         {
-            return RedirectToAction("Index", "Profile");
+            return RedirectToAction("profile", "Profile");
         }
         return View();
     }
@@ -48,7 +48,7 @@ public class AccountController : Controller
             {
                 var user = await _userService.Register(model);
                 await Authenticate(user);
-                return RedirectToAction("Index", "Profile");
+                return RedirectToAction("profile", "Profile");
             }
             catch (InvalidOperationException ex)
             {
@@ -70,7 +70,7 @@ public class AccountController : Controller
     {
         if (User.Identity.IsAuthenticated)
         {
-            return RedirectToAction("Index", "Profile");
+            return RedirectToAction("profile", "Profile");
         }
         return View();
     }
@@ -86,7 +86,7 @@ public class AccountController : Controller
             if (user != null)
             {
                 await Authenticate(user);
-                return RedirectToAction("Index", "Profile");
+                return RedirectToAction("profile", "Profile");
             }
             
             ModelState.AddModelError(string.Empty, "Credenciais inválidas. Verifique seu e-mail e senha.");

@@ -33,4 +33,5 @@ public interface IRepositorio<T>
     Task UpdateAsync(T entity);
     Task DeleteAsync(string id);
     Task<T?> GetAgentByIdAsync(string id);
+    Task UpdateUserWalletAsync(string userId, string publicKey);
 }

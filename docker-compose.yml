@@ -53,6 +53,7 @@
   
   administration:
     image: administration
+    container_name: administration
     build:
       context: .
       dockerfile: Administration/Dockerfile
