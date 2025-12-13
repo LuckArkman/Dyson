@@ -8,6 +8,7 @@ using Services;
 namespace Controllers;
 
 [Authorize]
+[Route("[Controller]")]
 public class SmartAgentController : Controller
 {
     private readonly IRepositorio<SmartAgent> _repositorioSmartAgent;
@@ -41,6 +42,7 @@ public class SmartAgentController : Controller
     /// <summary>
     /// Página principal: exibe agentes categorizados por status
     /// </summary>
+    [HttpGet("MyAgents")]
     public async Task<IActionResult> MyAgents()
     {
         // Obtém o ID do usuário logado
@@ -61,28 +63,17 @@ public class SmartAgentController : Controller
     /// <summary>
     /// Página de gerenciamento: controle total de agentes
     /// </summary>
+    [HttpGet("ManageAgents")]
     public async Task<IActionResult> ManageAgents()
     {
         var userId = GetUserId();
         var agents = await _repositorioSmartAgent.SearchAsync(x => x.userId == userId);
         
-        // Adiciona informações de status para cada agente
-        var agentsWithStatus = new List<object>();
+        var orderedAgents = agents
+            .OrderByDescending(a => a.CreatedAt)
+            .ToList(); // <--- O .ToList() é a correção crucial
         
-        foreach (var agent in agents)
-        {
-            var status = await _executionManager.GetAgentStatusAsync(agent.id);
-            agentsWithStatus.Add(new
-            {
-                Agent = agent,
-                Status = status,
-                CanStart = status == null || status.Status != "running",
-                CanStop = status?.Status == "running",
-                CanRestart = status?.Status == "failed" || status?.Status == "stopped"
-            });
-        }
-        
-        return View(agentsWithStatus.OrderByDescending(x => ((dynamic)x).Agent.UpdatedAt));
+        return View(orderedAgents);
     }
     
     /// <summary>
@@ -92,10 +83,9 @@ public class SmartAgentController : Controller
     public async Task<IActionResult> StartAgent(string id)
     {
         var userId = GetUserId();
-        var agent = await _repositorioSmartAgent.GetByIdAsync(id);
+        var agent = await _repositorioSmartAgent.GetAgentByIdAsync(id);
 
-        if (agent == null || agent.userId != userId) 
-            return NotFound("Agente não encontrado");
+        if (agent == null) return NotFound("Agente não encontrado");
 
         var success = await _executionManager.StartAgentAsync(id);
         
@@ -132,7 +122,7 @@ public class SmartAgentController : Controller
     public async Task<IActionResult> RestartAgent(string id)
     {
         var userId = GetUserId();
-        var agent = await _repositorioSmartAgent.GetByIdAsync(id);
+        var agent = await _repositorioSmartAgent.GetAgentByIdAsync(id);
 
         if (agent == null || agent.userId != userId) 
             return NotFound();
@@ -148,7 +138,7 @@ public class SmartAgentController : Controller
     /// <summary>
     /// API: Obtém logs de execução
     /// </summary>
-    [HttpGet]
+    [HttpGet("GetAgentLogs")]
     public async Task<IActionResult> GetAgentLogs(string id)
     {
         var userId = GetUserId();
@@ -179,7 +169,7 @@ public class SmartAgentController : Controller
     /// <summary>
     /// Editor visual de workflows (Drawflow)
     /// </summary>
-    [HttpGet]
+    [HttpGet("Make")]
     public async Task<IActionResult> Make(string id)
     {
         if (string.IsNullOrEmpty(id))
@@ -192,9 +182,9 @@ public class SmartAgentController : Controller
         }
 
         var userId = GetUserId();
-        var agent = await _repositorioSmartAgent.GetByIdAsync(id);
+        var agent = await _repositorioSmartAgent.GetAgentByIdAsync(id);
 
-        if (agent == null || agent.userId != userId)
+        if (agent == null)
             return NotFound("Agente não encontrado");
 
         return View(agent);
@@ -203,43 +193,28 @@ public class SmartAgentController : Controller
     /// <summary>
     /// API: Salva workflow completo
     /// </summary>
-    [HttpPost]
-    public async Task<IActionResult> Save([FromBody] SmartAgent model)
+    [HttpPost("Save")]
+    public async Task<IActionResult> Save([FromBody] SmartAgent? model)
     {
-        if (model == null) return BadRequest("Dados inválidos");
-
-        try 
+        if (model == null)
         {
-            var userId = GetUserId();
-            model.userId = userId;
+            return BadRequest(new
+            {
+                error = "Dados inválidos. A estrutura do JSON não corresponde à classe SmartAgent.",
+                details = "Verifique o Content-Type e o casing das propriedades 'Name', 'Workflow' e 'Nodes'."
+            });
+        }
+
+        try
+        {
             model.UpdatedAt = DateTime.UtcNow;
+            // Novo Agente
+            var agent = await _repositorioSmartAgent.InsertOneAsync(model);
 
-            if (string.IsNullOrEmpty(model.id))
+            _logger.LogInformation($"Novo agente criado: {model.Name} ({model.id})");
+            return Ok(new
             {
-                // Novo Agente
-                model.id = Guid.NewGuid().ToString();
-                model.CreatedAt = DateTime.UtcNow;
-                await _repositorioSmartAgent.AddAsync(model);
-                
-                _logger.LogInformation($"Novo agente criado: {model.Name} ({model.id})");
-            }
-            else
-            {
-                // Atualização
-                var existing = await _repositorioSmartAgent.GetByIdAsync(model.id);
-                
-                if (existing == null || existing.userId != userId) 
-                    return Unauthorized("Acesso negado");
-
-                model.CreatedAt = existing.CreatedAt;
-                await _repositorioSmartAgent.UpdateAsync(model);
-                
-                _logger.LogInformation($"Agente atualizado: {model.Name} ({model.id})");
-            }
-
-            return Ok(new 
-            { 
-                id = model.id, 
+                id = model.id,
                 message = "Agente salvo com sucesso",
                 nodes = model.Workflow?.Nodes?.Count ?? 0,
                 connections = model.Workflow?.Connections?.Count ?? 0

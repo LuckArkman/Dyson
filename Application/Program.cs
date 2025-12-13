@@ -31,6 +31,11 @@ builder.Services.AddSingleton<IWorkflowEngine, WorkflowEngine>();
 builder.Services.AddScoped<IWeb3AuthService, Web3AuthService>();
 builder.Services.AddHttpClient<IPaymentGateway, MercadoPagoService>();
 builder.Services.AddSingleton(typeof(IRepositorio<>), typeof(Repositorio<>));
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new BsonDocumentJsonConverter());
+    });
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {

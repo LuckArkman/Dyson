@@ -112,7 +112,7 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
-        <a asp-controller="Profile" asp-action="Index" class="brand-link text-center">
+        <a asp-controller="Profile" asp-action="profile" class="brand-link text-center">
             <span class="brand-text font-weight-light">
                 <i class="fas fa-robot"></i> Dyson.AI
             </span>
@@ -220,15 +220,7 @@
                             <p>Meus Agentes</p>
                         </a>
                     </li>
-
-                    <li class="nav-item">
-                        <a asp-controller="SmartAgent" asp-action="ManageAgents"
-                           class="nav-link @(ViewContext.RouteData.Values["Action"]?.ToString() == "ManageAgents" ? "active" : "")">
-                            <i class="nav-icon fas fa-cogs"></i>
-                            <p>Gerenciar Agentes</p>
-                        </a>
-                    </li>
-
+                    
                     <li class="nav-item">
                         <a asp-controller="SmartAgent" asp-action="make"
                            class="nav-link @(ViewContext.RouteData.Values["Action"]?.ToString() == "make" ? "active" : "")">
@@ -279,14 +271,6 @@
                             @ViewData["Title"]
                         </h1>
                     </div>
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item">
-                                <a asp-controller="Profile" asp-action="Index">Dashboard</a>
-                            </li>
-                            <li class="breadcrumb-item active">@ViewData["Title"]</li>
-                        </ol>
-                    </div>
                 </div>
             </div>
         </div>
@@ -303,7 +287,7 @@
     <!-- /.content-wrapper -->
 
     <footer class="main-footer">
-        <strong>Copyright &copy; 2025 <a href="https://dyson.ai">Dyson.AI</a>.</strong>
+        <strong>Copyright &copy; 2025 <a href="https://dyson-ai.ddns.net">Dyson.AI</a>.</strong>
         Todos os direitos reservados.
         <div class="float-right d-none d-sm-inline-block">
             <b>Versão</b> 1.0.0

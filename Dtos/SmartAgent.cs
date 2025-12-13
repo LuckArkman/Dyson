@@ -16,7 +16,7 @@ public class SmartAgent
     public int Downloads { get; set; }
 
     
-    public WorkflowData Workflow { get; set; } = new();
+    public WorkflowData? Workflow { get; set; } = new();
 
     public DateTime? CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime? UpdatedAt { get; set; }

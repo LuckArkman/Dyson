@@ -5,6 +5,7 @@ using System.Text.Json.Nodes;
 using Jint;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using MongoDB.Bson;
 
 namespace Services;
 
@@ -74,12 +75,12 @@ public class WorkflowEngine : IWorkflowEngine
                 else if (currentNode.Type.Contains("if", StringComparison.OrdinalIgnoreCase))
                 {
                     bool condition = ExecuteIfNode(currentNode, currentData, logs);
-                    currentNode = FindNextNode(agent, currentNode.Id, condition ? 0 : 1);
+                    currentNode = FindNextNode(agent, currentNode.Id, condition ? "" : Guid.NewGuid().ToString());
                     continue; 
                 }
 
                 // Vai para o próximo nó (Saída padrão 0)
-                currentNode = FindNextNode(agent, currentNode.Id, 0);
+                currentNode = FindNextNode(agent, currentNode.Id, "");
             }
             catch (Exception ex)
             {
@@ -111,7 +112,11 @@ public class WorkflowEngine : IWorkflowEngine
                         jsonStr = jsonStr.Replace($"{{{{{kvp.Key}}}}}", kvp.Value?.ToString() ?? "");
                     }
                     // Atualiza os parâmetros do nó (apenas em memória para execução)
-                    node.Parameters = JsonNode.Parse(jsonStr);
+                    var updatedParams = JsonSerializer.Deserialize<Dictionary<string, object>>(jsonStr);
+                    if (updatedParams != null)
+                    {
+                        node.Parameters = updatedParams;
+                    }
                 }
             }
         }
@@ -332,11 +337,11 @@ public class WorkflowEngine : IWorkflowEngine
     // NAVEGAÇÃO NO WORKFLOW
     // ============================================================
     
-    private WorkflowNode? FindNextNode(SmartAgent agent, string currentId, int outputIndex)
+    private WorkflowNode? FindNextNode(SmartAgent agent, string currentId, string outputIndex)
     {
         var conn = agent.Workflow.Connections.FirstOrDefault(c => 
             c.SourceNodeId == currentId && 
-            c.SourceOutputIndex == outputIndex);
+            c.SourceOutput == outputIndex);
 
         if (conn == null) return null;
         return agent.Workflow.Nodes.FirstOrDefault(n => n.Id == conn.TargetNodeId);

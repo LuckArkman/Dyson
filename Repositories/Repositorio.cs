@@ -242,4 +242,10 @@ public class Repositorio<T> : IRepositorio<T>
         var filter = Builders<T>.Filter.Eq("Id", id);
         await _collection.DeleteOneAsync(filter);
     }
+
+    public async Task<T?> GetAgentByIdAsync(string id)
+    {
+        var filter = Builders<T>.Filter.Eq("_id", id);
+        return await _collection.Find(filter).FirstOrDefaultAsync();
+    }
 }

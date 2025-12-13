@@ -30,12 +30,41 @@ public static class DataSeeder
             {
                 Nodes = new List<WorkflowNode>
                 {
-                    new WorkflowNode { Id = "1", Name = "Start", Type = "n8n-nodes-base.webhook", Position = new Position { X=100, Y=200 }, Parameters = new System.Text.Json.Nodes.JsonObject() },
-                    new WorkflowNode { Id = "2", Name = "Get Bitcoin Price", Type = "MyClone.HttpRequest", Position = new Position { X=400, Y=200 }, Parameters = System.Text.Json.Nodes.JsonNode.Parse("{\"url\": \"https://api.coindesk.com/v1/bpi/currentprice.json\", \"method\": \"GET\"}") }
+                    // ✅ CORRIGIDO: Usar Dictionary ao invés de JsonObject
+                    new WorkflowNode 
+                    { 
+                        Id = "1", 
+                        Name = "Start", 
+                        Type = "n8n-nodes-base.webhook", 
+                        Position = new Position { X = 100, Y = 200 }, 
+                        Parameters = new Dictionary<string, object>
+                        {
+                            { "path", "/webhook/demo" },
+                            { "method", "POST" }
+                        }
+                    },
+                    new WorkflowNode 
+                    { 
+                        Id = "2", 
+                        Name = "Get Bitcoin Price", 
+                        Type = "MyClone.HttpRequest", 
+                        Position = new Position { X = 400, Y = 200 }, 
+                        Parameters = new Dictionary<string, object>
+                        {
+                            { "url", "https://api.coindesk.com/v1/bpi/currentprice.json" },
+                            { "method", "GET" }
+                        }
+                    }
                 },
                 Connections = new List<WorkflowConnection>
                 {
-                    new WorkflowConnection { SourceNodeId = "1", TargetNodeId = "2" }
+                    new WorkflowConnection 
+                    { 
+                        SourceNodeId = "1", 
+                        TargetNodeId = "2",
+                        SourceOutput = "output_1",
+                        TargetInput = "input_1"
+                    }
                 }
             }
         };
