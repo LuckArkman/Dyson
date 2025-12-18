@@ -27,7 +27,7 @@ public interface IRepositorio<T>
     Task<List<User>> GetAllAsync(CancellationToken none);
     Task UpdateUserAsync(User existingUser);
     
-    Task<IEnumerable<T>> SearchAsync(Expression<Func<T, bool>> predicate);
+    Task<List<T>?> SearchAsync(Expression<Func<T, bool>> predicate);
     Task<T> GetByIdAsync(string id);
     Task AddAsync(T entity);
     Task UpdateAsync(T entity);

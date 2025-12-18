@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "e972hUN0yn4=",
+  "dgSpecHash": "MsbTL5sEwhY=",
   "success": true,
   "projectFilePath": "/home/mplopes/Documentos/Dyson/Controllers/Controllers.csproj",
   "expectedPackageFiles": [
@@ -122,8 +122,8 @@
     "/home/mplopes/.nuget/packages/microsoft.win32.primitives/4.3.0/microsoft.win32.primitives.4.3.0.nupkg.sha512",
     "/home/mplopes/.nuget/packages/microsoft.win32.registry/5.0.0/microsoft.win32.registry.5.0.0.nupkg.sha512",
     "/home/mplopes/.nuget/packages/microsoft.win32.systemevents/6.0.0/microsoft.win32.systemevents.6.0.0.nupkg.sha512",
-    "/home/mplopes/.nuget/packages/mongodb.bson/3.5.2/mongodb.bson.3.5.2.nupkg.sha512",
-    "/home/mplopes/.nuget/packages/mongodb.driver/3.5.2/mongodb.driver.3.5.2.nupkg.sha512",
+    "/home/mplopes/.nuget/packages/mongodb.bson/3.5.1/mongodb.bson.3.5.1.nupkg.sha512",
+    "/home/mplopes/.nuget/packages/mongodb.driver/3.5.1/mongodb.driver.3.5.1.nupkg.sha512",
     "/home/mplopes/.nuget/packages/mono.data.sqlite/1.0.61/mono.data.sqlite.1.0.61.nupkg.sha512",
     "/home/mplopes/.nuget/packages/netstandard.library/1.6.1/netstandard.library.1.6.1.nupkg.sha512",
     "/home/mplopes/.nuget/packages/newtonsoft.json/13.0.1/newtonsoft.json.13.0.1.nupkg.sha512",

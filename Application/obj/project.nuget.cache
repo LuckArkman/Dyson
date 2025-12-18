@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "UDzEl8atrRc=",
+  "dgSpecHash": "c1s/tsGhD5o=",
   "success": true,
   "projectFilePath": "/home/mplopes/Documentos/Dyson/Application/Application.csproj",
   "expectedPackageFiles": [
@@ -122,8 +122,8 @@
     "/home/mplopes/.nuget/packages/microsoft.netcore.targets/1.1.0/microsoft.netcore.targets.1.1.0.nupkg.sha512",
     "/home/mplopes/.nuget/packages/microsoft.win32.registry/5.0.0/microsoft.win32.registry.5.0.0.nupkg.sha512",
     "/home/mplopes/.nuget/packages/microsoft.win32.systemevents/6.0.0/microsoft.win32.systemevents.6.0.0.nupkg.sha512",
-    "/home/mplopes/.nuget/packages/mongodb.bson/3.5.2/mongodb.bson.3.5.2.nupkg.sha512",
-    "/home/mplopes/.nuget/packages/mongodb.driver/3.5.2/mongodb.driver.3.5.2.nupkg.sha512",
+    "/home/mplopes/.nuget/packages/mongodb.bson/3.5.1/mongodb.bson.3.5.1.nupkg.sha512",
+    "/home/mplopes/.nuget/packages/mongodb.driver/3.5.1/mongodb.driver.3.5.1.nupkg.sha512",
     "/home/mplopes/.nuget/packages/mono.data.sqlite/1.0.61/mono.data.sqlite.1.0.61.nupkg.sha512",
     "/home/mplopes/.nuget/packages/nbitcoin/7.0.6/nbitcoin.7.0.6.nupkg.sha512",
     "/home/mplopes/.nuget/packages/nbitcoin.secp256k1/3.1.1/nbitcoin.secp256k1.3.1.1.nupkg.sha512",
@@ -278,7 +278,7 @@
     {
       "code": "NU1701",
       "level": "Warning",
-      "message": "Package 'Mono.Data.Sqlite 1.0.61' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0'. This package may not be fully compatible with your project.",
+      "message": "O pacote 'Mono.Data.Sqlite 1.0.61' foi restaurado usando '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' em vez da estrutura de destino do projeto 'net8.0'. Esse pacote pode não ser totalmente compatível com o seu projeto.",
       "projectPath": "/home/mplopes/Documentos/Dyson/Application/Application.csproj",
       "warningLevel": 1,
       "filePath": "/home/mplopes/Documentos/Dyson/Application/Application.csproj",

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "xzjipSHOPZ0=",
+  "dgSpecHash": "LPUEJTFh2mQ=",
   "success": true,
   "projectFilePath": "/home/mplopes/Documentos/Dyson/Api/Api.csproj",
   "expectedPackageFiles": [
@@ -126,8 +126,8 @@
     "/home/mplopes/.nuget/packages/microsoft.win32.primitives/4.3.0/microsoft.win32.primitives.4.3.0.nupkg.sha512",
     "/home/mplopes/.nuget/packages/microsoft.win32.registry/5.0.0/microsoft.win32.registry.5.0.0.nupkg.sha512",
     "/home/mplopes/.nuget/packages/microsoft.win32.systemevents/6.0.0/microsoft.win32.systemevents.6.0.0.nupkg.sha512",
-    "/home/mplopes/.nuget/packages/mongodb.bson/3.5.2/mongodb.bson.3.5.2.nupkg.sha512",
-    "/home/mplopes/.nuget/packages/mongodb.driver/3.5.2/mongodb.driver.3.5.2.nupkg.sha512",
+    "/home/mplopes/.nuget/packages/mongodb.bson/3.5.1/mongodb.bson.3.5.1.nupkg.sha512",
+    "/home/mplopes/.nuget/packages/mongodb.driver/3.5.1/mongodb.driver.3.5.1.nupkg.sha512",
     "/home/mplopes/.nuget/packages/mono.data.sqlite/1.0.61/mono.data.sqlite.1.0.61.nupkg.sha512",
     "/home/mplopes/.nuget/packages/nbitcoin.secp256k1/3.1.1/nbitcoin.secp256k1.3.1.1.nupkg.sha512",
     "/home/mplopes/.nuget/packages/nethereum.abi/5.0.0/nethereum.abi.5.0.0.nupkg.sha512",

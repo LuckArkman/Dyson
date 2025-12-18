@@ -57,6 +57,10 @@
               "target": "Package",
               "version": "[8.0.0, )"
             },
+            "MongoDB.Bson": {
+              "target": "Package",
+              "version": "[3.5.1, )"
+            },
             "Qdrant.Client": {
               "target": "Package",
               "version": "[1.16.1, )"

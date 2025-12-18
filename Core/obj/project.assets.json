@@ -939,7 +939,7 @@
           }
         }
       },
-      "MongoDB.Bson/3.5.2": {
+      "MongoDB.Bson/3.5.1": {
         "type": "package",
         "dependencies": {
           "System.Memory": "4.5.5",
@@ -956,12 +956,12 @@
           }
         }
       },
-      "MongoDB.Driver/3.5.2": {
+      "MongoDB.Driver/3.5.1": {
         "type": "package",
         "dependencies": {
           "DnsClient": "1.6.1",
           "Microsoft.Extensions.Logging.Abstractions": "2.0.0",
-          "MongoDB.Bson": "3.5.2",
+          "MongoDB.Bson": "3.5.1",
           "SharpCompress": "0.30.1",
           "Snappier": "1.0.0",
           "System.Buffers": "4.5.1",
@@ -2478,7 +2478,7 @@
           "Jint": "4.4.2",
           "Microsoft.AspNetCore.Identity.Service.Core": "1.0.0-preview1-final",
           "Microsoft.Extensions.Http": "8.0.0",
-          "MongoDB.Driver": "3.5.2",
+          "MongoDB.Driver": "3.5.1",
           "Qdrant.Client": "1.16.1",
           "Records": "1.0.0"
         },
@@ -2496,6 +2496,7 @@
           "Jint": "4.4.2",
           "Microsoft.AspNetCore.Identity.Service.Core": "1.0.0-preview1-final",
           "Microsoft.Extensions.Http": "8.0.0",
+          "MongoDB.Bson": "3.5.1",
           "Qdrant.Client": "1.16.1"
         },
         "compile": {
@@ -2531,6 +2532,7 @@
           "Jint": "4.4.2",
           "Microsoft.AspNetCore.Identity.Service.Core": "1.0.0-preview1-final",
           "Microsoft.Extensions.Http": "8.0.0",
+          "MongoDB.Bson": "3.5.1",
           "Qdrant.Client": "1.16.1"
         },
         "compile": {
@@ -3702,10 +3704,10 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "MongoDB.Bson/3.5.2": {
-      "sha512": "aTlbKclBjXi4j3AkrHiaeuKCvdoGA029VbvXJUmmsCXDz+DEfBFq6n9uOvXJu2YXcJiW9Vay1ZctY5Iu0JRXdw==",
+    "MongoDB.Bson/3.5.1": {
+      "sha512": "7+ZYBqOqzkzx/BK+vT47aFRpLxrTNw6pTV9uv2lOAQbAIpXjUpkJ/4pSs9dhJxnnryuSu4GskYW0xzy071U6og==",
       "type": "package",
-      "path": "mongodb.bson/3.5.2",
+      "path": "mongodb.bson/3.5.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -3716,15 +3718,15 @@
         "lib/net6.0/MongoDB.Bson.xml",
         "lib/netstandard2.1/MongoDB.Bson.dll",
         "lib/netstandard2.1/MongoDB.Bson.xml",
-        "mongodb.bson.3.5.2.nupkg.sha512",
+        "mongodb.bson.3.5.1.nupkg.sha512",
         "mongodb.bson.nuspec",
         "packageIcon.png"
       ]
     },
-    "MongoDB.Driver/3.5.2": {
-      "sha512": "Z1EW+CI18wOQqyAnhZkQXvUVXycrHoOb8/dlJzPHKFfNp9XPB6sEJJR67GUVYyB03B5xzt1RlwSyLXAx9B5+yQ==",
+    "MongoDB.Driver/3.5.1": {
+      "sha512": "p++X0PJOAeSJKavNnoc+P8mnLt4YOD7Sv5wIruKGVPDf3MyNAOKh0gcwrOBLJklByV+fKfKVsMIZkeVXGvtE9w==",
       "type": "package",
-      "path": "mongodb.driver/3.5.2",
+      "path": "mongodb.driver/3.5.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -3735,7 +3737,7 @@
         "lib/net6.0/MongoDB.Driver.xml",
         "lib/netstandard2.1/MongoDB.Driver.dll",
         "lib/netstandard2.1/MongoDB.Driver.xml",
-        "mongodb.driver.3.5.2.nupkg.sha512",
+        "mongodb.driver.3.5.1.nupkg.sha512",
         "mongodb.driver.nuspec",
         "packageIcon.png"
       ]

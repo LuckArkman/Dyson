@@ -205,7 +205,7 @@ public class Repositorio<T> : IRepositorio<T>
         await Task.CompletedTask;
     }
     
-    public async Task<IEnumerable<T>> SearchAsync(Expression<Func<T, bool>> predicate)
+    public async Task<List<T>?> SearchAsync(Expression<Func<T, bool>> predicate)
     {
         return await _collection.Find(predicate).ToListAsync();
     }

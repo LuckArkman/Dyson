@@ -1,4 +1,4 @@
-using Interfaces;
+using Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services;
@@ -180,15 +180,4 @@ public class AIProvidersController : Controller
             return StatusCode(500, new { error = ex.Message });
         }
     }
-}
-
-/// <summary>
-/// Request para testar um provedor
-/// </summary>
-public class TestRequest
-{
-    public string ProviderModel { get; set; } // "OpenAI:gpt-4"
-    public string Prompt { get; set; }
-    public double Temperature { get; set; } = 0.7;
-    public int MaxTokens { get; set; } = 500;
 }

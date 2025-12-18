@@ -24,7 +24,7 @@
       <PackageReference Include="mercadopago-sdk" Version="2.11.0" />
       <PackageReference Include="Microsoft.AspNetCore.Identity.Service.Core" Version="1.0.0-preview1-final" />
       <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
-      <PackageReference Include="MongoDB.Driver" Version="3.5.2" />
+      <PackageReference Include="MongoDB.Driver" Version="3.5.1" />
       <PackageReference Include="Nethereum.Signer" Version="5.0.0" />
       <PackageReference Include="Nethereum.Util" Version="5.0.0" />
       <PackageReference Include="Nethereum.Web3" Version="5.0.0" />

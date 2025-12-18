@@ -3459,7 +3459,7 @@
           "Jint": "4.4.2",
           "Microsoft.AspNetCore.Identity.Service.Core": "1.0.0-preview1-final",
           "Microsoft.Extensions.Http": "8.0.0",
-          "MongoDB.Driver": "3.5.2",
+          "MongoDB.Driver": "3.5.1",
           "Qdrant.Client": "1.16.1",
           "Records": "1.0.0"
         },
@@ -3477,6 +3477,7 @@
           "Jint": "4.4.2",
           "Microsoft.AspNetCore.Identity.Service.Core": "1.0.0-preview1-final",
           "Microsoft.Extensions.Http": "8.0.0",
+          "MongoDB.Bson": "3.5.1",
           "Qdrant.Client": "1.16.1"
         },
         "compile": {
@@ -3494,6 +3495,7 @@
           "Jint": "4.4.2",
           "Microsoft.AspNetCore.Identity.Service.Core": "1.0.0-preview1-final",
           "Microsoft.Extensions.Http": "8.0.0",
+          "MongoDB.Bson": "3.5.1",
           "Qdrant.Client": "1.16.1"
         },
         "compile": {

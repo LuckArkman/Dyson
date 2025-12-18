@@ -102,7 +102,7 @@ public class marketPlaceController : Controller
     public IActionResult Agents()
     {
         ViewBag.Agents = _mockProducts;
-        return View();
+        return View(ViewBag.Agents);
     }
     
     public IActionResult Sell(string type = "")
@@ -138,7 +138,7 @@ public class marketPlaceController : Controller
             _logger.LogInformation($"Novo Smart Agent cadastrado para venda: {model.Name} por {model.price} DTC.");
             TempData["Message"] = $"O Smart Agent '{model.Name}' foi listado com sucesso no Marketplace!";
             TempData["MessageType"] = "success";
-            return RedirectToAction("Index");
+            return RedirectToAction("Market");
         }
     
         // Se houver erro, retorna para a mesma página com os dados
@@ -158,7 +158,7 @@ public class marketPlaceController : Controller
             _logger.LogInformation($"Pacote de Tokens cadastrado para venda: {model.Amount} DTC por ${model.TotalPriceUSD}.");
             TempData["Message"] = $"Seu pacote de {model.Amount} DTC foi listado para venda por ${model.TotalPriceUSD}.";
             TempData["MessageType"] = "success";
-            return RedirectToAction("Index");
+            return RedirectToAction("Market");
         }
 
         // Se houver erro, retorna para a mesma página com os dados
@@ -179,7 +179,7 @@ public class marketPlaceController : Controller
         TempData["Message"] = $"Compra de {amount} DTC iniciada. Aguardando confirmação da transação na Blockchain.";
         TempData["MessageType"] = "success";
         
-        return RedirectToAction("Index");
+        return RedirectToAction("Market");
     }
 
     // Ação de Venda de DTC (Simulação)
@@ -194,7 +194,7 @@ public class marketPlaceController : Controller
         TempData["Message"] = $"Venda de {amount} DTC iniciada. Aguardando confirmação da transação na Blockchain.";
         TempData["MessageType"] = "success";
         
-        return RedirectToAction("Index");
+        return RedirectToAction("Market");
     }
     
     // Ação de Compra de Agente (Simulação)

@@ -209,7 +209,7 @@ public class AccountController : Controller
                 Email = user.Email,
                 WalletAddress = user.WalletAddress,
                 IsNewUser = isNewUser,
-                RedirectUrl = Url.Action("Index", "Profile") // URL para redirect
+                RedirectUrl = Url.Action("profile", "Profile") // URL para redirect
             };
 
             _logger.LogInformation("Web3Login: Success for wallet {Wallet}. IsNew: {IsNew}. RedirectUrl: {Url}", 

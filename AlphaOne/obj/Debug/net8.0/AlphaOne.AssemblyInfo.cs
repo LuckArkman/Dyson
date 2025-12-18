@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AlphaOne")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1bbc6c04bd11a2383c867b890556bc59513ad321")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ab7dedd600e7f09809caf7614d44d34aaf9451ef")]
 [assembly: System.Reflection.AssemblyProductAttribute("AlphaOne")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AlphaOne")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,5 +1,6 @@
 using System.Collections.Concurrent;
 using System.Net.WebSockets;
+using Acornima.Ast;
 using Interfaces;
 using Records;
 using Data;
@@ -154,9 +155,16 @@ public class ChatService : IChatService
         }
 
         var nodes = _connectedNodes.Values.ToList();
-        var index = Random.Shared.Next(nodes.Count);
-        var nodeClient = nodes[index];
-    
+        NodeClient? nodeClient = null;
+        if (nodes.Count > 1)
+        {
+            Random r = new Random();
+            var index = r.Next(0, nodes.Count);
+            nodeClient = nodes[index];
+        }
+
+        if (nodeClient == null) nodeClient = nodes[0];
+
         Console.WriteLine($"[ChatService] Enviando HelloRequest para o nó {nodeClient.id}...");
 
         try

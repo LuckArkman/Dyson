@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "UmpxYANxIfc=",
+  "dgSpecHash": "yJ7kXp/GxBo=",
   "success": true,
   "projectFilePath": "/home/mplopes/Documentos/Dyson/Repositories/Repositories.csproj",
   "expectedPackageFiles": [
@@ -57,8 +57,8 @@
     "/home/mplopes/.nuget/packages/microsoft.packaging.tools/1.0.0-preview1-25301-01/microsoft.packaging.tools.1.0.0-preview1-25301-01.nupkg.sha512",
     "/home/mplopes/.nuget/packages/microsoft.win32.registry/5.0.0/microsoft.win32.registry.5.0.0.nupkg.sha512",
     "/home/mplopes/.nuget/packages/microsoft.win32.systemevents/6.0.0/microsoft.win32.systemevents.6.0.0.nupkg.sha512",
-    "/home/mplopes/.nuget/packages/mongodb.bson/3.5.2/mongodb.bson.3.5.2.nupkg.sha512",
-    "/home/mplopes/.nuget/packages/mongodb.driver/3.5.2/mongodb.driver.3.5.2.nupkg.sha512",
+    "/home/mplopes/.nuget/packages/mongodb.bson/3.5.1/mongodb.bson.3.5.1.nupkg.sha512",
+    "/home/mplopes/.nuget/packages/mongodb.driver/3.5.1/mongodb.driver.3.5.1.nupkg.sha512",
     "/home/mplopes/.nuget/packages/netstandard.library/2.0.0-preview1-25301-01/netstandard.library.2.0.0-preview1-25301-01.nupkg.sha512",
     "/home/mplopes/.nuget/packages/newtonsoft.json/13.0.1/newtonsoft.json.13.0.1.nupkg.sha512",
     "/home/mplopes/.nuget/packages/qdrant.client/1.16.1/qdrant.client.1.16.1.nupkg.sha512",

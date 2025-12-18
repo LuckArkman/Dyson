@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "0t/t1UUVWdY=",
+  "dgSpecHash": "Xkmo4g46o/E=",
   "success": true,
   "projectFilePath": "/home/mplopes/Documentos/Dyson/Enums/Enums.csproj",
   "expectedPackageFiles": [
@@ -55,6 +55,7 @@
     "/home/mplopes/.nuget/packages/microsoft.packaging.tools/1.0.0-preview1-25301-01/microsoft.packaging.tools.1.0.0-preview1-25301-01.nupkg.sha512",
     "/home/mplopes/.nuget/packages/microsoft.win32.primitives/4.3.0/microsoft.win32.primitives.4.3.0.nupkg.sha512",
     "/home/mplopes/.nuget/packages/microsoft.win32.registry/4.3.0/microsoft.win32.registry.4.3.0.nupkg.sha512",
+    "/home/mplopes/.nuget/packages/mongodb.bson/3.5.1/mongodb.bson.3.5.1.nupkg.sha512",
     "/home/mplopes/.nuget/packages/netstandard.library/2.0.0-preview1-25301-01/netstandard.library.2.0.0-preview1-25301-01.nupkg.sha512",
     "/home/mplopes/.nuget/packages/newtonsoft.json/9.0.1/newtonsoft.json.9.0.1.nupkg.sha512",
     "/home/mplopes/.nuget/packages/qdrant.client/1.16.1/qdrant.client.1.16.1.nupkg.sha512",
@@ -94,6 +95,7 @@
     "/home/mplopes/.nuget/packages/system.io.filesystem.primitives/4.3.0/system.io.filesystem.primitives.4.3.0.nupkg.sha512",
     "/home/mplopes/.nuget/packages/system.linq/4.3.0/system.linq.4.3.0.nupkg.sha512",
     "/home/mplopes/.nuget/packages/system.linq.expressions/4.3.0/system.linq.expressions.4.3.0.nupkg.sha512",
+    "/home/mplopes/.nuget/packages/system.memory/4.5.5/system.memory.4.5.5.nupkg.sha512",
     "/home/mplopes/.nuget/packages/system.net.http/4.3.0/system.net.http.4.3.0.nupkg.sha512",
     "/home/mplopes/.nuget/packages/system.net.primitives/4.3.0/system.net.primitives.4.3.0.nupkg.sha512",
     "/home/mplopes/.nuget/packages/system.objectmodel/4.3.0/system.objectmodel.4.3.0.nupkg.sha512",
@@ -106,6 +108,7 @@
     "/home/mplopes/.nuget/packages/system.reflection.typeextensions/4.3.0/system.reflection.typeextensions.4.3.0.nupkg.sha512",
     "/home/mplopes/.nuget/packages/system.resources.resourcemanager/4.3.0/system.resources.resourcemanager.4.3.0.nupkg.sha512",
     "/home/mplopes/.nuget/packages/system.runtime/4.3.0/system.runtime.4.3.0.nupkg.sha512",
+    "/home/mplopes/.nuget/packages/system.runtime.compilerservices.unsafe/5.0.0/system.runtime.compilerservices.unsafe.5.0.0.nupkg.sha512",
     "/home/mplopes/.nuget/packages/system.runtime.extensions/4.3.0/system.runtime.extensions.4.3.0.nupkg.sha512",
     "/home/mplopes/.nuget/packages/system.runtime.handles/4.3.0/system.runtime.handles.4.3.0.nupkg.sha512",
     "/home/mplopes/.nuget/packages/system.runtime.interopservices/4.3.0/system.runtime.interopservices.4.3.0.nupkg.sha512",
