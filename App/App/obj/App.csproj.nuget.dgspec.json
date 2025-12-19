@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/mnt/8AA2CEB6A2CEA5D3/D.AImobile/App/App/App.csproj": {}
+    "/home/mplopes/Documentos/Dyson/App/App/App.csproj": {}
   },
   "projects": {
-    "/mnt/8AA2CEB6A2CEA5D3/D.AImobile/App/App/App.csproj": {
+    "/home/mplopes/Documentos/Dyson/App/App/App.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/mnt/8AA2CEB6A2CEA5D3/D.AImobile/App/App/App.csproj",
+        "projectUniqueName": "/home/mplopes/Documentos/Dyson/App/App/App.csproj",
         "projectName": "App",
-        "projectPath": "/mnt/8AA2CEB6A2CEA5D3/D.AImobile/App/App/App.csproj",
+        "projectPath": "/home/mplopes/Documentos/Dyson/App/App/App.csproj",
         "packagesPath": "/home/mplopes/.nuget/packages/",
-        "outputPath": "/mnt/8AA2CEB6A2CEA5D3/D.AImobile/App/App/obj/",
+        "outputPath": "/home/mplopes/Documentos/Dyson/App/App/obj/",
         "projectStyle": "PackageReference",
         "crossTargeting": true,
         "configFilePaths": [
@@ -46,6 +46,22 @@
         "net9.0-android35.0": {
           "targetAlias": "net9.0-android",
           "dependencies": {
+            "Akka": {
+              "target": "Package",
+              "version": "[1.5.56, )"
+            },
+            "MathNet.Numerics": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
+            "Microsoft.Data.Sqlite": {
+              "target": "Package",
+              "version": "[10.0.1, )"
+            },
+            "Microsoft.Extensions.Hosting": {
+              "target": "Package",
+              "version": "[8.0.1, )"
+            },
             "Microsoft.Extensions.Logging.Debug": {
               "target": "Package",
               "version": "[8.0.1, )"
@@ -59,6 +75,18 @@
               "target": "Package",
               "version": "[9.0.5, )",
               "autoReferenced": true
+            },
+            "MongoDB.Driver": {
+              "target": "Package",
+              "version": "[3.5.1, )"
+            },
+            "Mono.Data.Sqlite": {
+              "target": "Package",
+              "version": "[1.0.61, )"
+            },
+            "OpenCL.NetCore": {
+              "target": "Package",
+              "version": "[1.2.0, )"
             }
           },
           "imports": [
