@@ -52,7 +52,7 @@ public class MercadoPagoService : IPaymentGateway
             var payload = new
             {
                 transaction_amount = (double)order.TotalAmount,
-                description = $"Pedido Dyson AI #{order.Id.Substring(0, 8)}",
+                description = $"Pedido Dyson AI #{order.id.Substring(0, 8)}",
                 payment_method_id = mpPaymentMethodId,
                 payer = new
                 {
@@ -67,7 +67,7 @@ public class MercadoPagoService : IPaymentGateway
                         number = cleanCpf
                     }
                 },
-                external_reference = order.Id,
+                external_reference = order.id,
                 binary_mode = true // Ajuda a evitar estados intermediários
             };
 
@@ -177,7 +177,7 @@ public class MercadoPagoService : IPaymentGateway
         var payload = new
         {
             transaction_amount = (double)order.TotalAmount,
-            description = $"Pedido Dyson AI #{order.Id.Substring(0, 8)}",
+            description = $"Pedido Dyson AI #{order.id.Substring(0, 8)}",
             payment_method_id = mpPaymentMethodId,
             payer = new
             {
@@ -192,7 +192,7 @@ public class MercadoPagoService : IPaymentGateway
                 // AQUI ESTÁ A CORREÇÃO: Endereço obrigatório para Boleto
                 address = GetDefaultAddress() 
             },
-            external_reference = order.Id,
+            external_reference = order.id,
             binary_mode = true
         };
 

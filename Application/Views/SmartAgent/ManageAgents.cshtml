@@ -1,0 +1,687 @@
+@using Dtos
+@model List<SmartAgent>
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- DataTables CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+    /* ==================== LAYOUT BASE ==================== */
+    .page-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 30px;
+        border-radius: 12px;
+        margin-bottom: 30px;
+        box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+    }
+    .page-header h2 {
+        color: white;
+        font-weight: 700;
+        margin: 0;
+        font-size: 28px;
+    }
+    .page-header p {
+        color: rgba(255,255,255,0.9);
+        margin: 8px 0 0 0;
+        font-size: 15px;
+    }
+
+    /* ==================== STATS CARDS ==================== */
+    .stats-row {
+        margin-bottom: 30px;
+    }
+    .stat-card {
+        background: white;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        transition: all 0.3s ease;
+        border-left: 4px solid;
+    }
+    .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    }
+    .stat-card.total { border-left-color: #667eea; }
+    .stat-card.running { border-left-color: #10b981; }
+    .stat-card.stopped { border-left-color: #6b7280; }
+    .stat-card.failed { border-left-color: #ef4444; }
+
+    .stat-card-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        margin-right: 15px;
+    }
+    .stat-card.total .stat-card-icon { background: rgba(102, 126, 234, 0.1); color: #667eea; }
+    .stat-card.running .stat-card-icon { background: rgba(16, 185, 129, 0.1); color: #10b981; }
+    .stat-card.stopped .stat-card-icon { background: rgba(107, 114, 128, 0.1); color: #6b7280; }
+    .stat-card.failed .stat-card-icon { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
+
+    .stat-card-body {
+        flex: 1;
+    }
+    .stat-card-value {
+        font-size: 32px;
+        font-weight: 700;
+        margin: 0;
+    }
+    .stat-card-label {
+        font-size: 14px;
+        color: #6b7280;
+        margin: 0;
+        font-weight: 500;
+    }
+
+    /* ==================== TABLE CONTAINER ==================== */
+    .table-container {
+        background: white;
+        border-radius: 12px;
+        padding: 25px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    /* ==================== DATATABLE CUSTOMIZAÇÃO ==================== */
+    .table thead th {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        font-weight: 600;
+        border: none;
+        padding: 15px 10px;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .table tbody tr {
+        transition: all 0.3s ease;
+    }
+    .table tbody tr:hover {
+        background: rgba(102, 126, 234, 0.05);
+        transform: scale(1.01);
+    }
+
+    .table tbody td {
+        vertical-align: middle;
+        padding: 15px 10px;
+        font-size: 14px;
+    }
+
+    /* ==================== STATUS BADGES ==================== */
+    .status-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    .status-badge i {
+        margin-right: 5px;
+        font-size: 10px;
+    }
+    .status-badge.running {
+        background: rgba(16, 185, 129, 0.15);
+        color: #059669;
+        border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+    .status-badge.stopped {
+        background: rgba(107, 114, 128, 0.15);
+        color: #4b5563;
+        border: 1px solid rgba(107, 114, 128, 0.3);
+    }
+    .status-badge.pending {
+        background: rgba(251, 191, 36, 0.15);
+        color: #d97706;
+        border: 1px solid rgba(251, 191, 36, 0.3);
+    }
+    .status-badge.failed {
+        background: rgba(239, 68, 68, 0.15);
+        color: #dc2626;
+        border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    /* ==================== ACTION BUTTONS ==================== */
+    .action-btn {
+        border: none;
+        padding: 8px 12px;
+        border-radius: 6px;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin: 0 3px;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+    }
+    .action-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .btn-start {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        color: white;
+    }
+    .btn-stop {
+        background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        color: white;
+    }
+    .btn-restart {
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        color: white;
+    }
+    .btn-edit {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+    }
+    .btn-logs {
+        background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+        color: white;
+    }
+    .btn-delete {
+        background: linear-gradient(135deg, #991b1b 0%, #7f1d1d 100%);
+        color: white;
+    }
+
+    /* ==================== LOADING SPINNER ==================== */
+    .spinner-wrapper {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+        z-index: 9999;
+        align-items: center;
+        justify-content: center;
+    }
+    .spinner-wrapper.active {
+        display: flex;
+    }
+    .spinner {
+        width: 50px;
+        height: 50px;
+        border: 5px solid rgba(255,255,255,0.3);
+        border-top-color: white;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+    @@keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+
+    /* ==================== RESPONSIVE ==================== */
+    @@media (max-width: 768px) {
+        .stat-card {
+            margin-bottom: 15px;
+        }
+        .table-container {
+            overflow-x: auto;
+        }
+        .action-btn {
+            padding: 6px 10px;
+            font-size: 11px;
+        }
+    }
+</style>
+
+<!-- ==================== PAGE HEADER ==================== -->
+<div class="page-header">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h2>
+                <i class="fas fa-tasks mr-2"></i>
+                Gerenciar Smart Agents
+            </h2>
+            <p>Controle, monitore e gerencie todos os seus agentes inteligentes</p>
+        </div>
+        <a href="/SmartAgent/Make" class="btn btn-light btn-lg">
+            <i class="fas fa-plus-circle mr-2"></i>
+            Criar Novo Agente
+        </a>
+    </div>
+</div>
+
+<!-- ==================== STATS CARDS ==================== -->
+<div class="stats-row row">
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="stat-card total d-flex align-items-center">
+            <div class="stat-card-icon">
+                <i class="fas fa-robot"></i>
+            </div>
+            <div class="stat-card-body">
+                <p class="stat-card-value" id="totalAgents">@Model.Count</p>
+                <p class="stat-card-label">Total de Agentes</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="stat-card running d-flex align-items-center">
+            <div class="stat-card-icon">
+                <i class="fas fa-play-circle"></i>
+            </div>
+            <div class="stat-card-body">
+                <p class="stat-card-value" id="runningAgents">@Model.Count(a => a.Status == "running")</p>
+                <p class="stat-card-label">Em Execução</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="stat-card stopped d-flex align-items-center">
+            <div class="stat-card-icon">
+                <i class="fas fa-stop-circle"></i>
+            </div>
+            <div class="stat-card-body">
+                <p class="stat-card-value" id="stoppedAgents">@Model.Count(a => a.Status == "stopped")</p>
+                <p class="stat-card-label">Parados</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="stat-card failed d-flex align-items-center">
+            <div class="stat-card-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <div class="stat-card-body">
+                <p class="stat-card-value" id="failedAgents">@Model.Count(a => a.Status == "failed")</p>
+                <p class="stat-card-label">Com Falha</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== TABLE ==================== -->
+<div class="table-container">
+    <table id="agentsTable" class="table table-hover" style="width:100%">
+        <thead>
+            <tr>
+                <th>Nome do Agente</th>
+                <th>Status</th>
+                <th>Última Execução</th>
+                <th>Execuções</th>
+                <th>Taxa de Sucesso</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var agent in Model)
+            {
+                <tr data-agent-id="@agent.id">
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-robot mr-2" style="color: #667eea; font-size: 20px;"></i>
+                            <strong>@agent.Name</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <span class="status-badge @agent.Status" id="status-@agent.id">
+                            @if (agent.Status == "running")
+                            {
+                                <i class="fas fa-circle"></i><text>Em Execução</text>
+                            }
+                            else if (agent.Status == "stopped")
+                            {
+                                <i class="fas fa-circle"></i><text>Parado</text>
+                            }
+                            else if (agent.Status == "pending")
+                            {
+                                <i class="fas fa-circle"></i><text>Pendente</text>
+                            }
+                            else if (agent.Status == "failed")
+                            {
+                                <i class="fas fa-exclamation-circle"></i><text>Falhou</text>
+                            }
+                        </span>
+                    </td>
+                    <td>
+                        <span id="lastExec-@agent.id">
+                            @(agent.UpdatedAt?.ToString("dd/MM/yyyy HH:mm") ?? "Nunca")
+                        </span>
+                    </td>
+                    <td>
+                        <span id="execCount-@agent.id">0</span>
+                    </td>
+                    <td>
+                        <span id="successRate-@agent.id">-</span>
+                    </td>
+                    <td>
+                        <div class="btn-group" role="group">
+                            @if (agent.Status == "running")
+                            {
+                                <button class="action-btn btn-stop" onclick="stopAgent('@agent.id')" title="Parar">
+                                    <i class="fas fa-stop"></i>
+                                </button>
+                                <button class="action-btn btn-restart" onclick="restartAgent('@agent.id')" title="Reiniciar">
+                                    <i class="fas fa-sync"></i>
+                                </button>
+                            }
+                            else
+                            {
+                                <button class="action-btn btn-start" onclick="startAgent('@agent.id')" title="Iniciar">
+                                    <i class="fas fa-play"></i>
+                                </button>
+                            }
+                            <button class="action-btn btn-edit" onclick="editAgent('@agent.id')" title="Editar">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="action-btn btn-logs" onclick="viewLogs('@agent.id')" title="Logs">
+                                <i class="fas fa-file-alt"></i>
+                            </button>
+                            <button class="action-btn btn-delete" onclick="deleteAgent('@agent.id')" title="Excluir">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<!-- Loading Spinner -->
+<div class="spinner-wrapper" id="loadingSpinner">
+    <div class="spinner"></div>
+</div>
+
+@section Scripts {
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        // ==================== DATATABLES INIT ====================
+        $(document).ready(function() {
+            $('#agentsTable').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.13.7/i18n/pt-BR.json"
+                },
+                "order": [[2, "desc"]],
+                "pageLength": 25,
+                "responsive": true,
+                "dom": '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>rtip'
+            });
+
+            // Auto-refresh a cada 5 segundos
+            setInterval(refreshStatuses, 5000);
+        });
+
+        // ==================== AGENT ACTIONS ====================
+        async function startAgent(agentId) {
+            showLoading();
+            try {
+                const res = await fetch(`/SmartAgent/StartAgent?id=${agentId}`, { method: 'POST' });
+                const data = await res.json();
+                
+                if (res.ok) {
+                    updateAgentStatus(agentId, 'running');
+                    showToast('success', '✓ Agente iniciado!');
+                } else {
+                    showToast('error', data.message || 'Erro ao iniciar agente');
+                }
+            } catch(e) {
+                showToast('error', 'Erro de conexão');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        async function stopAgent(agentId) {
+            showLoading();
+            try {
+                const res = await fetch(`/SmartAgent/StopAgent?id=${agentId}`, { method: 'POST' });
+                const data = await res.json();
+                
+                if (res.ok) {
+                    updateAgentStatus(agentId, 'stopped');
+                    showToast('success', '✓ Agente parado!');
+                } else {
+                    showToast('error', data.message || 'Erro ao parar agente');
+                }
+            } catch(e) {
+                showToast('error', 'Erro de conexão');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        async function restartAgent(agentId) {
+            showLoading();
+            try {
+                const res = await fetch(`/SmartAgent/RestartAgent?id=${agentId}`, { method: 'POST' });
+                const data = await res.json();
+                
+                if (res.ok) {
+                    updateAgentStatus(agentId, 'running');
+                    showToast('success', '✓ Agente reiniciado!');
+                } else {
+                    showToast('error', data.message || 'Erro ao reiniciar agente');
+                }
+            } catch(e) {
+                showToast('error', 'Erro de conexão');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        function editAgent(agentId) {
+            window.location.href = `/SmartAgent/Make?id=${agentId}`;
+        }
+
+        async function viewLogs(agentId) {
+            showLoading();
+            try {
+                const res = await fetch(`/SmartAgent/GetAgentLogs?id=${agentId}`);
+                const data = await res.json();
+                
+                if (res.ok) {
+                    const logsHtml = data.logs && data.logs.length > 0 
+                        ? data.logs.map(log => `<div style="margin-bottom: 10px; padding: 10px; background: rgba(0,0,0,0.05); border-radius: 6px; font-family: monospace; font-size: 12px;">${log}</div>`).join('')
+                        : '<p style="text-align: center; color: #6b7280;">Nenhum log disponível</p>';
+
+                    Swal.fire({
+                        title: `Logs do Agente`,
+                        html: `
+                            <div style="text-align: left; max-height: 400px; overflow-y: auto;">
+                                <p><strong>Status:</strong> ${data.status}</p>
+                                <p><strong>Execuções:</strong> ${data.executionCount}</p>
+                                <p><strong>Taxa de Sucesso:</strong> ${data.successRate}%</p>
+                                <hr>
+                                ${logsHtml}
+                            </div>
+                        `,
+                        width: 800,
+                        confirmButtonColor: '#667eea',
+                        background: '#fff',
+                        customClass: {
+                            htmlContainer: 'swal-logs-container'
+                        }
+                    });
+                } else {
+                    showToast('error', 'Erro ao carregar logs');
+                }
+            } catch(e) {
+                showToast('error', 'Erro de conexão');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        async function deleteAgent(agentId) {
+            const result = await Swal.fire({
+                title: 'Excluir Agente?',
+                text: 'Esta ação não pode ser desfeita!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#ef4444',
+                cancelButtonColor: '#6b7280',
+                confirmButtonText: 'Sim, excluir!',
+                cancelButtonText: 'Cancelar'
+            });
+
+            if (result.isConfirmed) {
+                showLoading();
+                try {
+                    const res = await fetch(`/SmartAgent/Delete?id=${agentId}`, { method: 'POST' });
+                    
+                    if (res.ok) {
+                        $(`tr[data-agent-id="${agentId}"]`).fadeOut(300, function() {
+                            $(this).remove();
+                            updateStats();
+                        });
+                        showToast('success', '✓ Agente excluído!');
+                    } else {
+                        showToast('error', 'Erro ao excluir agente');
+                    }
+                } catch(e) {
+                    showToast('error', 'Erro de conexão');
+                } finally {
+                    hideLoading();
+                }
+            }
+        }
+
+        // ==================== AUTO-REFRESH ====================
+        async function refreshStatuses() {
+            try {
+                const agents = @Html.Raw(Json.Serialize(Model.Select(a => a.id)));
+                
+                for (const agentId of agents) {
+                    const res = await fetch(`/SmartAgent/GetAgentLogs?id=${agentId}`);
+                    if (res.ok) {
+                        const data = await res.json();
+                        updateAgentInfo(agentId, data);
+                    }
+                }
+            } catch(e) {
+                // Silent fail
+            }
+        }
+
+        function updateAgentInfo(agentId, data) {
+            // Update status badge
+            const statusElement = document.getElementById(`status-${agentId}`);
+            if (statusElement) {
+                statusElement.className = `status-badge ${data.status}`;
+                statusElement.innerHTML = getStatusLabel(data.status);
+            }
+
+            // Update stats
+            document.getElementById(`execCount-${agentId}`).textContent = data.executionCount || 0;
+            document.getElementById(`successRate-${agentId}`).textContent = 
+                data.successRate !== undefined ? `${data.successRate}%` : '-';
+
+            // Update action buttons
+            const tr = document.querySelector(`tr[data-agent-id="${agentId}"]`);
+            if (tr) {
+                updateActionButtons(tr, agentId, data.status);
+            }
+        }
+
+        function updateAgentStatus(agentId, newStatus) {
+            const statusElement = document.getElementById(`status-${agentId}`);
+            if (statusElement) {
+                statusElement.className = `status-badge ${newStatus}`;
+                statusElement.innerHTML = getStatusLabel(newStatus);
+            }
+
+            const tr = document.querySelector(`tr[data-agent-id="${agentId}"]`);
+            if (tr) {
+                updateActionButtons(tr, agentId, newStatus);
+            }
+
+            updateStats();
+        }
+
+        function updateActionButtons(tr, agentId, status) {
+            const btnGroup = tr.querySelector('.btn-group');
+            if (!btnGroup) return;
+
+            let buttons = '';
+            if (status === 'running') {
+                buttons = `
+                    <button class="action-btn btn-stop" onclick="stopAgent('${agentId}')" title="Parar">
+                        <i class="fas fa-stop"></i>
+                    </button>
+                    <button class="action-btn btn-restart" onclick="restartAgent('${agentId}')" title="Reiniciar">
+                        <i class="fas fa-sync"></i>
+                    </button>
+                `;
+            } else {
+                buttons = `
+                    <button class="action-btn btn-start" onclick="startAgent('${agentId}')" title="Iniciar">
+                        <i class="fas fa-play"></i>
+                    </button>
+                `;
+            }
+            buttons += `
+                <button class="action-btn btn-edit" onclick="editAgent('${agentId}')" title="Editar">
+                    <i class="fas fa-edit"></i>
+                </button>
+                <button class="action-btn btn-logs" onclick="viewLogs('${agentId}')" title="Logs">
+                    <i class="fas fa-file-alt"></i>
+                </button>
+                <button class="action-btn btn-delete" onclick="deleteAgent('${agentId}')" title="Excluir">
+                    <i class="fas fa-trash"></i>
+                </button>
+            `;
+            btnGroup.innerHTML = buttons;
+        }
+
+        function getStatusLabel(status) {
+            const labels = {
+                'running': '<i class="fas fa-circle"></i> Em Execução',
+                'stopped': '<i class="fas fa-circle"></i> Parado',
+                'pending': '<i class="fas fa-circle"></i> Pendente',
+                'failed': '<i class="fas fa-exclamation-circle"></i> Falhou'
+            };
+            return labels[status] || status;
+        }
+
+        function updateStats() {
+            const total = $('tbody tr').length;
+            const running = $('.status-badge.running').length;
+            const stopped = $('.status-badge.stopped').length;
+            const failed = $('.status-badge.failed').length;
+
+            $('#totalAgents').text(total);
+            $('#runningAgents').text(running);
+            $('#stoppedAgents').text(stopped);
+            $('#failedAgents').text(failed);
+        }
+
+        // ==================== HELPER FUNCTIONS ====================
+        function showLoading() {
+            document.getElementById('loadingSpinner').classList.add('active');
+        }
+
+        function hideLoading() {
+            document.getElementById('loadingSpinner').classList.remove('active');
+        }
+
+        function showToast(icon, title) {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 2500,
+                timerProgressBar: true
+            });
+            Toast.fire({ icon, title });
+        }
+
+        console.log('✓ Manage Agents carregado com sucesso!');
+    </script>
+}

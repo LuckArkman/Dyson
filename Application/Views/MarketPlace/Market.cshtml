@@ -1,0 +1,215 @@
+@using Dtos
+@{
+    ViewData["Title"] = "MarketPlace";
+    Layout = "_AdminLayout";
+}
+
+<style>
+    .category-rail .card {
+        transition: transform 0.2s, box-shadow 0.2s;
+        border: none;
+        cursor: pointer;
+    }
+    .category-rail .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+    .product-card {
+        border: 1px solid #343a40; /* Borda mais suave no dark mode */
+        border-radius: 8px;
+        transition: box-shadow 0.3s;
+    }
+    .product-card:hover {
+        box-shadow: 0 0 20px rgba(0, 123, 255, 0.25);
+    }
+    .product-image-placeholder {
+        background-color: #212529; /* Cor de fundo escura para placeholder */
+        height: 150px;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 4rem;
+        color: #6c757d;
+    }
+    .product-info {
+        padding: 1rem;
+        text-align: center;
+    }
+    .add-to-cart-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 10;
+        opacity: 0.8;
+    }
+</style>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-@(TempData["MessageType"] == "success" ? "success" : "danger") alert-dismissible fade show" role="alert">
+        <i class="fas fa-info-circle mr-2"></i>
+        @TempData["Message"]
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+
+<div class="container-fluid">
+
+    <h2 class="mt-2 mb-4 text-white">
+        <i class="fas fa-sitemap mr-2"></i> Categorias de Smart Agents
+    </h2>
+    <div class="row category-rail flex-nowrap overflow-auto pb-3">
+        
+        <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+            <div class="card bg-info">
+                <div class="card-body text-center p-3">
+                    <i class="fas fa-chart-line fa-2x mb-2"></i>
+                    <h5 class="card-title text-white">Trading & Otimização</h5>
+                    <small>12 Agentes</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+            <div class="card bg-success">
+                <div class="card-body text-center p-3">
+                    <i class="fas fa-cloud fa-2x mb-2"></i>
+                    <h5 class="card-title text-white">Análise de Sentimento</h5>
+                    <small>8 Agentes</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+            <div class="card bg-warning">
+                <div class="card-body text-center p-3">
+                    <i class="fas fa-shield-alt fa-2x mb-2"></i>
+                    <h5 class="card-title text-white">Segurança & Auditoria</h5>
+                    <small>5 Agentes</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+            <div class="card bg-danger">
+                <div class="card-body text-center p-3">
+                    <i class="fas fa-handshake fa-2x mb-2"></i>
+                    <h5 class="card-title text-white">Criação de Contratos</h5>
+                    <small>3 Agentes</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+            <div class="card bg-secondary">
+                <div class="card-body text-center p-3">
+                    <i class="fas fa-cogs fa-2x mb-2"></i>
+                    <h5 class="card-title text-white">Manutenção de Dados</h5>
+                    <small>7 Agentes</small>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <hr class="mt-4 mb-4">
+
+    <h2 class="mt-4 mb-4 text-white">
+        <i class="fas fa-cubes mr-2"></i> Produtos Mais Populares
+    </h2>
+
+    <div class="row">
+        @{
+            var allMarketItems = new List<SmartAgent>();
+            var agents = ((List<SmartAgent>)ViewBag.Products).FindAll(p => p.Type == "Agent");
+            var tokenPrice = ((List<SmartAgent>)ViewBag.Products).Find(p => p.Type == "Token")?.price ?? 0.50m;
+
+            // Adicionar Agentes como itens de venda
+            allMarketItems.AddRange(agents);
+            
+            // Adicionar pacotes de Tokens DTC para venda (simulando diferentes ofertas)
+            allMarketItems.Add(new SmartAgent { id = "dtc_pack_1k", Name = "Pacote de 1,000 DTC", Description = $"Tokens DTC para uso imediato.", price = 1000 * tokenPrice, Type = "DTC_Package" });
+            allMarketItems.Add(new SmartAgent { id = "dtc_pack_2_5k", Name = "Pacote de 2,500 DTC", Description = $"Oferta Especial!.", price = 2500 * tokenPrice * 0.95m, Type = "DTC_Package" }); // 5% de desconto
+            allMarketItems.Add(new SmartAgent { id = "dtc_pack_5k", Name = "Pacote de 5,000 DTC", Description = $"Melhor Valor por Token.", price = 5000 * tokenPrice * 0.90m, Type = "DTC_Package" }); // 10% de desconto
+        }
+
+        @foreach (var item in allMarketItems)
+        {
+            var isAgent = item.Type == "Agent";
+            var btnClass = isAgent ? "btn-info" : "btn-success";
+            var iconClass = isAgent ? "fas fa-robot" : "fas fa-box-open";
+            var actionName = isAgent ? "BuyAgent" : "BuyDTC";
+            var nameValue = isAgent ? "agentId" : "amount";
+            var valueToSend = isAgent ? item.id : (item.Type == "DTC_Package" ? item.Name.Split(' ')[2].Replace(",", "") : "");
+            var priceText = isAgent ? $"{item.price} DTC" : $"${item.price.ToString("F2")} USD";
+
+            <div class="col-6 col-sm-6 col-md-4 col-lg-3 mb-4">
+                <div class="card product-card bg-dark h-100 position-relative">
+                    
+                    <form asp-controller="marketPlace" asp-action="@actionName" method="post" class="d-inline add-to-cart-btn" 
+                          data-toggle="tooltip" title="Adicionar ao Carrinho">
+                        @if (!isAgent)
+                        {
+                            <input type="hidden" name="amount" value="@valueToSend" />
+                        } 
+                        else 
+                        {
+                            <input type="hidden" name="agentId" value="@item.id" />
+                        }
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-sm @btnClass rounded-circle">
+                            <i class="fas fa-shopping-bag"></i>
+                        </button>
+                    </form>
+
+                    <div class="product-image-placeholder">
+                        <i class="@iconClass"></i>
+                    </div>
+
+                    <div class="product-info">
+                        <h6 class="text-truncate text-white" title="@item.Name">@item.Name</h6>
+                        
+                        <div class="text-muted small mb-2 text-truncate">
+                            @if (isAgent)
+                            {
+                                <span><i class="fas fa-robot text-info"></i> Smart Agent</span>
+                            }
+                            else
+                            {
+                                <span><i class="fas fa-box text-success"></i> Pacote de Tokens</span>
+                            }
+                        </div>
+                        
+                        <div class="font-weight-bold @(isAgent ? "text-warning" : "text-success") mb-3">
+                            @priceText
+                        </div>
+                        
+                        <form asp-controller="marketPlace" asp-action="@actionName" method="post">
+                            @if (!isAgent)
+                            {
+                                <input type="hidden" name="amount" value="@valueToSend" />
+                            }
+                            else
+                            {
+                                <input type="hidden" name="agentId" value="@item.id" />
+                            }
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="btn btn-block btn-outline-light btn-sm">
+                                Comprar @(isAgent ? "Agente" : "Pacote")
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Inicializa Tooltips do Bootstrap
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+}

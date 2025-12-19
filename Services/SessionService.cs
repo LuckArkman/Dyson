@@ -87,7 +87,7 @@ namespace Services
             var session = new UserSession
             {
                 SessionToken = reader.GetString(0),
-                UserId = reader.GetGuid(1),
+                UserId = reader.GetString(1),
                 ExpiresAtUtc = DateTime.Parse(reader.GetString(2))
             };
 

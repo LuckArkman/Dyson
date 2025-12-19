@@ -1,0 +1,891 @@
+@using Dtos
+@model SmartAgent
+@{
+Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jerosoler/Drawflow/dist/drawflow.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+    /* ==================== FIX PARA DRAG PERFORMANCE ==================== */
+    html, body { height: 100%; margin: 0; padding: 0; }
+
+    /* ==================== LAYOUT BASE ==================== */
+    .content-wrapper { display: flex; flex-direction: column; height: calc(100vh - 57px); overflow: hidden; }
+    .content { flex: 1; display: flex; flex-direction: column; padding: 0 !important; margin: 0 !important; }
+    .container-fluid { flex: 1; display: flex; flex-direction: column; padding: 0; height: 100%; }
+
+    /* ==================== EDITOR CANVAS ==================== */
+    .editor-container {
+        flex: 1; position: relative; overflow: hidden; background: #1a1d23;
+        background-image: linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
+        background-size: 20px 20px;
+    }
+
+    /* ==================== TOOLBAR SUPERIOR ==================== */
+    .editor-toolbar {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 12px 20px; border-bottom: 2px solid rgba(255,255,255,0.1);
+        display: flex; justify-content: space-between; align-items: center; z-index: 100; box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    }
+    .agent-name-input {
+        background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: white;
+        font-size: 16px; font-weight: 600; padding: 8px 15px; border-radius: 8px; width: 350px; transition: all 0.3s ease;
+    }
+    .agent-name-input:focus { background: rgba(255,255,255,0.25); border-color: rgba(255,255,255,0.5); box-shadow: 0 0 15px rgba(255,255,255,0.3); outline: none; }
+    .toolbar-btn {
+        background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); color: white;
+        padding: 8px 16px; border-radius: 6px; font-weight: 600; transition: all 0.3s ease; cursor: pointer;
+    }
+    .toolbar-btn:hover { background: rgba(255,255,255,0.3); transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.3); }
+    .toolbar-btn.btn-save { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border: none; font-size: 14px; padding: 10px 25px; }
+    .toolbar-btn.btn-save:hover { transform: translateY(-2px) scale(1.05); }
+
+    /* ==================== NODE PALETTE ==================== */
+    .node-palette {
+        position: absolute; top: 20px; left: 20px; width: 280px; max-height: calc(100vh - 160px);
+        background: rgba(26, 29, 35, 0.98); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;
+        z-index: 50; box-shadow: 0 8px 32px rgba(0,0,0,0.5); overflow-y: auto; overflow-x: hidden;
+    }
+    .node-palette::-webkit-scrollbar { width: 8px; }
+    .node-palette::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); border-radius: 4px; }
+    .node-palette::-webkit-scrollbar-thumb { background: rgba(102, 126, 234, 0.5); border-radius: 4px; }
+    .node-palette::-webkit-scrollbar-thumb:hover { background: rgba(102, 126, 234, 0.7); }
+    .palette-header {
+        padding: 15px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); font-weight: 700;
+        text-align: center; color: white; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;
+        position: sticky; top: 0; z-index: 10;
+    }
+    .palette-search { padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); position: sticky; top: 49px; background: rgba(26, 29, 35, 0.98); z-index: 9; }
+    .palette-search input { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 8px 12px; border-radius: 6px; font-size: 13px; }
+    .palette-search input::placeholder { color: rgba(255,255,255,0.4); }
+    .palette-section { padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .palette-section-title {
+        padding: 8px 15px; color: #8b92a7; font-size: 11px; font-weight: 600; text-transform: uppercase;
+        letter-spacing: 0.5px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: all 0.2s ease;
+    }
+    .palette-section-title:hover { background: rgba(255,255,255,0.03); color: #fff; }
+    .palette-section-title i.fa-chevron-down { transition: transform 0.3s ease; }
+    .palette-section.collapsed .palette-section-title i.fa-chevron-down { transform: rotate(-90deg); }
+    .palette-section.collapsed .palette-section-content { display: none; }
+    .palette-item {
+        padding: 10px 15px; color: #fff; cursor: grab; display: flex; align-items: center;
+        transition: all 0.2s ease; margin: 2px 8px; border-radius: 6px;
+    }
+    .palette-item:hover { background: rgba(102, 126, 234, 0.2); transform: translateX(5px); }
+    .palette-item:active { cursor: grabbing; }
+    .palette-item i { width: 28px; margin-right: 10px; text-align: center; font-size: 15px; }
+    .palette-item-label { flex: 1; font-size: 12px; font-weight: 500; }
+
+    /* ==================== PROPERTIES PANEL ==================== */
+    .properties-panel {
+        position: absolute; top: 0; right: -400px; width: 380px; height: 100%;
+        background: rgba(26, 29, 35, 0.98); border-left: 1px solid rgba(255,255,255,0.1);
+        transition: right 0.4s cubic-bezier(0.4, 0.0, 0.2, 1); z-index: 60; padding: 0;
+        overflow-y: auto; box-shadow: -8px 0 32px rgba(0,0,0,0.5);
+    }
+    .properties-panel.open { right: 0; }
+    .props-header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; color: white; position: sticky; top: 0; z-index: 10; }
+    .props-header h5 { margin: 0; font-size: 16px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+    .props-close-btn { background: rgba(255,255,255,0.2); border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; transition: all 0.3s ease; }
+    .props-close-btn:hover { background: rgba(255,255,255,0.3); transform: rotate(90deg); }
+    .props-content { padding: 20px; }
+    .form-group-modern { margin-bottom: 20px; }
+    .form-group-modern label { display: block; color: #8b92a7; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+
+    /* ==================== FORM CONTROLS - CORRIGIDO ==================== */
+    .form-control-modern {
+        width: 100%;
+        background: rgba(255,255,255,0.05) !important;
+        border: 1px solid rgba(255,255,255,0.1);
+        color: white !important;
+        padding: 10px 15px;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: all 0.3s ease;
+    }
+    .form-control-modern:focus {
+        background: rgba(255,255,255,0.08) !important;
+        border-color: #667eea;
+        box-shadow: 0 0 15px rgba(102, 126, 234, 0.3);
+        outline: none;
+    }
+    .form-control-modern::placeholder { color: rgba(255,255,255,0.3); }
+
+    /* ==================== SELECT DROPDOWN - CORRIGIDO ==================== */
+    .form-control-modern option {
+        background: #1a1d23 !important;
+        color: white !important;
+        padding: 10px;
+    }
+    .form-control-modern optgroup {
+        background: #2d3748 !important;
+        color: #8b92a7 !important;
+        font-weight: 700;
+        padding: 8px;
+    }
+
+    /* Estilo específico para select */
+    select.form-control-modern {
+        cursor: pointer;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 15px center;
+        background-size: 12px;
+        padding-right: 40px;
+        background-color: rgba(255,255,255,0.05) !important;
+    }
+    select.form-control-modern:hover {
+        background-color: rgba(255,255,255,0.08) !important;
+    }
+
+    .props-actions { padding: 20px; border-top: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.2); }
+    .btn-apply {
+        width: 100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none;
+        color: white; padding: 12px; border-radius: 8px; font-weight: 600; font-size: 14px;
+        cursor: pointer; transition: all 0.3s ease; margin-bottom: 10px;
+    }
+    .btn-apply:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4); }
+    .btn-delete {
+        width: 100%; background: transparent; border: 1px solid rgba(239, 68, 68, 0.5); color: #ef4444;
+        padding: 10px; border-radius: 8px; font-weight: 600; font-size: 13px; cursor: pointer; transition: all 0.3s ease;
+    }
+    .btn-delete:hover { background: rgba(239, 68, 68, 0.1); border-color: #ef4444; }
+
+    /* ==================== AI PROVIDER SELECTOR ==================== */
+    .provider-badge {
+        display: inline-block; padding: 4px 10px; border-radius: 12px;
+        font-size: 11px; font-weight: 600; margin-left: 8px;
+    }
+    .provider-badge.free { background: #10b981; color: white; }
+    .provider-badge.low { background: #3b82f6; color: white; }
+    .provider-badge.mid { background: #f59e0b; color: white; }
+    .provider-badge.high { background: #ef4444; color: white; }
+
+    /* ==================== DRAWFLOW NODE STYLES ==================== */
+    .drawflow-node {
+        background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%); border: 2px solid rgba(255,255,255,0.1);
+        border-radius: 12px; width: 220px; color: white; padding: 0; box-shadow: 0 8px 24px rgba(0,0,0,0.4); transition: all 0.3s ease;
+    }
+    .drawflow-node:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0,0,0,0.6); }
+    .drawflow-node.selected { border-color: #fbbf24; box-shadow: 0 0 30px rgba(251, 191, 36, 0.6); transform: scale(1.02); }
+    .drawflow-node .title-box { padding: 12px 15px; border-radius: 10px 10px 0 0; font-weight: 700; font-size: 13px; display: flex; align-items: center; gap: 8px; }
+    .drawflow-node .title-box i { font-size: 16px; }
+    .drawflow-node .node-content { padding: 12px 15px; font-size: 12px; color: #cbd5e0; line-height: 1.4; }
+
+    /* ==================== CORES DOS NÓS ==================== */
+    .node-webhook { background: linear-gradient(135deg, #10b981 0%, #059669 100%); }
+    .node-schedule { background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%); }
+    .node-cron { background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%); }
+    .node-http { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); }
+    .node-graphql { background: linear-gradient(135deg, #e91e63 0%, #c2185b 100%); }
+    .node-soap { background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); }
+    .node-ai { background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); }
+    .node-memory { background: linear-gradient(135deg, #ec4899 0%, #db2777 100%); }
+    .node-code { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); }
+    .node-function { background: linear-gradient(135deg, #fb923c 0%, #ea580c 100%); }
+    .node-if { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); }
+    .node-switch { background: linear-gradient(135deg, #f87171 0%, #ef4444 100%); }
+    .node-loop { background: linear-gradient(135deg, #c026d3 0%, #a21caf 100%); }
+
+    /* ==================== MINIMAP ==================== */
+    .minimap { position: absolute; bottom: 20px; right: 20px; width: 200px; height: 150px; background: rgba(26, 29, 35, 0.95); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; z-index: 40; padding: 10px; }
+    .minimap-title { color: #8b92a7; font-size: 11px; font-weight: 600; text-transform: uppercase; margin-bottom: 8px; }
+
+    /* ==================== RESPONSIVE ==================== */
+    @@media (max-width: 768px) {
+        .node-palette { width: 240px; left: 10px; top: 10px; }
+        .properties-panel { width: 100%; right: -100%; }
+        .properties-panel.open { right: 0; }
+        .agent-name-input { width: 200px; }
+    }
+</style>
+
+<div class="editor-toolbar">
+    <div class="d-flex align-items-center gap-3">
+        <div><i class="fas fa-robot" style="font-size: 24px; color: white;"></i></div>
+        <input type="text" id="agentName" class="agent-name-input" value="@(Model.Name ?? "Novo Agente Inteligente")" placeholder="Nome do seu Smart Agent">
+        <input type="hidden" id="agentId" value="@Model.id">
+    </div>
+    <div class="d-flex align-items-center gap-2">
+        <div class="btn-group">
+            <button class="toolbar-btn" onclick="editor.zoom_out()" title="Zoom Out"><i class="fas fa-search-minus"></i></button>
+            <button class="toolbar-btn" onclick="editor.zoom_reset()" title="Reset"><i class="fas fa-search"></i></button>
+            <button class="toolbar-btn" onclick="editor.zoom_in()" title="Zoom In"><i class="fas fa-search-plus"></i></button>
+        </div>
+        <button class="toolbar-btn" onclick="clearCanvas()" title="Limpar Tudo"><i class="fas fa-trash-alt"></i></button>
+        <button class="toolbar-btn btn-save" onclick="saveWorkflow()"><i class="fas fa-save mr-2"></i> SALVAR AGENTE</button>
+    </div>
+</div>
+
+<div class="editor-container" id="drawflow" ondrop="drop(event)" ondragover="allowDrop(event)">
+    <div class="node-palette">
+        <div class="palette-header"><i class="fas fa-puzzle-piece mr-2"></i> Ferramentas</div>
+        <div class="palette-search"><input type="text" id="nodeSearch" placeholder="🔍 Buscar nós..." onkeyup="filterNodes()"></div>
+
+        <!-- TRIGGERS -->
+        <div class="palette-section">
+            <div class="palette-section-title" onclick="toggleSection(this)">
+                <span><i class="fas fa-bolt mr-1"></i> TRIGGERS</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="palette-section-content">
+                <div class="palette-item" draggable="true" ondragstart="drag(event)" data-node="webhook">
+                    <i class="fas fa-bolt" style="color: #10b981;"></i>
+                    <span class="palette-item-label">Webhook</span>
+                </div>
+                <div class="palette-item" draggable="true" ondragstart="drag(event)" data-node="schedule">
+                    <i class="fas fa-clock" style="color: #14b8a6;"></i>
+                    <span class="palette-item-label">Schedule</span>
+                </div>
+                <div class="palette-item" draggable="true" ondragstart="drag(event)" data-node="cron">
+                    <i class="fas fa-stopwatch" style="color: #06b6d4;"></i>
+                    <span class="palette-item-label">Cron</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- IA & PROCESSAMENTO -->
+        <div class="palette-section">
+            <div class="palette-section-title" onclick="toggleSection(this)">
+                <span><i class="fas fa-brain mr-1"></i> IA & PROCESSAMENTO</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="palette-section-content">
+                <div class="palette-item" draggable="true" ondragstart="drag(event)" data-node="ai">
+                    <i class="fas fa-brain" style="color: #8b5cf6;"></i>
+                    <span class="palette-item-label">AI / LLM</span>
+                </div>
+                <div class="palette-item" draggable="true" ondragstart="drag(event)" data-node="memory">
+                    <i class="fas fa-database" style="color: #ec4899;"></i>
+                    <span class="palette-item-label">Vector Memory</span>
+                </div>
+                <div class="palette-item" draggable="true" ondragstart="drag(event)" data-node="code">
+                    <i class="fas fa-code" style="color: #f59e0b;"></i>
+                    <span class="palette-item-label">JavaScript</span>
+                </div>
+                <div class="palette-item" draggable="true" ondragstart="drag(event)" data-node="function">
+                    <i class="fas fa-function" style="color: #fb923c;"></i>
+                    <span class="palette-item-label">Function</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- LÓGICA -->
+        <div class="palette-section">
+            <div class="palette-section-title" onclick="toggleSection(this)">
+                <span><i class="fas fa-code-branch mr-1"></i> LÓGICA</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="palette-section-content">
+                <div class="palette-item" draggable="true" ondragstart="drag(event)" data-node="if">
+                    <i class="fas fa-code-branch" style="color: #ef4444;"></i>
+                    <span class="palette-item-label">IF Condition</span>
+                </div>
+                <div class="palette-item" draggable="true" ondragstart="drag(event)" data-node="switch">
+                    <i class="fas fa-random" style="color: #f87171;"></i>
+                    <span class="palette-item-label">Switch</span>
+                </div>
+                <div class="palette-item" draggable="true" ondragstart="drag(event)" data-node="loop">
+                    <i class="fas fa-redo" style="color: #c026d3;"></i>
+                    <span class="palette-item-label">Loop</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- APIs -->
+        <div class="palette-section">
+            <div class="palette-section-title" onclick="toggleSection(this)">
+                <span><i class="fas fa-plug mr-1"></i> APIs</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="palette-section-content">
+                <div class="palette-item" draggable="true" ondragstart="drag(event)" data-node="http">
+                    <i class="fas fa-globe" style="color: #3b82f6;"></i>
+                    <span class="palette-item-label">HTTP Request</span>
+                </div>
+                <div class="palette-item" draggable="true" ondragstart="drag(event)" data-node="graphql">
+                    <i class="fas fa-project-diagram" style="color: #e91e63;"></i>
+                    <span class="palette-item-label">GraphQL</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="properties-panel" id="propsPanel">
+        <div class="props-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5><i class="fas fa-cog mr-2"></i> Configurações</h5>
+                <button class="props-close-btn" onclick="closeProps()"><i class="fas fa-times"></i></button>
+            </div>
+        </div>
+        <div class="props-content" id="propsContent">
+            <div class="text-center" style="padding: 60px 20px; color: #8b92a7;">
+                <i class="fas fa-mouse-pointer" style="font-size: 48px; margin-bottom: 20px; opacity: 0.5;"></i>
+                <p style="font-size: 14px; line-height: 1.6;">Selecione um nó no canvas<br>para visualizar e editar<br>suas configurações</p>
+            </div>
+        </div>
+        <div id="propsActions" style="display:none;" class="props-actions">
+            <button class="btn-apply" onclick="saveNodeSettings()"><i class="fas fa-check mr-2"></i> Aplicar Alterações</button>
+            <button class="btn-delete" onclick="deleteSelectedNode()"><i class="fas fa-trash-alt mr-2"></i> Excluir Este Nó</button>
+        </div>
+    </div>
+
+    <div class="minimap">
+        <div class="minimap-title">Minimap</div>
+        <div id="minimapContent" style="width: 100%; height: 100%; background: rgba(0,0,0,0.3); border-radius: 4px;"></div>
+    </div>
+</div>
+
+@section Scripts {
+<script src="https://cdn.jsdelivr.net/gh/jerosoler/Drawflow/dist/drawflow.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    const container = document.getElementById("drawflow");
+    const editor = new Drawflow(container);
+    editor.reroute = true;
+    editor.reroute_fix_curvature = true;
+    editor.curvature = 0.5;
+    editor.force_first_input = false;
+    editor.start();
+
+    let selectedNodeId = null;
+
+    function filterNodes() {
+        const searchTerm = document.getElementById('nodeSearch').value.toLowerCase();
+        document.querySelectorAll('.palette-item').forEach(item => {
+            const label = item.querySelector('.palette-item-label').textContent.toLowerCase();
+            item.style.display = label.includes(searchTerm) ? 'flex' : 'none';
+        });
+    }
+
+    function toggleSection(element) { element.parentElement.classList.toggle('collapsed'); }
+    function allowDrop(ev) { ev.preventDefault(); }
+    function drag(ev) { ev.dataTransfer.setData("node", ev.target.getAttribute('data-node')); }
+
+    function drop(ev) {
+        ev.preventDefault();
+        addNodeToCanvas(ev.dataTransfer.getData("node"), ev.clientX, ev.clientY);
+    }
+
+    function addNodeToCanvas(type, x, y) {
+        const rect = editor.precanvas.getBoundingClientRect();
+        const pos_x = (x - rect.left) * (editor.precanvas.clientWidth / (editor.precanvas.clientWidth * editor.zoom)) - editor.precanvas.getBoundingClientRect().x;
+        const pos_y = (y - rect.top) * (editor.precanvas.clientHeight / (editor.precanvas.clientHeight * editor.zoom)) - editor.precanvas.getBoundingClientRect().y;
+        const html = getNodeTemplate(type);
+        const inputs = ['webhook', 'schedule', 'cron'].includes(type) ? 0 : 1;
+        const outputs = ['if', 'switch'].includes(type) ? 3 : 1;
+        editor.addNode(type, inputs, outputs, pos_x, pos_y, type, { config: {} }, html);
+        showToast('success', `Nó ${type} adicionado!`);
+    }
+
+    function clearCanvas() {
+        Swal.fire({
+            title: 'Limpar Canvas?', text: "Todos os nós serão removidos!", icon: 'warning',
+            showCancelButton: true, confirmButtonColor: '#ef4444', cancelButtonColor: '#4f5b66',
+            confirmButtonText: 'Sim, limpar!', cancelButtonText: 'Cancelar',
+            background: '#1a1d23', color: '#fff'
+        }).then((result) => { if (result.isConfirmed) { editor.clear(); showToast('info', 'Canvas limpo!'); } });
+    }
+
+    function getNodeTemplate(type) {
+        const templates = {
+            'webhook': '<div class="title-box node-webhook"><i class="fas fa-bolt"></i><span>Webhook</span></div><div class="node-content">Recebe requisições HTTP</div>',
+            'schedule': '<div class="title-box node-schedule"><i class="fas fa-clock"></i><span>Schedule</span></div><div class="node-content">Executa em horários específicos</div>',
+            'cron': '<div class="title-box node-cron"><i class="fas fa-stopwatch"></i><span>Cron</span></div><div class="node-content">Agendamento avançado</div>',
+            'ai': '<div class="title-box node-ai"><i class="fas fa-brain"></i><span>AI / LLM</span></div><div class="node-content">Processamento com IA</div>',
+            'memory': '<div class="title-box node-memory"><i class="fas fa-database"></i><span>Vector Memory</span></div><div class="node-content">Memória de longo prazo</div>',
+            'code': '<div class="title-box node-code"><i class="fas fa-code"></i><span>JavaScript</span></div><div class="node-content">Executa código JS</div>',
+            'function': '<div class="title-box node-function"><i class="fas fa-function"></i><span>Function</span></div><div class="node-content">Função customizada</div>',
+            'if': '<div class="title-box node-if"><i class="fas fa-code-branch"></i><span>IF</span></div><div class="node-content">Condição lógica</div>',
+            'switch': '<div class="title-box node-switch"><i class="fas fa-random"></i><span>Switch</span></div><div class="node-content">Múltiplas condições</div>',
+            'loop': '<div class="title-box node-loop"><i class="fas fa-redo"></i><span>Loop</span></div><div class="node-content">Iteração de dados</div>',
+            'http': '<div class="title-box node-http"><i class="fas fa-globe"></i><span>HTTP</span></div><div class="node-content">Requisição HTTP</div>',
+            'graphql': '<div class="title-box node-graphql"><i class="fas fa-project-diagram"></i><span>GraphQL</span></div><div class="node-content">API GraphQL</div>',
+        };
+        return templates[type] || templates['http'];
+    }
+
+    editor.on('nodeSelected', function(id) { selectedNodeId = id; showNodeProperties(id); });
+    editor.on('nodeUnselected', function() { selectedNodeId = null; closeProps(); });
+
+    function showNodeProperties(nodeId) {
+        const node = editor.getNodeFromId(nodeId);
+        const data = node.data.config || {};
+        let html = '';
+
+        // WEBHOOK
+        if (node.name === 'webhook') {
+            html = `<div class="form-group-modern">
+                    <label><i class="fas fa-link mr-1"></i> Path do Webhook</label>
+                    <input type="text" id="prop-path" class="form-control-modern" value="${data.path || '/webhook'}" placeholder="/webhook">
+                </div>
+                <div class="form-group-modern">
+                    <label><i class="fas fa-exchange-alt mr-1"></i> Método HTTP</label>
+                    <select id="prop-method" class="form-control-modern">
+                        <option ${data.method === 'GET' ? 'selected' : ''}>GET</option>
+                        <option ${data.method === 'POST' ? 'selected' : ''}>POST</option>
+                        <option ${data.method === 'PUT' ? 'selected' : ''}>PUT</option>
+                        <option ${data.method === 'DELETE' ? 'selected' : ''}>DELETE</option>
+                    </select>
+                </div>`;
+        }
+        // HTTP REQUEST
+        else if (node.name === 'http') {
+            html = `<div class="form-group-modern">
+                    <label><i class="fas fa-link mr-1"></i> URL</label>
+                    <input type="text" id="prop-url" class="form-control-modern" value="${data.url || ''}" placeholder="https://api.example.com/endpoint">
+                </div>
+                <div class="form-group-modern">
+                    <label><i class="fas fa-exchange-alt mr-1"></i> Método</label>
+                    <select id="prop-method" class="form-control-modern">
+                        <option ${data.method === 'GET' ? 'selected' : ''}>GET</option>
+                        <option ${data.method === 'POST' ? 'selected' : ''}>POST</option>
+                        <option ${data.method === 'PUT' ? 'selected' : ''}>PUT</option>
+                        <option ${data.method === 'DELETE' ? 'selected' : ''}>DELETE</option>
+                    </select>
+                </div>
+                <div class="form-group-modern">
+                    <label><i class="fas fa-file-code mr-1"></i> Body (JSON)</label>
+                    <textarea id="prop-body" class="form-control-modern" rows="4" placeholder='{"key": "value"}'>${data.body || ''}</textarea>
+                </div>`;
+        }
+        // AI / LLM
+        else if (node.name === 'ai') {
+            html = `<div class="form-group-modern">
+                    <label><i class="fas fa-robot mr-1"></i> AI Provider & Model</label>
+                    <select id="prop-providerModel" class="form-control-modern">
+                        <optgroup label="🆓 Google Gemini (FREE)">
+                            <option value="Google Gemini:gemini-2.0-flash-exp" ${data.providerModel === 'Google Gemini:gemini-2.0-flash-exp' ? 'selected' : ''}>Gemini 2.0 Flash</option>
+                            <option value="Google Gemini:gemini-1.5-flash" ${data.providerModel === 'Google Gemini:gemini-1.5-flash' ? 'selected' : ''}>Gemini 1.5 Flash</option>
+                        </optgroup>
+                        <optgroup label="💎 Anthropic Claude">
+                            <option value="Anthropic Claude:claude-haiku-4-20250514" ${data.providerModel === 'Anthropic Claude:claude-haiku-4-20250514' ? 'selected' : ''}>Claude Haiku 4</option>
+                            <option value="Anthropic Claude:claude-sonnet-4-20250514" ${data.providerModel === 'Anthropic Claude:claude-sonnet-4-20250514' ? 'selected' : ''}>Claude Sonnet 4</option>
+                            <option value="Anthropic Claude:claude-opus-4-20250514" ${data.providerModel === 'Anthropic Claude:claude-opus-4-20250514' ? 'selected' : ''}>Claude Opus 4</option>
+                        </optgroup>
+                        <optgroup label="🤖 OpenAI">
+                            <option value="OpenAI:gpt-3.5-turbo" ${data.providerModel === 'OpenAI:gpt-3.5-turbo' ? 'selected' : ''}>GPT-3.5 Turbo</option>
+                            <option value="OpenAI:gpt-4-turbo" ${data.providerModel === 'OpenAI:gpt-4-turbo' ? 'selected' : ''}>GPT-4 Turbo</option>
+                            <option value="OpenAI:gpt-4o" ${data.providerModel === 'OpenAI:gpt-4o' ? 'selected' : ''}>GPT-4o</option>
+                        </optgroup>
+                    </select>
+                </div>
+                <div class="form-group-modern">
+                    <label><i class="fas fa-comment-dots mr-1"></i> Prompt / System Message</label>
+                    <textarea id="prop-prompt" class="form-control-modern" rows="6" placeholder="Você é um assistente útil que...">${data.prompt || ''}</textarea>
+                    <small style="color: #8b92a7; font-size: 11px; display: block; margin-top: 5px;">Use variáveis: {{ $json.campo }}</small>
+                </div>
+                <div class="form-group-modern">
+                    <label><i class="fas fa-thermometer-half mr-1"></i> Temperature: <span id="tempValue">${data.temperature || 0.7}</span></label>
+                    <input type="range" id="prop-temperature" class="form-control-modern" min="0" max="2" step="0.1" value="${data.temperature || 0.7}" style="height: 6px;">
+                </div>
+                <div class="form-group-modern">
+                    <label><i class="fas fa-text-width mr-1"></i> Max Tokens</label>
+                    <input type="number" id="prop-maxTokens" class="form-control-modern" value="${data.maxTokens || 1000}" min="100" max="8000" step="100">
+                </div>`;
+        }
+        // IF CONDITION
+        else if (node.name === 'if') {
+            html = `<div class="form-group-modern">
+                    <label><i class="fas fa-code-branch mr-1"></i> Condição</label>
+                    <select id="prop-condition-type" class="form-control-modern">
+                        <option ${data.conditionType === 'equals' ? 'selected' : ''}>equals</option>
+                        <option ${data.conditionType === 'notEquals' ? 'selected' : ''}>notEquals</option>
+                        <option ${data.conditionType === 'contains' ? 'selected' : ''}>contains</option>
+                        <option ${data.conditionType === 'greaterThan' ? 'selected' : ''}>greaterThan</option>
+                        <option ${data.conditionType === 'lessThan' ? 'selected' : ''}>lessThan</option>
+                    </select>
+                </div>
+                <div class="form-group-modern">
+                    <label><i class="fas fa-box mr-1"></i> Valor 1</label>
+                    <input type="text" id="prop-value1" class="form-control-modern" value="${data.value1 || ''}" placeholder="{{ $json.campo }}">
+                </div>
+                <div class="form-group-modern">
+                    <label><i class="fas fa-box mr-1"></i> Valor 2</label>
+                    <input type="text" id="prop-value2" class="form-control-modern" value="${data.value2 || ''}" placeholder="valor esperado">
+                </div>
+                <div style="padding: 15px; background: rgba(255,255,255,0.05); border-radius: 8px; margin-top: 15px;">
+                    <small style="color: #8b92a7; font-size: 11px; line-height: 1.6;">
+                        <i class="fas fa-info-circle mr-1"></i> <strong>Output 1:</strong> TRUE<br><strong>Output 2:</strong> FALSE
+                    </small>
+                </div>`;
+        }
+        // JAVASCRIPT CODE
+        else if (node.name === 'code') {
+            html = `<div class="form-group-modern">
+                    <label><i class="fas fa-code mr-1"></i> JavaScript Code</label>
+                    <textarea id="prop-code" class="form-control-modern" rows="12" style="font-family: 'Courier New', monospace; font-size: 13px;" placeholder="// Use $input para acessar dados&#10;return { resultado: $input.valor * 2 };">${data.code || '// Seu código aqui\nreturn $input;'}</textarea>
+                    <small style="color: #8b92a7; font-size: 11px; display: block; margin-top: 5px;">
+                        <i class="fas fa-lightbulb mr-1"></i> Use <code>$input</code> para dados de entrada
+                    </small>
+                </div>`;
+        }
+        // MEMORY
+        else if (node.name === 'memory') {
+            html = `<div class="form-group-modern">
+                    <label><i class="fas fa-cube mr-1"></i> Collection Name</label>
+                    <input type="text" id="prop-collectionName" class="form-control-modern" value="${data.collectionName || 'agent-memory'}" placeholder="Nome da coleção">
+                </div>
+                <div class="form-group-modern">
+                    <label><i class="fas fa-search mr-1"></i> Query Text</label>
+                    <textarea id="prop-queryText" class="form-control-modern" rows="3" placeholder="O que o usuário disse?">${data.queryText || '{{ $json.user_input }}'}</textarea>
+                    <small style="color: #8b92a7; font-size: 11px; display: block; margin-top: 5px;">Texto que será usado para buscar na memória</small>
+                </div>
+                <div class="form-group-modern">
+                    <label><i class="fas fa-sort-amount-up-alt mr-1"></i> Max Results</label>
+                    <input type="number" id="prop-maxResults" class="form-control-modern" value="${data.maxResults || 3}" min="1" max="10">
+                </div>
+                <div style="padding: 15px; background: rgba(255,255,255,0.05); border-radius: 8px; margin-top: 15px;">
+                    <small style="color: #8b92a7; font-size: 11px; line-height: 1.6;">
+                        <i class="fas fa-info-circle mr-1"></i> O resultado da busca (documentos) estará em <code>$json.memory_result</code>
+                    </small>
+                </div>`;
+        }
+
+        if (html) {
+            document.getElementById('propsContent').innerHTML = html;
+            document.getElementById('propsPanel').classList.add('open');
+            document.getElementById('propsActions').style.display = 'block';
+
+            // Listener para temperature range
+            const tempRange = document.getElementById('prop-temperature');
+            if (tempRange) {
+                const tempValue = document.getElementById('tempValue');
+                tempRange.addEventListener('input', function() {
+                    tempValue.textContent = this.value;
+                });
+            }
+        }
+    }
+
+    function closeProps() {
+        document.getElementById('propsPanel').classList.remove('open');
+        document.getElementById('propsActions').style.display = 'none';
+        document.getElementById('propsContent').innerHTML = `<div class="text-center" style="padding: 60px 20px; color: #8b92a7;">
+            <i class="fas fa-mouse-pointer" style="font-size: 48px; margin-bottom: 20px; opacity: 0.5;"></i>
+            <p style="font-size: 14px; line-height: 1.6;">Selecione um nó no canvas<br>para visualizar e editar<br>suas configurações</p>
+        </div>`;
+    }
+
+    function saveNodeSettings() {
+        if (!selectedNodeId) return;
+        const node = editor.getNodeFromId(selectedNodeId);
+        let config = {};
+
+        if (node.name === 'webhook') {
+            config = {
+                path: document.getElementById('prop-path').value,
+                method: document.getElementById('prop-method').value,
+            };
+        } else if (node.name === 'http') {
+            config = {
+                url: document.getElementById('prop-url').value,
+                method: document.getElementById('prop-method').value,
+                body: document.getElementById('prop-body').value,
+            };
+        } else if (node.name === 'ai') {
+            config = {
+                providerModel: document.getElementById('prop-providerModel').value,
+                prompt: document.getElementById('prop-prompt').value,
+                temperature: parseFloat(document.getElementById('prop-temperature').value),
+                maxTokens: parseInt(document.getElementById('prop-maxTokens').value),
+            };
+        } else if (node.name === 'if') {
+            config = {
+                conditionType: document.getElementById('prop-condition-type').value,
+                value1: document.getElementById('prop-value1').value,
+                value2: document.getElementById('prop-value2').value,
+            };
+        } else if (node.name === 'code') {
+            config = {
+                code: document.getElementById('prop-code').value,
+            };
+        } else if (node.name === 'memory') {
+            config = {
+                collectionName: document.getElementById('prop-collectionName').value,
+                queryText: document.getElementById('prop-queryText').value,
+                maxResults: parseInt(document.getElementById('prop-maxResults').value),
+            };
+        }
+
+        editor.updateNodeDataFromId(selectedNodeId, { config: config });
+        showToast('info', 'Configurações salvas!');
+    }
+
+    function deleteSelectedNode() {
+        if (!selectedNodeId) return;
+        Swal.fire({
+            title: 'Tem certeza?', text: "Você não poderá reverter isso!", icon: 'warning',
+            showCancelButton: true, confirmButtonColor: '#ef4444', cancelButtonColor: '#4f5b66',
+            confirmButtonText: 'Sim, excluir!', cancelButtonText: 'Cancelar',
+            background: '#1a1d23', color: '#fff'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                editor.removeNodeId(selectedNodeId);
+                selectedNodeId = null;
+                closeProps();
+                showToast('error', 'Nó excluído!');
+            }
+        });
+    }
+
+    function debugToken() {
+        const token = document.querySelector('input[name="__RequestVerificationToken"]');
+        console.log('🔍 Token element:', token);
+        console.log('🔍 Token value:', token?.value);
+        console.log('🔍 Token length:', token?.value?.length);
+
+        // Verifica todos os inputs da página
+        const allInputs = document.querySelectorAll('input[type="hidden"]');
+        console.log('🔍 Todos inputs hidden:', allInputs);
+        allInputs.forEach(input => {
+            console.log(`  - ${input.name}: ${input.value.substring(0, 50)}...`);
+        });
+    }
+    async function saveWorkflow() {
+        console.log('--- INÍCIO: saveWorkflow() ---');
+        const agentId = document.getElementById('agentId').value;
+        const agentName = document.getElementById('agentName').value;
+        const currentUserId = '@(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value)';
+        const workflowData = editor.export();
+
+        console.log('📦 Workflow exportado do Drawflow:', workflowData);
+
+        // ✅ MAPEAMENTO CORRETO DOS NODES
+        // Remove propriedades desnecessárias do Drawflow e mapeia para o formato esperado pelo backend
+        const mappedNodes = Object.keys(workflowData.drawflow.Home.data).map(nodeId => {
+            const drawflowNode = workflowData.drawflow.Home.data[nodeId];
+
+            // Log detalhado de cada node sendo processado
+            console.log(`🔍 Processando Node ${nodeId}:`, {
+                name: drawflowNode.name,
+                pos_x: drawflowNode.pos_x,
+                pos_y: drawflowNode.pos_y,
+                config: drawflowNode.data?.config
+            });
+
+            return {
+                Id: nodeId,
+                Name: drawflowNode.name || 'unknown',
+                Type: drawflowNode.name || 'unknown',
+                Position: {
+                    X: drawflowNode.pos_x || 0,
+                    Y: drawflowNode.pos_y || 0
+                },
+                Parameters: drawflowNode.data?.config || {}
+            };
+        });
+
+        const smartAgent = {
+            id: agentId || '',
+            Name: agentName,
+            Description: 'Descrição do agente',
+            Category: 'Automação',
+            Type: 'Workflow',
+            Status: 'Draft',
+            IsPublic: false,
+            userId: currentUserId,
+            Workflow: {
+                Nodes: mappedNodes,
+                Connections: extractConnections(workflowData)
+            }
+        };
+
+        // Log completo do objeto que será enviado
+        console.log('📤 Dados sendo enviados para /SmartAgent/Save:');
+        console.log(JSON.stringify(smartAgent, null, 2));
+
+        try {
+            const antiForgeryToken = document.querySelector('input[name="__RequestVerificationToken"]')?.value;
+
+            console.log('🔐 Anti-Forgery Token:', antiForgeryToken ? 'Encontrado' : 'NÃO ENCONTRADO');
+
+            const response = await fetch('/SmartAgent/Save', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': antiForgeryToken,
+                    'RequestVerificationToken': antiForgeryToken,  // Mantém ambos para compatibilidade
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: JSON.stringify(smartAgent)
+            });
+
+            console.log('📡 Response Status:', response.status);
+            console.log('📡 Response OK:', response.ok);
+
+            if (response.ok) {
+                const result = await response.json();
+                console.log('✅ Agente salvo com sucesso:', result);
+
+                // Atualiza o ID se for um novo agente
+                if (!agentId && result.id) {
+                    document.getElementById('agentId').value = result.id;
+                    console.log('🆔 ID atualizado para:', result.id);
+                }
+
+                // Mostra mensagem de sucesso
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Agente Salvo!',
+                    text: `${result.nodes} nós e ${result.connections} conexões salvas`,
+                    background: '#1a1d23',
+                    color: '#fff',
+                    confirmButtonColor: '#667eea'
+                });
+            } else {
+                // Tenta ler a resposta de erro
+                const errorText = await response.text();
+                console.error('❌ Resposta de erro do servidor:', errorText);
+
+                let errorMessage = 'Erro ao salvar';
+                let errorDetails = '';
+
+                try {
+                    const errorJson = JSON.parse(errorText);
+                    errorMessage = errorJson.error || 'Erro ao salvar';
+                    errorDetails = errorJson.details || errorJson.innerException || '';
+                    console.error('❌ Erro estruturado:', errorJson);
+                } catch {
+                    errorMessage = errorText.substring(0, 100);
+                }
+
+                throw new Error(`${errorMessage}\n${errorDetails}`);
+            }
+        } catch (error) {
+            console.error('❌ Erro na requisição:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Erro ao Salvar',
+                html: `<div style="text-align: left; font-size: 14px;">
+                     <strong>Mensagem:</strong> ${error.message}<br>
+                     <small>Verifique o console (F12) para mais detalhes</small>
+                   </div>`,
+                background: '#1a1d23',
+                color: '#fff',
+                confirmButtonColor: '#ef4444'
+            });
+        }
+
+        console.log('--- FIM: saveWorkflow() ---');
+    }
+
+    function extractConnections(drawflowData) {
+        const connections = [];
+        const nodes = drawflowData.drawflow.Home.data;
+
+        console.log('🔗 Extraindo conexões...');
+
+        for (const nodeId in nodes) {
+            const node = nodes[nodeId];
+
+            // Percorre as saídas do nó
+            if (node.outputs) {
+                for (const outputKey in node.outputs) {
+                    const output = node.outputs[outputKey];
+
+                    // Cada conexão na saída
+                    if (output.connections && output.connections.length > 0) {
+                        output.connections.forEach(conn => {
+                            const connection = {
+                                SourceNodeId: nodeId,
+                                TargetNodeId: conn.node,
+                                SourceOutput: outputKey,
+                                TargetInput: conn.output
+                            };
+
+                            connections.push(connection);
+                            console.log(`  ➡️ ${nodeId} → ${conn.node} (${outputKey} → ${conn.output})`);
+                        });
+                    }
+                }
+            }
+        }
+
+        console.log(`✅ Total de conexões: ${connections.length}`);
+        return connections;
+    }
+    
+    function showToast(icon, title) {
+        const Toast = Swal.mixin({
+            toast: true, position: 'top-end', showConfirmButton: false,
+            timer: 2000, timerProgressBar: true,
+            background: '#1a1d23', color: '#fff'
+        });
+        Toast.fire({ icon, title });
+    }
+
+    document.addEventListener('keydown', function(e) {
+        if ((e.ctrlKey || e.metaKey) && e.key === 's') { e.preventDefault(); saveWorkflow(); }
+        if (e.key === 'Delete' && selectedNodeId) { deleteSelectedNode(); }
+        if (e.key === 'Escape') { closeProps(); }
+    });
+
+    @if (Model.Workflow != null && Model.Workflow.Nodes != null && Model.Workflow.Nodes.Any())
+{
+@:try {
+    @:    const workflowBackend = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Workflow));
+    @:    console.log('📥 Workflow do servidor:', workflowBackend);
+    @:    
+    @:    
+    @:    const drawflowData = {
+    @:        drawflow: {
+    @:            Home: {
+    @:                data: {}
+    @:            }
+    @:        }
+    @:    };
+    @:    
+    @:    
+    @:    workflowBackend.Nodes.forEach(node => {
+    @:        drawflowData.drawflow.Home.data[node.Id] = {
+    @:            id: parseInt(node.Id),
+    @:            name: node.Name,
+    @:            data: { config: node.Parameters || {} },
+    @:            class: 'node-' + node.Name,
+    @:            html: '',
+    @:            typenode: false,
+    @:            inputs: { input_1: { connections: [] } },
+    @:            outputs: { output_1: { connections: [] } },
+    @:            pos_x: node.Position?.X || 100,
+    @:            pos_y: node.Position?.Y || 100
+    @:        };
+    @:    });
+    @:
+    @:    if (workflowBackend.Connections && workflowBackend.Connections.length > 0) {
+    @:        workflowBackend.Connections.forEach(conn => {
+    @:            const sourceNode = drawflowData.drawflow.Home.data[conn.SourceNodeId];
+    @:            if (sourceNode && sourceNode.outputs) {
+    @:                const outputKey = conn.SourceOutput || 'output_1';
+    @:                if (!sourceNode.outputs[outputKey]) {
+    @:                    sourceNode.outputs[outputKey] = { connections: [] };
+    @:                }
+    @:                sourceNode.outputs[outputKey].connections.push({
+    @:                    node: conn.TargetNodeId,
+    @:                    output: conn.TargetInput || 'input_1'
+    @:                });
+    @:            }
+    @:        });
+    @:    }
+    @:    
+    @:    console.log('🔄 Formato Drawflow:', drawflowData);
+    @:    editor.import(drawflowData);
+    @:    console.log('✅ Workflow carregado com sucesso!');
+    @:} catch(e) {
+    @:    console.error('❌ Erro ao carregar workflow:', e);
+    @:    console.error('Stack:', e.stack);
+    @:}
+}
+else
+{
+@:    console.log('ℹ️ Novo agente - workflow vazio');
+}
+
+    console.log('✅ Smart Agent Editor carregado - Dropdown corrigido!');
+</script>
+}

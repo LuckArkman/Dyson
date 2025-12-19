@@ -64,6 +64,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9zbWFydHdhbGxldHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[/home/mplopes/Documentos/Dyson/Application/Views/MarketPlace/Market.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTWFya2V0UGxhY2UvTWFya2V0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/mplopes/Documentos/Dyson/Application/Views/MarketPlace/Sell.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTWFya2V0UGxhY2UvU2VsbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [/home/mplopes/Documentos/Dyson/Application/Views/Payment/Boleto.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF5bWVudC9Cb2xldG8uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -80,12 +88,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUHJvZmlsZS9Db250cmFjdHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/mplopes/Documentos/Dyson/Application/Views/Profile/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUHJvZmlsZS9JbmRleC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
 [/home/mplopes/Documentos/Dyson/Application/Views/Profile/Orders.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUHJvZmlsZS9PcmRlcnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/mplopes/Documentos/Dyson/Application/Views/Profile/profile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUHJvZmlsZS9wcm9maWxlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/mplopes/Documentos/Dyson/Application/Views/Profile/Security.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUHJvZmlsZS9TZWN1cml0eS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/mplopes/Documentos/Dyson/Application/Views/Profile/Settings.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUHJvZmlsZS9TZXR0aW5ncy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [/home/mplopes/Documentos/Dyson/Application/Views/Profile/Wallet.cshtml]
@@ -106,6 +122,18 @@ build_metadata.AdditionalFiles.CssScope =
 
 [/home/mplopes/Documentos/Dyson/Application/Views/Shop/Cart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hvcC9DYXJ0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/mplopes/Documentos/Dyson/Application/Views/SmartAgent/make.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU21hcnRBZ2VudC9tYWtlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/mplopes/Documentos/Dyson/Application/Views/SmartAgent/ManageAgents.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU21hcnRBZ2VudC9NYW5hZ2VBZ2VudHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/mplopes/Documentos/Dyson/Application/Views/SmartAgent/MyAgents.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU21hcnRBZ2VudC9NeUFnZW50cy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [/home/mplopes/Documentos/Dyson/Application/Views/_ViewImports.cshtml]

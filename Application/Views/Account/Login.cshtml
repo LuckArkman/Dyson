@@ -13,6 +13,37 @@
             <p class="text-gray-400 mt-2">Acesse sua conta para continuar.</p>
         </div>
 
+        <!-- MetaMask Login Button -->
+        <div class="mb-6">
+            <button 
+                type="button" 
+                onclick="loginWithMetaMask()" 
+                class="w-full p-4 text-white font-bold rounded-lg bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 transition duration-300 shadow-lg shadow-orange-600/30 flex items-center justify-center space-x-3">
+                <svg class="w-6 h-6" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M32.8 2L20 11.6L22.4 6.2L32.8 2Z" fill="#E17726"/>
+                    <path d="M7.2 2L19.8 11.7L17.6 6.2L7.2 2Z" fill="#E27625"/>
+                    <path d="M28 28.9L24.6 34.5L32 36.5L34.1 29.1L28 28.9Z" fill="#E27625"/>
+                    <path d="M5.9 29.1L8 36.5L15.4 34.5L12 28.9L5.9 29.1Z" fill="#E27625"/>
+                    <path d="M15 17.5L13.1 20.5L20.4 20.8L20.2 13L15 17.5Z" fill="#E27625"/>
+                    <path d="M25 17.5L19.7 12.9L19.6 20.8L26.9 20.5L25 17.5Z" fill="#E27625"/>
+                    <path d="M15.4 34.5L19.8 32.4L16 29.1L15.4 34.5Z" fill="#E27625"/>
+                    <path d="M20.2 32.4L24.6 34.5L24 29.1L20.2 32.4Z" fill="#E27625"/>
+                </svg>
+                <span>Conectar com MetaMask</span>
+            </button>
+        </div>
+
+        <!-- Divider -->
+        <div class="relative mb-6">
+            <div class="absolute inset-0 flex items-center">
+                <div class="w-full border-t border-gray-700"></div>
+            </div>
+            <div class="relative flex justify-center text-sm">
+                <span class="px-4 bg-secondary-dark text-gray-400">ou continue com e-mail</span>
+            </div>
+        </div>
+
+        <!-- Traditional Login Form -->
         <form asp-controller="Account" asp-action="Login" method="post">
             
             <div asp-validation-summary="ModelOnly" class="text-red-400 text-sm mb-4 p-3 rounded-lg bg-red-900/30 border border-red-800"></div>
@@ -20,7 +51,7 @@
             <!-- Campo E-mail -->
             <div class="mb-5">
                 <label asp-for="Email" class="block text-sm font-medium text-gray-300 mb-2">E-mail</label>
-                <input asp-for="Email" type="email" class="w-full p-3 rounded-lg bg-primary-dark border border-gray-700 focus:border-accent-blue focus:ring-accent-blue text-white transition duration-200" placeholder="seu.email@@exemplo.com" autocomplete="email" />
+                <input asp-for="Email" type="email" class="w-full p-3 rounded-lg bg-primary-dark border border-gray-700 focus:border-accent-blue focus:ring-accent-blue text-white transition duration-200" placeholder="seu.email@exemplo.com" autocomplete="email" />
                 <span asp-validation-for="Email" class="text-red-400 text-xs mt-1 block"></span>
             </div>
 
@@ -46,9 +77,23 @@
                 </a>
             </p>
         </div>
+
+        <!-- Info sobre MetaMask -->
+        <div class="mt-6 p-4 bg-primary-dark rounded-lg border border-gray-700">
+            <div class="flex items-start space-x-3">
+                <svg class="w-5 h-5 text-accent-blue flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+                </svg>
+                <div class="text-xs text-gray-400">
+                    <p class="font-medium text-gray-300 mb-1">Novo no MetaMask?</p>
+                    <p>O MetaMask é uma carteira digital segura que permite você acessar aplicações blockchain. <a href="https://metamask.io" target="_blank" class="text-accent-blue hover:underline">Saiba mais</a></p>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/metamask-auth.js"></script>
 }

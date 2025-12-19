@@ -159,8 +159,8 @@ app.MapGet("/ws", async (HttpContext context) =>
             if (userSession != null) await sessionService.RemoveAsync(token);
             return;
         }
-
-        entityId = userSession.UserId;
+        Guid.TryParse(userSession.UserId, out var id);
+        entityId = id;
         entityName = $"User:{userSession.UserId}"; // Nome de exibição para logs
         Console.WriteLine($"[Server] Autenticação de USUÁRIO bem-sucedida. UserId: {userSession.UserId}.");
     }

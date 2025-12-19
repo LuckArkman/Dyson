@@ -39,12 +39,9 @@ public class CartService
             // Atualiza preço e tipo se já existir
             existingItem.Price = newItem.Price;
             existingItem._priceType = newItem._priceType;
-            // Opcional: existingItem.Quantity += newItem.Quantity; 
         }
 
         cart.LastUpdated = DateTime.UtcNow;
-
-        // Upsert: Se existe atualiza, se não existe cria
         await _carts.ReplaceOneAsync(
             c => c.UserId == userId, 
             cart, 

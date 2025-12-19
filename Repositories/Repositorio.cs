@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using Data;
 using Dtos;
 using Interfaces;
@@ -124,7 +125,7 @@ public class Repositorio<T> : IRepositorio<T>
     public async Task<List<ContractDocument>> GetUserContractsAsync(string userId)
     {
         var collection = _db.GetDatabase().GetCollection<ContractDocument>("Contracts");
-        var filter = Builders<ContractDocument>.Filter.Eq(c => c.walletAndress, userId);
+        var filter = Builders<ContractDocument>.Filter.Eq(c => c.WalletAddress, userId);
         
         return await collection
             .Find(filter)
@@ -157,5 +158,105 @@ public class Repositorio<T> : IRepositorio<T>
 
         var result = await collection.UpdateOneAsync(filter, update);
         return result.ModifiedCount > 0;
+    }
+
+    public async Task<ContractDocument?> GetContractByIdAsync(string contractId)
+    {
+        var collection = _db.GetDatabase().GetCollection<ContractDocument>("Contracts");
+        var filter = Builders<ContractDocument>.Filter.Eq(c => c.Id, contractId);
+        
+        return await collection.Find(filter).FirstOrDefaultAsync();
+    }
+
+    public async Task UpdateAsync(string contractId, ContractDocument contract)
+    {
+        var collection = _db.GetDatabase().GetCollection<ContractDocument>("Contracts");
+        contract = await GetContractByIdAsync(contractId);
+        
+        var filter = Builders<ContractDocument>.Filter.Eq(c => c.Id, contractId);
+        var update = Builders<ContractDocument>.Update
+            .Set(c => c.Status, contract.Status)
+            .Set(c => c.UpdatedAt, DateTime.UtcNow);
+
+        var result = await collection.UpdateOneAsync(filter, update);
+        await Task.CompletedTask;
+    }
+
+    public Task<List<User>> GetAllAsync(CancellationToken none)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task UpdateUserAsync(User _User)
+    {
+        var collection = _db.GetDatabase().GetCollection<User>("Users");
+         var user = await GetContractByIdAsync(_User.Id);
+        
+        var filter = Builders<User>.Filter.Eq(c => c.Id, _User.Id);
+        var update = Builders<User>.Update
+            .Set(c => c.UserName, _User.UserName)
+            .Set(c => c.Email, _User.Email)
+            .Set(c => c.PhoneNumber, _User.PhoneNumber)
+            .Set(c => c.PasswordHash, _User.PasswordHash)
+            .Set(c => c.PersonalName, _User.PersonalName)
+            .Set(c => c.BackupDate, _User.BackupDate)
+            .Set(c => c.LastWalletAuth, DateTime.UtcNow);
+        var result = await collection.UpdateOneAsync(filter, update);
+        await Task.CompletedTask;
+    }
+    
+    public async Task<List<T>?> SearchAsync(Expression<Func<T, bool>> predicate)
+    {
+        return await _collection.Find(predicate).ToListAsync();
+    }
+
+    public async Task<T> GetByIdAsync(string id)
+    {
+        // Assume que a entidade tem um campo Id. 
+        // Como T é genérico, filtramos usando Builders genéricos ou Reflection se necessário.
+        // A maneira mais limpa com Driver Mongo moderno é Filter.Eq("Id", id)
+        var filter = Builders<T>.Filter.Eq("Id", id);
+        return await _collection.Find(filter).FirstOrDefaultAsync();
+    }
+
+    public async Task AddAsync(T entity)
+    {
+        await _collection.InsertOneAsync(entity);
+    }
+
+    public async Task UpdateAsync(T entity)
+    {
+        // Precisamos pegar o ID da entidade via Reflection ou assumir uma interface
+        var idProperty = typeof(T).GetProperty("Id");
+        var idValue = idProperty?.GetValue(entity)?.ToString();
+
+        if (idValue != null)
+        {
+            var filter = Builders<T>.Filter.Eq("Id", idValue);
+            await _collection.ReplaceOneAsync(filter, entity);
+        }
+    }
+
+    public async Task DeleteAsync(string id)
+    {
+        var filter = Builders<T>.Filter.Eq("Id", id);
+        await _collection.DeleteOneAsync(filter);
+    }
+
+    public async Task<T?> GetAgentByIdAsync(string id)
+    {
+        var filter = Builders<T>.Filter.Eq("_id", id);
+        return await _collection.Find(filter).FirstOrDefaultAsync();
+    }
+
+    public async Task UpdateUserWalletAsync(string userId, string publicKey)
+    {
+        var collection = _db.GetDatabase().GetCollection<User>("Users");
+        
+        var filter = Builders<User>.Filter.Eq(c => c.Id, userId);
+        var update = Builders<User>.Update
+            .Set(c => c.WalletAddress, publicKey);
+        var result = await collection.UpdateOneAsync(filter, update);
+        await Task.CompletedTask;
     }
 }

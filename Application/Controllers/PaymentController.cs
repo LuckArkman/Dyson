@@ -56,7 +56,7 @@ public class PaymentController : Controller
             var orderId = Guid.NewGuid().ToString();
             var order = new Order
             {
-                Id = orderId,
+                id = orderId,
                 UserId = userId,
                 Items = new List<OrderItem>(cartItems), // Copia os itens
                 TotalAmount = total, // Agora o total será R$ 25,00

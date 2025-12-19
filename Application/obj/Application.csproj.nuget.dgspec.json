@@ -8,7 +8,7 @@
       "version": "1.0.0",
       "restore": {
         "projectUniqueName": "/home/mplopes/Documentos/Dyson/Application/Application.csproj",
-        "projectName": "Application",
+        "projectName": "GalileuApp",
         "projectPath": "/home/mplopes/Documentos/Dyson/Application/Application.csproj",
         "packagesPath": "/home/mplopes/.nuget/packages/",
         "outputPath": "/home/mplopes/Documentos/Dyson/Application/obj/",
@@ -61,17 +61,45 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Jint": {
+              "target": "Package",
+              "version": "[4.4.2, )"
+            },
             "Microsoft.AspNetCore.Identity.Service.Core": {
               "target": "Package",
               "version": "[1.0.0-preview1-final, )"
             },
+            "Microsoft.Extensions.Http": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
             "MongoDB.Driver": {
               "target": "Package",
-              "version": "[3.5.2, )"
+              "version": "[3.5.1, )"
+            },
+            "Nethereum.Signer": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
+            "Nethereum.Util": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
+            "Nethereum.Web3": {
+              "target": "Package",
+              "version": "[5.0.0, )"
             },
             "QRCoder": {
               "target": "Package",
               "version": "[1.7.0, )"
+            },
+            "Qdrant.Client": {
+              "target": "Package",
+              "version": "[1.16.1, )"
+            },
+            "Serilog.AspNetCore": {
+              "target": "Package",
+              "version": "[8.0.0, )"
             },
             "Thirdweb": {
               "target": "Package",
@@ -165,6 +193,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Jint": {
+              "target": "Package",
+              "version": "[4.4.2, )"
+            },
             "Microsoft.AspNetCore.Http": {
               "target": "Package",
               "version": "[2.3.0, )"
@@ -176,6 +208,14 @@
             "Microsoft.AspNetCore.Mvc": {
               "target": "Package",
               "version": "[2.3.0, )"
+            },
+            "Microsoft.Extensions.Http": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Qdrant.Client": {
+              "target": "Package",
+              "version": "[1.16.1, )"
             }
           },
           "imports": [
@@ -245,9 +285,17 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Jint": {
+              "target": "Package",
+              "version": "[4.4.2, )"
+            },
             "Microsoft.AspNetCore.Identity.Service.Core": {
               "target": "Package",
               "version": "[1.0.0-preview1-final, )"
+            },
+            "Microsoft.Extensions.Http": {
+              "target": "Package",
+              "version": "[8.0.0, )"
             },
             "MongoDB.Bson": {
               "target": "Package",
@@ -256,6 +304,10 @@
             "MongoDB.Driver": {
               "target": "Package",
               "version": "[3.5.1, )"
+            },
+            "Qdrant.Client": {
+              "target": "Package",
+              "version": "[1.16.1, )"
             }
           },
           "imports": [
@@ -336,13 +388,25 @@
               "target": "Package",
               "version": "[1.5.55, )"
             },
+            "Jint": {
+              "target": "Package",
+              "version": "[4.4.2, )"
+            },
             "Microsoft.AspNetCore.Identity.Service.Core": {
               "target": "Package",
               "version": "[1.0.0-preview1-final, )"
             },
+            "Microsoft.Extensions.Http": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
             "MongoDB.Driver": {
               "target": "Package",
-              "version": "[3.5.2, )"
+              "version": "[3.5.1, )"
+            },
+            "Qdrant.Client": {
+              "target": "Package",
+              "version": "[1.16.1, )"
             }
           },
           "imports": [
@@ -412,9 +476,25 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Jint": {
+              "target": "Package",
+              "version": "[4.4.2, )"
+            },
             "Microsoft.AspNetCore.Identity.Service.Core": {
               "target": "Package",
               "version": "[1.0.0-preview1-final, )"
+            },
+            "Microsoft.Extensions.Http": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "MongoDB.Bson": {
+              "target": "Package",
+              "version": "[3.5.1, )"
+            },
+            "Qdrant.Client": {
+              "target": "Package",
+              "version": "[1.16.1, )"
             }
           },
           "imports": [
@@ -491,9 +571,21 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Jint": {
+              "target": "Package",
+              "version": "[4.4.2, )"
+            },
             "Microsoft.AspNetCore.Identity.Service.Core": {
               "target": "Package",
               "version": "[1.0.0-preview1-final, )"
+            },
+            "Microsoft.Extensions.Http": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Qdrant.Client": {
+              "target": "Package",
+              "version": "[1.16.1, )"
             }
           },
           "imports": [
@@ -567,9 +659,25 @@
               "target": "Package",
               "version": "[1.5.55, )"
             },
+            "Jint": {
+              "target": "Package",
+              "version": "[4.4.2, )"
+            },
             "Microsoft.AspNetCore.Identity.Service.Core": {
               "target": "Package",
               "version": "[1.0.0-preview1-final, )"
+            },
+            "Microsoft.Extensions.Http": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "MongoDB.Bson": {
+              "target": "Package",
+              "version": "[3.5.1, )"
+            },
+            "Qdrant.Client": {
+              "target": "Package",
+              "version": "[1.16.1, )"
             }
           },
           "imports": [
@@ -646,6 +754,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Jint": {
+              "target": "Package",
+              "version": "[4.4.2, )"
+            },
             "Microsoft.AspNetCore.Identity.Service.Core": {
               "target": "Package",
               "version": "[1.0.0-preview1-final, )"
@@ -654,9 +766,17 @@
               "target": "Package",
               "version": "[8.0.0, )"
             },
+            "Microsoft.Extensions.Http": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
             "MongoDB.Driver": {
               "target": "Package",
-              "version": "[3.5.2, )"
+              "version": "[3.5.1, )"
+            },
+            "Qdrant.Client": {
+              "target": "Package",
+              "version": "[1.16.1, )"
             }
           },
           "imports": [
@@ -759,6 +879,10 @@
               "target": "Package",
               "version": "[0.0.4, )"
             },
+            "Jint": {
+              "target": "Package",
+              "version": "[4.4.2, )"
+            },
             "Microsoft.AspNetCore.Identity.Service.Core": {
               "target": "Package",
               "version": "[1.0.0-preview1-final, )"
@@ -772,6 +896,10 @@
               "version": "[10.0.0, )"
             },
             "Microsoft.Extensions.Hosting": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.Extensions.Http": {
               "target": "Package",
               "version": "[8.0.0, )"
             },
@@ -790,6 +918,10 @@
             "Mono.Data.Sqlite": {
               "target": "Package",
               "version": "[1.0.61, )"
+            },
+            "Qdrant.Client": {
+              "target": "Package",
+              "version": "[1.16.1, )"
             },
             "System.IdentityModel.Tokens.Jwt": {
               "target": "Package",

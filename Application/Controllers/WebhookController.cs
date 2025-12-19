@@ -100,7 +100,7 @@ public class WebhookController : Controller
 
                     await _orderCollection.UpdateOneAsync(filter, update);
 
-                    _logger.LogInformation("✅ Pedido {OrderId} atualizado para: {Status}", order.Id, newStatus);
+                    _logger.LogInformation("✅ Pedido {OrderId} atualizado para: {Status}", order.id, newStatus);
                 }
             }
 

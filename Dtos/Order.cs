@@ -6,7 +6,7 @@ namespace Dtos;
 public class Order
 {
     [BsonId]
-    public string Id { get; set; }
+    public string id { get; set; }
 
     [BsonElement("userId")]
     public string UserId { get; set; }

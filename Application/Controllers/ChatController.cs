@@ -25,7 +25,7 @@ public class ChatController : Controller
         _conversationService = conversationService;
         _httpClientFactory = httpClientFactory;
         _configuration = configuration;
-        _apiBaseUrl = _configuration["GenerativeAIService:ApiBaseUrl"] ?? 
+        _apiBaseUrl = _configuration["GenerativeAIService:ApiBaseUrl"] ??
                       throw new ArgumentNullException("GenerativeAIService:ApiBaseUrl not configured.");
         _logger = logger;
     }

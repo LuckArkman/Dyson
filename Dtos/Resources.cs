@@ -5,9 +5,13 @@ namespace Dtos;
 
 public class Resources
 {
-    [BsonId] 
+    [BsonId]
+    [BsonElement("_id")]
     public Guid id { get; set; } = Guid.NewGuid();
-    public string description { get; set; }
-    public bool active { get; set; }
     
+    [BsonElement("description")]
+    public string description { get; set; }
+    
+    [BsonElement("active")]
+    public bool active { get; set; }
 }

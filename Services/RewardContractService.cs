@@ -96,26 +96,25 @@ public class RewardContractService
         return score * 10m;
     }
 
-    public async Task RewardUserWallet(string nodeClientId)
+    public async Task RewardUserWallet(User _user)
     {
-        var wallet = await _repositorio.GetUserWalletAsync(nodeClientId, CancellationToken.None);
         var r = new Random();
         var amount = r.Next(2, 7);
-        if (wallet != null)
+        if (!string.IsNullOrWhiteSpace(_user.WalletAddress))
         {
-            await _walletService.CreateTransactionAsync("SYSTEM_MINT", wallet.Address, amount, "Dtc - Transfer");
+            await _walletService.CreateTransactionAsync("SYSTEM_MINT", _user.WalletAddress!, amount, "Dtc - Transfer");
         }
 
-        if (wallet == null)
+        if (string.IsNullOrWhiteSpace(_user.WalletAddress))
         {
             var (publicKey, privateKey) = CryptoUtils.GenerateKeyPair();
             var walt = new WalletDocument
             {
-                userId = nodeClientId,
+                userId = _user.Id,
                 Address = publicKey,
                 CreatedAt = DateTime.UtcNow
             };
-            await _repositorio.InsertOneAsync(walt);
+            await _repositorio.UpdateUserWalletAsync(_user.Id,publicKey);
             await _walletService.CreateTransactionAsync("SYSTEM_MINT", walt.Address, amount, "Dtc - Transfer");
         }
     }

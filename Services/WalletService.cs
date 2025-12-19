@@ -39,7 +39,6 @@ public class WalletService
         var database = client.GetDatabase(databaseName);
 
         _transactions = database.GetCollection<TransactionDocument>("Transactions");
-        _wallets = database.GetCollection<WalletDocument>("Wallets");
     
         _logger.LogInformation("WalletService conectado ao MongoDB com sucesso.");
     }

@@ -10,6 +10,9 @@
       <Reference Include="Microsoft.Extensions.Hosting.Abstractions">
         <HintPath>..\..\..\..\home\mplopes\.nuget\packages\microsoft.aspnetcore.app.ref\8.0.16\ref\net8.0\Microsoft.Extensions.Hosting.Abstractions.dll</HintPath>
       </Reference>
+      <Reference Include="Microsoft.Extensions.Http">
+        <HintPath>..\..\..\.nuget\packages\microsoft.aspnetcore.app.ref\8.0.16\ref\net8.0\Microsoft.Extensions.Http.dll</HintPath>
+      </Reference>
       <Reference Include="Microsoft.Extensions.Identity.Core">
         <HintPath>..\..\..\..\home\mplopes\.nuget\packages\microsoft.aspnetcore.app.ref\8.0.16\ref\net8.0\Microsoft.Extensions.Identity.Core.dll</HintPath>
       </Reference>
@@ -21,14 +24,17 @@
       <PackageReference Include="BouncyCastle.Cryptography" Version="2.6.2" />
       <PackageReference Include="Gossip" Version="0.1.0" />
       <PackageReference Include="Gossip4Net.Http" Version="0.0.4" />
+      <PackageReference Include="Jint" Version="4.4.2" />
       <PackageReference Include="Microsoft.AspNetCore.Identity.Service.Core" Version="1.0.0-preview1-final" />
       <PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.0" />
       <PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.0" />
       <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
       <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="8.0.0" />
       <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
       <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="8.0.0" />
       <PackageReference Include="Mono.Data.Sqlite" Version="1.0.61" />
+      <PackageReference Include="Qdrant.Client" Version="1.16.1" />
       <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.0.0" />
       <PackageReference Include="System.Security.Claims" Version="4.3.0" />
     </ItemGroup>

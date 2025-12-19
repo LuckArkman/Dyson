@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using Dtos;
 using MongoDB.Driver;
 
@@ -21,4 +22,16 @@ public interface IRepositorio<T>
     Task<List<ContractDocument>> GetUserContractsAsync(string userId);
     Task<ContractDocument?> GetContractByAddressAsync(string contractAddress);
     Task<bool> UpdateContractStatusAsync(string contractAddress, string status);
+    Task<ContractDocument?> GetContractByIdAsync(string contractId);
+    Task UpdateAsync(string contractId, ContractDocument contract);
+    Task<List<User>> GetAllAsync(CancellationToken none);
+    Task UpdateUserAsync(User existingUser);
+    
+    Task<List<T>?> SearchAsync(Expression<Func<T, bool>> predicate);
+    Task<T> GetByIdAsync(string id);
+    Task AddAsync(T entity);
+    Task UpdateAsync(T entity);
+    Task DeleteAsync(string id);
+    Task<T?> GetAgentByIdAsync(string id);
+    Task UpdateUserWalletAsync(string userId, string publicKey);
 }

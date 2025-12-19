@@ -1,8 +1,10 @@
+using Dtos;
 using Interfaces;
 using Microsoft.AspNetCore.Authentication.Cookies;
 // Usings do Mongo
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Bson.Serialization.Serializers;
 using Repositories;
 using Services;
@@ -11,25 +13,43 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 BsonSerializer.RegisterSerializer(new GuidSerializer(GuidRepresentation.Standard));
+var conventionPack = new ConventionPack { new CamelCaseElementNameConvention() };
+ConventionRegistry.Register("camelCase", conventionPack, t => true);
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient();
-builder.Services.AddSingleton<IUserService, UserService>(); 
-builder.Services.AddSingleton<ConversationService>();
 builder.Services.AddSingleton<CartService>();
-builder.Services.AddSingleton<WalletService>(); 
+builder.Services.AddSingleton<WalletService>();
+builder.Services.AddHttpClient<ThirdwebApiService>();
+builder.Services.AddSingleton<ConversationService>();
 builder.Services.AddSingleton<RewardContractService>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddSingleton<ContractDeploymentService>();
+builder.Services.AddSingleton<IAIProvider, OpenAIProvider>();
+builder.Services.AddSingleton<AIProviderManager>();
+builder.Services.AddSingleton<IAIProvider, GoogleGeminiProvider>();
+builder.Services.AddSingleton<IAIProvider, AnthropicProvider>();
+builder.Services.AddSingleton<IUserService, UserService>();
+builder.Services.AddSingleton<AgentExecutionManager>();
+builder.Services.AddSingleton<IWorkflowEngine, WorkflowEngine>();
+builder.Services.AddScoped<IWeb3AuthService, Web3AuthService>();
 builder.Services.AddHttpClient<IPaymentGateway, MercadoPagoService>();
 builder.Services.AddSingleton(typeof(IRepositorio<>), typeof(Repositorio<>));
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new BsonDocumentJsonConverter());
+    });
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
-        // Define o caminho para onde o usuário será redirecionado
-        // se tentar acessar uma página protegida sem estar autenticado.
         options.LoginPath = "/Account/Login";
-        options.AccessDeniedPath = "/Account/AccessDenied";
         options.LogoutPath = "/Account/Logout";
-        options.ExpireTimeSpan = TimeSpan.FromDays(1);
+        options.AccessDeniedPath = "/Account/AccessDenied";
+        options.ExpireTimeSpan = TimeSpan.FromHours(24);
+        options.SlidingExpiration = true;
+        options.Cookie.HttpOnly = true;
+        options.Cookie.SecurePolicy = CookieSecurePolicy.Always; // Usar HTTPS
+        options.Cookie.SameSite = SameSiteMode.Strict;
     });
 
 // Adiciona o serviço de usuários (SIMULADO - Substituir por MongoDB em produção)

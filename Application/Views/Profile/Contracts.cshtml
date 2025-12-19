@@ -1,72 +1,280 @@
-@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model List<Dtos.ContractDocument>
 @{
-    ViewData["Title"] = "Dashboard";
-    Layout = "_AdminLayout";
+ViewData["Title"] = "Smart Contracts";
+Layout = "_AdminLayout";
 }
+
 <div class="row">
     <div class="col-12">
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">Gerenciar Contratos Inteligentes</h3>
-                <div class="card-tools">
-                    <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#createContractModal">
-                        <i class="fas fa-plus"></i> Deploy Novo Contrato
-                    </button>
-                </div>
-            </div>
-            <div class="card-body table-responsive p-0">
-                <table class="table table-hover text-nowrap" id="contractsTable">
-                    <thead>
-                    <tr>
-                        <th>Nome do Contrato</th>
-                        <th>hash</th>
-                        <th>Tipo</th>
-                        <th>Status</th>
-                        <th>Gas Consumido</th>
-                        <th>Ações</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach (var c in Model)
-                    {
-                        <tr id="contract-row-@c.walletAndress">
-                            <td>@c.ContractName</td>
-                            <td>@c.ContractAddress</td>
-                            <td>@c.ContractType</td>
-                            <td>
-                                @if (c.Status == "Active")
-                                {
-                                    <span class="tag tag-success text-success">Ativo</span>
-                                }
-                                else if (c.Status == "Pending")
-                                {
-                                    <span class="tag tag-warning text-warning">Pendente</span>
-                                }
-                                else
-                                {
-                                    <span class="tag tag-secondary text-secondary">Executado</span>
-                                }
-                            </td>
-                            <td>@c.GasUsed ETH</td>
-                            <td>
-                                <button class="btn btn-xs btn-primary detail-btn"
-                                        data-contract-address="@c.ContractAddress">
-                                    Detalhes
-                                </button>
-                                <button class="btn btn-xs btn-danger">Pausar</button>
+        <!-- Info Box -->
+        <div class="callout callout-info">
+            <h5><i class="fas fa-info-circle"></i> Sobre Smart Contracts</h5>
+            Gerencie seus contratos inteligentes na blockchain. Visualize, crie e execute contratos de forma segura e transparente.
+        </div>
+    </div>
+</div>
 
-                            </td>
-                        </tr>
-                    }
-                    </tbody>
-                </table>
+<div class="row">
+    <!-- Active Contracts -->
+    <div class="col-lg-3 col-6">
+        <div class="small-box bg-info">
+            <div class="inner">
+                <h3>0</h3>
+                <p>Contratos Ativos</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-file-contract"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pending Contracts -->
+    <div class="col-lg-3 col-6">
+        <div class="small-box bg-warning">
+            <div class="inner">
+                <h3>0</h3>
+                <p>Pendentes</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-clock"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Completed Contracts -->
+    <div class="col-lg-3 col-6">
+        <div class="small-box bg-success">
+            <div class="inner">
+                <h3>0</h3>
+                <p>Completos</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Total Value -->
+    <div class="col-lg-3 col-6">
+        <div class="small-box bg-danger">
+            <div class="inner">
+                <h3>R$ 0</h3>
+                <p>Valor Total</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-dollar-sign"></i>
             </div>
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="createContractModal" tabindex="-1" role="dialog" aria-labelledby="createContractModalLabel" aria-hidden="true">
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-list"></i> Meus Smart Contracts
+                </h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalNewContract">
+                        <i class="fas fa-plus"></i> Novo Contrato
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="card-body table-responsive p-0">
+                    <table class="table table-hover text-nowrap">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>Tipo</th>
+                            <th>Status</th>
+                            <th>Data Criação</th>
+                            <th>Valor</th>
+                            <th>Ações</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @if (!Model.Any())
+                        {
+                            <tr>
+                                <td colspan="7" class="text-center text-muted">
+                                    <i class="fas fa-inbox fa-3x mb-3"></i>
+                                    <p>Nenhum contrato encontrado. Crie seu primeiro smart contract!</p>
+
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            @foreach(var c in Model)
+                            {
+                                <tr>
+                                    <td>@c.Id</td>
+                                    <td>@c.ContractName</td>
+                                    <td>@c.ContractType</td>
+                                    <td>
+                                        @if(c.Status == "Active") { <span class="tag tag-success text-success">Ativo</span> }
+                                        else if(c.Status == "Pending") { <span class="tag tag-warning text-warning">Pendente</span> }
+                                        else { <span class="tag tag-secondary text-secondary">Executado</span> }
+                                    </td>
+                                    <td>@c.CreatedAt</td>
+                                    <td>@c.GasUsed ETH</td>
+                                    <td>
+                                        <button class="btn btn-xs btn-primary">Detalhes</button>
+                                        <button class="btn btn-xs btn-danger">Pausar</button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Contract Templates -->
+<div class="row">
+    <div class="col-12">
+        <div class="card card-primary card-outline">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-th"></i> Templates de Contratos
+                </h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card card-widget widget-user-2">
+                            <div class="widget-user-header bg-gradient-primary">
+                                <h3 class="widget-user-username">Contrato de Pagamento</h3>
+                                <h5 class="widget-user-desc">ERC-20 Token Transfer</h5>
+                            </div>
+                            <div class="card-footer p-0">
+                                <ul class="nav flex-column">
+                                    <li class="nav-item">
+                                        <span class="nav-link">
+                                            Transferência automática de tokens
+                                        </span>
+                                    </li>
+                                    <li class="nav-item">
+                                        <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#modalNewContract">
+                                            Usar Template
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="card card-widget widget-user-2">
+                            <div class="widget-user-header bg-gradient-success">
+                                <h3 class="widget-user-username">Contrato de Escrow</h3>
+                                <h5 class="widget-user-desc">Garantia de Transação</h5>
+                            </div>
+                            <div class="card-footer p-0">
+                                <ul class="nav flex-column">
+                                    <li class="nav-item">
+                                        <span class="nav-link">
+                                            Proteção para comprador e vendedor
+                                        </span>
+                                    </li>
+                                    <li class="nav-item">
+                                        <button class="btn btn-success btn-block" data-toggle="modal" data-target="#modalNewContract">
+                                            Usar Template
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="card card-widget widget-user-2">
+                            <div class="widget-user-header bg-gradient-warning">
+                                <h3 class="widget-user-username">Contrato Multi-Assinatura</h3>
+                                <h5 class="widget-user-desc">Multi-Sig Wallet</h5>
+                            </div>
+                            <div class="card-footer p-0">
+                                <ul class="nav flex-column">
+                                    <li class="nav-item">
+                                        <span class="nav-link">
+                                            Requer múltiplas aprovações
+                                        </span>
+                                    </li>
+                                    <li class="nav-item">
+                                        <button class="btn btn-warning btn-block" data-toggle="modal" data-target="#modalNewContract">
+                                            Usar Template
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal New Contract -->
+<!--
+<div class="modal fade" id="modalNewContract">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h4 class="modal-title">
+                    <i class="fas fa-plus"></i> Criar Novo Smart Contract
+                </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label>Nome do Contrato</label>
+                        <input type="text" class="form-control" placeholder="Ex: Contrato de Serviço">
+                    </div>
+                    <div class="form-group">
+                        <label>Tipo de Contrato</label>
+                        <select class="form-control">
+                            <option>Pagamento Simples</option>
+                            <option>Escrow</option>
+                            <option>Multi-Assinatura</option>
+                            <option>Personalizado</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Valor (em Tokens)</label>
+                        <input type="number" class="form-control" placeholder="0.00">
+                    </div>
+                    <div class="form-group">
+                        <label>Descrição</label>
+                        <textarea class="form-control" rows="3" placeholder="Descreva o contrato..."></textarea>
+                    </div>
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i>
+                        <strong>Nota:</strong> A criação do contrato requer aprovação via MetaMask e pagamento de gas fees.
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary">
+                    <i class="fas fa-check"></i> Criar Contrato
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+-->
+
+<div class="modal fade" id="modalNewContract" tabindex="-1" role="dialog" aria-labelledby="createContractModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">

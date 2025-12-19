@@ -1,12 +1,9 @@
-using System;
 using System.Collections.Concurrent;
 using System.Net.WebSockets;
-using System.Net.Http;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading;
-using System.Threading.Tasks;
 using Dtos;
 using Records;
 
@@ -18,6 +15,8 @@ namespace Services;
 /// </summary>
 public class NodeClient : IDisposable
 {
+    private readonly byte[] EncryptionKey;
+    private readonly SemaphoreSlim _sendLock = new SemaphoreSlim(1, 1);
     public readonly Guid id;
     private readonly ChatService _chatService;
     public readonly WebSocket? _webSocket;
@@ -41,6 +40,7 @@ public class NodeClient : IDisposable
     public NodeClient(Guid nodeId, UserSession? session, WebSocket webSocket, ChatService chatService)
     {
         _chatService = chatService;
+        EncryptionKey = Encoding.UTF8.GetBytes(session.SessionToken);
         id = nodeId;
         _session = session;
         _webSocket = webSocket ?? throw new ArgumentNullException(nameof(webSocket));
@@ -87,75 +87,63 @@ public class NodeClient : IDisposable
     if (_webSocket == null) return;
 
     var buffer = new byte[1024 * 16];
-    var messageBuilder = new StringBuilder();
 
     try
     {
         while (_webSocket.State == WebSocketState.Open && !cancellationToken.IsCancellationRequested)
         {
-            messageBuilder.Clear();
-            WebSocketReceiveResult? result;
+            using var ms = new MemoryStream();
+            WebSocketReceiveResult result;
 
+            // 1. Coleta todos os fragmentos da mensagem binária
             do
             {
-                result = await _webSocket.ReceiveAsync(
-                    new ArraySegment<byte>(buffer),
-                    cancellationToken
-                );
+                result = await _webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), cancellationToken);
 
                 if (result.MessageType == WebSocketMessageType.Close)
                 {
-                    Console.WriteLine($"[NodeClient {id}] ✓ WebSocket fechado corretamente pelo cliente.");
-                    
-                    if (_webSocket.State == WebSocketState.Open || _webSocket.State == WebSocketState.CloseReceived)
-                    {
-                        await _webSocket.CloseAsync(
-                            WebSocketCloseStatus.NormalClosure,
-                            "Confirmando fechamento",
-                            CancellationToken.None
-                        );
-                    }
+                    await HandleSocketClose(result);
                     return;
                 }
 
-                var messageChunk = Encoding.UTF8.GetString(buffer, 0, result.Count);
-                messageBuilder.Append(messageChunk);
-
+                ms.Write(buffer, 0, result.Count);
             } while (!result.EndOfMessage);
 
-            var jsonMessage = messageBuilder.ToString();
-            
-            if (string.IsNullOrWhiteSpace(jsonMessage))
+            // 2. Extrai os bytes e valida se não está vazio (keep-alives podem ser vazios)
+            var encryptedData = ms.ToArray();
+            if (encryptedData.Length == 0) continue;
+
+            try 
             {
-                continue;
+                // 3. Descriptografa usando a chave derivada do Token da Sessão
+                byte[] key = GetEncryptionKey();
+                string jsonMessage = Decrypt(encryptedData, key);
+
+                // 4. Log e Processamento
+                var logPreview = jsonMessage.Length > 100 ? jsonMessage[..100] + "..." : jsonMessage;
+                Console.WriteLine($"[NodeClient {id}] 🔓 Mensagem decifrada: {logPreview}");
+
+                await ProcessReceivedMessageAsync(jsonMessage);
             }
-
-            var logMessage = jsonMessage.Length > 200 
-                ? jsonMessage.Substring(0, 200) + "..." 
-                : jsonMessage;
-            Console.WriteLine($"[NodeClient {id}] Mensagem recebida: {logMessage}");
-
-            await ProcessReceivedMessageAsync(jsonMessage);
+            catch (Exception cryptEx)
+            {
+                Console.WriteLine($"[NodeClient {id}] ⚠️ Falha ao descriptografar: {cryptEx.Message}");
+            }
         }
-        
-        Console.WriteLine($"[NodeClient {id}] Loop de escuta finalizado. Estado: {_webSocket.State}");
     }
-    catch (OperationCanceledException)
-    {
-        Console.WriteLine($"[NodeClient {id}] Escuta cancelada.");
-    }
-    catch (WebSocketException wsEx) when (wsEx.WebSocketErrorCode == WebSocketError.ConnectionClosedPrematurely)
-    {
-        // ✅ NOVO: Trata fechamento abrupto como normal
-        Console.WriteLine($"[NodeClient {id}] ⚠️ Cliente fechou a conexão abruptamente (sem handshake de fechamento).");
-    }
-    catch (WebSocketException wsEx)
-    {
-        Console.WriteLine($"[NodeClient {id}] Erro WebSocket: {wsEx.Message}");
-    }
+    catch (OperationCanceledException) { /* Silencioso */ }
     catch (Exception ex)
     {
-        Console.WriteLine($"[NodeClient {id}] ERRO ao escutar mensagens: {ex.Message}");
+        Console.WriteLine($"[NodeClient {id}] ERRO crítico na escuta: {ex.Message}");
+    }
+}
+
+private async Task HandleSocketClose(WebSocketReceiveResult result)
+{
+    Console.WriteLine($"[NodeClient {id}] ✓ WebSocket fechado pelo cliente.");
+    if (_webSocket.State == WebSocketState.Open || _webSocket.State == WebSocketState.CloseReceived)
+    {
+        await _webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Confirmando", CancellationToken.None);
     }
 }
 
@@ -391,28 +379,84 @@ public class NodeClient : IDisposable
     {
         if (_webSocket == null || _webSocket.State != WebSocketState.Open)
         {
-            throw new InvalidOperationException($"WebSocket não disponível. Estado: {_webSocket?.State}");
+            throw new InvalidOperationException($"WebSocket não disponível. Estado: {_webSocket?.State}"); //
         }
 
+        await _sendLock.WaitAsync(cancellationToken);
         try
         {
-            var json = JsonSerializer.Serialize(message, message.GetType(), _jsonOptions);
-            var bytes = Encoding.UTF8.GetBytes(json);
+            var json = JsonSerializer.Serialize(message, message.GetType(), _jsonOptions); //
+        
+            // Criptografia usando a chave derivada do Token
+            byte[] key = GetEncryptionKey();
+            byte[] encryptedBytes = Encrypt(json, key); // Usa o seu método Encrypt já existente
 
             await _webSocket.SendAsync(
-                new ArraySegment<byte>(bytes),
-                WebSocketMessageType.Text,
+                new ArraySegment<byte>(encryptedBytes),
+                WebSocketMessageType.Binary, // Alterado para Binary por ser dado cifrado
                 endOfMessage: true,
                 cancellationToken
             );
 
-            Console.WriteLine($"[NodeClient {id}] ✓ Enviado: {message.GetType().Name} (CorrelationId: {message.CorrelationId})");
+            Console.WriteLine($"[NodeClient {id}] ✓ Enviado Cifrado (CorrelationId: {message.CorrelationId})"); //
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"[NodeClient {id}] ❌ Erro ao enviar: {ex.Message}");
+            Console.WriteLine($"[NodeClient {id}] ❌ Erro ao enviar: {ex.Message}"); //
             throw;
         }
+        finally
+        {
+            _sendLock.Release();
+        }
+    }
+    
+    private byte[] GetEncryptionKey()
+    {
+        // Usamos a sessão injetada no construtor
+        var token = _session?.SessionToken ?? throw new InvalidOperationException("Sessão ou Token não encontrado.");
+    
+        using var sha256 = SHA256.Create();
+        return sha256.ComputeHash(Encoding.UTF8.GetBytes(token));
+    }
+    
+    public byte[] Encrypt(string plainText, byte[] key)
+    {
+        using var aes = Aes.Create();
+        aes.Key = key;
+        aes.GenerateIV(); // Cria um IV aleatório para esta mensagem específica
+    
+        using var encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
+        using var ms = new MemoryStream();
+    
+        // Escrevemos o IV no início do stream para que o destino saiba qual usar
+        ms.Write(aes.IV, 0, aes.IV.Length); 
+
+        using (var cs = new CryptoStream(ms, encryptor, CryptoStreamMode.Write))
+        using (var sw = new StreamWriter(cs))
+        {
+            sw.Write(plainText);
+        }
+    
+        return ms.ToArray();
+    }
+    
+    public string Decrypt(byte[] cipherTextWithIv, byte[] key)
+    {
+        using var aes = Aes.Create();
+        aes.Key = key;
+
+        // O IV está nos primeiros 16 bytes (conforme seu método Encrypt gravou)
+        byte[] iv = new byte[16];
+        Array.Copy(cipherTextWithIv, 0, iv, 0, iv.Length);
+        aes.IV = iv;
+
+        using var decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
+        using var ms = new MemoryStream(cipherTextWithIv, iv.Length, cipherTextWithIv.Length - iv.Length);
+        using var cs = new CryptoStream(ms, decryptor, CryptoStreamMode.Read);
+        using var sr = new StreamReader(cs);
+    
+        return sr.ReadToEnd();
     }
 
     #endregion
