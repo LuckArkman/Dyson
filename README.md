@@ -1,4 +1,4 @@
-# Dyson Project (Galileu) - Technical Whitepaper & Documentation
+# Dyson Project - Technical Whitepaper & Documentation
 
 > **Version**: 1.0.0
 > **Date**: 2025-12-20
@@ -41,7 +41,7 @@ Contemporary Artificial Intelligence is heavily centralized. Training and runnin
 *   **Energy Inefficiency**: Massive localized heat generation and energy consumption.
 *   **Data Privacy Risks**: User data must be sent to a central server.
 
-### The Solution: Dyson (Galileu)
+### The Solution: Dyson
 Dyson proposes a paradigm shift: **Decentralized Cognitive Processing**. Instead of one giant server, Dyson uses millions of smartphones, each acting as a neuron or a small cluster of neurons.
 *   **Distributed Inference**: The model is split into segments. Node A runs Layer 1-5, Node B runs Layer 6-10.
 *   **Scalability**: The network grows stronger as more users join.
@@ -139,7 +139,7 @@ Communication happens over persistent WebSockets to minimize latency.
 
 ## 5. Tokenomics & Incentives
 
-The Dyson economy is fueled by the **GLU (Galileu) Token**.
+The Dyson economy is fueled by the **DTC (Dyson Token Coin)  Token**.
 
 ### Structure
 *   **System Mint**: `SYSTEM_MINT` address. Source of all new tokens.
@@ -223,11 +223,11 @@ The following outline can be used to generate a pitch deck or presentation.
 
 | Slide Title | Key Bullet Points | Visual Idea |
 | :--- | :--- | :--- |
-| **Slide 1: Title** | • Project: Dyson (Galileu)<br>• The Future of Decentralized AI<br>• Presented by: Engineering Team | Logo of a connected brain mesh. |
+| **Slide 1: Title** | • Project: Dyson <br>• The Future of Decentralized AI<br>• Presented by: Engineering Team | Logo of a connected brain mesh. |
 | **Slide 2: The Problem** | • Centralized AI is expensive.<br>• Data privacy is non-existent.<br>• Single point of failure. | Image of a burning server room vs. a serene network. |
 | **Slide 3: The Solution** | • Utilize 3.8 Billion active smartphones.<br>• Split the brain, share the load.<br>• Rewarded participation. | Diagram of phones forming a giant supercomputer. |
 | **Slide 4: Technology** | • .NET 8 & MAUI Cross-Platform.<br>• Akka.NET Actor Model.<br>• Custom Tensor Core (LSTM). | Tech stack logos (C#, .NET, Mongo). |
-| **Slide 5: Tokenomics** | • Earn GLU for compute.<br>• Fair distribution based on work.<br>• Sustainable economy. | Coin icon with an ascending graph. |
+| **Slide 5: Tokenomics** | • Earn DTC for compute.<br>• Fair distribution based on work.<br>• Sustainable economy. | Coin icon with an ascending graph. |
 | **Slide 6: Roadmap** | • Q1: Beta Swarm Launch.<br>• Q2: Transformer Model Support.<br>• Q3: Public Mainnet. | Timeline graphic. |
 
 ---
