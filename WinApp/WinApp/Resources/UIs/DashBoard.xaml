@@ -31,6 +31,13 @@
                 <Setter Property="FontSize" Value="14"/>
                 <Setter Property="Padding" Value="5,10,0,0" />
             </Style>
+            
+            <Color x:Key="DashBackground">#24292e</Color>
+            <Color x:Key="CardBackground">#2d333b</Color>
+            <Color x:Key="AccentBlue">#3498db</Color>
+            <Color x:Key="AccentGreen">#27ae60</Color>
+            <Color x:Key="AccentYellow">#f1c40f</Color>
+            <Color x:Key="AccentRed">#e74c3c</Color>
 
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -114,18 +121,127 @@
                 </VerticalStackLayout>
             </Grid>
 
-            <!-- Corpo da UI (conteúdo principal) -->
+            
             <Grid Grid.Column="1"
                   Style="{StaticResource layout-body}">
 
                 <!-- Grid Bootstrap-like (12 colunas) -->
-                <Grid ColumnDefinitions="*,*,*,*,*,*,*,*,*,*,*,*"
-                      RowDefinitions="Auto,*"
-                      ColumnSpacing="16"
-                      RowSpacing="16">
+                <ScrollView Grid.Column="1" BackgroundColor="{StaticResource DashBackground}" Padding="20">
+    <VerticalStackLayout Spacing="20">
+        
+        <Grid ColumnDefinitions="*, 2*" ColumnSpacing="20" HeightRequest="350">
+            
+            <Border StrokeShape="RoundRectangle 8" BackgroundColor="{StaticResource CardBackground}" Padding="20">
+                <VerticalStackLayout Spacing="15" HorizontalOptions="Center">
+                    <Frame CornerRadius="50" HeightRequest="100" WidthRequest="100" BackgroundColor="#444" Padding="0" HorizontalOptions="Center">
+                        <Label Text="M" FontSize="40" VerticalOptions="Center" HorizontalOptions="Center" TextColor="White"/>
+                    </Frame>
+                    <Label Text="MAURICIO DA PAIXAO LOPES" FontAttributes="Bold" HorizontalTextAlignment="Center" TextColor="White"/>
+                    <Label Text="mauriciopaixao21@gmail.com" TextColor="Gray" HorizontalTextAlignment="Center" Margin="0,-10,0,10"/>
+                    
+                    <BoxView HeightRequest="1" Color="#444" HorizontalOptions="Fill"/>
+                    
+                    <Grid ColumnDefinitions="*, Auto">
+                        <Label Text="Status da Conta" TextColor="White"/>
+                        <Label Grid.Column="1" Text="Ativo" TextColor="White" BackgroundColor="Green" Padding="5,2" FontSize="10"/>
+                    </Grid>
+                    <Grid ColumnDefinitions="*, Auto">
+                        <Label Text="Membro desde" TextColor="White"/>
+                        <Label Grid.Column="1" Text="Dec 2025" TextColor="#3498db"/>
+                    </Grid>
+                    
+                    <Button Text="Editar Perfil" ImageSource="pencil_icon.png" BackgroundColor="#4a5568" Margin="0,10,0,0"/>
+                </VerticalStackLayout>
+            </Border>
 
-                    <!-- Conteúdo do corpo -->
+            <Border Grid.Column="1" StrokeShape="RoundRectangle 8" BackgroundColor="{StaticResource CardBackground}" Padding="0">
+                <Grid RowDefinitions="Auto, *, Auto">
+                    <BoxView HeightRequest="4" BackgroundColor="{StaticResource AccentGreen}" VerticalOptions="Start"/>
+                    <HorizontalStackLayout Padding="20" Spacing="10">
+                        <Label Text="📁 Carteira Web3 Conectada" TextColor="White" FontAttributes="Bold"/>
+                        <Label Text="Verificada" BackgroundColor="Green" TextColor="White" Padding="5,2" CharacterSpacing="1" FontSize="10"/>
+                    </HorizontalStackLayout>
+
+                    <Grid Grid.Row="1" Padding="20" ColumnDefinitions="*, Auto" RowDefinitions="Auto, Auto">
+                        <VerticalStackLayout Spacing="5">
+                            <Label Text="Endereço da Carteira:" TextColor="Gray"/>
+                            <Border Stroke="Gray" BackgroundColor="#1c2128" Padding="10">
+                                <HorizontalStackLayout Spacing="10">
+                                    <Label Text="MIIBCgKCAQEA...V4Dxuyh7" TextColor="White" VerticalOptions="Center"/>
+                                    <ImageButton Source="copy_icon.png" WidthRequest="20"/>
+                                </HorizontalStackLayout>
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <Grid Grid.Row="1" ColumnDefinitions="*,*" ColumnSpacing="10" Margin="0,20,0,0">
+                            <Border BackgroundColor="#27ae60" Padding="15" StrokeShape="RoundRectangle 5">
+                                <HorizontalStackLayout Spacing="10">
+                                    <Label Text="🛡️" FontSize="20"/>
+                                    <VerticalStackLayout>
+                                        <Label Text="Segurança" FontSize="12" TextColor="White"/>
+                                        <Label Text="Blockchain" FontAttributes="Bold" TextColor="White"/>
+                                    </VerticalStackLayout>
+                                </HorizontalStackLayout>
+                            </Border>
+                            <Border Grid.Column="1" BackgroundColor="#3498db" Padding="15" StrokeShape="RoundRectangle 5">
+                                <HorizontalStackLayout Spacing="10">
+                                    <Label Text="✔️" FontSize="20"/>
+                                    <VerticalStackLayout>
+                                        <Label Text="Status" FontSize="12" TextColor="White"/>
+                                        <Label Text="Ativo" FontAttributes="Bold" TextColor="White"/>
+                                    </VerticalStackLayout>
+                                </HorizontalStackLayout>
+                            </Border>
+                        </Grid>
+                    </Grid>
                 </Grid>
+            </Border>
+        </Grid>
+
+        <Grid ColumnDefinitions="*, *, *, *" ColumnSpacing="15" HeightRequest="150">
+            <Border Grid.Column="0" BackgroundColor="#0088a9" StrokeShape="RoundRectangle 5">
+                <Grid RowDefinitions="*, Auto" Padding="15">
+                    <VerticalStackLayout>
+                        <Label Text="0" FontSize="32" FontAttributes="Bold" TextColor="White"/>
+                        <Label Text="Contratos Ativos" TextColor="White"/>
+                    </VerticalStackLayout>
+                    <Label Grid.Row="1" Text="Ver Contratos →" TextColor="White" HorizontalOptions="Center" FontSize="12"/>
+                </Grid>
+            </Border>
+
+            <Border Grid.Column="1" BackgroundColor="#27ae60" StrokeShape="RoundRectangle 5">
+                <Grid RowDefinitions="*, Auto" Padding="15">
+                    <VerticalStackLayout>
+                        <Label Text="0" FontSize="32" FontAttributes="Bold" TextColor="White"/>
+                        <Label Text="Pedidos Completos" TextColor="White"/>
+                    </VerticalStackLayout>
+                    <Label Grid.Row="1" Text="Ver Pedidos →" TextColor="White" HorizontalOptions="Center" FontSize="12"/>
+                </Grid>
+            </Border>
+
+            <Border Grid.Column="2" BackgroundColor="#f1c40f" StrokeShape="RoundRectangle 5">
+                <Grid RowDefinitions="*, Auto" Padding="15">
+                    <VerticalStackLayout>
+                        <Label Text="R$ 0" FontSize="32" FontAttributes="Bold" TextColor="White"/>
+                        <Label Text="Saldo em Tokens" TextColor="White"/>
+                    </VerticalStackLayout>
+                    <Label Grid.Row="1" Text="Ver Carteira →" TextColor="White" HorizontalOptions="Center" FontSize="12"/>
+                </Grid>
+            </Border>
+
+            <Border Grid.Column="3" BackgroundColor="#e74c3c" StrokeShape="RoundRectangle 5">
+                <Grid RowDefinitions="*, Auto" Padding="15">
+                    <VerticalStackLayout>
+                        <Label Text="0" FontSize="32" FontAttributes="Bold" TextColor="White"/>
+                        <Label Text="Transações" TextColor="White"/>
+                    </VerticalStackLayout>
+                    <Label Grid.Row="1" Text="Ver Histórico →" TextColor="White" HorizontalOptions="Center" FontSize="12"/>
+                </Grid>
+            </Border>
+        </Grid>
+
+    </VerticalStackLayout>
+</ScrollView>
             </Grid>
         </Grid>
     </ContentPage.Content>
