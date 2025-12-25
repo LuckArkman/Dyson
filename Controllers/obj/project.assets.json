@@ -11997,42 +11997,42 @@
     ]
   },
   "packageFolders": {
-    "/home/mplopes/.nuget/packages/": {}
+    "C:\\Users\\MPLopes\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/mplopes/Documentos/Dyson/Controllers/Controllers.csproj",
+      "projectUniqueName": "D:\\Dyson\\Controllers\\Controllers.csproj",
       "projectName": "Controllers",
-      "projectPath": "/home/mplopes/Documentos/Dyson/Controllers/Controllers.csproj",
-      "packagesPath": "/home/mplopes/.nuget/packages/",
-      "outputPath": "/home/mplopes/Documentos/Dyson/Controllers/obj/",
+      "projectPath": "D:\\Dyson\\Controllers\\Controllers.csproj",
+      "packagesPath": "C:\\Users\\MPLopes\\.nuget\\packages\\",
+      "outputPath": "D:\\Dyson\\Controllers\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/mplopes/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\MPLopes\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
-        "/usr/share/dotnet/library-packs": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "/home/mplopes/Documentos/Dyson/Dtos/Dtos.csproj": {
-              "projectPath": "/home/mplopes/Documentos/Dyson/Dtos/Dtos.csproj"
+            "D:\\Dyson\\Dtos\\Dtos.csproj": {
+              "projectPath": "D:\\Dyson\\Dtos\\Dtos.csproj"
             },
-            "/home/mplopes/Documentos/Dyson/Interfaces/Interfaces.csproj": {
-              "projectPath": "/home/mplopes/Documentos/Dyson/Interfaces/Interfaces.csproj"
+            "D:\\Dyson\\Interfaces\\Interfaces.csproj": {
+              "projectPath": "D:\\Dyson\\Interfaces\\Interfaces.csproj"
             },
-            "/home/mplopes/Documentos/Dyson/Records/Records.csproj": {
-              "projectPath": "/home/mplopes/Documentos/Dyson/Records/Records.csproj"
+            "D:\\Dyson\\Records\\Records.csproj": {
+              "projectPath": "D:\\Dyson\\Records\\Records.csproj"
             },
-            "/home/mplopes/Documentos/Dyson/Services/Services.csproj": {
-              "projectPath": "/home/mplopes/Documentos/Dyson/Services/Services.csproj"
+            "D:\\Dyson\\Services\\Services.csproj": {
+              "projectPath": "D:\\Dyson\\Services\\Services.csproj"
             }
           }
         }
@@ -12047,7 +12047,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.300"
+      "SdkAnalysisLevel": "10.0.100"
     },
     "frameworks": {
       "net8.0": {
@@ -12089,18 +12089,12 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[8.0.16, 8.0.16]"
-          }
-        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/9.0.300/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.101/PortableRuntimeIdentifierGraph.json"
       }
     }
   },

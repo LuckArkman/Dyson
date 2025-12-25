@@ -1,0 +1,17 @@
+﻿<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WinApp.Resources.Models.SidebarMenuItem"
+             x:Name="thisItem"> 
+    <VerticalStackLayout>
+        <Button Text="{Binding Title, Source={x:Reference thisItem}}" 
+                Clicked="OnToggleClicked" 
+                TextColor="Black" 
+                BackgroundColor="Transparent"
+                HorizontalOptions="Start"
+                FontAttributes="Bold" />
+
+        <VerticalStackLayout x:Name="ChildContainer" IsVisible="False" Padding="20,0,0,0">
+            <ContentPresenter />
+        </VerticalStackLayout>
+    </VerticalStackLayout>
+</ContentView>

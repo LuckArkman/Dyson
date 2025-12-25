@@ -10,11 +10,12 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.AspNetCore.Identity.UI.UIFrameworkAttribute("Bootstrap5")]
 [assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("aspnet-AlphaOne-5f2cdf60-cf60-41fb-86d7-0f49df04e500")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("AlphaOne")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+86e4598573dd45afb999b82d4c49f5611de0057c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+371ed20465181dd4d4d250055b684783482ddb12")]
 [assembly: System.Reflection.AssemblyProductAttribute("AlphaOne")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AlphaOne")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -2,8 +2,121 @@
 
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:winApp="using:WinApp"
+             xmlns:models="using:WinApp.Resources.Models"
              x:Class="WinApp.Resources.UIs.DashBoard">
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+
+            <!-- Sidebar -->
+            <Style TargetType="BoxView" x:Key="layout-sidebar">
+                <Setter Property="WidthRequest" Value="200"/>
+                <Setter Property="VerticalOptions" Value="Fill"/>
+                <Setter Property="HorizontalOptions" Value="Fill"/>
+                <Setter Property="BackgroundColor" Value="Gray"/>
+            </Style>
+            <Style TargetType="Grid" x:Key="layout-body">
+                <Setter Property="VerticalOptions" Value="Fill"/>
+                <Setter Property="HorizontalOptions" Value="Fill"/>
+                <Setter Property="BackgroundColor" Value="DarkGray"/>
+            </Style>
+            
+            <Style TargetType="Label" x:Key="layout-text-Menu">
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="Padding" Value="20,10,0,0" />
+            </Style>
+            <Style TargetType="Label" x:Key="menu-layout">
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="Padding" Value="5,10,0,0" />
+            </Style>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
-        
+        <Grid
+            RowDefinitions="*"
+            ColumnDefinitions="200,*">
+
+            <!-- Sidebar esquerda -->
+            <Grid Grid.Column="0"
+                  >
+                
+                <BoxView Grid.Column="0" Style="{StaticResource layout-sidebar}" /> <ScrollView Grid.Column="0" BackgroundColor="Transparent">
+                    <VerticalStackLayout Spacing="10" Padding="10">
+                        
+                        <Label Text="PAINEL PRINCIPAL" Style="{StaticResource menu-layout}" />
+                        <models:SidebarMenuItem Title="PAINEL PRINCIPAL"  >
+                            <VerticalStackLayout>
+                                <Label Text="Dashboard" Style="{StaticResource layout-text-Menu}" />
+                            </VerticalStackLayout>
+                        </models:SidebarMenuItem>
+                        
+                        <Label Text="WEB3 / BLOCKCHAIN" Style="{StaticResource menu-layout}" />
+                        <models:SidebarMenuItem Title="WEB3 / BLOCKCHAIN">
+                            <VerticalStackLayout>
+                                <Label Text="Smart Wallet" Style="{StaticResource layout-text-Menu}" />
+                                <Label Text="Smart Contracts" Style="{StaticResource layout-text-Menu}" />
+                            </VerticalStackLayout>
+                        </models:SidebarMenuItem>
+                        
+                        <Label Text="SERVIÇOS" Style="{StaticResource menu-layout}" />
+                        <models:SidebarMenuItem Title="SERVIÇOS" >
+                            <VerticalStackLayout>
+                                <Label Text="Meus Pedidos" Style="{StaticResource layout-text-Menu}" />
+                            </VerticalStackLayout>
+                        </models:SidebarMenuItem>
+                        
+                        <Label Text="MarketPlace" Style="{StaticResource menu-layout}" />
+                        <models:SidebarMenuItem Title="MarketPlace">
+                            <VerticalStackLayout>
+                                <Label Text="Navegar" Style="{StaticResource layout-text-Menu}" />
+                                <Label Text="Vender" Style="{StaticResource layout-text-Menu}" />
+                            </VerticalStackLayout>
+                        </models:SidebarMenuItem>
+                        
+                        <Label Text="Smart Agents" Style="{StaticResource menu-layout}" />
+                        <models:SidebarMenuItem Title="Smart Agents" >
+                            <VerticalStackLayout>
+                                <Label Text="Meus Agentes" Style="{StaticResource layout-text-Menu}" />
+                                <Label Text="Criar um Novo Agente" Style="{StaticResource layout-text-Menu}" />
+                            </VerticalStackLayout>
+                        </models:SidebarMenuItem>
+                        
+                        <Label Text="Configurações" Style="{StaticResource menu-layout}" />
+                        <models:SidebarMenuItem Title="Configurações">
+                            <VerticalStackLayout>
+                                <Label Text="Geral" Style="{StaticResource layout-text-Menu}" />
+                                <Label Text="Segurança" Style="{StaticResource layout-text-Menu}" />
+                                <Label Text="Meu Ecossistema" Style="{StaticResource layout-text-Menu}" />
+                                <Label Text="Documentação" Style="{StaticResource layout-text-Menu}" />
+                            </VerticalStackLayout>
+                        </models:SidebarMenuItem>
+                        
+                    </VerticalStackLayout>
+                </ScrollView>
+
+                <!-- Garante 100% da altura -->
+                <VerticalStackLayout>
+
+                    <!-- Conteúdo da sidebar -->
+                </VerticalStackLayout>
+            </Grid>
+
+            <!-- Corpo da UI (conteúdo principal) -->
+            <Grid Grid.Column="1"
+                  Style="{StaticResource layout-body}">
+
+                <!-- Grid Bootstrap-like (12 colunas) -->
+                <Grid ColumnDefinitions="*,*,*,*,*,*,*,*,*,*,*,*"
+                      RowDefinitions="Auto,*"
+                      ColumnSpacing="16"
+                      RowSpacing="16">
+
+                    <!-- Conteúdo do corpo -->
+                </Grid>
+            </Grid>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

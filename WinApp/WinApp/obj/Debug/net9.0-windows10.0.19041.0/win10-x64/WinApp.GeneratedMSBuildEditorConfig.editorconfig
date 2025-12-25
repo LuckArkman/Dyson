@@ -42,6 +42,12 @@ build_metadata.AdditionalFiles.ManifestResourceName = WinApp.MainPage.xaml
 build_metadata.AdditionalFiles.TargetPath = MainPage.xaml
 build_metadata.AdditionalFiles.RelativePath = MainPage.xaml
 
+[D:/Dyson/WinApp/WinApp/Resources/Models/SidebarMenuItem.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WinApp.Resources.Models.SidebarMenuItem.xaml
+build_metadata.AdditionalFiles.TargetPath = Resources\Models\SidebarMenuItem.xaml
+build_metadata.AdditionalFiles.RelativePath = Resources\Models\SidebarMenuItem.xaml
+
 [D:/Dyson/WinApp/WinApp/Resources/Styles/Colors.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = WinApp.Resources.Styles.Colors.xaml
@@ -59,3 +65,9 @@ build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = WinApp.Resources.UIs.DashBoard.xaml
 build_metadata.AdditionalFiles.TargetPath = Resources\UIs\DashBoard.xaml
 build_metadata.AdditionalFiles.RelativePath = Resources\UIs\DashBoard.xaml
+
+[D:/Dyson/WinApp/WinApp/Resources/UIs/login.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WinApp.Resources.UIs.login.xaml
+build_metadata.AdditionalFiles.TargetPath = Resources\UIs\login.xaml
+build_metadata.AdditionalFiles.RelativePath = Resources\UIs\login.xaml
