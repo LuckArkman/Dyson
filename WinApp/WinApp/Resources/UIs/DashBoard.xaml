@@ -24,7 +24,7 @@
             
             <Style TargetType="Label" x:Key="layout-text-Menu">
                 <Setter Property="TextColor" Value="White"/>
-                <Setter Property="Padding" Value="20,10,0,0" />
+                <Setter Property="Padding" Value="25,10,0,0" />
             </Style>
             <Style TargetType="Label" x:Key="menu-layout">
                 <Setter Property="TextColor" Value="White"/>
@@ -81,6 +81,16 @@
                             <VerticalStackLayout>
                                 <Label Text="Meus Agentes" Style="{StaticResource layout-text-Menu}" />
                                 <Label Text="Criar um Novo Agente" Style="{StaticResource layout-text-Menu}" />
+                            </VerticalStackLayout>
+                        </models:SidebarMenuItem>
+                        
+                        <Label Text="Smart Node" Style="{StaticResource menu-layout}" />
+                        <models:SidebarMenuItem Title="Smart Node">
+                            <VerticalStackLayout>
+                                <Label Text="Interação Neural" Style="{StaticResource layout-text-Menu}" />
+                                <Label Text="Configurações do Node" Style="{StaticResource layout-text-Menu}" />
+                                <Label Text="Agentes de Automação" Style="{StaticResource layout-text-Menu}" />
+                                <Label Text="Ecossistema Neural" Style="{StaticResource layout-text-Menu}" />
                             </VerticalStackLayout>
                         </models:SidebarMenuItem>
                         
