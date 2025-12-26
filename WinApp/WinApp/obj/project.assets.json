@@ -2,6 +2,33 @@
   "version": 3,
   "targets": {
     "net9.0-windows10.0.19041": {
+      "AathifMahir.Maui.MauiIcons.Core/5.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Maui.Controls": "9.0.82",
+          "Microsoft.Maui.Controls.Compatibility": "9.0.82"
+        },
+        "compile": {
+          "lib/net9.0-windows10.0.19041/MauiIcons.Core.dll": {}
+        },
+        "runtime": {
+          "lib/net9.0-windows10.0.19041/MauiIcons.Core.dll": {}
+        }
+      },
+      "AathifMahir.Maui.MauiIcons.Material/5.0.0": {
+        "type": "package",
+        "dependencies": {
+          "AathifMahir.Maui.MauiIcons.Core": "5.0.0",
+          "Microsoft.Maui.Controls": "9.0.82",
+          "Microsoft.Maui.Controls.Compatibility": "9.0.82"
+        },
+        "compile": {
+          "lib/net9.0-windows10.0.19041/MauiIcons.Material.dll": {}
+        },
+        "runtime": {
+          "lib/net9.0-windows10.0.19041/MauiIcons.Material.dll": {}
+        }
+      },
       "Microsoft.Extensions.Configuration/9.0.9": {
         "type": "package",
         "dependencies": {
@@ -234,6 +261,25 @@
         "build": {
           "buildTransitive/net6.0-windows10.0.17763.0/Microsoft.Maui.Controls.Build.Tasks.props": {},
           "buildTransitive/net6.0-windows10.0.17763.0/Microsoft.Maui.Controls.Build.Tasks.targets": {}
+        }
+      },
+      "Microsoft.Maui.Controls.Compatibility/9.0.82": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Configuration": "9.0.5",
+          "Microsoft.Extensions.Logging.Abstractions": "9.0.5",
+          "Microsoft.Maui.Controls.Core": "9.0.82",
+          "Microsoft.Maui.Controls.Xaml": "9.0.82"
+        },
+        "compile": {
+          "lib/net9.0-windows10.0.19041/Microsoft.Maui.Controls.Compatibility.dll": {
+            "related": ".pdb;.pri;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net9.0-windows10.0.19041/Microsoft.Maui.Controls.Compatibility.dll": {
+            "related": ".pdb;.pri;.xml"
+          }
         }
       },
       "Microsoft.Maui.Controls.Core/9.0.120": {
@@ -655,6 +701,33 @@
       }
     },
     "net9.0-windows10.0.19041/win10-x64": {
+      "AathifMahir.Maui.MauiIcons.Core/5.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Maui.Controls": "9.0.82",
+          "Microsoft.Maui.Controls.Compatibility": "9.0.82"
+        },
+        "compile": {
+          "lib/net9.0-windows10.0.19041/MauiIcons.Core.dll": {}
+        },
+        "runtime": {
+          "lib/net9.0-windows10.0.19041/MauiIcons.Core.dll": {}
+        }
+      },
+      "AathifMahir.Maui.MauiIcons.Material/5.0.0": {
+        "type": "package",
+        "dependencies": {
+          "AathifMahir.Maui.MauiIcons.Core": "5.0.0",
+          "Microsoft.Maui.Controls": "9.0.82",
+          "Microsoft.Maui.Controls.Compatibility": "9.0.82"
+        },
+        "compile": {
+          "lib/net9.0-windows10.0.19041/MauiIcons.Material.dll": {}
+        },
+        "runtime": {
+          "lib/net9.0-windows10.0.19041/MauiIcons.Material.dll": {}
+        }
+      },
       "Microsoft.Extensions.Configuration/9.0.9": {
         "type": "package",
         "dependencies": {
@@ -876,6 +949,25 @@
         "build": {
           "buildTransitive/net6.0-windows10.0.17763.0/Microsoft.Maui.Controls.Build.Tasks.props": {},
           "buildTransitive/net6.0-windows10.0.17763.0/Microsoft.Maui.Controls.Build.Tasks.targets": {}
+        }
+      },
+      "Microsoft.Maui.Controls.Compatibility/9.0.82": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Configuration": "9.0.5",
+          "Microsoft.Extensions.Logging.Abstractions": "9.0.5",
+          "Microsoft.Maui.Controls.Core": "9.0.82",
+          "Microsoft.Maui.Controls.Xaml": "9.0.82"
+        },
+        "compile": {
+          "lib/net9.0-windows10.0.19041/Microsoft.Maui.Controls.Compatibility.dll": {
+            "related": ".pdb;.pri;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net9.0-windows10.0.19041/Microsoft.Maui.Controls.Compatibility.dll": {
+            "related": ".pdb;.pri;.xml"
+          }
         }
       },
       "Microsoft.Maui.Controls.Core/9.0.120": {
@@ -1257,6 +1349,45 @@
     }
   },
   "libraries": {
+    "AathifMahir.Maui.MauiIcons.Core/5.0.0": {
+      "sha512": "PCSm+cDoKemX5ukZFdV6UU/pfPcYoEFQEhsY8TZZtlYmwEiXAoOOY7swCCk4vUh5jAKBZbVLEAZ8+OoOEjySmg==",
+      "type": "package",
+      "path": "aathifmahir.maui.mauiicons.core/5.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "aathifmahir.maui.mauiicons.core.5.0.0.nupkg.sha512",
+        "aathifmahir.maui.mauiicons.core.nuspec",
+        "icon.png",
+        "lib/net9.0-android35.0/MauiIcons.Core.dll",
+        "lib/net9.0-android35.0/MauiIcons.Core.xml",
+        "lib/net9.0-ios18.0/MauiIcons.Core.dll",
+        "lib/net9.0-maccatalyst18.0/MauiIcons.Core.dll",
+        "lib/net9.0-windows10.0.19041/MauiIcons.Core.dll",
+        "lib/net9.0/MauiIcons.Core.dll",
+        "readme.md"
+      ]
+    },
+    "AathifMahir.Maui.MauiIcons.Material/5.0.0": {
+      "sha512": "6CiFPRn/VIqv07vAu30pwyRU1qdwzLHdI+wl2nD4GkLsIB2efZENk9ABA3LQj5gqrXYfCDdKf0QS4YzdoXd80g==",
+      "type": "package",
+      "path": "aathifmahir.maui.mauiicons.material/5.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "ReadMe.txt",
+        "aathifmahir.maui.mauiicons.material.5.0.0.nupkg.sha512",
+        "aathifmahir.maui.mauiicons.material.nuspec",
+        "icon.png",
+        "lib/net9.0-android35.0/MauiIcons.Material.dll",
+        "lib/net9.0-android35.0/MauiIcons.Material.xml",
+        "lib/net9.0-ios18.0/MauiIcons.Material.dll",
+        "lib/net9.0-maccatalyst18.0/MauiIcons.Material.dll",
+        "lib/net9.0-windows10.0.19041/MauiIcons.Material.dll",
+        "lib/net9.0/MauiIcons.Material.dll",
+        "readme.md"
+      ]
+    },
     "Microsoft.Extensions.Configuration/9.0.9": {
       "sha512": "w87wF/90/VI0ZQBhf4rbMEeyEy0vi2WKjFmACsNAKNaorY+ZlVz7ddyXkbADvaWouMKffNmR0yQOGcrvSSvKGg==",
       "type": "package",
@@ -1726,6 +1857,51 @@
         "buildTransitive/netstandard2.0/zh-Hant/Microsoft.Maui.Controls.Build.Tasks.resources.dll",
         "microsoft.maui.controls.build.tasks.9.0.120.nupkg.sha512",
         "microsoft.maui.controls.build.tasks.nuspec"
+      ]
+    },
+    "Microsoft.Maui.Controls.Compatibility/9.0.82": {
+      "sha512": "5MEhPueXOXZKJ/+yy8+htfH93se3ZwLsq9P1dBsBoYVHnE7avxLP48XxVQQz4UiDm9thgNy2SKhvUASt3LwoCQ==",
+      "type": "package",
+      "path": "microsoft.maui.controls.compatibility/9.0.82",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
+        "README.md",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/net9.0-android35.0/Microsoft.Maui.Controls.Compatibility.aar",
+        "lib/net9.0-android35.0/Microsoft.Maui.Controls.Compatibility.dll",
+        "lib/net9.0-android35.0/Microsoft.Maui.Controls.Compatibility.pdb",
+        "lib/net9.0-android35.0/Microsoft.Maui.Controls.Compatibility.xml",
+        "lib/net9.0-ios18.0/Microsoft.Maui.Controls.Compatibility.dll",
+        "lib/net9.0-ios18.0/Microsoft.Maui.Controls.Compatibility.pdb",
+        "lib/net9.0-ios18.0/Microsoft.Maui.Controls.Compatibility.xml",
+        "lib/net9.0-maccatalyst18.0/Microsoft.Maui.Controls.Compatibility.dll",
+        "lib/net9.0-maccatalyst18.0/Microsoft.Maui.Controls.Compatibility.pdb",
+        "lib/net9.0-maccatalyst18.0/Microsoft.Maui.Controls.Compatibility.xml",
+        "lib/net9.0-tizen7.0/Microsoft.Maui.Controls.Compatibility.dll",
+        "lib/net9.0-tizen7.0/Microsoft.Maui.Controls.Compatibility.pdb",
+        "lib/net9.0-tizen7.0/Microsoft.Maui.Controls.Compatibility.xml",
+        "lib/net9.0-windows10.0.19041/Microsoft.Maui.Controls.Compatibility.dll",
+        "lib/net9.0-windows10.0.19041/Microsoft.Maui.Controls.Compatibility.pdb",
+        "lib/net9.0-windows10.0.19041/Microsoft.Maui.Controls.Compatibility.pri",
+        "lib/net9.0-windows10.0.19041/Microsoft.Maui.Controls.Compatibility.xml",
+        "lib/net9.0-windows10.0.20348/Microsoft.Maui.Controls.Compatibility.dll",
+        "lib/net9.0-windows10.0.20348/Microsoft.Maui.Controls.Compatibility.pdb",
+        "lib/net9.0-windows10.0.20348/Microsoft.Maui.Controls.Compatibility.pri",
+        "lib/net9.0-windows10.0.20348/Microsoft.Maui.Controls.Compatibility.xml",
+        "lib/net9.0/Microsoft.Maui.Controls.Compatibility.dll",
+        "lib/net9.0/Microsoft.Maui.Controls.Compatibility.pdb",
+        "lib/net9.0/Microsoft.Maui.Controls.Compatibility.xml",
+        "lib/netstandard2.0/Microsoft.Maui.Controls.Compatibility.dll",
+        "lib/netstandard2.0/Microsoft.Maui.Controls.Compatibility.pdb",
+        "lib/netstandard2.0/Microsoft.Maui.Controls.Compatibility.xml",
+        "lib/netstandard2.1/Microsoft.Maui.Controls.Compatibility.dll",
+        "lib/netstandard2.1/Microsoft.Maui.Controls.Compatibility.pdb",
+        "lib/netstandard2.1/Microsoft.Maui.Controls.Compatibility.xml",
+        "microsoft.maui.controls.compatibility.9.0.82.nupkg.sha512",
+        "microsoft.maui.controls.compatibility.nuspec"
       ]
     },
     "Microsoft.Maui.Controls.Core/9.0.120": {
@@ -3242,6 +3418,7 @@
   },
   "projectFileDependencyGroups": {
     "net9.0-windows10.0.19041": [
+      "AathifMahir.Maui.MauiIcons.Material >= 5.0.0",
       "Microsoft.Extensions.Logging.Debug >= 9.0.9",
       "Microsoft.Maui.Controls >= 9.0.120"
     ]
@@ -3291,6 +3468,10 @@
       "net9.0-windows10.0.19041": {
         "targetAlias": "net9.0-windows10.0.19041.0",
         "dependencies": {
+          "AathifMahir.Maui.MauiIcons.Material": {
+            "target": "Package",
+            "version": "[5.0.0, )"
+          },
           "Microsoft.Extensions.Logging.Debug": {
             "target": "Package",
             "version": "[9.0.9, )"

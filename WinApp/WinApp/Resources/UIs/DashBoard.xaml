@@ -3,6 +3,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:winApp="using:WinApp"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
              xmlns:models="using:WinApp.Resources.Models"
              x:Class="WinApp.Resources.UIs.DashBoard">
     
@@ -29,7 +30,7 @@
             <Style TargetType="Label" x:Key="menu-layout">
                 <Setter Property="TextColor" Value="White"/>
                 <Setter Property="FontSize" Value="14"/>
-                <Setter Property="Padding" Value="5,10,0,0" />
+                <Setter Property="Padding" Value="5,0,0,0" />
             </Style>
             
             <Color x:Key="DashBackground">#24292e</Color>
@@ -47,67 +48,104 @@
             ColumnDefinitions="200,*">
 
             <!-- Sidebar esquerda -->
-            <Grid Grid.Column="0"
-                  >
+            <Grid Grid.Column="0">
                 
                 <BoxView Grid.Column="0" Style="{StaticResource layout-sidebar}" /> <ScrollView Grid.Column="0" BackgroundColor="Transparent">
                     <VerticalStackLayout Spacing="10" Padding="10">
-                        
                         <Label Text="PAINEL PRINCIPAL" Style="{StaticResource menu-layout}" />
                         <models:SidebarMenuItem Title="PAINEL PRINCIPAL"  >
                             <VerticalStackLayout>
-                                <Label Text="Dashboard" Style="{StaticResource layout-text-Menu}" />
+                                <Label Text="Dashboard" Style="{StaticResource layout-text-Menu}" >
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnToggleClicked"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
                             </VerticalStackLayout>
                         </models:SidebarMenuItem>
                         
                         <Label Text="WEB3 / BLOCKCHAIN" Style="{StaticResource menu-layout}" />
                         <models:SidebarMenuItem Title="WEB3 / BLOCKCHAIN">
                             <VerticalStackLayout>
-                                <Label Text="Smart Wallet" Style="{StaticResource layout-text-Menu}" />
-                                <Label Text="Smart Contracts" Style="{StaticResource layout-text-Menu}" />
-                            </VerticalStackLayout>
-                        </models:SidebarMenuItem>
-                        
-                        <Label Text="SERVIÇOS" Style="{StaticResource menu-layout}" />
-                        <models:SidebarMenuItem Title="SERVIÇOS" >
-                            <VerticalStackLayout>
-                                <Label Text="Meus Pedidos" Style="{StaticResource layout-text-Menu}" />
+                                <Label Text="Smart Wallet" Style="{StaticResource layout-text-Menu}" >
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnToggleClicked"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                                <Label Text="Smart Contracts" Style="{StaticResource layout-text-Menu}" >
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnToggleClicked"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
                             </VerticalStackLayout>
                         </models:SidebarMenuItem>
                         
                         <Label Text="MarketPlace" Style="{StaticResource menu-layout}" />
                         <models:SidebarMenuItem Title="MarketPlace">
                             <VerticalStackLayout>
-                                <Label Text="Navegar" Style="{StaticResource layout-text-Menu}" />
-                                <Label Text="Vender" Style="{StaticResource layout-text-Menu}" />
-                            </VerticalStackLayout>
-                        </models:SidebarMenuItem>
-                        
-                        <Label Text="Smart Agents" Style="{StaticResource menu-layout}" />
-                        <models:SidebarMenuItem Title="Smart Agents" >
-                            <VerticalStackLayout>
-                                <Label Text="Meus Agentes" Style="{StaticResource layout-text-Menu}" />
-                                <Label Text="Criar um Novo Agente" Style="{StaticResource layout-text-Menu}" />
+                                <Label Text="Navegar" Style="{StaticResource layout-text-Menu}" >
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnToggleClicked"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                                <Label Text="Vender" Style="{StaticResource layout-text-Menu}" >
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnToggleClicked"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
                             </VerticalStackLayout>
                         </models:SidebarMenuItem>
                         
                         <Label Text="Smart Node" Style="{StaticResource menu-layout}" />
                         <models:SidebarMenuItem Title="Smart Node">
                             <VerticalStackLayout>
-                                <Label Text="Interação Neural" Style="{StaticResource layout-text-Menu}" />
-                                <Label Text="Configurações do Node" Style="{StaticResource layout-text-Menu}" />
-                                <Label Text="Agentes de Automação" Style="{StaticResource layout-text-Menu}" />
-                                <Label Text="Ecossistema Neural" Style="{StaticResource layout-text-Menu}" />
+                                <Label Text="Interação Neural" Style="{StaticResource layout-text-Menu}" >
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnToggleClicked"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                                <Label Text="Configurações do Node" Style="{StaticResource layout-text-Menu}" >
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnToggleClicked"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                                <Label Text="Agentes de Automação" Style="{StaticResource layout-text-Menu}" >
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnToggleClicked"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                                <Label Text="Ecossistema Neural" Style="{StaticResource layout-text-Menu}" >
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnToggleClicked"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
                             </VerticalStackLayout>
                         </models:SidebarMenuItem>
-                        
-                        <Label Text="Configurações" Style="{StaticResource menu-layout}" />
-                        <models:SidebarMenuItem Title="Configurações">
+           
+                            <Label Text="Settings" 
+                                   Style="{StaticResource menu-layout}"
+                                   VerticalOptions="Center"/>
+                        <models:SidebarMenuItem>
                             <VerticalStackLayout>
-                                <Label Text="Geral" Style="{StaticResource layout-text-Menu}" />
-                                <Label Text="Segurança" Style="{StaticResource layout-text-Menu}" />
-                                <Label Text="Meu Ecossistema" Style="{StaticResource layout-text-Menu}" />
-                                <Label Text="Documentação" Style="{StaticResource layout-text-Menu}" />
+                                <Label Text="Geral" Style="{StaticResource layout-text-Menu}" >
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnToggleClicked"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                                <Label Text="Segurança" Style="{StaticResource layout-text-Menu}" >
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnToggleClicked"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                                <Label Text="Meu Ecossistema" Style="{StaticResource layout-text-Menu}" >
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnToggleClicked"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                                <Label Text="Documentação" Style="{StaticResource layout-text-Menu}" >
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnToggleClicked"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
                             </VerticalStackLayout>
                         </models:SidebarMenuItem>
                         
@@ -115,10 +153,6 @@
                 </ScrollView>
 
                 <!-- Garante 100% da altura -->
-                <VerticalStackLayout>
-
-                    <!-- Conteúdo da sidebar -->
-                </VerticalStackLayout>
             </Grid>
 
             
@@ -168,7 +202,7 @@
                             <Border Stroke="Gray" BackgroundColor="#1c2128" Padding="10">
                                 <HorizontalStackLayout Spacing="10">
                                     <Label Text="MIIBCgKCAQEA...V4Dxuyh7" TextColor="White" VerticalOptions="Center"/>
-                                    <ImageButton Source="copy_icon.png" WidthRequest="20"/>
+                                    <ImageButton Source="{mi:Material Icon=FileCopy}" BackgroundColor="Transparent" WidthRequest="20"/>
                                 </HorizontalStackLayout>
                             </Border>
                         </VerticalStackLayout>
@@ -178,7 +212,7 @@
                                 <HorizontalStackLayout Spacing="10">
                                     <Label Text="🛡️" FontSize="20"/>
                                     <VerticalStackLayout>
-                                        <Label Text="Segurança" FontSize="12" TextColor="White"/>
+                                        <Label Text="Segurança" FontSize="12" TextColor="White" />
                                         <Label Text="Blockchain" FontAttributes="Bold" TextColor="White"/>
                                     </VerticalStackLayout>
                                 </HorizontalStackLayout>

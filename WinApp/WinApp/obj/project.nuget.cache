@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "ReHGpHW2GjA=",
+  "dgSpecHash": "eOZBjX/Mbtc=",
   "success": true,
   "projectFilePath": "D:\\Dyson\\WinApp\\WinApp\\WinApp.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\MPLopes\\.nuget\\packages\\aathifmahir.maui.mauiicons.core\\5.0.0\\aathifmahir.maui.mauiicons.core.5.0.0.nupkg.sha512",
+    "C:\\Users\\MPLopes\\.nuget\\packages\\aathifmahir.maui.mauiicons.material\\5.0.0\\aathifmahir.maui.mauiicons.material.5.0.0.nupkg.sha512",
     "C:\\Users\\MPLopes\\.nuget\\packages\\microsoft.extensions.configuration\\9.0.9\\microsoft.extensions.configuration.9.0.9.nupkg.sha512",
     "C:\\Users\\MPLopes\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\9.0.9\\microsoft.extensions.configuration.abstractions.9.0.9.nupkg.sha512",
     "C:\\Users\\MPLopes\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\9.0.9\\microsoft.extensions.dependencyinjection.9.0.9.nupkg.sha512",
@@ -17,6 +19,7 @@
     "C:\\Users\\MPLopes\\.nuget\\packages\\microsoft.io.recyclablememorystream\\3.0.1\\microsoft.io.recyclablememorystream.3.0.1.nupkg.sha512",
     "C:\\Users\\MPLopes\\.nuget\\packages\\microsoft.maui.controls\\9.0.120\\microsoft.maui.controls.9.0.120.nupkg.sha512",
     "C:\\Users\\MPLopes\\.nuget\\packages\\microsoft.maui.controls.build.tasks\\9.0.120\\microsoft.maui.controls.build.tasks.9.0.120.nupkg.sha512",
+    "C:\\Users\\MPLopes\\.nuget\\packages\\microsoft.maui.controls.compatibility\\9.0.82\\microsoft.maui.controls.compatibility.9.0.82.nupkg.sha512",
     "C:\\Users\\MPLopes\\.nuget\\packages\\microsoft.maui.controls.core\\9.0.120\\microsoft.maui.controls.core.9.0.120.nupkg.sha512",
     "C:\\Users\\MPLopes\\.nuget\\packages\\microsoft.maui.controls.xaml\\9.0.120\\microsoft.maui.controls.xaml.9.0.120.nupkg.sha512",
     "C:\\Users\\MPLopes\\.nuget\\packages\\microsoft.maui.core\\9.0.120\\microsoft.maui.core.9.0.120.nupkg.sha512",

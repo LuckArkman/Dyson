@@ -9,8 +9,8 @@
     ".NETCoreApp,Version=v9.0/win10-x64": {
       "WinApp/1.0": {
         "dependencies": {
+          "AathifMahir.Maui.MauiIcons.Material": "5.0.0",
           "Microsoft.Extensions.Logging.Debug": "9.0.9",
-          "Microsoft.Maui.Controls": "9.0.120",
           "Microsoft.Web.WebView2.Core.Projection": "1.0.3179.45",
           "runtimepack.Microsoft.Windows.SDK.NET.Ref": "10.0.19041.57"
         },
@@ -27,6 +27,29 @@
           "WinRT.Runtime.dll": {
             "assemblyVersion": "2.2.0.0",
             "fileVersion": "2.2.0.48161"
+          }
+        }
+      },
+      "AathifMahir.Maui.MauiIcons.Core/5.0.0": {
+        "dependencies": {
+          "Microsoft.Maui.Controls.Compatibility": "9.0.82"
+        },
+        "runtime": {
+          "lib/net9.0-windows10.0.19041/MauiIcons.Core.dll": {
+            "assemblyVersion": "5.0.0.0",
+            "fileVersion": "5.0.0.0"
+          }
+        }
+      },
+      "AathifMahir.Maui.MauiIcons.Material/5.0.0": {
+        "dependencies": {
+          "AathifMahir.Maui.MauiIcons.Core": "5.0.0",
+          "Microsoft.Maui.Controls.Compatibility": "9.0.82"
+        },
+        "runtime": {
+          "lib/net9.0-windows10.0.19041/MauiIcons.Material.dll": {
+            "assemblyVersion": "5.0.0.0",
+            "fileVersion": "5.0.0.0"
           }
         }
       },
@@ -153,10 +176,18 @@
           }
         }
       },
-      "Microsoft.Maui.Controls/9.0.120": {
+      "Microsoft.Maui.Controls.Compatibility/9.0.82": {
         "dependencies": {
+          "Microsoft.Extensions.Configuration": "9.0.9",
+          "Microsoft.Extensions.Logging.Abstractions": "9.0.9",
           "Microsoft.Maui.Controls.Core": "9.0.120",
           "Microsoft.Maui.Controls.Xaml": "9.0.120"
+        },
+        "runtime": {
+          "lib/net9.0-windows10.0.19041/Microsoft.Maui.Controls.Compatibility.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "9.0.8225.35901"
+          }
         }
       },
       "Microsoft.Maui.Controls.Core/9.0.120": {
@@ -491,6 +522,20 @@
       "serviceable": false,
       "sha512": ""
     },
+    "AathifMahir.Maui.MauiIcons.Core/5.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-PCSm+cDoKemX5ukZFdV6UU/pfPcYoEFQEhsY8TZZtlYmwEiXAoOOY7swCCk4vUh5jAKBZbVLEAZ8+OoOEjySmg==",
+      "path": "aathifmahir.maui.mauiicons.core/5.0.0",
+      "hashPath": "aathifmahir.maui.mauiicons.core.5.0.0.nupkg.sha512"
+    },
+    "AathifMahir.Maui.MauiIcons.Material/5.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-6CiFPRn/VIqv07vAu30pwyRU1qdwzLHdI+wl2nD4GkLsIB2efZENk9ABA3LQj5gqrXYfCDdKf0QS4YzdoXd80g==",
+      "path": "aathifmahir.maui.mauiicons.material/5.0.0",
+      "hashPath": "aathifmahir.maui.mauiicons.material.5.0.0.nupkg.sha512"
+    },
     "Microsoft.Extensions.Configuration/9.0.9": {
       "type": "package",
       "serviceable": true,
@@ -568,12 +613,12 @@
       "path": "microsoft.io.recyclablememorystream/3.0.1",
       "hashPath": "microsoft.io.recyclablememorystream.3.0.1.nupkg.sha512"
     },
-    "Microsoft.Maui.Controls/9.0.120": {
+    "Microsoft.Maui.Controls.Compatibility/9.0.82": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-O4hPe1zGjB82/aV4EeW8cmIM3vFcTGEXGEO/z1Pl320bJEdG9Ms7RSECeI9kKjcG4lp1TC9w+7dNYgogQEPCkA==",
-      "path": "microsoft.maui.controls/9.0.120",
-      "hashPath": "microsoft.maui.controls.9.0.120.nupkg.sha512"
+      "sha512": "sha512-5MEhPueXOXZKJ/+yy8+htfH93se3ZwLsq9P1dBsBoYVHnE7avxLP48XxVQQz4UiDm9thgNy2SKhvUASt3LwoCQ==",
+      "path": "microsoft.maui.controls.compatibility/9.0.82",
+      "hashPath": "microsoft.maui.controls.compatibility.9.0.82.nupkg.sha512"
     },
     "Microsoft.Maui.Controls.Core/9.0.120": {
       "type": "package",
