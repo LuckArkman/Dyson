@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "2qJvTTE+Ga0=",
+  "dgSpecHash": "NUrrrSPUhCs=",
   "success": true,
-  "projectFilePath": "D:\\Dyson\\Services\\Services.csproj",
+  "projectFilePath": "d:\\Dyson\\Services\\Services.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\MPLopes\\.nuget\\packages\\acornima\\1.2.0\\acornima.1.2.0.nupkg.sha512",
     "C:\\Users\\MPLopes\\.nuget\\packages\\akka\\1.5.55\\akka.1.5.55.nupkg.sha512",
@@ -186,9 +186,9 @@
       "code": "NU1701",
       "level": "Warning",
       "message": "Package 'Mono.Data.Sqlite 1.0.61' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0'. This package may not be fully compatible with your project.",
-      "projectPath": "D:\\Dyson\\Services\\Services.csproj",
+      "projectPath": "d:\\Dyson\\Services\\Services.csproj",
       "warningLevel": 1,
-      "filePath": "D:\\Dyson\\Services\\Services.csproj",
+      "filePath": "d:\\Dyson\\Services\\Services.csproj",
       "libraryId": "Mono.Data.Sqlite",
       "targetGraphs": [
         "net8.0"

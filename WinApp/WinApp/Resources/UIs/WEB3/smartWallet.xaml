@@ -1,0 +1,261 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:winApp="using:WinApp"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             xmlns:models="using:WinApp.Resources.Models"
+             x:Class="WinApp.Resources.UIs.WEB3.smartWallet">
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+
+            <!-- Sidebar -->
+            <Style TargetType="BoxView" x:Key="layout-sidebar">
+                <Setter Property="WidthRequest" Value="200"/>
+                <Setter Property="VerticalOptions" Value="Fill"/>
+                <Setter Property="HorizontalOptions" Value="Fill"/>
+                <Setter Property="BackgroundColor" Value="Gray"/>
+            </Style>
+            <Style TargetType="Grid" x:Key="layout-body">
+                <Setter Property="VerticalOptions" Value="Fill"/>
+                <Setter Property="HorizontalOptions" Value="Fill"/>
+                <Setter Property="BackgroundColor" Value="DarkGray"/>
+            </Style>
+            
+            <Style TargetType="Label" x:Key="layout-text-Menu">
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="Padding" Value="25,10,0,0" />
+            </Style>
+            <Style TargetType="Label" x:Key="menu-layout">
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="Padding" Value="5,0,0,0" />
+            </Style>
+            
+            <Color x:Key="DashBackground">#24292e</Color>
+            <Color x:Key="CardBackground">#2d333b</Color>
+            <Color x:Key="TextGray">#8b949e</Color>
+
+            <Style TargetType="Frame" x:Key="CardFrame">
+                <Setter Property="BackgroundColor" Value="{StaticResource CardBackground}"/>
+                <Setter Property="BorderColor" Value="Transparent"/>
+                <Setter Property="CornerRadius" Value="4"/>
+                <Setter Property="Padding" Value="15"/>
+                <Setter Property="HasShadow" Value="False"/>
+            </Style>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid
+            RowDefinitions="*"
+            ColumnDefinitions="200,*">
+
+            <!-- Sidebar esquerda -->
+            <Grid Grid.Column="0">
+                
+                <BoxView Grid.Column="0" Style="{StaticResource layout-sidebar}" /> <ScrollView Grid.Column="0" BackgroundColor="Transparent">
+                    <VerticalStackLayout Spacing="10" Padding="10">
+                        <Label Text="PAINEL PRINCIPAL" Style="{StaticResource menu-layout}" />
+                        <models:SidebarMenuItem Title="PAINEL PRINCIPAL"  >
+                            <VerticalStackLayout>
+                                <Label Text="Dashboard" Style="{StaticResource layout-text-Menu}" >
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnToggleClicked"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                            </VerticalStackLayout>
+                        </models:SidebarMenuItem>
+                        
+                        <Label Text="WEB3 / BLOCKCHAIN" Style="{StaticResource menu-layout}" />
+                        <models:SidebarMenuItem Title="WEB3 / BLOCKCHAIN">
+                            <VerticalStackLayout>
+                                <Label Text="Smart Wallet" Style="{StaticResource layout-text-Menu}" >
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnToggleClicked"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                                <Label Text="Smart Contracts" Style="{StaticResource layout-text-Menu}" >
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnToggleClicked"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                            </VerticalStackLayout>
+                        </models:SidebarMenuItem>
+                        
+                        <Label Text="MarketPlace" Style="{StaticResource menu-layout}" />
+                        <models:SidebarMenuItem Title="MarketPlace">
+                            <VerticalStackLayout>
+                                <Label Text="Navegar" Style="{StaticResource layout-text-Menu}" >
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnToggleClicked"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                                <Label Text="Vender" Style="{StaticResource layout-text-Menu}" >
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnToggleClicked"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                            </VerticalStackLayout>
+                        </models:SidebarMenuItem>
+                        
+                        <Label Text="Smart Node" Style="{StaticResource menu-layout}" />
+                        <models:SidebarMenuItem Title="Smart Node">
+                            <VerticalStackLayout>
+                                <Label Text="Interação Neural" Style="{StaticResource layout-text-Menu}" >
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnToggleClicked"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                                <Label Text="Configurações do Node" Style="{StaticResource layout-text-Menu}" >
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnToggleClicked"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                                <Label Text="Agentes de Automação" Style="{StaticResource layout-text-Menu}" >
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnToggleClicked"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                                <Label Text="Ecossistema Neural" Style="{StaticResource layout-text-Menu}" >
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnToggleClicked"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                            </VerticalStackLayout>
+                        </models:SidebarMenuItem>
+           
+                            <Label Text="Settings" 
+                                   Style="{StaticResource menu-layout}"
+                                   VerticalOptions="Center"/>
+                        <models:SidebarMenuItem>
+                            <VerticalStackLayout>
+                                <Label Text="Geral" Style="{StaticResource layout-text-Menu}" >
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnToggleClicked"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                                <Label Text="Segurança" Style="{StaticResource layout-text-Menu}" >
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnToggleClicked"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                                <Label Text="Meu Ecossistema" Style="{StaticResource layout-text-Menu}" >
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnToggleClicked"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                                <Label Text="Documentação" Style="{StaticResource layout-text-Menu}" >
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnToggleClicked"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                            </VerticalStackLayout>
+                        </models:SidebarMenuItem>
+                        
+                    </VerticalStackLayout>
+                </ScrollView>
+
+                <!-- Garante 100% da altura -->
+            </Grid>
+
+            
+            <ScrollView Grid.Column="1" BackgroundColor="{StaticResource DashBackground}">
+    <VerticalStackLayout Padding="20" Spacing="20">
+        
+        <Label Text="Smart Wallet &amp; Trading" FontSize="20" FontAttributes="Bold" TextColor="White" Margin="0,0,0,10"/>
+
+        <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="15" HeightRequest="100">
+            <Frame Grid.Column="0" Style="{StaticResource CardFrame}" BackgroundColor="#4a69bd">
+                <VerticalStackLayout VerticalOptions="Center">
+                    <Label Text="0.0000" FontSize="24" TextColor="White" FontAttributes="Bold"/>
+                    <Label Text="Tokens DTC Disponíveis" FontSize="12" TextColor="#bdc3c7"/>
+                </VerticalStackLayout>
+            </Frame>
+            <Frame Grid.Column="1" Style="{StaticResource CardFrame}" BackgroundColor="#27ae60">
+                <VerticalStackLayout VerticalOptions="Center">
+                    <Label Text="R$ 0.00" FontSize="24" TextColor="White" FontAttributes="Bold"/>
+                    <Label Text="Valor Total" FontSize="12" TextColor="#bdc3c7"/>
+                </VerticalStackLayout>
+            </Frame>
+            <Frame Grid.Column="2" Style="{StaticResource CardFrame}" BackgroundColor="#f39c12">
+                <VerticalStackLayout VerticalOptions="Center">
+                    <Label Text="0.0000" FontSize="24" TextColor="White" FontAttributes="Bold"/>
+                    <Label Text="Tokens em Staking" FontSize="12" TextColor="#bdc3c7"/>
+                </VerticalStackLayout>
+            </Frame>
+            <Frame Grid.Column="3" Style="{StaticResource CardFrame}" BackgroundColor="#3498db">
+                <VerticalStackLayout VerticalOptions="Center">
+                    <Label Text="▲ 17%" FontSize="24" TextColor="White" FontAttributes="Bold"/>
+                    <Label Text="Variação 24h" FontSize="12" TextColor="#bdc3c7"/>
+                </VerticalStackLayout>
+            </Frame>
+        </Grid>
+
+        <Grid ColumnDefinitions="2*, *" ColumnSpacing="20">
+            
+            <VerticalStackLayout Grid.Column="0" Spacing="15">
+                <Frame Style="{StaticResource CardFrame}" HeightRequest="400">
+                    <VerticalStackLayout>
+                        <Label Text="Gráfico de Preços DTC/BRL" TextColor="White" Margin="0,0,0,15"/>
+                        <BoxView HeightRequest="250" Color="#1c2128" CornerRadius="5" /> 
+                        
+                        <Grid ColumnDefinitions="*,*,*,*" Margin="0,20,0,0">
+                            <VerticalStackLayout Grid.Column="0" HorizontalOptions="Center">
+                                <Label Text="R$ 5.50" TextColor="White" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                <Label Text="PREÇO ATUAL" FontSize="10" TextColor="Gray" HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                            </Grid>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10" HeightRequest="50">
+                    <Button Grid.Column="0" Text="↓ COMPRAR" BackgroundColor="#27ae60" TextColor="White" CornerRadius="5"/>
+                    <Button Grid.Column="1" Text="↑ VENDER" BackgroundColor="#e74c3c" TextColor="White" CornerRadius="5"/>
+                    <Button Grid.Column="2" Text="🔒 STAKE" BackgroundColor="#f39c12" TextColor="White" CornerRadius="5"/>
+                </Grid>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Column="1" Spacing="15">
+                <Frame Style="{StaticResource CardFrame}">
+                    <VerticalStackLayout Spacing="10">
+                        <Label Text="Minha Carteira" TextColor="White" FontAttributes="Bold"/>
+                        <BoxView HeightRequest="1" Color="#444" />
+                        <Image Source="wallet_icon.png" HeightRequest="60" HorizontalOptions="Center" Margin="10"/>
+                        <Label Text="0.0000 DTC" HorizontalOptions="Center" TextColor="White" FontSize="18"/>
+                        <Label Text="Saldo Disponível" HorizontalOptions="Center" TextColor="Gray" FontSize="12"/>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <Frame Style="{StaticResource CardFrame}">
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Insights do Mercado" TextColor="White" FontAttributes="Bold"/>
+                        <Label Text="↑ Tendência de Alta" TextColor="#27ae60" FontSize="14"/>
+                        <Label Text="O mercado está em movimento ascendente..." FontSize="11" TextColor="Gray"/>
+                    </VerticalStackLayout>
+                </Frame>
+            </VerticalStackLayout>
+        </Grid>
+
+        <Frame Style="{StaticResource CardFrame}">
+            <VerticalStackLayout Spacing="15">
+                <Label Text="Histórico de Transações" TextColor="White" FontAttributes="Bold"/>
+                <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,*,*,*,*">
+                    <Label Grid.Column="0" Text="Data" TextColor="Gray" FontSize="12"/>
+                    <Label Grid.Column="1" Text="Tipo" TextColor="Gray" FontSize="12"/>
+                    <Label Grid.Column="2" Text="Quantidade" TextColor="Gray" FontSize="12"/>
+                    <Label Grid.Column="3" Text="Preço" TextColor="Gray" FontSize="12"/>
+                    <Label Grid.Column="4" Text="Status" TextColor="Gray" FontSize="12"/>
+                    <Label Grid.Row="1" Grid.Column="0" Text="09/12/2024" TextColor="White" Margin="0,10"/>
+                    <Label Grid.Row="1" Grid.Column="1" Text="Compra" TextColor="#27ae60" Margin="0,10"/>
+                    <Label Grid.Row="1" Grid.Column="2" Text="100.00 DTC" TextColor="White" Margin="0,10"/>
+                </Grid>
+            </VerticalStackLayout>
+        </Frame>
+
+    </VerticalStackLayout>
+</ScrollView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

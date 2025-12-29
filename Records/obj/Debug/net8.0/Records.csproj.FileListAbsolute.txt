@@ -37,3 +37,16 @@
 /mnt/8AA2CEB6A2CEA5D3/Dyson/Records/obj/Debug/net8.0/refint/Records.dll
 /mnt/8AA2CEB6A2CEA5D3/Dyson/Records/obj/Debug/net8.0/Records.pdb
 /mnt/8AA2CEB6A2CEA5D3/Dyson/Records/obj/Debug/net8.0/ref/Records.dll
+d:\Dyson\Records\bin\Debug\net8.0\Records.deps.json
+d:\Dyson\Records\bin\Debug\net8.0\Records.dll
+d:\Dyson\Records\bin\Debug\net8.0\Records.pdb
+d:\Dyson\Records\obj\Debug\net8.0\Records.csproj.AssemblyReference.cache
+d:\Dyson\Records\obj\Debug\net8.0\Records.GeneratedMSBuildEditorConfig.editorconfig
+d:\Dyson\Records\obj\Debug\net8.0\Records.AssemblyInfoInputs.cache
+d:\Dyson\Records\obj\Debug\net8.0\Records.AssemblyInfo.cs
+d:\Dyson\Records\obj\Debug\net8.0\Records.csproj.CoreCompileInputs.cache
+d:\Dyson\Records\obj\Debug\net8.0\Records.sourcelink.json
+d:\Dyson\Records\obj\Debug\net8.0\Records.dll
+d:\Dyson\Records\obj\Debug\net8.0\refint\Records.dll
+d:\Dyson\Records\obj\Debug\net8.0\Records.pdb
+d:\Dyson\Records\obj\Debug\net8.0\ref\Records.dll

@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="using:WinApp.Resources.Models"
+             x:Class="WinApp.Resources.UIs.SmartNode.SmartAgents"
+             BackgroundColor="#0B011A">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="DeepPurpleBg">#0B011A</Color>
+            <Color x:Key="SidebarNavBg">#120D1D</Color>
+            <Color x:Key="HistoryBg">#0D0118</Color>
+            <Color x:Key="AccentPurple">#7B52FF</Color>
+
+            <Style TargetType="Label" x:Key="layout-text-Menu">
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="Padding" Value="25,10,0,0" />
+            </Style>
+            <Style TargetType="Label" x:Key="menu-layout">
+                <Setter Property="TextColor" Value="#888888" />
+                <Setter Property="FontSize" Value="12" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="Padding" Value="5,15,0,5" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <Grid ColumnDefinitions="220, *, 280">
+
+            <Grid Grid.Column="0" BackgroundColor="{StaticResource SidebarNavBg}">
+                <ScrollView Padding="15">
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="PAINEL PRINCIPAL" Style="{StaticResource menu-layout}" />
+                        <Label Text="Dashboard" Style="{StaticResource layout-text-Menu}" />
+
+                        <Label Text="WEB3 / BLOCKCHAIN" Style="{StaticResource menu-layout}" />
+                        <Label Text="Smart Wallet" Style="{StaticResource layout-text-Menu}" />
+                        <Label Text="Smart Contracts" Style="{StaticResource layout-text-Menu}" />
+
+                        <Label Text="Smart Node" Style="{StaticResource menu-layout}" />
+                        <Label Text="Interação Neural" Style="{StaticResource layout-text-Menu}">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnToggleClicked" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Label Text="Configurações do Node" Style="{StaticResource layout-text-Menu}">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnToggleClicked" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Label Text="Agentes de Automação" Style="{StaticResource layout-text-Menu}">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnToggleClicked" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Label Text="Ecossistema Neural" Style="{StaticResource layout-text-Menu}">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnToggleClicked" />
+                            </Label.GestureRecognizers>
+                        </Label>
+
+
+                        <Label Text="Smart Node" Style="{StaticResource menu-layout}" />
+                        <Label Text="Interação Neural" Style="{StaticResource layout-text-Menu}" />
+                        <Label Text="Configurações" Style="{StaticResource layout-text-Menu}" />
+                    </VerticalStackLayout>
+                </ScrollView>
+            </Grid>
+
+            <!-- corpo com o conteudo do SmartAgents do Node -->
+            <Grid Grid.Column="1" RowDefinitions="Auto, *" BackgroundColor="{StaticResource DeepPurpleBg}" Padding="40">
+    
+                <VerticalStackLayout Grid.Row="0" Spacing="5" Margin="0,0,0,30">
+                    <Label Text="Agentes de Automação" FontSize="28" FontAttributes="Bold" TextColor="White" />
+                    <Label Text="Gerencie seus agentes neurais e bots de automação Web3." TextColor="#888888" FontSize="14" />
+                </VerticalStackLayout>
+
+                <ScrollView Grid.Row="1">
+                    <FlexLayout Wrap="Wrap" JustifyContent="Start" AlignContent="Start" AlignItems="Start">
+            
+                        <Frame BackgroundColor="#1A1128" BorderColor="{StaticResource AccentPurple}" 
+                               CornerRadius="12" WidthRequest="260" HeightRequest="180" Margin="10" HasShadow="False">
+                            <VerticalStackLayout Spacing="10">
+                                <HorizontalStackLayout Spacing="10">
+                                    <BoxView Color="{StaticResource AccentPurple}" WidthRequest="10" HeightRequest="10" CornerRadius="5" VerticalOptions="Center"/>
+                                    <Label Text="Liquidity Bot v1" TextColor="White" FontAttributes="Bold" FontSize="16" />
+                                </HorizontalStackLayout>
+                    
+                                <Label Text="Status: Ativo" TextColor="#00FFA3" FontSize="12" />
+                                <Label Text="Monitorando pares de tokens e executando trades de arbitragem." 
+                                       TextColor="#BBBBBB" FontSize="12" MaxLines="3" LineBreakMode="WordWrap" />
+                    
+                                <Button Text="Configurar" BackgroundColor="Transparent" TextColor="{StaticResource AccentPurple}" 
+                                        FontSize="12" HorizontalOptions="Start" Margin="0,10,0,0" />
+                            </VerticalStackLayout>
+                        </Frame>
+
+                    </FlexLayout>
+                </ScrollView>
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

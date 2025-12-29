@@ -1,0 +1,244 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:winApp="using:WinApp"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             xmlns:models="using:WinApp.Resources.Models"
+             x:Class="WinApp.Resources.UIs.MarketPlace.Navegar">
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+
+            <!-- Sidebar -->
+            <Style TargetType="BoxView" x:Key="layout-sidebar">
+                <Setter Property="WidthRequest" Value="200"/>
+                <Setter Property="VerticalOptions" Value="Fill"/>
+                <Setter Property="HorizontalOptions" Value="Fill"/>
+                <Setter Property="BackgroundColor" Value="Gray"/>
+            </Style>
+            <Style TargetType="Grid" x:Key="layout-body">
+                <Setter Property="VerticalOptions" Value="Fill"/>
+                <Setter Property="HorizontalOptions" Value="Fill"/>
+                <Setter Property="BackgroundColor" Value="DarkGray"/>
+            </Style>
+            
+            <Style TargetType="Label" x:Key="layout-text-Menu">
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="Padding" Value="25,10,0,0" />
+            </Style>
+            <Style TargetType="Label" x:Key="menu-layout">
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="Padding" Value="5,0,0,0" />
+            </Style>
+            
+            <Color x:Key="DashBackground">#24292e</Color>
+            <Color x:Key="CardBackground">#2d333b</Color>
+            <Color x:Key="AccentBlue">#3498db</Color>
+            <Color x:Key="AccentGreen">#27ae60</Color>
+            <Color x:Key="AccentYellow">#f1c40f</Color>
+            <Color x:Key="AccentRed">#e74c3c</Color>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid
+            RowDefinitions="*"
+            ColumnDefinitions="200,*">
+
+            <!-- Sidebar esquerda -->
+            <Grid Grid.Column="0">
+                
+                <BoxView Grid.Column="0" Style="{StaticResource layout-sidebar}" /> <ScrollView Grid.Column="0" BackgroundColor="Transparent">
+                    <VerticalStackLayout Spacing="10" Padding="10">
+                        <Label Text="PAINEL PRINCIPAL" Style="{StaticResource menu-layout}" />
+                        <models:SidebarMenuItem Title="PAINEL PRINCIPAL"  >
+                            <VerticalStackLayout>
+                                <Label Text="Dashboard" Style="{StaticResource layout-text-Menu}" >
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnToggleClicked"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                            </VerticalStackLayout>
+                        </models:SidebarMenuItem>
+                        
+                        <Label Text="WEB3 / BLOCKCHAIN" Style="{StaticResource menu-layout}" />
+                        <models:SidebarMenuItem Title="WEB3 / BLOCKCHAIN">
+                            <VerticalStackLayout>
+                                <Label Text="Smart Wallet" Style="{StaticResource layout-text-Menu}" >
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnToggleClicked"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                                <Label Text="Smart Contracts" Style="{StaticResource layout-text-Menu}" >
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnToggleClicked"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                            </VerticalStackLayout>
+                        </models:SidebarMenuItem>
+                        
+                        <Label Text="MarketPlace" Style="{StaticResource menu-layout}" />
+                        <models:SidebarMenuItem Title="MarketPlace">
+                            <VerticalStackLayout>
+                                <Label Text="Navegar" Style="{StaticResource layout-text-Menu}" >
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnToggleClicked"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                                <Label Text="Vender" Style="{StaticResource layout-text-Menu}" >
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnToggleClicked"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                            </VerticalStackLayout>
+                        </models:SidebarMenuItem>
+                        
+                        <Label Text="Smart Node" Style="{StaticResource menu-layout}" />
+                        <models:SidebarMenuItem Title="Smart Node">
+                            <VerticalStackLayout>
+                                <Label Text="Interação Neural" Style="{StaticResource layout-text-Menu}" >
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnToggleClicked"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                                <Label Text="Configurações do Node" Style="{StaticResource layout-text-Menu}" >
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnToggleClicked"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                                <Label Text="Agentes de Automação" Style="{StaticResource layout-text-Menu}" >
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnToggleClicked"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                                <Label Text="Ecossistema Neural" Style="{StaticResource layout-text-Menu}" >
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnToggleClicked"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                            </VerticalStackLayout>
+                        </models:SidebarMenuItem>
+           
+                            <Label Text="Settings" 
+                                   Style="{StaticResource menu-layout}"
+                                   VerticalOptions="Center"/>
+                        <models:SidebarMenuItem>
+                            <VerticalStackLayout>
+                                <Label Text="Geral" Style="{StaticResource layout-text-Menu}" >
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnToggleClicked"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                                <Label Text="Segurança" Style="{StaticResource layout-text-Menu}" >
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnToggleClicked"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                                <Label Text="Meu Ecossistema" Style="{StaticResource layout-text-Menu}" >
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnToggleClicked"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                                <Label Text="Documentação" Style="{StaticResource layout-text-Menu}" >
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnToggleClicked"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                            </VerticalStackLayout>
+                        </models:SidebarMenuItem>
+                        
+                    </VerticalStackLayout>
+                </ScrollView>
+
+                <!-- Garante 100% da altura -->
+            </Grid>
+
+            
+            <Grid Grid.Column="1"
+                  Style="{StaticResource layout-body}">
+
+                <!-- Grid Navegar-like (12 colunas) -->
+                <ScrollView Grid.Column="1" BackgroundColor="{StaticResource DashBackground}" Padding="20">
+                    <VerticalStackLayout Spacing="30">
+                        
+                        <Label Text="MarketPlace" 
+                               FontSize="32" 
+                               TextColor="White" 
+                               FontAttributes="Bold" 
+                               Margin="0,0,0,10"/>
+
+    <VerticalStackLayout Spacing="15">
+        <Label Text="Categorias de Smart Agents" 
+               FontSize="18" 
+               TextColor="White" 
+               Opacity="0.9"/>
+
+        <FlexLayout Wrap="Wrap" JustifyContent="Start">
+            <Frame BackgroundColor="#00bcd4" BorderColor="Transparent" CornerRadius="4" Padding="15" Margin="0,0,15,10" WidthRequest="260">
+                <Grid ColumnDefinitions="*, Auto">
+                    <Label Text="Trading &amp; Otimização" TextColor="White" FontAttributes="Bold" VerticalOptions="Center"/>
+                    <Label Grid.Column="1" Text="12 Agentes" TextColor="White" FontSize="10" VerticalOptions="Center" Margin="10,0,0,0"/>
+                </Grid>
+            </Frame>
+
+            <Frame BackgroundColor="#2e7d32" BorderColor="Transparent" CornerRadius="4" Padding="15" Margin="0,0,15,10" WidthRequest="260">
+                <Grid ColumnDefinitions="*, Auto">
+                    <Label Text="Análise de Sentimento" TextColor="White" FontAttributes="Bold" VerticalOptions="Center"/>
+                    <Label Grid.Column="1" Text="8 Agentes" TextColor="White" FontSize="10" VerticalOptions="Center" Margin="10,0,0,0"/>
+                </Grid>
+            </Frame>
+        </FlexLayout>
+    </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="5">
+                            <Label Text="Produtos Mais Populares (Renderização de Teste)" 
+                                   FontSize="18" 
+                                   TextColor="White" 
+                                   Opacity="0.9"/>
+
+                            <FlexLayout BindableLayout.ItemsSource="{Binding Items}" 
+                                        Wrap="Wrap" 
+                                        JustifyContent="Start" 
+                                        AlignItems="Start"
+                                        AlignContent="Start">
+        
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate>
+                                        <Frame BackgroundColor="#1e2227" 
+                                               BorderColor="#333b43" 
+                                               Padding="0" 
+                                               HasShadow="False" 
+                                               CornerRadius="5" 
+                                               WidthRequest="250"
+                                               Margin="2.5"> <VerticalStackLayout>
+                                                <BoxView HeightRequest="160" Color="#161b22"/> 
+
+                                                <VerticalStackLayout Padding="5" Spacing="10" HorizontalOptions="Center">
+                                                    <Label Text="{Binding Nome}" TextColor="White" HorizontalTextAlignment="Center" FontSize="16"/>
+    
+                                                    <Label Text="{Binding Preco, StringFormat='{0} DTC'}" TextColor="#fbc02d" FontAttributes="Bold" HorizontalTextAlignment="Center" FontSize="18"/>
+    
+                                                    <Button Text="Comprar" 
+                                                            BackgroundColor="#1c2128" 
+                                                            BorderColor="#333b43" 
+                                                            BorderWidth="1" 
+                                                            TextColor="White" 
+                                                            Padding="30,10"
+                                                            Margin="0,5,0,5"
+                                                            CornerRadius="8"/>
+                                                </VerticalStackLayout>
+                                            </VerticalStackLayout>
+                                        </Frame>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </FlexLayout>
+                        </VerticalStackLayout>
+
+</VerticalStackLayout>
+                </ScrollView>
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

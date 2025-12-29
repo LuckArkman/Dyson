@@ -10,5 +10,343 @@
             Exposes the Android Resource designer assembly into the project Namespace.
             </summary>
         </member>
+        <member name="M:Brain.ComputationGraphCacheManager.Reset">
+            <summary>
+            Limpa o cache anterior e prepara o arquivo para uma nova passagem forward.
+            </summary>
+        </member>
+        <member name="M:Brain.ComputationGraphCacheManager.CacheNode(Brain.ComputationGraphNode)">
+            <summary>
+            Serializa um único nó do grafo e o anexa ao arquivo de cache no disco.
+            </summary>
+        </member>
+        <member name="M:Brain.ComputationGraphCacheManager.RetrieveNodesBackward">
+            <summary>
+            Retorna um iterador que lê os nós do grafo do disco em ordem REVERSA.
+            Isso é extremamente eficiente em memória, pois apenas um nó é desserializado por vez.
+            </summary>
+        </member>
+        <member name="M:Brain.DiskOnlyCacheManager.CacheStep(Brain.LstmStepCache)">
+            <summary>
+            Armazena os estados intermediários de uma etapa LSTM em disco.
+            </summary>
+        </member>
+        <member name="M:Brain.DiskOnlyCacheManager.RetrieveMultipleTensors(System.Int32,System.String[])">
+            <summary>
+            Recupera múltiplos tensores de um timestep, usando ArrayPool para buffers temporários.
+            </summary>
+            <summary>
+            ✅ MÉTODO REATORADO: Recupera múltiplos conjuntos de dados brutos (float[] e shape) de um timestep.
+            Não cria mais tensores, eliminando a dependência da IMathEngine.
+            </summary>
+        </member>
+        <member name="M:Brain.DiskOnlyCacheManager.RetrieveTensor(System.Int32,System.String)">
+            <summary>
+            Recupera um tensor individual de um timestep.
+            </summary>
+        </member>
+        <member name="M:Brain.GenerativeNeuralNetworkLSTM.#ctor(System.Int32,System.Int32,System.Int32,System.String,Interfaces.ISearchService,Interfaces.IMathEngine)">
+            <summary>
+            Construtor para criar um novo modelo generativo para treinamento.
+            </summary>
+        </member>
+        <member name="M:Brain.GenerativeNeuralNetworkLSTM.#ctor(Brain.NeuralNetworkLSTM,Core.VocabularyManager,Interfaces.ISearchService)">
+            <summary>
+            Construtor privado para "envolver" um modelo base já carregado.
+            </summary>
+        </member>
+        <member name="M:Brain.GenerativeNeuralNetworkLSTM.Load(System.String,Interfaces.IMathEngine,Core.VocabularyManager,Interfaces.ISearchService)">
+            <summary>
+            Método de fábrica estático para carregar um modelo e envolvê-lo.
+            </summary>
+        </member>
+        <member name="M:Brain.GenerativeNeuralNetworkLSTM.GenerateResponse(System.String,System.Int32)">
+            <summary>
+            Gera uma continuação de texto a partir de um prompt.
+            </summary>
+        </member>
+        <member name="M:Brain.GenerativeNeuralNetworkLSTM.CalculateSequenceLoss(System.Int32[],System.Int32[])">
+            <summary>
+            Calcula a perda para uma sequência para fins de validação.
+            </summary>
+        </member>
+        <member name="M:Brain.GpuLoadMonitor.RecordUtilization(System.Double,System.Double)">
+            <summary>
+            Atualiza estatísticas de utilização e ajusta parâmetros se necessário.
+            Deve ser chamado após cada lote (batch) de treinamento.
+            </summary>
+        </member>
+        <member name="M:Brain.GpuLoadMonitor.ApplyThrottle">
+            <summary>
+            Aplica a pausa (throttle) calculada dinamicamente.
+            </summary>
+        </member>
+        <member name="M:Brain.GpuLoadMonitor.MeasureGpuUtilization">
+            <summary>
+            Simula medição de utilização da GPU.
+            Em produção, substitua por chamadas reais ao driver OpenCL.
+            </summary>
+        </member>
+        <member name="M:Brain.LearningRateScheduler.GetLearningRate">
+            <summary>
+            Retorna o Learning Rate atual baseado no step.
+            </summary>
+        </member>
+        <member name="M:Brain.LearningRateScheduler.GetLearningRate(System.Int32)">
+            <summary>
+            Calcula LR para um step específico.
+            </summary>
+        </member>
+        <member name="M:Brain.LearningRateScheduler.Step">
+            <summary>
+            Incrementa o step interno.
+            </summary>
+        </member>
+        <member name="M:Brain.LearningRateScheduler.Reset">
+            <summary>
+            Reseta o scheduler para uma nova época.
+            </summary>
+        </member>
+        <member name="M:Brain.LearningRateScheduler.GetStatus">
+            <summary>
+            Retorna informações de debug.
+            </summary>
+        </member>
+        <member name="M:Brain.MemoryMonitor.Start(System.Int32)">
+            <summary>
+            Inicia monitoramento em background.
+            </summary>
+        </member>
+        <member name="M:Brain.MemoryMonitor.Stop">
+            <summary>
+            Para monitoramento e imprime relatório final.
+            </summary>
+        </member>
+        <member name="M:Brain.MemoryMonitor.CheckMemory">
+            <summary>
+            Verifica memória atual e dispara alertas.
+            </summary>
+        </member>
+        <member name="M:Brain.MemoryMonitor.CheckNow">
+            <summary>
+            Força verificação imediata (chamável externamente).
+            </summary>
+        </member>
+        <member name="M:Brain.MemoryMonitor.GetUptime">
+            <summary>
+            Retorna tempo desde início do monitoramento.
+            </summary>
+        </member>
+        <member name="M:Brain.MemoryMonitor.PrintFinalReport">
+            <summary>
+            Imprime relatório final de execução.
+            </summary>
+        </member>
+        <member name="M:Brain.ModelSerializerLSTM.SaveModel(Brain.GenerativeNeuralNetworkLSTM,System.String)">
+            <summary>
+            Salva o modelo no caminho especificado, delegando a lógica para o próprio modelo.
+            </summary>
+        </member>
+        <member name="M:Brain.ModelSerializerLSTM.LoadModel(System.String,Interfaces.IMathEngine)">
+            <summary>
+            Carrega um modelo generativo do disco.
+            </summary>
+        </member>
+        <member name="M:Brain.TensorPool.Return(Interfaces.IMathTensor)">
+            <summary>
+            Chamado pelo PooledTensor.Dispose()
+            </summary>
+        </member>
+        <member name="M:Core.Tensor.WriteToStream(System.IO.BinaryWriter)">
+            <summary>
+            Escreve o conteúdo do tensor de forma eficiente para um stream.
+            </summary>
+        </member>
+        <member name="M:Core.Tensor.ReadFromStream(System.IO.BinaryReader,System.Int64)">
+            <summary>
+            ✅ ATUALIZADO: Lê dados de um stream de forma eficiente usando ArrayPool.
+            </summary>
+        </member>
+        <member name="M:Cpu.CpuTensor.WriteToStream(System.IO.BinaryWriter)">
+            <summary>
+            Escreve o conteúdo do tensor da RAM para um stream binário (arquivo).
+            Esta operação é altamente eficiente ("zero-copy"), pois cria uma visualização
+            somente leitura dos dados como bytes e os escreve diretamente no stream.
+            </summary>
+        </member>
+        <member name="M:Cpu.CpuTensor.ReadFromStream(System.IO.BinaryReader,System.Int64)">
+            <summary>
+            Lê dados de um stream binário (arquivo) e os carrega na memória deste tensor de CPU.
+            Utiliza um buffer de RAM intermediário e reutilizável do ArrayPool para a leitura,
+            evitando alocações de memória desnecessárias.
+            </summary>
+        </member>
+        <member name="T:Gpu.GpuMemoryTracker">
+            <summary>
+            Rastreador de alocações de memória GPU para detectar vazamentos.
+            Monitora criação e liberação de tensores, identificando leaks em tempo real.
+            </summary>
+        </member>
+        <member name="M:Gpu.GpuMemoryTracker.TrackAllocation(Interfaces.IMathTensor,System.String,System.Int32[])">
+            <summary>
+            Registra alocação de um novo tensor.
+            </summary>
+        </member>
+        <member name="M:Gpu.GpuMemoryTracker.TrackDeallocation(System.Int32)">
+            <summary>
+            Registra liberação de um tensor.
+            </summary>
+        </member>
+        <member name="M:Gpu.GpuMemoryTracker.DetectLeaks(System.Object)">
+            <summary>
+            Verifica se há tensores não liberados há muito tempo.
+            </summary>
+        </member>
+        <member name="M:Gpu.GpuMemoryTracker.CheckMemoryThresholds">
+            <summary>
+            Verifica thresholds de memória e emite alertas.
+            </summary>
+        </member>
+        <member name="M:Gpu.GpuMemoryTracker.PrintTopAllocations(System.Int32)">
+            <summary>
+            Imprime maiores alocações ativas.
+            </summary>
+        </member>
+        <member name="M:Gpu.GpuMemoryTracker.CleanupOrphans">
+            <summary>
+            Força liberação de tensores órfãos (GC coletados mas não dispostos).
+            </summary>
+        </member>
+        <member name="M:Gpu.GpuMemoryTracker.GetStatistics">
+            <summary>
+            Retorna estatísticas de memória.
+            </summary>
+        </member>
+        <member name="M:Gpu.GpuMemoryTracker.PrintReport">
+            <summary>
+            Imprime relatório detalhado.
+            </summary>
+        </member>
+        <member name="T:Gpu.TensorAllocation">
+            <summary>
+            Informações sobre uma alocação de tensor.
+            </summary>
+        </member>
+        <member name="T:Gpu.MemoryStatistics">
+            <summary>
+            Estatísticas de memória GPU.
+            </summary>
+        </member>
+        <member name="T:Gpu.GpuSyncGuard">
+            <summary>
+            Camada de sincronização GPU crítica para prevenir vazamentos VRAM→RAM.
+            Garante que TODAS as operações GPU sejam completadas antes de operações sensíveis.
+            </summary>
+        </member>
+        <member name="M:Gpu.GpuSyncGuard.SynchronizeBeforeRead(System.String)">
+            <summary>
+            🔒 CRÍTICO: Sincroniza GPU ANTES de qualquer operação que leia de buffers.
+            Previne staging buffers fantasma na RAM.
+            </summary>
+        </member>
+        <member name="M:Gpu.GpuSyncGuard.SynchronizeBeforeDispose(System.String,System.Int64)">
+            <summary>
+            🔒 CRÍTICO: Sincroniza GPU ANTES de liberar buffers.
+            Previne shadow copies na RAM.
+            </summary>
+        </member>
+        <member name="M:Gpu.GpuSyncGuard.InsertBarrier(System.String)">
+            <summary>
+            🔒 Insere uma barreira explícita no command queue.
+            Garante que comandos futuros só executem após comandos passados completarem.
+            </summary>
+        </member>
+        <member name="M:Gpu.GpuSyncGuard.CreateProgressMarker(System.String)">
+            <summary>
+            🔒 Cria um marker para rastrear progresso de operações assíncronas.
+            </summary>
+        </member>
+        <member name="M:Gpu.GpuSyncGuard.WaitForEvent(OpenCL.NetCore.Event,System.String,System.Int32)">
+            <summary>
+            🔒 Aguarda um evento específico completar com timeout.
+            </summary>
+        </member>
+        <member name="M:Gpu.GpuSyncGuard.GetStatistics">
+            <summary>
+            📊 Retorna estatísticas de sincronização para diagnóstico.
+            </summary>
+        </member>
+        <member name="M:Gpu.GpuSyncGuard.CleanupOldSyncPoints">
+            <summary>
+            🧹 Limpa sync points antigos (mais de 5 minutos).
+            </summary>
+        </member>
+        <member name="T:Gpu.SyncPoint">
+            <summary>
+            Representa um ponto de sincronização registrado.
+            </summary>
+        </member>
+        <member name="T:Gpu.SyncStatistics">
+            <summary>
+            Estatísticas de sincronização GPU.
+            </summary>
+        </member>
+        <member name="M:Models.NodeState.GetKnownPeers">
+            <summary>
+            Retorna uma cópia da lista de pares conhecidos.
+            </summary>
+        </member>
+        <member name="M:Models.NodeState.MergePeers(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Mescla uma lista de pares recebidos com nossa lista local.
+            </summary>
+        </member>
+        <member name="M:Services.DatasetService.InitializeAndSplit(System.String,System.Int32,Core.VocabularyManager,System.String,System.Int32,System.Single)">
+            <summary>
+            Lê o dataset do disco (streaming), tokeniza via SQLite e grava lotes binários.
+            </summary>
+        </member>
+        <member name="M:Services.NodeRegistryService.FindNodesBySpecialization(System.String)">
+            <summary>
+            Consulta o registro e retorna os nós que possuem uma especialização específica.
+            Esta é a função-chave para o Worker.
+            </summary>
+        </member>
+        <member name="M:Services.NodeRegistryService.GetGeneralPurposeNodes(System.Int32)">
+            <summary>
+            Retorna uma quantidade de nós "genéricos" para tarefas que não têm uma especialização clara.
+            </summary>
+        </member>
+        <member name="M:Services.PrimingService.PrimeModel(Brain.GenerativeNeuralNetworkLSTM)">
+            <summary>
+            Processa o prompt de diretiva para "aquecer" o estado oculto do modelo,
+            usando a arquitetura ZeroRAM e Vocabulário SQLite.
+            </summary>
+        </member>
+        <member name="M:Services.WalletService.GetTransactionCountAsync(System.String)">
+            <summary>
+            Obtém o número total de transações de uma carteira
+            </summary>
+        </member>
+        <member name="M:Services.WalletService.WalletExistsAsync(System.String)">
+            <summary>
+            Verifica se uma carteira existe
+            </summary>
+        </member>
+        <member name="M:Services.WalletService.GetWalletInfoAsync(System.String)">
+            <summary>
+            Obtém informações básicas da carteira
+            </summary>
+        </member>
+        <member name="M:TreeSwapFile.BinaryTreeFileStorage.CalculateChecksum(System.Byte[])">
+            <summary>
+            Calcula checksum simples para validação de integridade
+            </summary>
+        </member>
+        <member name="M:TreeSwapFile.BinaryTreeFileStorage.GetDataBytes(System.Int64)">
+            <summary>
+            Lê dados com validação de checksum
+            </summary>
+        </member>
     </members>
 </doc>

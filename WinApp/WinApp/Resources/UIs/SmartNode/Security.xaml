@@ -1,0 +1,212 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="using:WinApp.Resources.Models"
+             x:Class="WinApp.Resources.UIs.SmartNode.Security"
+             BackgroundColor="#0B011A">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="DeepPurpleBg">#0B011A</Color>
+            <Color x:Key="SidebarNavBg">#120D1D</Color>
+            <Color x:Key="HistoryBg">#0D0118</Color>
+            <Color x:Key="AccentPurple">#7B52FF</Color>
+
+            <Style TargetType="Label" x:Key="layout-text-Menu">
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="Padding" Value="25,10,0,0" />
+            </Style>
+            <Style TargetType="Label" x:Key="menu-layout">
+                <Setter Property="TextColor" Value="#888888" />
+                <Setter Property="FontSize" Value="12" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="Padding" Value="5,15,0,5" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <Grid ColumnDefinitions="220, *, 280">
+
+            <Grid Grid.Column="0" BackgroundColor="{StaticResource SidebarNavBg}">
+                <ScrollView Padding="15">
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="PAINEL PRINCIPAL" Style="{StaticResource menu-layout}" />
+                        <Label Text="Dashboard" Style="{StaticResource layout-text-Menu}" />
+
+                        <Label Text="WEB3 / BLOCKCHAIN" Style="{StaticResource menu-layout}" />
+                        <Label Text="Smart Wallet" Style="{StaticResource layout-text-Menu}" />
+                        <Label Text="Smart Contracts" Style="{StaticResource layout-text-Menu}" />
+
+                        <Label Text="Smart Node" Style="{StaticResource menu-layout}" />
+                        <Label Text="Interação Neural" Style="{StaticResource layout-text-Menu}">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnToggleClicked" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Label Text="Configurações do Node" Style="{StaticResource layout-text-Menu}">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnToggleClicked" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Label Text="Agentes de Automação" Style="{StaticResource layout-text-Menu}">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnToggleClicked" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Label Text="Ecossistema Neural" Style="{StaticResource layout-text-Menu}">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnToggleClicked" />
+                            </Label.GestureRecognizers>
+                        </Label>
+
+                        <Label Text="Ecossistema Neural" Style="{StaticResource layout-text-Menu}">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnToggleClicked" />
+                            </Label.GestureRecognizers>
+                        </Label>
+
+                        <Label Text="Segurança" Style="{StaticResource layout-text-Menu}">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnToggleClicked" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </VerticalStackLayout>
+                </ScrollView>
+            </Grid>
+
+            <!-- corpo com o conteudo do Security do Node -->
+            <Grid Grid.Column="1" RowDefinitions="Auto, *" BackgroundColor="{StaticResource DeepPurpleBg}" Padding="40">
+
+                <Grid Grid.Row="0" ColumnDefinitions="*, Auto" Margin="0,0,0,30">
+                    <VerticalStackLayout Grid.Column="0" Spacing="5">
+                        <Label Text="Security Hub" FontSize="28" FontAttributes="Bold" TextColor="White" />
+                        <Label Text="Administração de camadas de proteção e políticas de isolamento neural."
+                               TextColor="#888888" />
+                    </VerticalStackLayout>
+
+                    <Border Grid.Column="1" Padding="15,8" Stroke="#00FFA3" StrokeThickness="1"
+                            BackgroundColor="#0D1A14">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="8" />
+                        </Border.StrokeShape>
+                        <HorizontalStackLayout Spacing="10">
+                            <Label Text="🛡️" VerticalOptions="Center" />
+                            <Label Text="NODE PROTEGIDO" TextColor="#00FFA3" FontAttributes="Bold" FontSize="12"
+                                   VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                    </Border>
+                </Grid>
+
+                <ScrollView Grid.Row="1">
+                    <VerticalStackLayout Spacing="25">
+
+                        <Label Text="NÍVEL DE BLINDAGEM" TextColor="#888888" FontAttributes="Bold" FontSize="12" />
+                        <Border Stroke="#2A1F40" StrokeThickness="1" Padding="25" BackgroundColor="#120D1D">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="12" />
+                            </Border.StrokeShape>
+                            <VerticalStackLayout Spacing="20">
+                                <Grid ColumnDefinitions="*, Auto">
+                                    <VerticalStackLayout Grid.Column="0">
+                                        <Label Text="Arquitetura de Segurança" TextColor="White" FontAttributes="Bold"
+                                               FontSize="16" />
+                                        <Label Text="Defina a robustez das camadas de criptografia e validação."
+                                               TextColor="#666666" FontSize="12" />
+                                    </VerticalStackLayout>
+                                    <Label Grid.Column="1" Text="Nível 4: Robusto"
+                                           TextColor="{StaticResource AccentPurple}" FontAttributes="Bold"
+                                           VerticalOptions="Center" />
+                                </Grid>
+
+                                <Slider Minimum="1" Maximum="5" Value="4" ThumbColor="{StaticResource AccentPurple}"
+                                        MinimumTrackColor="{StaticResource AccentPurple}" />
+
+                                <FlexLayout Wrap="Wrap" JustifyContent="SpaceBetween">
+                                    <CheckBox IsChecked="True" Color="{StaticResource AccentPurple}" />
+                                    <Label Text="Criptografia AES-256" TextColor="White" VerticalOptions="Center"
+                                           Margin="0,0,20,0" />
+                                    <CheckBox IsChecked="True" Color="{StaticResource AccentPurple}" />
+                                    <Label Text="Assinatura Multi-Sig" TextColor="White" VerticalOptions="Center"
+                                           Margin="0,0,20,0" />
+                                    <CheckBox IsChecked="False" Color="{StaticResource AccentPurple}" />
+                                    <Label Text="Zero-Knowledge Proofs" TextColor="White" VerticalOptions="Center" />
+                                </FlexLayout>
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <Grid ColumnDefinitions="*, *" ColumnSpacing="20">
+                            <Border Grid.Column="0" Stroke="#2A1F40" StrokeThickness="1" Padding="20"
+                                    BackgroundColor="#0D0118">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="12" />
+                                </Border.StrokeShape>
+                                <VerticalStackLayout Spacing="10">
+                                    <Label Text="DADOS DO NODE" TextColor="White" FontAttributes="Bold" />
+                                    <Label Text="Proteção de chaves privadas e estados internos do sistema."
+                                           TextColor="#666666" FontSize="12" />
+                                    <Button Text="Rotacionar Chaves" BackgroundColor="Transparent"
+                                            TextColor="{StaticResource AccentPurple}" HorizontalOptions="Start"
+                                            FontSize="12" />
+                                </VerticalStackLayout>
+                            </Border>
+
+                            <Border Grid.Column="1" Stroke="#2A1F40" StrokeThickness="1" Padding="20"
+                                    BackgroundColor="#0D0118">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="12" />
+                                </Border.StrokeShape>
+                                <VerticalStackLayout Spacing="10">
+                                    <Label Text="ECOSSISTEMA PRIVADO" TextColor="White" FontAttributes="Bold" />
+                                    <Label Text="Isolamento de domínios e confidencialidade estratégica."
+                                           TextColor="#666666" FontSize="12" />
+                                    <Button Text="Auditoria de Acesso" BackgroundColor="Transparent"
+                                            TextColor="{StaticResource AccentPurple}" HorizontalOptions="Start"
+                                            FontSize="12" />
+                                </VerticalStackLayout>
+                            </Border>
+                        </Grid>
+
+                        <Label Text="COMUNICAÇÃO EXTERNA" TextColor="#888888" FontAttributes="Bold" FontSize="12"
+                               Margin="0,10,0,0" />
+                        <Border Stroke="#2A1F40" StrokeThickness="1" Padding="20" BackgroundColor="#120D1D">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="12" />
+                            </Border.StrokeShape>
+                            <VerticalStackLayout Spacing="15">
+                                <Grid ColumnDefinitions="*, Auto">
+                                    <VerticalStackLayout Grid.Column="0" Spacing="5">
+                                        <Label Text="Políticas de Tráfego P2P" TextColor="White" FontAttributes="Bold" />
+                                        <Label Text="Criptografia de ponta-a-ponta e validação de reputação de pares."
+                                               TextColor="#666666" FontSize="12" />
+                                    </VerticalStackLayout>
+                                    <Switch Grid.Column="1" IsToggled="True" OnColor="{StaticResource AccentPurple}" />
+                                </Grid>
+
+                                <BoxView HeightRequest="1" Color="#2A1F40" />
+
+                                <HorizontalStackLayout Spacing="15">
+                                    <Border Padding="8,4" Stroke="#7B52FF" StrokeThickness="0.5"
+                                            BackgroundColor="Transparent">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="4" />
+                                        </Border.StrokeShape>
+                                        <Label Text="TLS 1.3" TextColor="#7B52FF" FontSize="10" />
+                                    </Border>
+                                    <Border Padding="8,4" Stroke="#7B52FF" StrokeThickness="0.5"
+                                            BackgroundColor="Transparent">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="4" />
+                                        </Border.StrokeShape>
+                                        <Label Text="mTLS" TextColor="#7B52FF" FontSize="10" />
+                                    </Border>
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+                        </Border>
+
+                    </VerticalStackLayout>
+                </ScrollView>
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

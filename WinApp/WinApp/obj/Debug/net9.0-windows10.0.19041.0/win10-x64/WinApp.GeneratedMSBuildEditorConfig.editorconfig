@@ -71,3 +71,63 @@ build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = WinApp.Resources.UIs.login.xaml
 build_metadata.AdditionalFiles.TargetPath = Resources\UIs\login.xaml
 build_metadata.AdditionalFiles.RelativePath = Resources\UIs\login.xaml
+
+[D:/Dyson/WinApp/WinApp/Resources/UIs/MarketPlace/Navegar.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WinApp.Resources.UIs.MarketPlace.Navegar.xaml
+build_metadata.AdditionalFiles.TargetPath = Resources\UIs\MarketPlace\Navegar.xaml
+build_metadata.AdditionalFiles.RelativePath = Resources\UIs\MarketPlace\Navegar.xaml
+
+[D:/Dyson/WinApp/WinApp/Resources/UIs/MarketPlace/Sell.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WinApp.Resources.UIs.MarketPlace.Sell.xaml
+build_metadata.AdditionalFiles.TargetPath = Resources\UIs\MarketPlace\Sell.xaml
+build_metadata.AdditionalFiles.RelativePath = Resources\UIs\MarketPlace\Sell.xaml
+
+[D:/Dyson/WinApp/WinApp/Resources/UIs/SmartNode/Chat.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WinApp.Resources.UIs.SmartNode.Chat.xaml
+build_metadata.AdditionalFiles.TargetPath = Resources\UIs\SmartNode\Chat.xaml
+build_metadata.AdditionalFiles.RelativePath = Resources\UIs\SmartNode\Chat.xaml
+
+[D:/Dyson/WinApp/WinApp/Resources/UIs/SmartNode/NeuralEcosystem.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WinApp.Resources.UIs.SmartNode.NeuralEcosystem.xaml
+build_metadata.AdditionalFiles.TargetPath = Resources\UIs\SmartNode\NeuralEcosystem.xaml
+build_metadata.AdditionalFiles.RelativePath = Resources\UIs\SmartNode\NeuralEcosystem.xaml
+
+[D:/Dyson/WinApp/WinApp/Resources/UIs/SmartNode/NodeController.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WinApp.Resources.UIs.SmartNode.NodeController.xaml
+build_metadata.AdditionalFiles.TargetPath = Resources\UIs\SmartNode\NodeController.xaml
+build_metadata.AdditionalFiles.RelativePath = Resources\UIs\SmartNode\NodeController.xaml
+
+[D:/Dyson/WinApp/WinApp/Resources/UIs/SmartNode/Security.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WinApp.Resources.UIs.SmartNode.Security.xaml
+build_metadata.AdditionalFiles.TargetPath = Resources\UIs\SmartNode\Security.xaml
+build_metadata.AdditionalFiles.RelativePath = Resources\UIs\SmartNode\Security.xaml
+
+[D:/Dyson/WinApp/WinApp/Resources/UIs/SmartNode/Settings.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WinApp.Resources.UIs.SmartNode.Settings.xaml
+build_metadata.AdditionalFiles.TargetPath = Resources\UIs\SmartNode\Settings.xaml
+build_metadata.AdditionalFiles.RelativePath = Resources\UIs\SmartNode\Settings.xaml
+
+[D:/Dyson/WinApp/WinApp/Resources/UIs/SmartNode/SmartAgents.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WinApp.Resources.UIs.SmartNode.SmartAgents.xaml
+build_metadata.AdditionalFiles.TargetPath = Resources\UIs\SmartNode\SmartAgents.xaml
+build_metadata.AdditionalFiles.RelativePath = Resources\UIs\SmartNode\SmartAgents.xaml
+
+[D:/Dyson/WinApp/WinApp/Resources/UIs/WEB3/smartContracts.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WinApp.Resources.UIs.WEB3.smartContracts.xaml
+build_metadata.AdditionalFiles.TargetPath = Resources\UIs\WEB3\smartContracts.xaml
+build_metadata.AdditionalFiles.RelativePath = Resources\UIs\WEB3\smartContracts.xaml
+
+[D:/Dyson/WinApp/WinApp/Resources/UIs/WEB3/smartWallet.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WinApp.Resources.UIs.WEB3.smartWallet.xaml
+build_metadata.AdditionalFiles.TargetPath = Resources\UIs\WEB3\smartWallet.xaml
+build_metadata.AdditionalFiles.RelativePath = Resources\UIs\WEB3\smartWallet.xaml

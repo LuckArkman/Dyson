@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="using:WinApp.Resources.Models"
+             x:Class="WinApp.Resources.UIs.SmartNode.Chat"
+             BackgroundColor="#0B011A"> <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="DeepPurpleBg">#0B011A</Color>
+            <Color x:Key="SidebarNavBg">#120D1D</Color>
+            <Color x:Key="HistoryBg">#0D0118</Color>
+            <Color x:Key="AccentPurple">#7B52FF</Color>
+            
+            <Style TargetType="Label" x:Key="layout-text-Menu">
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="Padding" Value="25,10,0,0" />
+            </Style>
+            <Style TargetType="Label" x:Key="menu-layout">
+                <Setter Property="TextColor" Value="#888888"/>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="Padding" Value="5,15,0,5" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <Grid ColumnDefinitions="220, *, 280">
+
+            <Grid Grid.Column="0" BackgroundColor="{StaticResource SidebarNavBg}">
+                <ScrollView Padding="15">
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="PAINEL PRINCIPAL" Style="{StaticResource menu-layout}" />
+                        <Label Text="Dashboard" Style="{StaticResource layout-text-Menu}" />
+                        
+                        <Label Text="WEB3 / BLOCKCHAIN" Style="{StaticResource menu-layout}" />
+                        <Label Text="Smart Wallet" Style="{StaticResource layout-text-Menu}" />
+                        <Label Text="Smart Contracts" Style="{StaticResource layout-text-Menu}" />
+                        
+                        <Label Text="Smart Node" Style="{StaticResource menu-layout}" />
+                        <Label Text="Interação Neural" Style="{StaticResource layout-text-Menu}">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnToggleClicked" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Label Text="Configurações do Node" Style="{StaticResource layout-text-Menu}">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnToggleClicked" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Label Text="Agentes de Automação" Style="{StaticResource layout-text-Menu}">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnToggleClicked" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Label Text="Ecossistema Neural" Style="{StaticResource layout-text-Menu}">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnToggleClicked" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                        
+                        
+                        <Label Text="Smart Node" Style="{StaticResource menu-layout}" />
+                        <Label Text="Interação Neural" Style="{StaticResource layout-text-Menu}" />
+                        <Label Text="Configurações" Style="{StaticResource layout-text-Menu}" />
+                    </VerticalStackLayout>
+                </ScrollView>
+            </Grid>
+
+            <Grid Grid.Column="1" RowDefinitions="Auto, *, Auto" BackgroundColor="{StaticResource DeepPurpleBg}">
+                
+                <HorizontalStackLayout Spacing="10" Padding="25, 15">
+                    <Ellipse Fill="#4CAF50" WidthRequest="8" HeightRequest="8" VerticalOptions="Center"/>
+                    <Label Text="Dyson-AI Model" TextColor="White" FontAttributes="Bold" VerticalOptions="Center"/>
+                    <Border BackgroundColor="#2D1B4E" Padding="6,2" StrokeShape="RoundRectangle 4">
+                        <Label Text="v0.1" TextColor="{StaticResource AccentPurple}" FontSize="10" FontAttributes="Bold"/>
+                    </Border>
+                </HorizontalStackLayout>
+
+                <ScrollView Grid.Row="1" Padding="20">
+                    <VerticalStackLayout Spacing="20" VerticalOptions="Center" HorizontalOptions="Center">
+                        <Border WidthRequest="70" HeightRequest="70" BackgroundColor="{StaticResource AccentPurple}" StrokeShape="RoundRectangle 18">
+                            <Label Text="⚡" FontSize="35" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <Label Text="Como posso ajudar hoje?" TextColor="White" FontSize="28" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                        <Label Text="Pergunte sobre Smart Contracts, Smart Wallets ou Smart Nodes." 
+                               TextColor="#888888" HorizontalTextAlignment="Center" MaximumWidthRequest="400"/>
+                    </VerticalStackLayout>
+                </ScrollView>
+
+                <VerticalStackLayout Grid.Row="2" Padding="30,10,30,20" Spacing="10">
+                    <Border StrokeShape="RoundRectangle 15" BackgroundColor="#1D0A35" StrokeThickness="1" Stroke="#3D2B52">
+                        <Grid ColumnDefinitions="*, Auto" Padding="15,5">
+                            <Entry Placeholder="Envie uma mensagem para a IA..." PlaceholderColor="#555555" TextColor="White" HeightRequest="50"/>
+                            <Button Grid.Column="1" Text="▲" BackgroundColor="{StaticResource AccentPurple}" CornerRadius="8" WidthRequest="40" HeightRequest="35"/>
+                        </Grid>
+                    </Border>
+                    <Label Text="A Dyson-IA pode cometer erros." TextColor="#555555" FontSize="10" HorizontalTextAlignment="Center"/>
+                </VerticalStackLayout>
+            </Grid>
+
+            <Grid Grid.Column="2" BackgroundColor="{StaticResource HistoryBg}" RowDefinitions="Auto, *, Auto" Padding="15">
+                <Button Text="+ Novo Chat" BackgroundColor="#1D0A35" TextColor="White" BorderColor="#3D2B52" BorderWidth="1" CornerRadius="8" HeightRequest="45"/>
+
+                <ScrollView Grid.Row="1" Margin="0,20">
+                    <VerticalStackLayout Spacing="15">
+                        <Label Text="HISTÓRICO" TextColor="#555555" FontSize="11" FontAttributes="Bold"/>
+                        <Label Text="esse e um teste" TextColor="#D1D1D1"/>
+                        <Label Text="numero pi" TextColor="#D1D1D1"/>
+                        <Label Text="teste de smart contract" TextColor="#D1D1D1"/>
+                    </VerticalStackLayout>
+                </ScrollView>
+
+                <Grid Grid.Row="2" ColumnDefinitions="Auto, *" ColumnSpacing="12" Padding="5,15">
+                    <Border WidthRequest="40" HeightRequest="40" BackgroundColor="{StaticResource AccentPurple}" StrokeShape="RoundRectangle 20">
+                        <Label Text="U" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" FontAttributes="Bold"/>
+                    </Border>
+                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                        <Label Text="MAURICIO DA PAIXAO LOPES" TextColor="White" FontSize="10" FontAttributes="Bold"/>
+                        <Label Text="Conta Node" TextColor="#555555" FontSize="9"/>
+                    </VerticalStackLayout>
+                </Grid>
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

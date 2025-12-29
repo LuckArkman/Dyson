@@ -1,25 +1,31 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Dyson\\Controllers\\Controllers.csproj": {}
+    "d:\\Dyson\\Controllers\\Controllers.csproj": {}
   },
   "projects": {
-    "D:\\Dyson\\Controllers\\Controllers.csproj": {
+    "d:\\Dyson\\Controllers\\Controllers.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Dyson\\Controllers\\Controllers.csproj",
+        "projectUniqueName": "d:\\Dyson\\Controllers\\Controllers.csproj",
         "projectName": "Controllers",
-        "projectPath": "D:\\Dyson\\Controllers\\Controllers.csproj",
+        "projectPath": "d:\\Dyson\\Controllers\\Controllers.csproj",
         "packagesPath": "C:\\Users\\MPLopes\\.nuget\\packages\\",
-        "outputPath": "D:\\Dyson\\Controllers\\obj\\",
+        "outputPath": "d:\\Dyson\\Controllers\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\MPLopes\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\MPLopes\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
@@ -27,17 +33,17 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\Dyson\\Dtos\\Dtos.csproj": {
-                "projectPath": "D:\\Dyson\\Dtos\\Dtos.csproj"
+              "d:\\Dyson\\Dtos\\Dtos.csproj": {
+                "projectPath": "d:\\Dyson\\Dtos\\Dtos.csproj"
               },
-              "D:\\Dyson\\Interfaces\\Interfaces.csproj": {
-                "projectPath": "D:\\Dyson\\Interfaces\\Interfaces.csproj"
+              "d:\\Dyson\\Interfaces\\Interfaces.csproj": {
+                "projectPath": "d:\\Dyson\\Interfaces\\Interfaces.csproj"
               },
-              "D:\\Dyson\\Records\\Records.csproj": {
-                "projectPath": "D:\\Dyson\\Records\\Records.csproj"
+              "d:\\Dyson\\Records\\Records.csproj": {
+                "projectPath": "d:\\Dyson\\Records\\Records.csproj"
               },
-              "D:\\Dyson\\Services\\Services.csproj": {
-                "projectPath": "D:\\Dyson\\Services\\Services.csproj"
+              "d:\\Dyson\\Services\\Services.csproj": {
+                "projectPath": "d:\\Dyson\\Services\\Services.csproj"
               }
             }
           }
@@ -103,22 +109,28 @@
         }
       }
     },
-    "D:\\Dyson\\Data\\Data.csproj": {
+    "d:\\Dyson\\Data\\Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Dyson\\Data\\Data.csproj",
+        "projectUniqueName": "d:\\Dyson\\Data\\Data.csproj",
         "projectName": "Data",
-        "projectPath": "D:\\Dyson\\Data\\Data.csproj",
+        "projectPath": "d:\\Dyson\\Data\\Data.csproj",
         "packagesPath": "C:\\Users\\MPLopes\\.nuget\\packages\\",
-        "outputPath": "D:\\Dyson\\Data\\obj\\",
+        "outputPath": "d:\\Dyson\\Data\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\MPLopes\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\MPLopes\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
@@ -189,22 +201,28 @@
         }
       }
     },
-    "D:\\Dyson\\Dtos\\Dtos.csproj": {
+    "d:\\Dyson\\Dtos\\Dtos.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Dyson\\Dtos\\Dtos.csproj",
+        "projectUniqueName": "d:\\Dyson\\Dtos\\Dtos.csproj",
         "projectName": "Dtos",
-        "projectPath": "D:\\Dyson\\Dtos\\Dtos.csproj",
+        "projectPath": "d:\\Dyson\\Dtos\\Dtos.csproj",
         "packagesPath": "C:\\Users\\MPLopes\\.nuget\\packages\\",
-        "outputPath": "D:\\Dyson\\Dtos\\obj\\",
+        "outputPath": "d:\\Dyson\\Dtos\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\MPLopes\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\MPLopes\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
@@ -212,11 +230,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\Dyson\\Enums\\Enums.csproj": {
-                "projectPath": "D:\\Dyson\\Enums\\Enums.csproj"
+              "d:\\Dyson\\Enums\\Enums.csproj": {
+                "projectPath": "d:\\Dyson\\Enums\\Enums.csproj"
               },
-              "D:\\Dyson\\Records\\Records.csproj": {
-                "projectPath": "D:\\Dyson\\Records\\Records.csproj"
+              "d:\\Dyson\\Records\\Records.csproj": {
+                "projectPath": "d:\\Dyson\\Records\\Records.csproj"
               }
             }
           }
@@ -282,22 +300,28 @@
         }
       }
     },
-    "D:\\Dyson\\Enums\\Enums.csproj": {
+    "d:\\Dyson\\Enums\\Enums.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Dyson\\Enums\\Enums.csproj",
+        "projectUniqueName": "d:\\Dyson\\Enums\\Enums.csproj",
         "projectName": "Enums",
-        "projectPath": "D:\\Dyson\\Enums\\Enums.csproj",
+        "projectPath": "d:\\Dyson\\Enums\\Enums.csproj",
         "packagesPath": "C:\\Users\\MPLopes\\.nuget\\packages\\",
-        "outputPath": "D:\\Dyson\\Enums\\obj\\",
+        "outputPath": "d:\\Dyson\\Enums\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\MPLopes\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\MPLopes\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
@@ -364,22 +388,28 @@
         }
       }
     },
-    "D:\\Dyson\\Interfaces\\Interfaces.csproj": {
+    "d:\\Dyson\\Interfaces\\Interfaces.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Dyson\\Interfaces\\Interfaces.csproj",
+        "projectUniqueName": "d:\\Dyson\\Interfaces\\Interfaces.csproj",
         "projectName": "Interfaces",
-        "projectPath": "D:\\Dyson\\Interfaces\\Interfaces.csproj",
+        "projectPath": "d:\\Dyson\\Interfaces\\Interfaces.csproj",
         "packagesPath": "C:\\Users\\MPLopes\\.nuget\\packages\\",
-        "outputPath": "D:\\Dyson\\Interfaces\\obj\\",
+        "outputPath": "d:\\Dyson\\Interfaces\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\MPLopes\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\MPLopes\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
@@ -387,11 +417,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\Dyson\\Dtos\\Dtos.csproj": {
-                "projectPath": "D:\\Dyson\\Dtos\\Dtos.csproj"
+              "d:\\Dyson\\Dtos\\Dtos.csproj": {
+                "projectPath": "d:\\Dyson\\Dtos\\Dtos.csproj"
               },
-              "D:\\Dyson\\Records\\Records.csproj": {
-                "projectPath": "D:\\Dyson\\Records\\Records.csproj"
+              "d:\\Dyson\\Records\\Records.csproj": {
+                "projectPath": "d:\\Dyson\\Records\\Records.csproj"
               }
             }
           }
@@ -449,22 +479,28 @@
         }
       }
     },
-    "D:\\Dyson\\Records\\Records.csproj": {
+    "d:\\Dyson\\Records\\Records.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Dyson\\Records\\Records.csproj",
+        "projectUniqueName": "d:\\Dyson\\Records\\Records.csproj",
         "projectName": "Records",
-        "projectPath": "D:\\Dyson\\Records\\Records.csproj",
+        "projectPath": "d:\\Dyson\\Records\\Records.csproj",
         "packagesPath": "C:\\Users\\MPLopes\\.nuget\\packages\\",
-        "outputPath": "D:\\Dyson\\Records\\obj\\",
+        "outputPath": "d:\\Dyson\\Records\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\MPLopes\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\MPLopes\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
@@ -535,22 +571,28 @@
         }
       }
     },
-    "D:\\Dyson\\Services\\Services.csproj": {
+    "d:\\Dyson\\Services\\Services.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Dyson\\Services\\Services.csproj",
+        "projectUniqueName": "d:\\Dyson\\Services\\Services.csproj",
         "projectName": "Services",
-        "projectPath": "D:\\Dyson\\Services\\Services.csproj",
+        "projectPath": "d:\\Dyson\\Services\\Services.csproj",
         "packagesPath": "C:\\Users\\MPLopes\\.nuget\\packages\\",
-        "outputPath": "D:\\Dyson\\Services\\obj\\",
+        "outputPath": "d:\\Dyson\\Services\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\MPLopes\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\MPLopes\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
@@ -558,17 +600,17 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\Dyson\\Data\\Data.csproj": {
-                "projectPath": "D:\\Dyson\\Data\\Data.csproj"
+              "d:\\Dyson\\Data\\Data.csproj": {
+                "projectPath": "d:\\Dyson\\Data\\Data.csproj"
               },
-              "D:\\Dyson\\Dtos\\Dtos.csproj": {
-                "projectPath": "D:\\Dyson\\Dtos\\Dtos.csproj"
+              "d:\\Dyson\\Dtos\\Dtos.csproj": {
+                "projectPath": "d:\\Dyson\\Dtos\\Dtos.csproj"
               },
-              "D:\\Dyson\\Interfaces\\Interfaces.csproj": {
-                "projectPath": "D:\\Dyson\\Interfaces\\Interfaces.csproj"
+              "d:\\Dyson\\Interfaces\\Interfaces.csproj": {
+                "projectPath": "d:\\Dyson\\Interfaces\\Interfaces.csproj"
               },
-              "D:\\Dyson\\Records\\Records.csproj": {
-                "projectPath": "D:\\Dyson\\Records\\Records.csproj"
+              "d:\\Dyson\\Records\\Records.csproj": {
+                "projectPath": "d:\\Dyson\\Records\\Records.csproj"
               }
             }
           }

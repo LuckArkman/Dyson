@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "L9KOvl89/zk=",
+  "dgSpecHash": "kH8C6A7Fj+0=",
   "success": true,
-  "projectFilePath": "D:\\Dyson\\Records\\Records.csproj",
+  "projectFilePath": "d:\\Dyson\\Records\\Records.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\MPLopes\\.nuget\\packages\\acornima\\1.2.0\\acornima.1.2.0.nupkg.sha512",
     "C:\\Users\\MPLopes\\.nuget\\packages\\akka\\1.5.55\\akka.1.5.55.nupkg.sha512",

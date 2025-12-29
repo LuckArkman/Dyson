@@ -4,11 +4,11 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:WinApp"
-    xmlns:uIs="using:WinApp.Resources.UIs"
+    xmlns:uIs="using:WinApp.Resources.UIs.SmartNode"
     Title="Dyson-AI Manager">
 
     <ShellContent
-        ContentTemplate="{DataTemplate uIs:DashBoard}"
+        ContentTemplate="{DataTemplate uIs:Security}"
         Route="MainPage" />
 
 </Shell>

@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="using:WinApp.Resources.Models"
+             x:Class="WinApp.Resources.UIs.SmartNode.NeuralEcosystem"
+             BackgroundColor="#0B011A">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="DeepPurpleBg">#0B011A</Color>
+            <Color x:Key="SidebarNavBg">#120D1D</Color>
+            <Color x:Key="HistoryBg">#0D0118</Color>
+            <Color x:Key="AccentPurple">#7B52FF</Color>
+
+            <Style TargetType="Label" x:Key="layout-text-Menu">
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="Padding" Value="25,10,0,0" />
+            </Style>
+            <Style TargetType="Label" x:Key="menu-layout">
+                <Setter Property="TextColor" Value="#888888" />
+                <Setter Property="FontSize" Value="12" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="Padding" Value="5,15,0,5" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <Grid ColumnDefinitions="220, *, 280">
+
+            <Grid Grid.Column="0" BackgroundColor="{StaticResource SidebarNavBg}">
+                <ScrollView Padding="15">
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="PAINEL PRINCIPAL" Style="{StaticResource menu-layout}" />
+                        <Label Text="Dashboard" Style="{StaticResource layout-text-Menu}" />
+
+                        <Label Text="WEB3 / BLOCKCHAIN" Style="{StaticResource menu-layout}" />
+                        <Label Text="Smart Wallet" Style="{StaticResource layout-text-Menu}" />
+                        <Label Text="Smart Contracts" Style="{StaticResource layout-text-Menu}" />
+
+                        <Label Text="Smart Node" Style="{StaticResource menu-layout}" />
+                        <Label Text="Interação Neural" Style="{StaticResource layout-text-Menu}">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnToggleClicked" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Label Text="Configurações do Node" Style="{StaticResource layout-text-Menu}">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnToggleClicked" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Label Text="Agentes de Automação" Style="{StaticResource layout-text-Menu}">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnToggleClicked" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Label Text="Ecossistema Neural" Style="{StaticResource layout-text-Menu}">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnToggleClicked" />
+                            </Label.GestureRecognizers>
+                        </Label>
+
+
+                        <Label Text="Smart Node" Style="{StaticResource menu-layout}" />
+                        <Label Text="Interação Neural" Style="{StaticResource layout-text-Menu}" />
+                        <Label Text="Configurações" Style="{StaticResource layout-text-Menu}" />
+                    </VerticalStackLayout>
+                </ScrollView>
+            </Grid>
+
+            <!-- corpo com o conteudo do NeuralEcosystem do Node -->
+            <Grid Grid.Column="1" RowDefinitions="Auto, Auto, *" BackgroundColor="{StaticResource DeepPurpleBg}"
+                  Padding="40">
+
+                <VerticalStackLayout Grid.Row="0" Spacing="10" Margin="0,0,0,30">
+                    <Label Text="Ecossistema Neural" FontSize="32" FontAttributes="Bold" TextColor="White" />
+                    <Label Text="Gerencie a topologia e a expansão da sua rede de inteligência distribuída."
+                           TextColor="#A0A0A0" FontSize="14" />
+
+                    <HorizontalStackLayout Spacing="20" Margin="0,10,0,0">
+                        <Border Stroke="#33FFFFFF" BackgroundColor="#1A1128" Padding="15,5"
+                                StrokeShape="RoundRectangle 20">
+                            <Label Text="Nodes Ativos: 12" TextColor="{StaticResource AccentPurple}" FontSize="12"
+                                   VerticalOptions="Center" />
+                        </Border>
+                        <Border Stroke="#33FFFFFF" BackgroundColor="#1A1128" Padding="15,5"
+                                StrokeShape="RoundRectangle 20">
+                            <Label Text="Sincronização: 98%" TextColor="#00FFA3" FontSize="12" VerticalOptions="Center" />
+                        </Border>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+
+                <Grid Grid.Row="1" ColumnDefinitions="*, *, *" ColumnSpacing="20" Margin="0,0,0,30">
+                    <Frame Grid.Column="0" BackgroundColor="#120D1D" BorderColor="#2A1F40" HasShadow="False">
+                        <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+                            <Label Text="+" TextColor="{StaticResource AccentPurple}" FontSize="24"
+                                   HorizontalOptions="Center" />
+                            <Label Text="Expandir Rede" TextColor="White" FontAttributes="Bold"
+                                   HorizontalOptions="Center" />
+                            <Label Text="Adicionar novos nós" TextColor="#888888" FontSize="11"
+                                   HorizontalOptions="Center" />
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <Frame Grid.Column="1" BackgroundColor="#120D1D" BorderColor="#2A1F40" HasShadow="False">
+                        <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+                            <Label Text="⚡" TextColor="Orange" FontSize="20" HorizontalOptions="Center" />
+                            <Label Text="Otimização" TextColor="White" FontAttributes="Bold" HorizontalOptions="Center" />
+                            <Label Text="Balancear carga neural" TextColor="#888888" FontSize="11"
+                                   HorizontalOptions="Center" />
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <Frame Grid.Column="2" BackgroundColor="#120D1D" BorderColor="#2A1F40" HasShadow="False">
+                        <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+                            <Label Text="🛡️" TextColor="#00FFA3" FontSize="20" HorizontalOptions="Center" />
+                            <Label Text="Protocolos" TextColor="White" FontAttributes="Bold" HorizontalOptions="Center" />
+                            <Label Text="Configurar segurança" TextColor="#888888" FontSize="11"
+                                   HorizontalOptions="Center" />
+                        </VerticalStackLayout>
+                    </Frame>
+                </Grid>
+
+                <Border Grid.Row="2"
+                        BackgroundColor="#0D0118"
+                        Stroke="{StaticResource AccentPurple}"
+                        StrokeThickness="0.5">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="12" />
+                    </Border.StrokeShape>
+                    <Grid RowDefinitions="Auto, *">
+                        <BoxView Grid.Row="0" HeightRequest="1" Color="#2A1F40" VerticalOptions="End" />
+                        <Label Grid.Row="0" Text="MAPA DA REDE NEURAL" Margin="20" TextColor="#888888" FontSize="12"
+                               FontAttributes="Bold" />
+
+                        <ScrollView Grid.Row="1" Padding="20">
+                            <VerticalStackLayout Spacing="15">
+                                <Border Stroke="{StaticResource AccentPurple}" Padding="15"
+                                        StrokeShape="RoundRectangle 10" BackgroundColor="#1A1128">
+                                    <Grid ColumnDefinitions="Auto, *, Auto">
+                                        <Image Source="node_icon.png" WidthRequest="30" Grid.Column="0" />
+                                        <VerticalStackLayout Grid.Column="1" Margin="15,0">
+                                            <Label Text="Central Intelligence Node (Master)" TextColor="White"
+                                                   FontAttributes="Bold" />
+                                            <Label Text="ID: 0x88...FF21 | Local: São Paulo, BR" TextColor="#666666"
+                                                   FontSize="12" />
+                                        </VerticalStackLayout>
+                                        <Switch Grid.Column="2" IsToggled="True"
+                                                OnColor="{StaticResource AccentPurple}" />
+                                    </Grid>
+                                </Border>
+                            </VerticalStackLayout>
+                        </ScrollView>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

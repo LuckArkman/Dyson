@@ -1,25 +1,31 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Dyson\\Data\\Data.csproj": {}
+    "d:\\Dyson\\Data\\Data.csproj": {}
   },
   "projects": {
-    "D:\\Dyson\\Data\\Data.csproj": {
+    "d:\\Dyson\\Data\\Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Dyson\\Data\\Data.csproj",
+        "projectUniqueName": "d:\\Dyson\\Data\\Data.csproj",
         "projectName": "Data",
-        "projectPath": "D:\\Dyson\\Data\\Data.csproj",
+        "projectPath": "d:\\Dyson\\Data\\Data.csproj",
         "packagesPath": "C:\\Users\\MPLopes\\.nuget\\packages\\",
-        "outputPath": "D:\\Dyson\\Data\\obj\\",
+        "outputPath": "d:\\Dyson\\Data\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\MPLopes\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\MPLopes\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },

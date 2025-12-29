@@ -36,3 +36,16 @@
 /mnt/8AA2CEB6A2CEA5D3/Dyson/Enums/obj/Debug/net8.0/refint/Enums.dll
 /mnt/8AA2CEB6A2CEA5D3/Dyson/Enums/obj/Debug/net8.0/Enums.pdb
 /mnt/8AA2CEB6A2CEA5D3/Dyson/Enums/obj/Debug/net8.0/ref/Enums.dll
+d:\Dyson\Enums\bin\Debug\net8.0\Enums.deps.json
+d:\Dyson\Enums\bin\Debug\net8.0\Enums.dll
+d:\Dyson\Enums\bin\Debug\net8.0\Enums.pdb
+d:\Dyson\Enums\obj\Debug\net8.0\Enums.csproj.AssemblyReference.cache
+d:\Dyson\Enums\obj\Debug\net8.0\Enums.GeneratedMSBuildEditorConfig.editorconfig
+d:\Dyson\Enums\obj\Debug\net8.0\Enums.AssemblyInfoInputs.cache
+d:\Dyson\Enums\obj\Debug\net8.0\Enums.AssemblyInfo.cs
+d:\Dyson\Enums\obj\Debug\net8.0\Enums.csproj.CoreCompileInputs.cache
+d:\Dyson\Enums\obj\Debug\net8.0\Enums.sourcelink.json
+d:\Dyson\Enums\obj\Debug\net8.0\Enums.dll
+d:\Dyson\Enums\obj\Debug\net8.0\refint\Enums.dll
+d:\Dyson\Enums\obj\Debug\net8.0\Enums.pdb
+d:\Dyson\Enums\obj\Debug\net8.0\ref\Enums.dll

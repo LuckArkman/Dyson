@@ -11997,24 +11997,31 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\MPLopes\\.nuget\\packages\\": {}
+    "C:\\Users\\MPLopes\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Dyson\\Controllers\\Controllers.csproj",
+      "projectUniqueName": "d:\\Dyson\\Controllers\\Controllers.csproj",
       "projectName": "Controllers",
-      "projectPath": "D:\\Dyson\\Controllers\\Controllers.csproj",
+      "projectPath": "d:\\Dyson\\Controllers\\Controllers.csproj",
       "packagesPath": "C:\\Users\\MPLopes\\.nuget\\packages\\",
-      "outputPath": "D:\\Dyson\\Controllers\\obj\\",
+      "outputPath": "d:\\Dyson\\Controllers\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\MPLopes\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\MPLopes\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
@@ -12022,17 +12029,17 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "D:\\Dyson\\Dtos\\Dtos.csproj": {
-              "projectPath": "D:\\Dyson\\Dtos\\Dtos.csproj"
+            "d:\\Dyson\\Dtos\\Dtos.csproj": {
+              "projectPath": "d:\\Dyson\\Dtos\\Dtos.csproj"
             },
-            "D:\\Dyson\\Interfaces\\Interfaces.csproj": {
-              "projectPath": "D:\\Dyson\\Interfaces\\Interfaces.csproj"
+            "d:\\Dyson\\Interfaces\\Interfaces.csproj": {
+              "projectPath": "d:\\Dyson\\Interfaces\\Interfaces.csproj"
             },
-            "D:\\Dyson\\Records\\Records.csproj": {
-              "projectPath": "D:\\Dyson\\Records\\Records.csproj"
+            "d:\\Dyson\\Records\\Records.csproj": {
+              "projectPath": "d:\\Dyson\\Records\\Records.csproj"
             },
-            "D:\\Dyson\\Services\\Services.csproj": {
-              "projectPath": "D:\\Dyson\\Services\\Services.csproj"
+            "d:\\Dyson\\Services\\Services.csproj": {
+              "projectPath": "d:\\Dyson\\Services\\Services.csproj"
             }
           }
         }
